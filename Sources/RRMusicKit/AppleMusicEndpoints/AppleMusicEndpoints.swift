@@ -13,8 +13,8 @@ public enum LibraryPath: String {
     
     var url: String {
         switch self {
-            case .catalog: return "/catalog/"
-            case .user: return "/me/"
+            case .catalog: return "/v1/catalog/"
+            case .user: return "/v1/me/"
         }
     }
 }
@@ -23,9 +23,9 @@ public struct AppleMusicEndPoint {
     var library: LibraryPath?
     var path: String
     var addStoreFront: Bool
-    var queryItems: [URLQueryItem]
+    var queryItems: [URLQueryItem]?
     
-    public init(library: LibraryPath? = nil, _ path: String, addStoreFront: Bool = true, queryItems: [URLQueryItem] = []) {
+    public init(library: LibraryPath? = nil, _ path: String, addStoreFront: Bool = true, queryItems: [URLQueryItem]? = nil) {
         self.library = library
         self.path = path
         self.addStoreFront = addStoreFront
@@ -37,14 +37,17 @@ public extension AppleMusicEndPoint {
     var url: URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.music.apple.com/v1"
-        components.queryItems = queryItems
+        components.host = "api.music.apple.com"
         components.path = (library?.url ?? "")
+        
+        if let queryItems = queryItems {
+            components.queryItems = queryItems
+        }
         
         if addStoreFront, let storeFront = MusicKitManager.shared.storeFront {
             components.path += (storeFront + "/" + path)
         } else {
-            components.path += ("/" + path)
+            components.path += path
         }
         
         guard let url = components.url else {
