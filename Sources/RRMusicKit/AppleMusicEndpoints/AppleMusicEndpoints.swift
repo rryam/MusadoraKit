@@ -20,10 +20,17 @@ public enum LibraryPath: String {
 }
 
 public struct AppleMusicEndPoint {
-    var library: LibraryPath? = nil
+    var library: LibraryPath?
     var path: String
-    var addStoreFront: Bool = true
-    var queryItems: [URLQueryItem] = []
+    var addStoreFront: Bool
+    var queryItems: [URLQueryItem]
+    
+    public init(library: LibraryPath? = nil, _ path: String, addStoreFront: Bool = true, queryItems: [URLQueryItem] = []) {
+        self.library = library
+        self.path = path
+        self.addStoreFront = addStoreFront
+        self.queryItems = queryItems
+    }
 }
 
 public extension AppleMusicEndPoint {
