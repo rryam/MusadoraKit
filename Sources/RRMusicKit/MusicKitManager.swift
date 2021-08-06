@@ -23,7 +23,7 @@ public class MusicKitManager {
         return try await decode(endpoint: .genres())
     }
     
-    private func decode<Model: Decodable>(endpoint: AppleMusicEndPoint) async throws -> Model {
+    public func decode<Model: Decodable>(endpoint: AppleMusicEndPoint) async throws -> Model {
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: endpoint.url))
         let dataResponse = try await dataRequest.response()
         
