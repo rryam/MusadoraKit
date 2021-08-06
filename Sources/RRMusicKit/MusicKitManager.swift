@@ -11,9 +11,9 @@ import Foundation
 public class MusicKitManager {
     var storeFront: String?
     
-    static let shared = MusicKitManager()
+    public static let shared = MusicKitManager()
     
-    init() {
+    public init() {
         Task {
             self.storeFront = try await MusicDataRequest.currentCountryCode
         }
