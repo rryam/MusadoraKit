@@ -58,14 +58,18 @@ public extension AppleMusicEndPoint {
 // MARK: - CATALOG
 public extension AppleMusicEndPoint {
     static func genres() -> Self {
-        AppleMusicEndPoint(library: .catalog, path: "genres")
+        AppleMusicEndPoint(library: .catalog, "genres")
     }
     
     static func search() -> Self {
-        AppleMusicEndPoint(library: .catalog, path: "search")
+        AppleMusicEndPoint(library: .catalog, "search")
     }
     
     static func hints(storeFront: String) -> Self {
-        AppleMusicEndPoint(library: .catalog, path: "hints")
+        AppleMusicEndPoint(library: .catalog, "hints")
+    }
+    
+    static func recent() -> Self {
+        AppleMusicEndPoint(library: .user, "recent/played/tracks")
     }
 }
