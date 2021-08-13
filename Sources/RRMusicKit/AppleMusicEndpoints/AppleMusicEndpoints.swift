@@ -14,8 +14,8 @@ public enum LibraryPath: String {
     
     var url: String {
         switch self {
-            case .catalog: return "catalog/"
-            case .user: return "me/"
+            case .catalog: return "/v1/catalog/"
+            case .user: return "/v1/me/"
         }
     }
 }
@@ -38,7 +38,7 @@ public extension AppleMusicEndPoint {
     func url() async -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.music.apple.com/v1/"
+        components.host = "api.music.apple.com"
         components.path = library?.url ?? ""
         
         if let queryItems = queryItems {
@@ -80,6 +80,6 @@ public extension AppleMusicEndPoint {
     }
     
     static func recent() -> Self {
-        AppleMusicEndPoint(library: .user, "recent/played/tracks")
+        AppleMusicEndPoint(library: .user, "recent/played/tracks", addStoreFront: false)
     }
 }
