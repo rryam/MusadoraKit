@@ -14,8 +14,8 @@ public enum LibraryPath: String {
     
     var url: String {
         switch self {
-            case .catalog: return "/v1/catalog/"
-            case .user: return "/v1/me/"
+            case .catalog: return "catalog/"
+            case .user: return "me/"
         }
     }
 }
@@ -38,8 +38,8 @@ public extension AppleMusicEndPoint {
     func url() async -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.music.apple.com"
-        components.path = (library?.url ?? "")
+        components.host = "api.music.apple.com/v1/"
+        components.path = library?.url ?? ""
         
         if let queryItems = queryItems {
             components.queryItems = queryItems
@@ -47,6 +47,8 @@ public extension AppleMusicEndPoint {
         
         let storeFront = try? await MusicDataRequest.currentCountryCode
         
+        debugPrint("Country Code is \(storeFront)")
+
         if addStoreFront, let storeFront = storeFront {
             components.path += (storeFront + "/" + path)
         } else {
@@ -56,6 +58,8 @@ public extension AppleMusicEndPoint {
         guard let url = components.url else {
             preconditionFailure("Invalid URL components: \(components)")
         }
+        
+        debugPrint("Apple Music URL is \(url)")
         
         return url
     }
