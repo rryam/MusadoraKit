@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MusicKit
 
 public enum LibraryPath: String {
     case catalog
@@ -34,7 +35,7 @@ public struct AppleMusicEndPoint {
 }
 
 public extension AppleMusicEndPoint {
-    var url: URL {
+    func url() async -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.music.apple.com"
@@ -44,7 +45,9 @@ public extension AppleMusicEndPoint {
             components.queryItems = queryItems
         }
         
-        if addStoreFront, let storeFront = MusicKitManager.shared.storeFront {
+        let storeFront = try? await MusicDataRequest.currentCountryCode
+        
+        if addStoreFront, let storeFront = storeFront {
             components.path += (storeFront + "/" + path)
         } else {
             components.path += path

@@ -6,6 +6,6 @@ final class RRMusicKitTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(RRMusicKit().text, "Hello, World!")
+      //  XCTAssertEqual(RRMusicKit().text, "Hello, World!")
     }
 }
