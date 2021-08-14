@@ -9,14 +9,16 @@ import MusicKit
 import Foundation
 
 public class RRMusicKit {
-    public static func getGenres() async throws -> Genres {
-        return try await decode(endpoint: .genres())
+    public static func genres() async throws -> Genres {
+        return try await decode(endpoint: .genres)
     }
     
     public static func decode<Model: Decodable>(endpoint: AppleMusicEndPoint) async throws -> Model {
         let url = await endpoint.url()
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: url))
         let dataResponse = try await dataRequest.response()
+        
+        debugPrint("DATA RESPONSE IS \(dataResponse.debugDescription)")
         
         let decoder = JSONDecoder()
         
@@ -56,5 +58,13 @@ extension RRMusicKit {
         let response = try await musicRequest.response()
         
         return response.items
+    }
+}
+
+// MARK: - REQUESTING USER LIBRARY
+extension RRMusicKit {
+    public static func recentlyPlayedSongs() async throws -> [Song] {
+        let songs: Songs = try await self.decode(endpoint: .recent)
+        return songs.data
     }
 }
