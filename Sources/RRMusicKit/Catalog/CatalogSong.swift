@@ -7,9 +7,8 @@
 
 import MusicKit
 
-// MARK: - REQUESTING CATALOG SONG
 public extension RRMusicKit {
-     static func catalogSong(id: MusicItemID) async throws -> MusicItemCollection<Song> {
+    static func catalogSong(id: MusicItemID) async throws -> MusicItemCollection<Song> {
         let musicRequest = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
         let response = try await musicRequest.response()
         
