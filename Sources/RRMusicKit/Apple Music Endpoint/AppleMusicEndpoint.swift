@@ -1,6 +1,6 @@
 //
-//  AppleMusicEndPoint.swift
-//  AppleMusicEndPoint
+//  AppleMusicEndpoint.swift
+//  AppleMusicEndpoint
 //
 //  Created by Rudrank Riyam on 04/08/21.
 //
@@ -8,19 +8,7 @@
 import Foundation
 import MusicKit
 
-public enum LibraryPath: String {
-    case catalog
-    case user
-    
-    var url: String {
-        switch self {
-            case .catalog: return "/v1/catalog/"
-            case .user: return "/v1/me/"
-        }
-    }
-}
-
-public struct AppleMusicEndPoint {
+public struct AppleMusicEndpoint {
     var library: LibraryPath?
     var path: String
     var addStoreFront: Bool
@@ -34,7 +22,7 @@ public struct AppleMusicEndPoint {
     }
 }
 
-public extension AppleMusicEndPoint {
+public extension AppleMusicEndpoint {
     func url() async -> URL {
         var components = URLComponents()
         components.scheme = "https"
@@ -66,20 +54,20 @@ public extension AppleMusicEndPoint {
 }
 
 // MARK: - CATALOG
-public extension AppleMusicEndPoint {
+public extension AppleMusicEndpoint {
     static var genres: Self {
-        AppleMusicEndPoint(library: .catalog, "genres")
+        AppleMusicEndpoint(library: .catalog, "genres")
     }
     
     static var search: Self {
-        AppleMusicEndPoint(library: .catalog, "search")
+        AppleMusicEndpoint(library: .catalog, "search")
     }
     
     static func hints(storeFront: String) -> Self {
-        AppleMusicEndPoint(library: .catalog, "hints")
+        AppleMusicEndpoint(library: .catalog, "hints")
     }
     
     static var recent: Self {
-        AppleMusicEndPoint(library: .user, "recent/played/tracks", addStoreFront: false)
+        AppleMusicEndpoint(library: .user, "recent/played/tracks", addStoreFront: false)
     }
 }
