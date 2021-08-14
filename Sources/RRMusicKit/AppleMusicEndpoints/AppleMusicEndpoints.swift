@@ -47,7 +47,7 @@ public extension AppleMusicEndPoint {
         
         let storeFront = try? await MusicDataRequest.currentCountryCode
         
-        debugPrint("Country Code is \(storeFront)")
+        debugPrint("Country Code is \(String(describing: storeFront))")
 
         if addStoreFront, let storeFront = storeFront {
             components.path += (storeFront + "/" + path)
