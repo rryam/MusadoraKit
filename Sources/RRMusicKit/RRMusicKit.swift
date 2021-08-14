@@ -18,7 +18,7 @@ public class RRMusicKit {
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: url))
         let dataResponse = try await dataRequest.response()
         
-        debugPrint("DATA RESPONSE IS \(dataResponse.debugDescription)")
+        print("DATA RESPONSE IS \(String(describing: dataResponse.data.prettyPrintedJSONString))")
         
         let decoder = JSONDecoder()
         
