@@ -9,15 +9,15 @@ import MusicKit
 
  extension AppleMusicEndpoint {
     static func librarySong(id: String) -> Self {
-        AppleMusicEndpoint(library: .user, "/library/songs/\(id)", addStoreFront: false)
+        AppleMusicEndpoint(library: .user, "/library/songs/\(id)")
     }
     
     static var librarySongs: Self {
-        AppleMusicEndpoint(library: .user, "/library/songs", addStoreFront: false)
+        AppleMusicEndpoint(library: .user, "/library/songs")
     }
     
     static var userLibrary: Self {
-        AppleMusicEndpoint(library: .user, "library", addStoreFront: false)
+        AppleMusicEndpoint(library: .user, "library")
     }
 }
 

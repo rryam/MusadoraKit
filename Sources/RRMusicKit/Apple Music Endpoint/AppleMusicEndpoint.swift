@@ -11,13 +11,11 @@ import MusicKit
 public struct AppleMusicEndpoint {
     var library: LibraryPath?
     var path: String
-    var addStoreFront: Bool
     var queryItems: [URLQueryItem]?
     
-    public init(library: LibraryPath? = nil, _ path: String, addStoreFront: Bool = true, queryItems: [URLQueryItem]? = nil) {
+    public init(library: LibraryPath? = nil, _ path: String, queryItems: [URLQueryItem]? = nil) {
         self.library = library
         self.path = path
-        self.addStoreFront = addStoreFront
         self.queryItems = queryItems
     }
 }
@@ -33,14 +31,16 @@ public extension AppleMusicEndpoint {
             components.queryItems = queryItems
         }
         
-        let storeFront = try? await MusicDataRequest.currentCountryCode
-        
-        debugPrint("Country Code is \(String(describing: storeFront))")
-
-        if addStoreFront, let storeFront = storeFront {
-            components.path += (storeFront + "/" + path)
-        } else {
-            components.path += path
+        switch library {
+            case .catalog:
+                let storeFront = try? await MusicDataRequest.currentCountryCode
+                
+                if let storeFront = storeFront {
+                    components.path += (storeFront + "/" + path)
+                }
+                
+            case .user: components.path += path
+            case .none: break// Do nothing
         }
         
         guard let url = components.url else {
@@ -55,19 +55,11 @@ public extension AppleMusicEndpoint {
 
 // MARK: - CATALOG
 public extension AppleMusicEndpoint {
-    static var genres: Self {
-        AppleMusicEndpoint(library: .catalog, "genres")
-    }
-    
     static var search: Self {
         AppleMusicEndpoint(library: .catalog, "search")
     }
     
     static func hints(storeFront: String) -> Self {
         AppleMusicEndpoint(library: .catalog, "hints")
-    }
-    
-    static var recent: Self {
-        AppleMusicEndpoint(library: .user, "recent/played/tracks", addStoreFront: false)
     }
 }

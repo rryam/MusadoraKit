@@ -16,22 +16,11 @@ public class RRMusicKit {
         
         let decoder = JSONDecoder()
         
+        print("***DATA FOR PATH \(endpoint.path) IS***")
+        print(dataResponse.data.prettyPrintedJSONString)
+        
         let response = try decoder.decode(Model.self, from: dataResponse.data)
         
         return response
     }
 }
-
-public extension RRMusicKit {
-    static func genres() async throws -> Genres {
-        try await decode(endpoint: .genres)
-    }
-}
-
-// MARK: - REQUESTING USER LIBRARY
-public extension RRMusicKit {
-    static func recentlyPlayedSongs() async throws -> MusicItemCollection<Song> {
-        try await self.decode(endpoint: .recent)
-    }
-}
-

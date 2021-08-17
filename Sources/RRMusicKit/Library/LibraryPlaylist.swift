@@ -6,10 +6,12 @@
 //
 
 import MusicKit
+import UIKit
+import class UIKit.UIImage
 
 public extension AppleMusicEndpoint {
     static var libraryPlaylists: Self {
-        AppleMusicEndpoint(library: .user, "/library/playlists", addStoreFront: false)
+        AppleMusicEndpoint(library: .user, "/library/playlists")
     }
 }
 
