@@ -6,8 +6,6 @@
 //
 
 import MusicKit
-import UIKit
-import class UIKit.UIImage
 
 public extension AppleMusicEndpoint {
     static var libraryPlaylists: Self {

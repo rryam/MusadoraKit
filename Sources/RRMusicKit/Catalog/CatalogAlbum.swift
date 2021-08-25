@@ -29,10 +29,9 @@ public extension RRMusicKit {
         return response.items
     }
     
-    static func catalogAlbumRelationship(id: MusicItemID, relationships: [PartialMusicAsyncProperty<Album>]) async throws -> MusicItemCollection<Album> {
+    static func catalogAlbum(id: MusicItemID, with relationships: [PartialMusicAsyncProperty<Album>]) async throws -> MusicItemCollection<Album> {
         var musicRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
         musicRequest.properties = relationships
-        
         let response = try await musicRequest.response()
         
         return response.items

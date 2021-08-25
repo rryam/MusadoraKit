@@ -16,9 +16,6 @@ public class RRMusicKit {
         
         let decoder = JSONDecoder()
         
-        print("***DATA FOR PATH \(endpoint.path) IS***")
-        print(dataResponse.data.prettyPrintedJSONString)
-        
         let response = try decoder.decode(Model.self, from: dataResponse.data)
         
         return response
