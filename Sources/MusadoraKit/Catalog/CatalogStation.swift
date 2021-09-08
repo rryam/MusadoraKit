@@ -22,7 +22,7 @@ extension AppleMusicEndpoint {
     }
 }
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func catalogStations() async throws -> Stations {
         try await self.decode(endpoint: .catalogStations)
     }

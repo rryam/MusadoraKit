@@ -9,7 +9,7 @@ import MusicKit
 
 public typealias Artists = MusicItemCollection<Artist>
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func catalogArtist(id: MusicItemID) async throws -> Artists {
         let musicRequest = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
         let response = try await musicRequest.response()

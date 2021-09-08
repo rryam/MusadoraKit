@@ -25,7 +25,7 @@ extension AppleMusicEndpoint {
     }
 }
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func libraryAlbums() async throws -> MusicItemCollection<Album> {
         try await self.decode(endpoint: .libraryAlbums)
     }

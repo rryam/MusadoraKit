@@ -8,7 +8,7 @@
 import Foundation
 import MusicKit
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func catalogSearch(for term: String,
                        types: [MusicCatalogSearchable.Type],
                        limit: Int?,
