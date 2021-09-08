@@ -19,11 +19,11 @@ public enum MusicLibrarySearchType: String, CodingKey {
         
         for type in types {
             switch type {
-                case _ as Song.Type: typeQueries.append(Self.songs.rawValue)
-                case _ as Album.Type: typeQueries.append(Self.albums.rawValue)
-                case _ as Artist.Type: typeQueries.append(Self.artists.rawValue)
-                case _ as MusicVideo.Type: typeQueries.append(Self.musicVideos.rawValue)
-                case _ as Playlist.Type: typeQueries.append(Self.playlists.rawValue)
+                case is Song.Type: typeQueries.append(Self.songs.rawValue)
+                case is Album.Type: typeQueries.append(Self.albums.rawValue)
+                case is Artist.Type: typeQueries.append(Self.artists.rawValue)
+                case is MusicVideo.Type: typeQueries.append(Self.musicVideos.rawValue)
+                case is Playlist.Type: typeQueries.append(Self.playlists.rawValue)
                 default: ()
             }
         }
