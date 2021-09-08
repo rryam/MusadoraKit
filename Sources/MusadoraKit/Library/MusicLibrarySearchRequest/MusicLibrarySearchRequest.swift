@@ -37,8 +37,9 @@ public struct MusicLibrarySearchRequest {
     /// the search term of the request.
     public func response() async throws -> MusicLibrarySearchResponse {
         var queryItems: [URLQueryItem] = []
-
-        let termQuery = URLQueryItem(name: "term", value: term.replacingOccurrences(of: " ", with: "+"))
+        
+        let termValue = term.replacingOccurrences(of: " ", with: "+")
+        let termQuery = URLQueryItem(name: "term", value: termValue)
         queryItems.append(termQuery)
         
         let typesValue = MusicLibrarySearchType.getTypes(types)
