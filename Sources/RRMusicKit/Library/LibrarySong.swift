@@ -22,7 +22,7 @@ import MusicKit
 }
 
 public extension RRMusicKit {
-    static func librarySongs() async throws -> MusicItemCollection<Song> {
+    static func librarySongs() async throws -> Songs {
         try await self.decode(endpoint: .librarySongs)
     }
 }

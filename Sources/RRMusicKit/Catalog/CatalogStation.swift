@@ -8,6 +8,8 @@
 import Foundation
 import MusicKit
 
+public typealias Stations = MusicItemCollection<Station>
+
 extension AppleMusicEndpoint {
     static var catalogStations: Self {
         let queryItem = URLQueryItem(name: "filter[featured]", value: "apple-music-live-radio")
@@ -21,15 +23,15 @@ extension AppleMusicEndpoint {
 }
 
 public extension RRMusicKit {
-    static func catalogStations() async throws -> MusicItemCollection<Station> {
+    static func catalogStations() async throws -> Stations {
         try await self.decode(endpoint: .catalogStations)
     }
     
-    static func libraryStations() async throws -> MusicItemCollection<Station> {
+    static func libraryStations() async throws -> Stations {
         try await self.decode(endpoint: .libraryStations)
     }
     
-    static func catalogStation(id: String) async throws -> MusicItemCollection<Station> {
+    static func catalogStation(id: String) async throws -> Stations {
         let musicRequest = MusicCatalogResourceRequest<Station>(matching: \.id, equalTo: MusicItemID(rawValue: id))
         let response = try await musicRequest.response()
         

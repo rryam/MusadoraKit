@@ -14,7 +14,7 @@ public extension AppleMusicEndpoint {
 }
 
 public extension RRMusicKit {
-    static func libraryPlaylists() async throws -> MusicItemCollection<Playlist> {
+    static func libraryPlaylists() async throws -> Playlists {
         try await self.decode(endpoint: .libraryPlaylists)
     }
 }
