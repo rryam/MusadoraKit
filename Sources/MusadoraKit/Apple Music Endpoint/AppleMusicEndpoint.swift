@@ -40,7 +40,7 @@ public extension AppleMusicEndpoint {
                 }
                 
             case .user: components.path += path
-            case .none: break// Do nothing
+            case .none: break
         }
         
         guard let url = components.url else {
@@ -50,16 +50,5 @@ public extension AppleMusicEndpoint {
         debugPrint("Apple Music URL is \(url)")
         
         return url
-    }
-}
-
-// MARK: - CATALOG
-public extension AppleMusicEndpoint {
-    static var search: Self {
-        AppleMusicEndpoint(library: .catalog, "search")
-    }
-    
-    static func hints(storeFront: String) -> Self {
-        AppleMusicEndpoint(library: .catalog, "hints")
     }
 }
