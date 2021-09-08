@@ -27,7 +27,6 @@ public enum MusicLibrarySearchType: String, CodingKey {
                 default: ()
             }
         }
-        
         return typeQueries.joined(separator: ",")
     }
 }
