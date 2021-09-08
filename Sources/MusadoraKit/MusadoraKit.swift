@@ -1,6 +1,6 @@
 //
-//  RRMusicKit.swift
-//  RRMusicKit
+//  MusadoraKit.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 04/08/21.
 //
@@ -8,7 +8,7 @@
 import MusicKit
 import Foundation
 
-public class RRMusicKit {
+public class MusadoraKit {
     static func decode<Model: Decodable>(endpoint: AppleMusicEndpoint) async throws -> Model {
         let url = await endpoint.url()
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: url))

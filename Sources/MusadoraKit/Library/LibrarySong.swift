@@ -21,7 +21,7 @@ import MusicKit
     }
 }
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func librarySongs() async throws -> Songs {
         try await self.decode(endpoint: .librarySongs)
     }

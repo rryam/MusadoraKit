@@ -14,7 +14,7 @@ extension AppleMusicEndpoint {
     }
 }
 
-public extension RRMusicKit {
+public extension MusadoraKit {
     static func genres() async throws -> MusicItemCollection<Genre> {
         try await self.decode(endpoint: .genres)
     }

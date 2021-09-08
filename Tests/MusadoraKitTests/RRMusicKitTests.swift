@@ -1,11 +1,11 @@
 import XCTest
-@testable import RRMusicKit
+@testable import MusadoraKit
 
-final class RRMusicKitTests: XCTestCase {
+final class MusadoraKitTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-      //  XCTAssertEqual(RRMusicKit().text, "Hello, World!")
+      //  XCTAssertEqual(MusadoraKit().text, "Hello, World!")
     }
 }
