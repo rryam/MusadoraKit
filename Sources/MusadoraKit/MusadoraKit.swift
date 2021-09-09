@@ -8,15 +8,13 @@
 import MusicKit
 import Foundation
 
-public class MusadoraKit {
+public struct MusadoraKit {
     static func decode<Model: Decodable>(endpoint: AppleMusicEndpoint) async throws -> Model {
-        let url = await endpoint.url()
+        let url = try await endpoint.url
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: url))
         let dataResponse = try await dataRequest.response()
         
-        let decoder = JSONDecoder()
-        
-        let response = try decoder.decode(Model.self, from: dataResponse.data)
+        let response = try JSONDecoder().decode(Model.self, from: dataResponse.data)
         
         return response
     }
