@@ -20,35 +20,34 @@ public struct AppleMusicEndpoint {
     }
 }
 
-public extension AppleMusicEndpoint {
-    func url() async -> URL {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.music.apple.com"
-        components.path = library?.url ?? ""
-        
-        if let queryItems = queryItems {
-            components.queryItems = queryItems
-        }
-        
-        switch library {
-            case .catalog:
-                let storeFront = try? await MusicDataRequest.currentCountryCode
-                
-                if let storeFront = storeFront {
+extension AppleMusicEndpoint {
+    var url: URL {
+        get async throws {
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "api.music.apple.com"
+            components.path = library?.url ?? ""
+            
+            if let queryItems = queryItems {
+                components.queryItems = queryItems
+            }
+            
+            switch library {
+                case .catalog:
+                    let storeFront = try await MusicDataRequest.currentCountryCode
                     components.path += (storeFront + "/" + path)
-                }
-                
-            case .user: components.path += path
-            case .none: break
+                    
+                case .user: components.path += path
+                case .none: break
+            }
+            
+            guard let url = components.url else {
+                preconditionFailure("Invalid URL components: \(components)")
+            }
+            
+            debugPrint("Apple Music URL is \(url)")
+            
+            return url
         }
-        
-        guard let url = components.url else {
-            preconditionFailure("Invalid URL components: \(components)")
-        }
-        
-        debugPrint("Apple Music URL is \(url)")
-        
-        return url
     }
 }
