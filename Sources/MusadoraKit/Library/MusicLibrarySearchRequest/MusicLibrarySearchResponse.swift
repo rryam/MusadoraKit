@@ -65,7 +65,8 @@ extension MusicLibrarySearchResponse : CustomStringConvertible, CustomDebugStrin
         return description + "\n)"
     }
     
+    #warning("Figure out a better way to do this")
     public var debugDescription: String {
-        "MusicLibrarySearchResponse(\n\(self.songs.debugDescription),\n\(self.artists.debugDescription),\n\(self.albums.debugDescription),\n\(self.musicVideos.debugDescription),\(self.playlists.debugDescription)\n)"
+        "MusicLibrarySearchResponse(\n\(songs.debugDescription),\n\(artists.debugDescription),\n\(albums.debugDescription),\n\(musicVideos.debugDescription),\(playlists.debugDescription)\n)"
     }
 }
