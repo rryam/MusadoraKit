@@ -132,5 +132,31 @@ extension MusicCatalogChartResponse: Decodable {
     }
 }
 
-extension MusicCatalogChartResponse: Equatable, Hashable {
+extension MusicCatalogChartResponse: Equatable, Hashable {}
+
+extension MusicCatalogChartResponse: CustomStringConvertible {
+    public var description: String {
+        var description: [String] = []
+        if !songs.isEmpty {
+            description.append("songs: \(flatten(songs))")
+        }
+
+        if !playlists.isEmpty {
+            description.append("playlists: \(flatten(playlists))")
+        }
+
+        if !albums.isEmpty {
+            description.append("albums: \(flatten(albums))")
+        }
+
+        if !musicVideos.isEmpty {
+            description.append("music videos: \(flatten(musicVideos))")
+        }
+
+        return "\(Self.self)(\n\(description.joined(separator: ", \n"))\n)"
+    }
+
+    private func flatten<Type>(_ type: [MusicItemCollection<Type>]) -> String where Type: MusicCatalogChart {
+        "\(type.flatMap { $0 })"
+    }
 }
