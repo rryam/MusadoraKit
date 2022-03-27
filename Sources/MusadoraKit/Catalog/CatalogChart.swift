@@ -8,18 +8,31 @@
 import Foundation
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol MusicCatalogChart {}
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChart {
     static var objectIdentifier: ObjectIdentifier {
         ObjectIdentifier(Self.self)
     }
 }
 
-extension Song: MusicCatalogChart {}
-extension Playlist: MusicCatalogChart {}
-extension MusicVideo: MusicCatalogChart {}
-extension Album: MusicCatalogChart {}
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Song: MusicCatalogChart {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Playlist: MusicCatalogChart {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension MusicVideo: MusicCatalogChart {
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Album: MusicCatalogChart {
+}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 struct Charts: Decodable {
@@ -72,6 +85,7 @@ public struct MusicCatalogChartRequest {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartRequest {
     private func createURL() async throws -> URL {
         let storefront = try await MusicDataRequest.currentCountryCode
@@ -116,6 +130,7 @@ public struct MusicCatalogChartResponse {
     public let albums: [MusicItemCollection<Album>]
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case songs, playlists, albums
@@ -132,8 +147,10 @@ extension MusicCatalogChartResponse: Decodable {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: Equatable, Hashable {}
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: CustomStringConvertible {
     public var description: String {
         var description: [String] = []
