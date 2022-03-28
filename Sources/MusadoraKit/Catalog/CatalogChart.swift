@@ -35,8 +35,61 @@ extension Album: MusicCatalogChart {
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-struct Charts: Decodable {
+struct Charts: Codable {
     let results: MusicCatalogChartResponse
+}
+
+/// A collection of chart items.
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public struct ChartItemCollection<MusicItemType> where MusicItemType: MusicItem {
+
+    /// The unique name of the chart to use when fetching a specific chart.
+    public let chart: String
+
+    /// The localized display name for the chart.
+    public let name: String
+
+    /// A relative cursor to fetch the next paginated results for the chart if more exist.
+    public let next: String?
+
+    /// The popularity-ordered music item type for the chart.
+    public let items: [MusicItemType]
+
+    enum CodingKeys: String, CodingKey {
+        case chart, name
+        case next
+        case items = "data"
+    }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ChartItemCollection {
+
+    /// A Boolean value that indicates whether the collection has information
+    /// that allows it to fetch a subsequent batch of items.
+    public var hasNextBatch: Bool {
+        next == nil
+    }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ChartItemCollection where MusicItemType: MusicCatalogChart {}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ChartItemCollection: Decodable where MusicItemType: Decodable {}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ChartItemCollection: Encodable where MusicItemType: Encodable {}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension ChartItemCollection: Equatable, Hashable {
+    public static func == (lhs: ChartItemCollection<MusicItemType>, rhs: ChartItemCollection<MusicItemType>) -> Bool {
+        lhs.chart == rhs.chart
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(chart)
+    }
 }
 
 /// A  chart request that your app uses to fetch charts from the Apple Music catalog
@@ -118,16 +171,16 @@ extension MusicCatalogChartRequest {
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicCatalogChartResponse {
     /// An array of collection of songs.
-    public let songs: [MusicItemCollection<Song>]
+    public let songs: [ChartItemCollection<Song>]
 
     /// An array of collection of playlists.
-    public let playlists: [MusicItemCollection<Playlist>]
+    public let playlists: [ChartItemCollection<Playlist>]
 
     /// An array of collection of music videos.
-    public let musicVideos: [MusicItemCollection<MusicVideo>]
+    public let musicVideos: [ChartItemCollection<MusicVideo>]
 
     /// An array of collection of albums.
-    public let albums: [MusicItemCollection<Album>]
+    public let albums: [ChartItemCollection<Album>]
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -140,10 +193,21 @@ extension MusicCatalogChartResponse: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        songs = try container.decodeIfPresent([MusicItemCollection<Song>].self, forKey: .songs) ?? []
-        playlists = try container.decodeIfPresent([MusicItemCollection<Playlist>].self, forKey: .playlists) ?? []
-        musicVideos = try container.decodeIfPresent([MusicItemCollection<MusicVideo>].self, forKey: .musicVideos) ?? []
-        albums = try container.decodeIfPresent([MusicItemCollection<Album>].self, forKey: .albums) ?? []
+        songs = try container.decodeIfPresent([ChartItemCollection<Song>].self, forKey: .songs) ?? []
+        playlists = try container.decodeIfPresent([ChartItemCollection<Playlist>].self, forKey: .playlists) ?? []
+        musicVideos = try container.decodeIfPresent([ChartItemCollection<MusicVideo>].self, forKey: .musicVideos) ?? []
+        albums = try container.decodeIfPresent([ChartItemCollection<Album>].self, forKey: .albums) ?? []
+    }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension MusicCatalogChartResponse: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(songs, forKey: .songs)
+        try container.encode(playlists, forKey: .playlists)
+        try container.encode(musicVideos, forKey: .musicVideos)
+        try container.encode(albums, forKey: .albums)
     }
 }
 
@@ -173,7 +237,8 @@ extension MusicCatalogChartResponse: CustomStringConvertible {
         return "\(Self.self)(\n\(description.joined(separator: ", \n"))\n)"
     }
 
-    private func flatten<Type>(_ type: [MusicItemCollection<Type>]) -> String where Type: MusicCatalogChart {
-        "\(type.flatMap { $0 })"
+    private func flatten<Type>(_ type: [ChartItemCollection<Type>]) -> String where Type: MusicCatalogChart {
+        "\(type.compactMap { $0 })"
     }
 }
+
