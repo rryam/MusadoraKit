@@ -8,13 +8,13 @@
 import MusicKit
 import Foundation
 
-/// A  chart request that your app uses to fetch charts from the Apple Music catalog
-/// using the types of charts and for the genre identifier.
+/// A  request that your app uses to fetch recommendations from
+/// the user's library, either default ones or based on identifiers.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicRecommendationRequest {
 
     /// A limit for the number of items to return
-    /// in the recommendation  response.
+    /// in the recommendation response.
     public var limit: Int?
 
     /// Creates a request to fetch default recommendations.
