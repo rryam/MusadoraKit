@@ -7,7 +7,7 @@
 
 import MusicKit
 
-public enum MusicLibrarySearchType: String, CodingKey {
+enum MusicLibrarySearchType: String, CodingKey {
     case songs = "library-songs"
     case artists = "library-artists"
     case albums = "library-albums"
@@ -15,18 +15,15 @@ public enum MusicLibrarySearchType: String, CodingKey {
     case playlists = "library-playlists"
 
     static func getTypes(_ types: [MusicLibrarySearchable.Type]) -> String {
-        var typeQueries: [String] = []
-        
-        for type in types {
-            switch type {
-                case is Song.Type: typeQueries.append(Self.songs.rawValue)
-                case is Album.Type: typeQueries.append(Self.albums.rawValue)
-                case is Artist.Type: typeQueries.append(Self.artists.rawValue)
-                case is MusicVideo.Type: typeQueries.append(Self.musicVideos.rawValue)
-                case is Playlist.Type: typeQueries.append(Self.playlists.rawValue)
-                default: ()
+        Set(types.map({ $0.searchIdentifier })).compactMap {
+            switch $0 {
+                case Song.searchIdentifier: return songs.rawValue
+                case Album.searchIdentifier: return albums.rawValue
+                case MusicVideo.searchIdentifier: return musicVideos.rawValue
+                case Playlist.searchIdentifier: return playlists.rawValue
+                case Artist.searchIdentifier: return artists.rawValue
+                default: return nil
             }
-        }
-        return typeQueries.joined(separator: ",")
+        }.joined(separator: ",")
     }
 }
