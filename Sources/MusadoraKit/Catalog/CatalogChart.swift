@@ -129,7 +129,7 @@ public struct MusicCatalogChartRequest {
     public func response() async throws -> MusicCatalogChartResponse {
         let url = try await createURL()
 
-        let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+        let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
 
         let charts = try JSONDecoder().decode(Charts.self, from: response.data)
