@@ -19,20 +19,16 @@ extension MusicCatalogChart {
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Song: MusicCatalogChart {
-}
+extension Song: MusicCatalogChart {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Playlist: MusicCatalogChart {
-}
+extension Playlist: MusicCatalogChart {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension MusicVideo: MusicCatalogChart {
-}
+extension MusicVideo: MusicCatalogChart {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Album: MusicCatalogChart {
-}
+extension Album: MusicCatalogChart {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 struct Charts: Codable {

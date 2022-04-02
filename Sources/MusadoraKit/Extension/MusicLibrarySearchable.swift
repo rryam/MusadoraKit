@@ -10,26 +10,26 @@ import MusicKit
 /// A protocol for music items that your app can fetch by
 /// using a library search request.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public protocol MusicLibrarySearchable: MusicItem {
+public protocol MusicLibrarySearchable: MusicItem {}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension MusicLibrarySearchable {
+    static var searchIdentifier: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Song: MusicLibrarySearchable {
-}
+extension Song: MusicLibrarySearchable {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Artist: MusicLibrarySearchable {
-}
+extension Artist: MusicLibrarySearchable {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Album: MusicLibrarySearchable {
-    
-}
+extension Album: MusicLibrarySearchable {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension MusicVideo: MusicLibrarySearchable {
-}
+extension MusicVideo: MusicLibrarySearchable {}
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension Playlist: MusicLibrarySearchable {
-}
+extension Playlist: MusicLibrarySearchable {}
