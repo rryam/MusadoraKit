@@ -55,8 +55,6 @@ public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: Mu
     public func response() async throws -> MusicLibraryResourceResponse<MusicItemType> {
         guard let url = try libraryEndpointURL else { throw URLError(.badURL) }
 
-        print("LIBRARY ENDPOINT IS \(url)")
-
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
 

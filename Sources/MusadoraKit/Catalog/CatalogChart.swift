@@ -121,7 +121,7 @@ public struct MusicCatalogChartRequest {
     }
 
     /// Fetches charts of the requested catalog chart types that match
-    /// the genre ID of the request.
+    /// the genre identifier of the request.
     public func response() async throws -> MusicCatalogChartResponse {
         let url = try await createURL()
 
