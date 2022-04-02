@@ -26,14 +26,15 @@ public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: Mu
     /// in the catalog resource response.
     public var limit: Int?
 
-    private var type: LibraryMusicItemType?
-    private var id: String?
-    private var ids: [String]?
+    /// Creates a request to fetch all the items in alphabetical order.
+    public init() {
+        setType()
+    }
 
     /// Creates a request to fetch items using a filter that matches
     /// a specific value.
     public init<Value>(matching keyPath: KeyPath<MusicItemType.FilterLibraryType, Value>, equalTo value: Value) where MusicItemType: FilterableLibraryItem {
-        getType()
+        setType()
 
         if let id = value as? MusicItemID {
             self.id = id.rawValue
@@ -43,7 +44,7 @@ public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: Mu
     /// Creates a request to fetch items using a filter that matches
     /// any value from an array of possible values.
     public init<Value>(matching keyPath: KeyPath<MusicItemType.FilterLibraryType, Value>, memberOf values: [Value]) where MusicItemType: FilterableLibraryItem {
-        getType()
+        setType()
 
         if let ids = values as? [MusicItemID] {
             self.ids = ids.map { $0.rawValue }
@@ -52,7 +53,9 @@ public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: Mu
 
     /// Fetches items from the user's library that match a specific filter.
     public func response() async throws -> MusicLibraryResourceResponse<MusicItemType> {
-        let url = try createURL()
+        guard let url = try libraryEndpointURL else { throw URLError(.badURL) }
+
+        print("LIBRARY ENDPOINT IS \(url)")
 
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
@@ -61,11 +64,15 @@ public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: Mu
 
         return MusicLibraryResourceResponse(items: items)
     }
+
+    private var type: LibraryMusicItemType?
+    private var id: String?
+    private var ids: [String]?
 }
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibraryResourceRequest {
-    private mutating func getType() {
+    private mutating func setType() {
         switch MusicItemType.self {
             case is Song.Type: type = .songs
             case is Album.Type: type = .albums
@@ -76,29 +83,32 @@ extension MusicLibraryResourceRequest {
         }
     }
 
-    private func createURL() throws -> URL {
-        guard let type = type else { throw URLError(.badURL) }
+    private var libraryEndpointURL: URL? {
+        get throws {
+            #warning("Add better error for missing type.")
+            guard let type = type else { throw URLError(.badURL) }
 
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.music.apple.com"
-
-        if let id = id {
-            components.path = "/v1/me/library/\(type.rawValue)/\(id)"
-        } else if let ids = ids {
-            components.path = "/v1/me/library/\(type.rawValue)"
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "api.music.apple.com"
+            components.path = "/v1/me/library/"
 
             var queryItems: [URLQueryItem] = []
 
-            queryItems.append(URLQueryItem(name: "ids", value: ids.joined(separator: ",")))
+            if let id = id {
+                components.path += "\(type.rawValue)/\(id)"
+            } else if let ids = ids {
+                queryItems.append(URLQueryItem(name: "ids", value: ids.joined(separator: ",")))
+            } else {
+                components.path += type.rawValue
+            }
+
+            if let limit = limit {
+                queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+            }
+
             components.queryItems = queryItems
-        } else {
-            throw URLError(.badURL)
+            return components.url
         }
-
-        print(components.url)
-
-        guard let url = components.url else { throw URLError(.badURL) }
-        return url
     }
 }
