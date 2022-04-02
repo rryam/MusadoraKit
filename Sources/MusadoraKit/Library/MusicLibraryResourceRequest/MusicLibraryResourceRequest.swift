@@ -98,6 +98,7 @@ extension MusicLibraryResourceRequest {
             if let id = id {
                 components.path += "\(type.rawValue)/\(id)"
             } else if let ids = ids {
+                components.path += type.rawValue
                 queryItems.append(URLQueryItem(name: "ids", value: ids.joined(separator: ",")))
             } else {
                 components.path += type.rawValue
