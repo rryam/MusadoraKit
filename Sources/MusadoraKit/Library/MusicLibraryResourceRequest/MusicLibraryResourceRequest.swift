@@ -17,10 +17,12 @@ fileprivate enum LibraryMusicItemType: String {
     case musicVideos = "music-videos"
 }
 
+public typealias MusicCodableItem = MusicItem & Codable
+
 /// A request that your app uses to fetch items from the user's library
 /// using a filter.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public struct MusicLibraryResourceRequest<MusicItemType> where MusicItemType: MusicItem, MusicItemType: Decodable {
+public struct MusicLibraryResourceRequest<MusicItemType: MusicCodableItem> {
 
     /// A limit for the number of items to return
     /// in the catalog resource response.
