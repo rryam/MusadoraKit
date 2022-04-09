@@ -10,9 +10,9 @@ import MusicKit
 public typealias Playlists = MusicItemCollection<Playlist>
 
 public extension MusadoraKit {
-    static func catalogPlaylist(id: MusicItemID, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlist {
+    static func catalogPlaylist(id: MusicItemID,
+                                with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlist {
         var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
@@ -24,7 +24,9 @@ public extension MusadoraKit {
         return playlist
     }
     
-    static func catalogPlaylists(ids: [MusicItemID], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlists {
+    static func catalogPlaylists(ids: [MusicItemID],
+                                 limit: Int? = nil,
+                                 with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlists {
         var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
         request.limit = limit
         request.properties = properties

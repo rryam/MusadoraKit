@@ -10,9 +10,9 @@ import MusicKit
 public typealias Albums = MusicItemCollection<Album>
 
 public extension MusadoraKit {
-    static func catalogAlbum(id: MusicItemID, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
+    static func catalogAlbum(id: MusicItemID,
+                             with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
         var request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
@@ -24,7 +24,9 @@ public extension MusadoraKit {
         return album
     }
     
-    static func catalogAlbums(ids: [MusicItemID], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
+    static func catalogAlbums(ids: [MusicItemID],
+                              limit: Int? = nil,
+                              with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
         var request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
         request.limit = limit
         request.properties = properties
@@ -34,9 +36,9 @@ public extension MusadoraKit {
         return response.items
     }
     
-    static func catalogAlbums(isrc: String, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
+    static func catalogAlbums(isrc: String,
+                              with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
         var request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: isrc)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
@@ -48,7 +50,9 @@ public extension MusadoraKit {
         return album
     }
     
-    static func catalogAlbums(isrc: [String], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
+    static func catalogAlbums(isrc: [String],
+                              limit: Int? = nil,
+                              with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
         var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: isrc)
         request.limit = limit
         request.properties = properties

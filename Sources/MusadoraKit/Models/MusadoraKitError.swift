@@ -16,7 +16,19 @@ extension MusadoraKitError: CustomStringConvertible {
     public var description: String {
         switch self {
             case .notFound(let id):
-                return "The specified music item could not be found for - \(id)"
+                return "The specified music item could not be found for \(id)."
+        }
+    }
+}
+
+extension MusadoraKitError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+            case .notFound(let id):
+                return NSLocalizedString(
+                    "The specified music item could not be found for \(id).",
+                    comment: "Resource Not Found"
+                )
         }
     }
 }

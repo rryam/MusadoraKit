@@ -11,10 +11,8 @@ public typealias Songs = MusicItemCollection<Song>
 
 public extension MusadoraKit {
     static func catalogSong(id: MusicItemID,
-                            limit: Int? = nil,
                             with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Song {
         var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
