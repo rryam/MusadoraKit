@@ -23,7 +23,7 @@ extension MusicCatalogSearchable {
 public struct MusicCatalogSuggestionsRequest {
 
     /// The suggestion kinds to include in the results.
-    public enum Kind: String {
+    public enum Kind: String, Codable {
         case terms
         case topResults
     }
@@ -39,13 +39,13 @@ public struct MusicCatalogSuggestionsRequest {
     public let term: String
 
     /// The list of requested catalog searchable types.
-    public var types: [MusicCatalogSearchable.Type]
+    public var types: [MusicCatalogSearchable.Type]?
 
     private var kinds: [Kind] = []
 
     /// Creates a catalog suggestions request for a specified search term
     /// and list of catalog searchable types.
-    public init(term: String,  kinds: [Kind], types: [MusicCatalogSearchable.Type]) {
+    public init(term: String,  kinds: [Kind], types: [MusicCatalogSearchable.Type]? = nil) {
         self.term = term
         self.types = types
         self.kinds = kinds
@@ -70,7 +70,8 @@ extension MusicCatalogSuggestionsRequest {
     private var searchSuggestionsEndpointURL: URL {
         get async throws {
             let storefront = try await MusicDataRequest.currentCountryCode
-            let searchTypes = setTypes(for: types)
+
+
             let kinds = Set(kinds.map({ $0.rawValue })).joined(separator: ",")
 
             var queryItems: [URLQueryItem] = []
@@ -82,7 +83,8 @@ extension MusicCatalogSuggestionsRequest {
             queryItems.append(URLQueryItem(name: "kinds", value: kinds))
             queryItems.append(URLQueryItem(name: "term", value: term))
 
-            if !searchTypes.isEmpty {
+            if let types = types {
+                let searchTypes = setTypes(for: types)
                 queryItems.append(URLQueryItem(name: "types", value: searchTypes))
             }
 
@@ -134,34 +136,10 @@ extension MusicCatalogSuggestionsRequest {
 public struct MusicCatalogSuggestionsResponse {
 
     /// A collection of search and display terms.
-    public var suggestions: [TermSuggestion] = []
+    public var terms: [TermSuggestion] = []
 
-    /// A collection of albums.
-    public var albums: MusicItemCollection<Album> = []
-
-    /// A collection of artists.
-    public var artists: MusicItemCollection<Artist> = []
-
-    /// A collection of curators.
-    public var curators: MusicItemCollection<Curator> = []
-
-    /// A collection of music videos.
-    public var musicVideos: MusicItemCollection<MusicVideo> = []
-
-    /// A collection of playlists.
-    public var playlists: MusicItemCollection<Playlist> = []
-
-    /// A collection of radio shows.
-    public var radioShows: MusicItemCollection<RadioShow> = []
-
-    /// A collection of record labels.
-    public var recordLabels: MusicItemCollection<RecordLabel> = []
-
-    /// A collection of songs.
-    public var songs: MusicItemCollection<Song> = []
-
-    /// A collection of stations.
-    public var stations: MusicItemCollection<Station> = []
+    /// A collection of different top results.
+    public var topResults: [TopResultsSuggestion] = []
 }
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
@@ -177,19 +155,11 @@ extension MusicCatalogSuggestionsResponse: Codable {
 
         for suggestion in suggestions {
             switch suggestion {
-                case .terms(let term): self.suggestions.append(term)
-                case .topResults(let topResult): ()
-                    switch topResult.content {
-                        case .album(let album): self.albums += MusicItemCollection(arrayLiteral: album)
-                        case .artist(let artist): self.artists += MusicItemCollection(arrayLiteral: artist)
-                        case .song(let song): self.songs += MusicItemCollection(arrayLiteral: song)
-                        case .curator(let curator): self.curators += MusicItemCollection(arrayLiteral: curator)
-                        case .radioShow(let radioShow): self.radioShows += MusicItemCollection(arrayLiteral: radioShow)
-                        case .playlist(let playlist): self.playlists += MusicItemCollection(arrayLiteral: playlist)
-                        case .musicVideo(let musicVideo): self.musicVideos += MusicItemCollection(arrayLiteral: musicVideo)
-                        case .station(let station): self.stations += MusicItemCollection(arrayLiteral: station)
-                        case .recordLabel(let recordLabel): self.recordLabels += MusicItemCollection(arrayLiteral: recordLabel)
-                    }
+                case .terms(let term):
+                    terms.append(term)
+
+                case .topResults(let topResult):
+                    topResults.append(topResult)
             }
         }
     }
@@ -200,14 +170,16 @@ extension MusicCatalogSuggestionsResponse: Codable {
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TermSuggestion: Codable, Equatable, Hashable {
-    let searchTerm: String
-    let displayTerm: String
+    public let kind: MusicCatalogSuggestionsRequest.Kind
+    public let searchTerm: String
+    public let displayTerm: String
 }
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TopResultsSuggestion: Codable, Equatable, Hashable {
-    let content: SearchSuggestionItem
+    public let kind: MusicCatalogSuggestionsRequest.Kind
+    public let content: SearchSuggestionItem
 }
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
@@ -218,12 +190,7 @@ public struct Suggestions: Codable {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
-
-
-
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-enum SearchSuggestionItem: Equatable, Hashable {
+public enum SearchSuggestionItem: Equatable, Hashable {
     case album(Album)
     case song(Song)
     case musicVideo(MusicVideo)
@@ -242,7 +209,7 @@ extension SearchSuggestionItem: Codable {
         case type
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let type = try values.decode(String.self, forKey: .type)
 
@@ -283,7 +250,7 @@ extension SearchSuggestionItem: Codable {
         }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
 
     }
 }
@@ -301,25 +268,17 @@ public enum SuggestionKind: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let kind = try container.decode(String.self, forKey: .kind)
+        let kind = try container.decode(MusicCatalogSuggestionsRequest.Kind.self, forKey: .kind)
 
         switch kind {
-            case "terms":
+            case .terms:
                 let termSuggestion = try TermSuggestion(from: decoder)
                 self = .terms(termSuggestion)
-            case "topResults":
+            case .topResults:
                 let topResultsSuggestion = try TopResultsSuggestion(from: decoder)
                 self = .topResults(topResultsSuggestion)
-            default:
-                let decodingErrorContext = DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unexpected kind \"\(kind)\" encountered for SuggestionKind."
-                )
-                throw DecodingError.typeMismatch(SuggestionKind.self, decodingErrorContext)
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
-
-    }
+    public func encode(to encoder: Encoder) throws {}
 }
