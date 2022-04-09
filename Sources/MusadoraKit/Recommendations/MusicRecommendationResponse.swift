@@ -12,5 +12,5 @@ import Foundation
 public struct MusicRecommendationResponse {
 
     /// A collection of recommendation based on the `MusicRecommendationRequest`.
-    public let items: [Recommendation]
+    public let items: [Recommendations.Recommendation]
 }

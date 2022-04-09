@@ -7,7 +7,7 @@
 
 import MusicKit
 
-public enum UserMusicItem {
+public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)
     case playlist(Playlist)
     case station(Station)
