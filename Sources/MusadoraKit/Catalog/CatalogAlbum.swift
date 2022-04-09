@@ -10,37 +10,49 @@ import MusicKit
 public typealias Albums = MusicItemCollection<Album>
 
 public extension MusadoraKit {
-    static func catalogAlbum(id: MusicItemID) async throws -> Albums {
-        let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func catalogAlbums(ids: [MusicItemID]) async throws -> Albums {
-        let request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func catalogAlbums(isrc: String) async throws -> Albums {
-        let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: isrc)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func catalogAlbums(isrc: [String]) async throws -> Albums {
-        let request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: isrc)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func catalogAlbum(id: MusicItemID, with relationships: [PartialMusicAsyncProperty<Album>]) async throws -> Albums {
+    static func catalogAlbum(id: MusicItemID, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
         var request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
-        request.properties = relationships
+        request.limit = limit
+        request.properties = properties
+
+        let response = try await request.response()
+        
+        guard let album = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+
+        return album
+    }
+    
+    static func catalogAlbums(ids: [MusicItemID], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
+        var request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
+        request.limit = limit
+        request.properties = properties
+
+        let response = try await request.response()
+        
+        return response.items
+    }
+    
+    static func catalogAlbums(isrc: String, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
+        var request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: isrc)
+        request.limit = limit
+        request.properties = properties
+
+        let response = try await request.response()
+        
+        guard let album = response.items.first else {
+            throw MusadoraKitError.notFound(for: isrc)
+        }
+
+        return album
+    }
+    
+    static func catalogAlbums(isrc: [String], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
+        var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: isrc)
+        request.limit = limit
+        request.properties = properties
+
         let response = try await request.response()
         
         return response.items

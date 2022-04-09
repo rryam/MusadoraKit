@@ -10,23 +10,25 @@ import MusicKit
 public typealias Playlists = MusicItemCollection<Playlist>
 
 public extension MusadoraKit {
-    static func playlist(id: MusicItemID) async throws -> Playlists {
-        let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func playlists(ids: [MusicItemID]) async throws -> Playlists {
-        let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
-        let response = try await request.response()
-        
-        return response.items
-    }
-    
-    static func playlist(id: MusicItemID, with relationships: [PartialMusicAsyncProperty<Playlist>]) async throws -> Playlists {
+    static func catalogPlaylist(id: MusicItemID, limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlist {
         var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
-        request.properties = relationships
+        request.limit = limit
+        request.properties = properties
+
+        let response = try await request.response()
+
+        guard let playlist = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+
+        return playlist
+    }
+    
+    static func catalogPlaylists(ids: [MusicItemID], limit: Int? = nil, with properties: [PartialMusicAsyncProperty<Playlist>] = []) async throws -> Playlists {
+        var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
+        request.limit = limit
+        request.properties = properties
+
         let response = try await request.response()
         
         return response.items
