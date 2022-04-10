@@ -8,6 +8,7 @@
 import Foundation
 import MusicKit
 
+/// A collection of stations.
 public typealias Stations = MusicItemCollection<Station>
 
 extension AppleMusicEndpoint {
@@ -23,18 +24,33 @@ extension AppleMusicEndpoint {
 }
 
 public extension MusadoraKit {
-    static func catalogStations() async throws -> Stations {
-        try await self.decode(endpoint: .catalogStations)
+
+    /// Fetch a station from the Apple Music catalog by using its identifier.
+    /// - Parameters:
+    ///   - id: The unique identifier for the station.
+    /// - Returns: `Station` matching the given identifier.
+    static func catalogStation(id: MusicItemID) async throws -> Station {
+        let request = MusicCatalogResourceRequest<Station>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let station = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        
+        return station
     }
-    
+
+    /// Fetch multiple stations from the Apple Music catalog by using their identifiers.
+    /// - Parameters:
+    ///   - ids: The unique identifier for the stations.
+    /// - Returns: `Stations` matching the given identifiers.
+    static func catalogStation(ids: [MusicItemID]) async throws -> Stations {
+        let request = MusicCatalogResourceRequest<Station>(matching: \.id, memberOf: ids)
+        let response = try await request.response()
+        return response.items
+    }
+
     static func libraryStations() async throws -> Stations {
         try await self.decode(endpoint: .libraryStations)
-    }
-    
-    static func catalogStation(id: String) async throws -> Stations {
-        let musicRequest = MusicCatalogResourceRequest<Station>(matching: \.id, equalTo: MusicItemID(rawValue: id))
-        let response = try await musicRequest.response()
-        
-        return response.items
     }
 }
