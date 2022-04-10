@@ -58,7 +58,7 @@ public extension MusadoraKit {
         let response = try await request.response()
         
         guard let album = response.items.first else {
-            throw MusadoraKitError.notFound(for: isrc)
+            throw MusadoraKitError.notFound(for: upc)
         }
 
         return album

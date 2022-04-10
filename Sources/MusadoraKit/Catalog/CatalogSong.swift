@@ -21,17 +21,15 @@ public extension MusadoraKit {
                             with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Song {
         var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
         request.properties = properties
-
         let response = try await request.response()
         
         guard let song = response.items.first else {
             throw MusadoraKitError.notFound(for: id.rawValue)
         }
-
         return song
     }
 
-    /// Fetch one or more songs from the Apple Music catalog by using their identifiers.
+    /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
     /// - Parameters:
     ///   - ids: The unique identifiers for the songs.
     ///   - properties: Additional relationships to fetch with the songs.
@@ -40,9 +38,7 @@ public extension MusadoraKit {
                              with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
         var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
         request.properties = properties
-
         let response = try await request.response()
-        
         return response.items
     }
 
@@ -57,12 +53,9 @@ public extension MusadoraKit {
                             with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
         var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
         request.properties = properties
-
         let response = try await request.response()
-
         return response.items
     }
-
 
     /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
     ///
@@ -75,9 +68,7 @@ public extension MusadoraKit {
                              with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
         var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
         request.properties = properties
-
         let response = try await request.response()
-        
         return response.items
     }
 }
