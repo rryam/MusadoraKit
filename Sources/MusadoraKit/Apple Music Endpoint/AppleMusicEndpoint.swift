@@ -8,6 +8,8 @@
 import Foundation
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+
 public struct AppleMusicEndpoint {
     var library: LibraryPath?
     var path: String
@@ -20,6 +22,7 @@ public struct AppleMusicEndpoint {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
     var url: URL {
         get async throws {

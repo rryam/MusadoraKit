@@ -7,6 +7,7 @@
 
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
  extension AppleMusicEndpoint {
     static func librarySong(id: String) -> Self {
         AppleMusicEndpoint(library: .user, "/library/songs/\(id)")
@@ -21,6 +22,7 @@ import MusicKit
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
     static func librarySong(id: MusicItemID) async throws -> Song {
         let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)

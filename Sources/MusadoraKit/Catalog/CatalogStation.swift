@@ -9,8 +9,10 @@ import Foundation
 import MusicKit
 
 /// A collection of stations.
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public typealias Stations = MusicItemCollection<Station>
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
     static var catalogStations: Self {
         let queryItem = URLQueryItem(name: "filter[featured]", value: "apple-music-live-radio")
@@ -23,6 +25,7 @@ extension AppleMusicEndpoint {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch a station from the Apple Music catalog by using its identifier.

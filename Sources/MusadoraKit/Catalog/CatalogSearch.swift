@@ -8,6 +8,7 @@
 import Foundation
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
     static func catalogSearch(for term: String,
                        types: [MusicCatalogSearchable.Type],
@@ -16,9 +17,7 @@ public extension MusadoraKit {
         var request = MusicCatalogSearchRequest(term: term, types: types)
         request.limit = limit
         request.offset = offset
-        
-        return try await request.response()
+        let response = try await request.response()
+        return response
     }
 }
-
-

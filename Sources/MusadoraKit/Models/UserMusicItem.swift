@@ -7,12 +7,14 @@
 
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)
     case playlist(Playlist)
     case station(Station)
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension UserMusicItem: MusicItem {
     public var id: MusicItemID {
         let id: MusicItemID
@@ -27,6 +29,7 @@ extension UserMusicItem: MusicItem {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension UserMusicItem: Decodable {
     enum CodingKeys: CodingKey {
         case type
@@ -55,6 +58,7 @@ extension UserMusicItem: Decodable {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension UserMusicItem: Encodable {
     public func encode(to encoder: Encoder) throws {
     }
