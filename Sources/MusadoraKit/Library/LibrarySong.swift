@@ -22,7 +22,32 @@ import MusicKit
 }
 
 public extension MusadoraKit {
-    static func librarySongs() async throws -> Songs {
-        try await self.decode(endpoint: .librarySongs)
+    static func librarySong(id: MusicItemID) async throws -> Song {
+        let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
+
+        let response = try await request.response()
+
+        guard let song = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+
+        return song
+    }
+
+    static func librarySongs(limit: Int? = nil) async throws -> Songs {
+        var request = MusicLibraryResourceRequest<Song>()
+        request.limit = limit
+
+        let response = try await request.response()
+
+        return response.items
+    }
+
+    static func librarySongs(ids: [MusicItemID]) async throws -> Songs {
+        let request = MusicLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
+
+        let response = try await request.response()
+
+        return response.items
     }
 }

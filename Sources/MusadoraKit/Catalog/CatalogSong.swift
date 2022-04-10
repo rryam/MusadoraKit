@@ -7,9 +7,16 @@
 
 import MusicKit
 
+/// A collection of songs.
 public typealias Songs = MusicItemCollection<Song>
 
 public extension MusadoraKit {
+
+    /// Fetch a song from the Apple Music catalog by using its identifier.
+    /// - Parameters:
+    ///   - id: The unique identifier for the song.
+    ///   - properties: Additional relationships to fetch with the song.
+    /// - Returns: `Song` matching the given identifier.
     static func catalogSong(id: MusicItemID,
                             with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Song {
         var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
@@ -23,24 +30,50 @@ public extension MusadoraKit {
 
         return song
     }
-    
+
+    /// Fetch one or more songs from the Apple Music catalog by using their identifiers.
+    /// - Parameters:
+    ///   - ids: The unique identifiers for the songs.
+    ///   - properties: Additional relationships to fetch with the songs.
+    /// - Returns: `Songs` matching the given identifiers.
     static func catalogSongs(ids: [MusicItemID],
-                             limit: Int? = nil,
                              with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
         var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
         
         return response.items
     }
-    
+
+    /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
+    ///
+    /// Note that one ISRC value may return more than one song.
+    /// - Parameters:
+    ///   - isrc: The ISRC values for the songs.
+    ///   - properties: Additional relationships to fetch with the songs.
+    /// - Returns: `Songs` matching the given ISRC value.
+    static func catalogSong(isrc: String,
+                            with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
+        var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
+        request.properties = properties
+
+        let response = try await request.response()
+
+        return response.items
+    }
+
+
+    /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
+    ///
+    /// Note that one ISRC value may return more than one song.
+    /// - Parameters:
+    ///   - isrc: The ISRC values for the songs.
+    ///   - properties: Additional relationships to fetch with the songs.
+    /// - Returns: `Songs` matching the given ISRC values.
     static func catalogSongs(isrc: [String],
-                             limit: Int? = nil,
                              with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
         var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
-        request.limit = limit
         request.properties = properties
 
         let response = try await request.response()
