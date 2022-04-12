@@ -43,7 +43,7 @@ public struct MusicRecommendationRequest {
         let response = try await request.response()
         let items = try JSONDecoder().decode(Recommendations.self, from: response.data)
 
-        return MusicRecommendationResponse(items: items.data)
+        return MusicRecommendationResponse(items: items)
     }
 }
 
