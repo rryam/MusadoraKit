@@ -16,7 +16,7 @@ public struct MusicHistoryRequest {
     /// in the history response.
     public var limit: Int?
 
-    private var endpoint: MusicHistoryEndpoints?
+    public var endpoint: MusicHistoryEndpoints
 
     /// Creates a request to fetch historical data based on the history endpoint.
     public init(for endpoint: MusicHistoryEndpoints) {
@@ -24,8 +24,7 @@ public struct MusicHistoryRequest {
     }
 
     public func response() async throws -> MusicHistoryResponse {
-        guard let url = try historyEndpointURL else { throw URLError(.badURL) }
-
+        let url = try historyEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
         let items = try JSONDecoder().decode(MusicItemCollection<UserMusicItem>.self, from: response.data)
@@ -36,12 +35,10 @@ public struct MusicHistoryRequest {
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicHistoryRequest {
-    private var historyEndpointURL: URL? {
+    private var historyEndpointURL: URL {
         get throws {
-            guard let endpoint = endpoint else { throw URLError(.badURL) }
-
             var components = URLComponents()
-            var queryItems: [URLQueryItem] = []
+            var queryItems: [URLQueryItem]?
 
             components.scheme = "https"
             components.host = "api.music.apple.com"
@@ -49,14 +46,16 @@ extension MusicHistoryRequest {
             components.path += endpoint.path
 
             if let limit = limit {
-                queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+                queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
             }
 
-            if !queryItems.isEmpty {
-                components.queryItems = queryItems
+            components.queryItems = queryItems
+
+            guard let url = components.url else {
+                throw URLError(.badURL)
             }
 
-            return components.url
+            return url
         }
     }
 }
