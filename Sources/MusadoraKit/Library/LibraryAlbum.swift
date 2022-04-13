@@ -39,9 +39,11 @@ public extension MusadoraKit {
     static func heavyRotation() async throws -> Albums {
         try await self.decode(endpoint: .heavyRotation)
     }
-    
-    #warning("The recommendations API returns a mix of albums and playlists. Need to figure out a way to do that.")
-    static func recommendations() async throws -> Albums {
-        try await self.decode(endpoint: .recommendations)
+
+    static func recommendations(limit: Int? = nil) async throws -> Recommendations {
+        var request = MusicRecommendationRequest()
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
     }
 }
