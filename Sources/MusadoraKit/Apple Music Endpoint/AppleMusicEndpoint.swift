@@ -10,12 +10,12 @@ import MusicKit
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 
-public struct AppleMusicEndpoint {
+struct AppleMusicEndpoint {
     var library: LibraryPath?
     var path: String
     var queryItems: [URLQueryItem]?
     
-    public init(library: LibraryPath? = nil, _ path: String, queryItems: [URLQueryItem]? = nil) {
+    init(library: LibraryPath? = nil, _ path: String, queryItems: [URLQueryItem]? = nil) {
         self.library = library
         self.path = path
         self.queryItems = queryItems

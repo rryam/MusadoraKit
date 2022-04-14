@@ -13,13 +13,6 @@ import MusicKit
 public typealias Genres = MusicItemCollection<Genre>
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension AppleMusicEndpoint {
-    static var genres: Self {
-        AppleMusicEndpoint(library: .catalog, "genres")
-    }
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch a genre from the Apple Music catalog by using its identifier.
