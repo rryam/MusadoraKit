@@ -22,13 +22,11 @@ public extension MusadoraKit {
                              with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
         var request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
         request.properties = properties
-
         let response = try await request.response()
         
         guard let album = response.items.first else {
             throw MusadoraKitError.notFound(for: id.rawValue)
         }
-
         return album
     }
 
@@ -41,9 +39,7 @@ public extension MusadoraKit {
                               with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
         var request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
         request.properties = properties
-
         let response = try await request.response()
-        
         return response.items
     }
 
@@ -56,13 +52,11 @@ public extension MusadoraKit {
                               with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Album {
         var request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: upc)
         request.properties = properties
-
         let response = try await request.response()
         
         guard let album = response.items.first else {
             throw MusadoraKitError.notFound(for: upc)
         }
-
         return album
     }
 
@@ -75,9 +69,7 @@ public extension MusadoraKit {
                               with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
         var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: upc)
         request.properties = properties
-
         let response = try await request.response()
-        
         return response.items
     }
 }

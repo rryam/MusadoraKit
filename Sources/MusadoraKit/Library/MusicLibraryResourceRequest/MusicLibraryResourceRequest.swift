@@ -60,12 +60,10 @@ public struct MusicLibraryResourceRequest<MusicItemType: MusicCodableItem> {
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
         let items = try JSONDecoder().decode(MusicItemCollection<MusicItemType>.self, from: response.data)
-
         return MusicLibraryResourceResponse(items: items)
     }
 
     private var type: LibraryMusicItemType?
-    private var id: String?
     private var ids: [String]?
 }
 
