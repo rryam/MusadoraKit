@@ -40,7 +40,7 @@ public struct MusicLibraryResourceRequest<MusicItemType: MusicCodableItem> {
         setType()
 
         if let id = value as? MusicItemID {
-            self.id = id.rawValue
+            self.ids = [id.rawValue]
         }
     }
 
@@ -56,11 +56,9 @@ public struct MusicLibraryResourceRequest<MusicItemType: MusicCodableItem> {
 
     /// Fetches items from the user's library that match a specific filter.
     public func response() async throws -> MusicLibraryResourceResponse<MusicItemType> {
-        guard let url = try libraryEndpointURL else { throw URLError(.badURL) }
-
+        let url = try libraryEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-
         let items = try JSONDecoder().decode(MusicItemCollection<MusicItemType>.self, from: response.data)
 
         return MusicLibraryResourceResponse(items: items)
@@ -84,33 +82,31 @@ extension MusicLibraryResourceRequest {
         }
     }
 
-    private var libraryEndpointURL: URL? {
+    private var libraryEndpointURL: URL {
         get throws {
-            #warning("Add better error for missing type.")
             guard let type = type else { throw URLError(.badURL) }
 
             var components = URLComponents()
+            var queryItems: [URLQueryItem]?
+
             components.scheme = "https"
             components.host = "api.music.apple.com"
             components.path = "/v1/me/library/"
+            components.path += type.rawValue
 
-            var queryItems: [URLQueryItem] = []
-
-            if let id = id {
-                components.path += "\(type.rawValue)/\(id)"
-            } else if let ids = ids {
-                components.path += type.rawValue
-                queryItems.append(URLQueryItem(name: "ids", value: ids.joined(separator: ",")))
-            } else {
-                components.path += type.rawValue
-            }
-
-            if let limit = limit {
-                queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+            if let ids = ids {
+                queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
+            } else if let limit = limit {
+                queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
             }
 
             components.queryItems = queryItems
-            return components.url
+
+            guard let url = components.url else {
+                throw URLError(.badURL)
+            }
+
+            return url
         }
     }
 }

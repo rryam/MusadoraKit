@@ -8,6 +8,16 @@
 import MusicKit
 import Foundation
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension MusadoraKit {
+    static func recommendations(limit: Int? = nil) async throws -> Recommendations {
+        var request = MusicRecommendationRequest()
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+    }
+}
+
 /// A  request that your app uses to fetch recommendations from
 /// the user's library, either default ones or based on identifiers.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -20,8 +30,13 @@ public struct MusicRecommendationRequest {
     /// Creates a request to fetch default recommendations.
     public init() {}
 
+    /// Creates a request to fetch a recommendation by using its identifier.
+    public init(equalTo id: String) {
+        self.ids = [id]
+    }
+
     /// Creates a request to fetch one or more recommendations by using their identifiers.
-    public init(ids: [String]) {
+    public init(memberOf ids: [String]) {
         self.ids = ids
     }
 
@@ -49,7 +64,7 @@ extension MusicRecommendationRequest {
             components.scheme = "https"
             components.host = "api.music.apple.com"
             components.path = "/v1/me/recommendations"
-            
+
             if let ids = ids {
                 queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
             } else if let limit = limit {
