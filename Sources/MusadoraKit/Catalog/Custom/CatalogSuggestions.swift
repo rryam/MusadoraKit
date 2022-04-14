@@ -16,17 +16,19 @@ extension MusicCatalogSearchable {
     }
 }
 
+
+/// The suggestion kinds to include in the results.
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
+public enum SuggestionsKind: String, Codable {
+    case terms
+    case topResults
+}
+
 /// A request that your app uses to fetch search suggestions from the Apple Music catalog
 /// using a search term.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct MusicCatalogSuggestionsRequest {
-
-    /// The suggestion kinds to include in the results.
-    public enum Kind: String, Codable {
-        case terms
-        case topResults
-    }
 
     /// A limit for the number of items to return
     /// in the catalog suggestions response.
@@ -41,11 +43,11 @@ public struct MusicCatalogSuggestionsRequest {
     /// The list of requested catalog searchable types.
     public var types: [MusicCatalogSearchable.Type]?
 
-    private var kinds: [Kind] = []
+    private var kinds: [SuggestionsKind] = []
 
-    /// Creates a catalog suggestions request for a specified search term
-    /// and list of catalog searchable types.
-    public init(term: String,  kinds: [Kind], types: [MusicCatalogSearchable.Type]? = nil) {
+    /// Creates a catalog suggestions request for a specified search term.
+    /// Set the `types` if the `kinds` is of the type `topResults`.
+    public init(term: String, kinds: [SuggestionsKind], types: [MusicCatalogSearchable.Type]? = nil) {
         self.term = term
         self.types = types
         self.kinds = kinds
@@ -55,11 +57,9 @@ public struct MusicCatalogSuggestionsRequest {
     /// the search term of the request.
     public func response() async throws -> MusicCatalogSuggestionsResponse {
         let url = try await searchSuggestionsEndpointURL
-
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
         let items = try JSONDecoder().decode(Suggestions.self, from: response.data)
-
         return items.results
     }
 }
@@ -69,9 +69,11 @@ public struct MusicCatalogSuggestionsRequest {
 extension MusicCatalogSuggestionsRequest {
     private var searchSuggestionsEndpointURL: URL {
         get async throws {
+            if self.kinds.contains(.topResults) && types == nil {
+                throw MusadoraKitError.typeMissing
+            }
+
             let storefront = try await MusicDataRequest.currentCountryCode
-
-
             let kinds = Set(kinds.map({ $0.rawValue })).joined(separator: ",")
 
             var queryItems: [URLQueryItem] = []
@@ -103,7 +105,7 @@ extension MusicCatalogSuggestionsRequest {
     }
 
     private func setTypes(for types: [MusicCatalogSearchable.Type]) -> String {
-        Set(types.map({ $0.identifier})).compactMap {
+        Set(types.map { $0.identifier }).compactMap {
             switch $0 {
                 case Song.identifier:
                     return "songs"
@@ -170,7 +172,7 @@ extension MusicCatalogSuggestionsResponse: Codable {
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TermSuggestion: Codable, Equatable, Hashable {
-    public let kind: MusicCatalogSuggestionsRequest.Kind
+    public let kind: SuggestionsKind
     public let searchTerm: String
     public let displayTerm: String
 }
@@ -178,7 +180,7 @@ public struct TermSuggestion: Codable, Equatable, Hashable {
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TopResultsSuggestion: Codable, Equatable, Hashable {
-    public let kind: MusicCatalogSuggestionsRequest.Kind
+    public let kind: SuggestionsKind
     public let content: SearchSuggestionItem
 }
 
@@ -265,10 +267,10 @@ public enum SuggestionKind: Codable {
     private enum CodingKeys: String, CodingKey {
         case kind
     }
-
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let kind = try container.decode(MusicCatalogSuggestionsRequest.Kind.self, forKey: .kind)
+        let kind = try container.decode(SuggestionsKind.self, forKey: .kind)
 
         switch kind {
             case .terms:

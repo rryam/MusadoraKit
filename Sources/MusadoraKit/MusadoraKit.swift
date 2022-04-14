@@ -14,9 +14,7 @@ public struct MusadoraKit {
         let url = try await endpoint.url
         let dataRequest = MusicDataRequest(urlRequest: URLRequest(url: url))
         let dataResponse = try await dataRequest.response()
-        
         let response = try JSONDecoder().decode(Model.self, from: dataResponse.data)
-        
         return response
     }
 }

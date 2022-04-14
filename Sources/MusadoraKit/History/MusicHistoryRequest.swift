@@ -8,6 +8,30 @@
 import Foundation
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension MusadoraKit {
+    static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+        var request = MusicHistoryRequest(for: .recentlyPlayed)
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func heavyRotation(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+        var request = MusicHistoryRequest(for: .heavyRotation)
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func recentlyAdded(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+        var request = MusicHistoryRequest(for: .recentlyAdded)
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+    }
+}
+
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
@@ -46,9 +70,9 @@ extension MusicHistoryRequest {
             components.path += endpoint.path
 
             if let limit = limit {
-                queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+                queryItems = [URLQueryItem(name: "limit", value: "\(limit)"), URLQueryItem(name: "include", value: "catalog")]
             }
-
+            
             components.queryItems = queryItems
 
             guard let url = components.url else {
