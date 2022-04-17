@@ -7,6 +7,10 @@
 
 import MusicKit
 
+/// A collection of user music items.
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public typealias UserMusicItems = MusicItemCollection<UserMusicItem>
+
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)

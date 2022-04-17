@@ -48,7 +48,10 @@ public struct MusicRecommendationRequest {
         let url = try recommendationEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-        let items = try JSONDecoder().decode(Recommendations.self, from: response.data)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let items = try decoder.decode(Recommendations.self, from: response.data)
 
         return MusicRecommendationResponse(items: items)
     }

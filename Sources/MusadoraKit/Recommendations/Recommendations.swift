@@ -24,32 +24,49 @@ public struct Recommendation: Codable, MusicItem {
 
     /// The contents associated with the content recommendation type.
     /// It is a collection of `UserMusicItem` that are a mixture of albums, playlists and stations.
-    public let contents: MusicItemCollection<UserMusicItem>
+    public let contents: UserMusicItems
 
-    private struct Relationships: Codable {
-        let contents: MusicItemCollection<UserMusicItem>
-    }
+    /// The next date in UTC format for updating the recommendation.
+    public let nextUpdate: Date
+}
 
-    private struct RecommendationAttributes: Codable {
-        let title: Title
-
-        struct Title: Codable {
-            let stringForDisplay: String
-        }
-    }
-
+extension Recommendation {
     enum CodingKeys: String, CodingKey {
-        case id
-        case title = "attributes"
-        case contents = "relationships"
+        case id, attributes, relationships
+    }
+
+    enum RelationshipKey: String, CodingKey {
+        case contents
+    }
+
+    enum AttributesKey: String, CodingKey {
+        case title
+        case nextUpdate = "nextUpdateDate"
+    }
+
+    enum TitleKey: String, CodingKey {
+        case stringForDisplay
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try container.decode(MusicItemID.self, forKey: .id)
-        title = try container.decode(RecommendationAttributes.self, forKey: .title).title.stringForDisplay
-        contents = try container.decode(Relationships.self, forKey: .contents).contents
+
+        let relationshipContainer = try container.nestedContainer(keyedBy: RelationshipKey.self, forKey: .relationships)
+        contents = try relationshipContainer.decode(UserMusicItems.self, forKey: .contents)
+
+        let attributesContainer = try container.nestedContainer(keyedBy: AttributesKey.self, forKey: .attributes)
+        nextUpdate = try attributesContainer.decode(Date.self, forKey: .nextUpdate)
+
+        let titleContainer = try attributesContainer.nestedContainer(keyedBy: TitleKey.self, forKey: .title)
+        title = try titleContainer.decode(String.self, forKey: .stringForDisplay)
+    }
+}
+
+extension Recommendation {
+    public func encode(to encoder: Encoder) throws {
+
     }
 }
 
