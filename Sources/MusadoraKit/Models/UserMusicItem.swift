@@ -11,6 +11,7 @@ import MusicKit
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public typealias UserMusicItems = MusicItemCollection<UserMusicItem>
 
+/// A generic music item that may either contain an album, playlist or a station.
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)
