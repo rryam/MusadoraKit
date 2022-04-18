@@ -8,17 +8,14 @@
 import MusicKit
 
 /// A collection of user music items.
-
 public typealias UserMusicItems = MusicItemCollection<UserMusicItem>
 
 /// A generic music item that may either contain an album, playlist or a station.
-
 public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)
     case playlist(Playlist)
     case station(Station)
 }
-
 
 extension UserMusicItem: MusicItem {
     public var id: MusicItemID {
@@ -33,7 +30,6 @@ extension UserMusicItem: MusicItem {
         return id
     }
 }
-
 
 extension UserMusicItem: Decodable {
     enum CodingKeys: CodingKey {
@@ -62,7 +58,6 @@ extension UserMusicItem: Decodable {
         }
     }
 }
-
 
 extension UserMusicItem: Encodable {
     public func encode(to encoder: Encoder) throws {

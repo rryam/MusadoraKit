@@ -35,7 +35,7 @@ public struct Storefronts: Codable {
     }
 }
 
-extension AppleMusicEndpoint {
+extension MusadoraLabsKit {
     public static func storefronts() async throws -> [Storefronts.Storefront] {
         let url = URL(string: "https://api.music.apple.com/v1/storefronts")!
         let request = MusicDataRequest(urlRequest: .init(url: url))
