@@ -6,40 +6,36 @@
 //
 
 import Foundation
-import MusicKit
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+import StoreKit
 
 struct AppleMusicEndpoint {
     var library: LibraryPath?
     var path: String
     var queryItems: [URLQueryItem]?
     
-    init(library: LibraryPath? = nil, _ path: String, queryItems: [URLQueryItem]? = nil) {
+    init(library: LibraryPath, path: String, queryItems: [URLQueryItem]? = nil) {
         self.library = library
         self.path = path
         self.queryItems = queryItems
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
     var url: URL {
         get async throws {
             var components = URLComponents()
             components.scheme = "https"
             components.host = "api.music.apple.com"
-            components.path = library?.url ?? ""
+            components.path = library.url
             
             if let queryItems = queryItems {
                 components.queryItems = queryItems
             }
             
             switch library {
-                case .catalog:
-                    let storeFront = try await MusicDataRequest.currentCountryCode
+                case .catalog:https://api.music.apple.com/v1/catalog/{storefront}/albums/{id}
+                    let storeFront = try await SKCloudServiceController().requestStorefrontCountryCode()
                     components.path += (storeFront + "/" + path)
-                    
                 case .user: components.path += path
                 case .none: break
             }
@@ -47,9 +43,6 @@ extension AppleMusicEndpoint {
             guard let url = components.url else {
                 preconditionFailure("Invalid URL components: \(components)")
             }
-            
-            debugPrint("Apple Music URL is \(url)")
-            
             return url
         }
     }

@@ -10,19 +10,19 @@ import MusicKit
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
     static var libraryAlbums: Self {
-        AppleMusicEndpoint(library: .user, "library/albums")
+        AppleMusicEndpoint(library: .user, path: "library/albums")
     }
     
     static var heavyRotation: Self {
-        AppleMusicEndpoint(library: .user, "history/heavy-rotation")
+        AppleMusicEndpoint(library: .user, path: "history/heavy-rotation")
     }
     
     static var recentlyPlayed: Self {
-        AppleMusicEndpoint(library: .user, "recent/played/tracks")
+        AppleMusicEndpoint(library: .user, path: "recent/played/tracks")
     }
     
     static var recommendations: Self {
-        AppleMusicEndpoint(library: .user, "recommendations")
+        AppleMusicEndpoint(library: .user, path: "recommendations")
     }
 }
 

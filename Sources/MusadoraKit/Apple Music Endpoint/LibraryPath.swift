@@ -7,14 +7,26 @@
 
 import Foundation
 
-public enum LibraryPath: String {
+public enum LibraryPath {
     case catalog
     case user
     
-    var url: String {
+    var path: String {
         switch self {
             case .catalog: return "/v1/catalog/"
             case .user: return "/v1/me/"
         }
+    }
+}
+
+public enum MusicItemPath: String {
+    case albums
+    case songs
+    case artists
+    case playlists
+    case musicVideos = "music-videos"
+
+    var path: String {
+        self.rawValue
     }
 }

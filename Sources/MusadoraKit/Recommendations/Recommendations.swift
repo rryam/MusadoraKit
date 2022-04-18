@@ -30,6 +30,7 @@ public struct Recommendation: Codable, MusicItem {
     public let nextUpdate: Date
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Recommendation {
     enum CodingKeys: String, CodingKey {
         case id, attributes, relationships
@@ -64,6 +65,7 @@ extension Recommendation {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Recommendation {
     public func encode(to encoder: Encoder) throws {
 
