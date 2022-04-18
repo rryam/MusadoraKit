@@ -11,15 +11,15 @@ import XCTest
 final class AppleMusicAlbumsEndpointTests: XCTestCase {
     // MARK: - Catalog Albums Tests
     func testFetchACatalogAlbumByIDEndpoint() async throws {
-        let id = "1456313174"
-        let endpoint = try await MusadoraLabsKit.catalogAlbum(id: id, storeFront: "in")
-        XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/in/albums/1456313174")
+        let id = "1564530719"
+        let endpoint = try await MusadoraLabsKit.catalogAlbum(id: id, storeFront: "us")
+        XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/albums/1564530719")
     }
 
     func testFetchMultipleCatalogAlbumsByIDsEndpoint() async throws {
-        let ids = ["1456313174", "1468166325"]
-        let endpoint = try await MusadoraLabsKit.catalogAlbums(ids: ids, storeFront: "in")
-        XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/in/albums?ids=1456313174,1468166325")
+        let ids = ["1564530719", "1568819304"]
+        let endpoint = try await MusadoraLabsKit.catalogAlbums(ids: ids, storeFront: "us")
+        XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/albums?ids=1564530719,1568819304")
     }
 
     func testFetchMultipleCatalogByUPCEndpoint() async throws {
