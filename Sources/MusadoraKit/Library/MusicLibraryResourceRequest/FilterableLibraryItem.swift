@@ -9,7 +9,6 @@ import MusicKit
 
 /// A declaration of the associated type that contains the set of library music item
 /// properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol FilterableLibraryItem: MusicItem {
 
     /// The associated type that contains the set of library music item properties
@@ -18,7 +17,6 @@ public protocol FilterableLibraryItem: MusicItem {
 }
 
 /// Album properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol AlbumLibraryFilter {
 
     /// The unique identifier for the album.
@@ -26,7 +24,6 @@ public protocol AlbumLibraryFilter {
 }
 
 /// Song properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol SongLibraryFilter {
 
     /// The unique identifier for the song.
@@ -34,7 +31,6 @@ public protocol SongLibraryFilter {
 }
 
 /// Artist properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol ArtistLibraryFilter {
 
     /// The unique identifier for the artist.
@@ -42,7 +38,6 @@ public protocol ArtistLibraryFilter {
 }
 
 /// Playlist properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol PlaylistLibraryFilter {
 
     /// The unique identifier for the playlist.
@@ -50,7 +45,6 @@ public protocol PlaylistLibraryFilter {
 }
 
 /// Music video properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol MusicVideoLibraryFilter {
 
     /// The unique identifier for the music video.
@@ -58,7 +52,6 @@ public protocol MusicVideoLibraryFilter {
 }
 
 /// Album properties your app uses as a filter for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Album: FilterableLibraryItem {
 
     /// The associated type that contains the set of album properties
@@ -66,7 +59,6 @@ extension Album: FilterableLibraryItem {
     public typealias FilterLibraryType = AlbumLibraryFilter
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Playlist: FilterableLibraryItem {
 
     /// The associated type that contains the set of playlist properties
@@ -74,7 +66,6 @@ extension Playlist: FilterableLibraryItem {
     public typealias FilterLibraryType = PlaylistLibraryFilter
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Song: FilterableLibraryItem {
 
     /// The associated type that contains the set of song properties
@@ -82,7 +73,6 @@ extension Song: FilterableLibraryItem {
     public typealias FilterLibraryType = SongLibraryFilter
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Artist: FilterableLibraryItem {
 
     /// The associated type that contains the set of artist properties
@@ -90,7 +80,6 @@ extension Artist: FilterableLibraryItem {
     public typealias FilterLibraryType = PlaylistLibraryFilter
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicVideo: FilterableLibraryItem {
 
     /// The associated type that contains the set of music video properties

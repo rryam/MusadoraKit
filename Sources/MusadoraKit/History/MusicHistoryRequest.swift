@@ -8,7 +8,6 @@
 import Foundation
 import MusicKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
     static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
         var request = MusicHistoryRequest(for: .recentlyPlayed)
@@ -34,7 +33,6 @@ public extension MusadoraKit {
 
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicHistoryRequest {
     /// A limit for the number of items to return
     /// in the history response.
@@ -57,7 +55,6 @@ public struct MusicHistoryRequest {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicHistoryRequest {
     private var historyEndpointURL: URL {
         get throws {

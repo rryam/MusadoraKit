@@ -8,7 +8,6 @@
 import MusicKit
 import Foundation
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 fileprivate enum LibraryMusicItemType: String {
     case songs
     case playlists
@@ -19,7 +18,6 @@ fileprivate enum LibraryMusicItemType: String {
 
 /// A request that your app uses to fetch items from the user's library
 /// using a filter.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
 
     /// A limit for the number of items to return
@@ -64,7 +62,6 @@ public struct MusicLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
     private var ids: [String]?
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibraryResourceRequest {
     private mutating func setType() {
         switch MusicItemType.self {

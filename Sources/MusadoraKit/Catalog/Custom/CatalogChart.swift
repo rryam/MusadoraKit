@@ -8,35 +8,27 @@
 import Foundation
 import MusicKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public protocol MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChart {
     static var objectIdentifier: ObjectIdentifier {
         ObjectIdentifier(Self.self)
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Song: MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Playlist: MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicVideo: MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension Album: MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 struct Charts: Codable {
     let results: MusicCatalogChartResponse
 }
 
 /// A collection of chart items.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct ChartItemCollection<MusicItemType> where MusicItemType: MusicItem {
 
     /// The unique name of the chart to use when fetching a specific chart.
@@ -58,7 +50,6 @@ public struct ChartItemCollection<MusicItemType> where MusicItemType: MusicItem 
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ChartItemCollection {
 
     /// A Boolean value that indicates whether the collection has information
@@ -68,16 +59,12 @@ extension ChartItemCollection {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ChartItemCollection where MusicItemType: MusicCatalogChart {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ChartItemCollection: Decodable where MusicItemType: Decodable {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ChartItemCollection: Encodable where MusicItemType: Encodable {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension ChartItemCollection: Equatable, Hashable {
     public static func == (lhs: ChartItemCollection<MusicItemType>, rhs: ChartItemCollection<MusicItemType>) -> Bool {
         lhs.chart == rhs.chart
@@ -90,7 +77,6 @@ extension ChartItemCollection: Equatable, Hashable {
 
 /// A  chart request that your app uses to fetch charts from the Apple Music catalog
 /// using the types of charts and for the genre identifier.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicCatalogChartRequest {
     /// The identifier for the genre to use in the chart results.
     public var genre: MusicItemID?
@@ -134,7 +120,6 @@ public struct MusicCatalogChartRequest {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartRequest {
     private func createURL() async throws -> URL {
         let storefront = try await MusicDataRequest.currentCountryCode
@@ -164,7 +149,6 @@ extension MusicCatalogChartRequest {
 }
 
 /// An object that contains results for a catalog chart request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicCatalogChartResponse {
     /// An array of collection of songs.
     public let songs: [ChartItemCollection<Song>]
@@ -179,7 +163,6 @@ public struct MusicCatalogChartResponse {
     public let albums: [ChartItemCollection<Album>]
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case songs, playlists, albums
@@ -196,7 +179,6 @@ extension MusicCatalogChartResponse: Decodable {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -207,10 +189,8 @@ extension MusicCatalogChartResponse: Encodable {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: Equatable, Hashable {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicCatalogChartResponse: CustomStringConvertible {
     public var description: String {
         var description: [String] = []

@@ -8,7 +8,6 @@
 import MusicKit
 
 /// An object that contains results for a library resource request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
 
     /// A collection of items matching the filter used in
@@ -16,15 +15,10 @@ public struct MusicLibraryResourceResponse<MusicItemType> where MusicItemType: M
     public let items: MusicItemCollection<MusicItemType>
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension MusicLibraryResourceResponse: Equatable where MusicItemType: Equatable {
-}
+extension MusicLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension MusicLibraryResourceResponse: Hashable where MusicItemType: Hashable {
-}
+extension MusicLibraryResourceResponse: Hashable where MusicItemType: Hashable {}
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibraryResourceResponse: Decodable where MusicItemType: Decodable {
 
     /// Creates a new instance by decoding from the given decoder.
@@ -38,7 +32,6 @@ extension MusicLibraryResourceResponse: Decodable where MusicItemType: Decodable
 //    }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibraryResourceResponse: Encodable where MusicItemType: Encodable {
 
     /// Encodes this value into the given encoder.
@@ -53,7 +46,6 @@ extension MusicLibraryResourceResponse: Encodable where MusicItemType: Encodable
    // public func encode(to encoder: Encoder) throws { }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         ""
