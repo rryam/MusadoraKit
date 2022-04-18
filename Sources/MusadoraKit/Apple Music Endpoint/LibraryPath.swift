@@ -10,11 +10,13 @@ import Foundation
 public enum LibraryPath {
     case catalog
     case user
+    case library
     
     var path: String {
         switch self {
             case .catalog: return "/v1/catalog/"
             case .user: return "/v1/me/"
+            case .library: return "/v1/me/library/"
         }
     }
 }
@@ -26,7 +28,7 @@ public enum MusicItemPath: String {
     case playlists
     case musicVideos = "music-videos"
 
-    var path: String {
-        self.rawValue
+    func id(_ id: String) -> String {
+        self.rawValue + "/" + id
     }
 }

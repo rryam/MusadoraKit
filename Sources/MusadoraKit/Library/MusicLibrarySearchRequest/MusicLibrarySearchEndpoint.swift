@@ -9,8 +9,8 @@ import Foundation
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
-    static func librarySearch(with queryItems: [URLQueryItem]) -> Self {
-        AppleMusicEndpoint(library: .user, path: "library/search", queryItems: queryItems)
+    static func librarySearch(with queryItems: [URLQueryItem], storeFront: String) -> Self {
+        AppleMusicEndpoint(library: .user, path: "library/search", storeFront: storeFront, queryItems: queryItems)
     }
 }
 

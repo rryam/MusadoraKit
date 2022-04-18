@@ -54,7 +54,8 @@ public struct MusicLibrarySearchRequest {
             queryItems.append(URLQueryItem(name: "offset", value: String(describing: offset)))
         }
 
-        let model: MusicLibrarySearchResponseResults = try await MusadoraKit.decode(endpoint: .librarySearch(with: queryItems))
+        let storeFront = try await MusicDataRequest.currentCountryCode
+        let model: MusicLibrarySearchResponseResults = try await MusadoraKit.decode(endpoint: .librarySearch(with: queryItems, storeFront: storeFront))
         return model.results
     }
 }
