@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import struct MusadoraKit.AppleMusicEndpoint
+@testable import MusadoraLabsKit
 
 final class AppleMusicAlbumsEndpointTests: XCTestCase {
     // MARK: - Catalog Albums Tests

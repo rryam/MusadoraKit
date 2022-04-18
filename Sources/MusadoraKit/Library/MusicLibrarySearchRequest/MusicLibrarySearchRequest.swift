@@ -36,26 +36,47 @@ public struct MusicLibrarySearchRequest {
     /// Fetches items of the requested library searchable types that match
     /// the search term of the request.
     public func response() async throws -> MusicLibrarySearchResponse {
-        var queryItems: [URLQueryItem] = []
-        
-        let termValue = term.replacingOccurrences(of: " ", with: "+")
-        let termQuery = URLQueryItem(name: "term", value: termValue)
-        queryItems.append(termQuery)
-        
-        let typesValue = MusicLibrarySearchType.getTypes(types)
-        let typesQuery = URLQueryItem(name: "types", value: typesValue)
-        queryItems.append(typesQuery)
-        
-        if let limit = limit {
-            queryItems.append(URLQueryItem(name: "limit", value: String(describing: limit)))
-        }
-        
-        if let offset = offset {
-            queryItems.append(URLQueryItem(name: "offset", value: String(describing: offset)))
-        }
-
-        let storeFront = try await MusicDataRequest.currentCountryCode
-        let model: MusicLibrarySearchResponseResults = try await MusadoraKit.decode(endpoint: .librarySearch(with: queryItems, storeFront: storeFront))
+        let url = try librarySearchEndpointURL
+        let request = MusicDataRequest(urlRequest: .init(url: url))
+        let response = try await request.response()
+        let model = try JSONDecoder().decode(MusicLibrarySearchResponseResults.self, from: response.data)
         return model.results
+    }
+}
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension MusicLibrarySearchRequest {
+    private var librarySearchEndpointURL: URL {
+        get throws {
+            var components = URLComponents()
+            var queryItems: [URLQueryItem] = []
+
+            components.scheme = "https"
+            components.host = "api.music.apple.com"
+            components.path = "/v1/me/library/search"
+
+            let termValue = term.replacingOccurrences(of: " ", with: "+")
+            let termQuery = URLQueryItem(name: "term", value: termValue)
+            queryItems.append(termQuery)
+
+            let typesValue = MusicLibrarySearchType.getTypes(types)
+            let typesQuery = URLQueryItem(name: "types", value: typesValue)
+            queryItems.append(typesQuery)
+
+            if let limit = limit {
+                queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+            }
+
+            if let offset = offset {
+                queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
+            }
+
+            components.queryItems = queryItems
+
+            guard let url = components.url else {
+                throw URLError(.badURL)
+            }
+            return url
+        }
     }
 }
