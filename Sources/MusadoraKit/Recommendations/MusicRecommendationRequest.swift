@@ -8,7 +8,7 @@
 import MusicKit
 import Foundation
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+
 public extension MusadoraKit {
     static func recommendations(limit: Int? = nil) async throws -> Recommendations {
         var request = MusicRecommendationRequest()
@@ -20,7 +20,7 @@ public extension MusadoraKit {
 
 /// A  request that your app uses to fetch recommendations from
 /// the user's library, either default ones or based on identifiers.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+
 public struct MusicRecommendationRequest {
 
     /// A limit for the number of items to return
@@ -57,7 +57,7 @@ public struct MusicRecommendationRequest {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+
 extension MusicRecommendationRequest {
     private var recommendationEndpointURL: URL {
         get throws {

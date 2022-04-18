@@ -10,7 +10,6 @@ import MusicKit
 
 /// A request that your app uses to fetch items from the your library
 /// using a search term.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicLibrarySearchRequest {
     
     /// The search term for the request.
@@ -44,7 +43,6 @@ public struct MusicLibrarySearchRequest {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibrarySearchRequest {
     private var librarySearchEndpointURL: URL {
         get throws {

@@ -8,10 +8,8 @@
 import MusicKit
 
 /// A collection of record labels.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public typealias RecordLabels = MusicItemCollection<RecordLabel>
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch a record label from the Apple Music catalog by using its identifier.

@@ -8,7 +8,6 @@
 import Foundation
 import MusicKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
     
     /// Search the Apple Music catalog by using a query term.

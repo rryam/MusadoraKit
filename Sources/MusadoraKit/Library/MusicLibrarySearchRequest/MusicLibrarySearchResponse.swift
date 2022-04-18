@@ -8,7 +8,6 @@
 import MusicKit
 
 /// An object that contains results for a library search request.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MusicLibrarySearchResponse: Equatable, Hashable {
     
     /// A collection of songs.
@@ -31,7 +30,6 @@ public struct MusicLibrarySearchResponse: Equatable, Hashable {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibrarySearchResponse: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MusicLibrarySearchType.self)
@@ -54,7 +52,6 @@ extension MusicLibrarySearchResponse: Codable {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MusicLibrarySearchResponse : CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
         var description = "MusicLibrarySearchResponse("

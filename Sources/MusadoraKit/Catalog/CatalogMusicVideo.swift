@@ -8,10 +8,8 @@
 import MusicKit
 
 /// A collection of music videos.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public typealias MusicVideos = MusicItemCollection<MusicVideo>
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch a music video from the Apple Music catalog by using its identifier.

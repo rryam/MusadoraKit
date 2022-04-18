@@ -7,7 +7,6 @@
 
 import MusicKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 enum MusicLibrarySearchType: String, CodingKey {
     case songs = "library-songs"
     case artists = "library-artists"

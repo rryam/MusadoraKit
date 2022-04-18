@@ -8,10 +8,8 @@
 import MusicKit
 
 /// A collection of artists.
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public typealias Artists = MusicItemCollection<Artist>
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch an artist from the Apple Music catalog by using its identifier.
