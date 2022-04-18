@@ -8,13 +8,6 @@
 import MusicKit
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-extension AppleMusicEndpoint {
-    static var libraryArtists: Self {
-        AppleMusicEndpoint(library: .user, path: "library/artists")
-    }
-}
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MusadoraKit {
 
     /// Fetch an artist from the user's library by using its identifier.
