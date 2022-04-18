@@ -62,12 +62,12 @@ public extension MusadoraKit {
 
     /// Fetch multiple albums from Apple Music catalog by using their UPC values.
     /// - Parameters:
-    ///   - upc: The UPC (Universal Product Code) values for the albums or singles.
+    ///   - upcs: The UPC (Universal Product Code) values for the albums or singles.
     ///   - properties: Additional relationships to fetch with the albums.
     /// - Returns: `Albums` matching the given UPC values.
-    static func catalogAlbums(upc: [String],
+    static func catalogAlbums(upcs: [String],
                               with properties: [PartialMusicAsyncProperty<Album>] = []) async throws -> Albums {
-        var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: upc)
+        var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: upcs)
         request.properties = properties
         let response = try await request.response()
         return response.items

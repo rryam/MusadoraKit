@@ -9,16 +9,16 @@ import MusicKit
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension AppleMusicEndpoint {
-    static func librarySong(id: String) -> Self {
-        AppleMusicEndpoint(library: .user, path: "/library/songs/\(id)")
+    static func librarySong(id: String, storeFront: String) -> Self {
+        AppleMusicEndpoint(library: .user, path: "/library/songs/\(id)", storeFront: storeFront)
     }
     
-    static var librarySongs: Self {
-        AppleMusicEndpoint(library: .user, path: "/library/songs")
+    static func librarySongs(storeFront: String) -> Self {
+        AppleMusicEndpoint(library: .user, path: "/library/songs", storeFront: storeFront)
     }
     
-    static var userLibrary: Self {
-        AppleMusicEndpoint(library: .user, path: "library")
+    static func userLibrary(storeFront: String) -> Self {
+        AppleMusicEndpoint(library: .user, path: "library", storeFront: storeFront)
     }
 }
 
