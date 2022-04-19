@@ -1,6 +1,6 @@
 //
-//  AppleMusicAlbumsEndpointTests.swift
-//  AppleMusicAlbumsEndpointTests
+//  AlbumsEndpointTests.swift
+//  AlbumsEndpointTests
 //
 //  Created by Rudrank Riyam on 18/04/22.
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import MusadoraLabsKit
 
-final class AppleMusicAlbumsEndpointTests: XCTestCase {
+final class AlbumsEndpointTests: XCTestCase {
     // MARK: - Catalog Albums Tests
     func testFetchACatalogAlbumByIDEndpoint() async throws {
         let id = "1564530719"

@@ -1,6 +1,6 @@
 //
-//  AppleMusicArtistsEndpointTests.swift
-//  AppleMusicArtistsEndpointTests
+//  ArtistsEndpointTests.swift
+//  ArtistsEndpointTests
 //
 //  Created by Rudrank Riyam on 19/04/22.
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import MusadoraLabsKit
 
-class AppleMusicArtistsEndpointTests: XCTestCase {
+class ArtistsEndpointTests: XCTestCase {
     // MARK: - Catalog Artists Tests
     func testFetchACatalogArtistsByIDEndpoint() async throws {
         let id = "1264549322"
