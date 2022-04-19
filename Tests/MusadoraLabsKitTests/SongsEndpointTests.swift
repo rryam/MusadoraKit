@@ -22,7 +22,7 @@ class SongsEndpointTests: XCTestCase {
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/songs?ids=1560735548,1572278914")
     }
 
-    func testFetchMultipleCatalogByISRCEndpoint() async throws {
+    func testFetchMultipleCatalogSongsByISRCEndpoint() async throws {
         let isrcs = ["USUM72105936"]
         let endpoint = try await MusadoraLabsKit.catalogSongs(isrcs: isrcs, storeFront: "us")
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/songs?filter[isrc]=USUM72105936")
