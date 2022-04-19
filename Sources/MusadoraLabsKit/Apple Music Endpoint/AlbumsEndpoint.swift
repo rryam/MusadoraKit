@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MusadoraLabsKit {
+public extension MusadoraLabsKit {
     // MARK: - Catalog Albums
     static func catalogAlbum(id: String, storeFront: String? = nil) async throws -> URL {
         try await MusadoraLabsKit(library: .catalog, path: MusicItemPath.albums.id(id), storeFront: storeFront).url

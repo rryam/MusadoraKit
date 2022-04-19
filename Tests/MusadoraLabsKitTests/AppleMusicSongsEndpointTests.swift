@@ -41,7 +41,7 @@ class AppleMusicSongsEndpointTests: XCTestCase {
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/me/library/songs?ids=i.gelNOzPuL41Lxo")
     }
 
-    func testFetchAllLibraryAlbumsEndpoint() async throws {
+    func testFetchAllLibraryArtistsEndpoint() async throws {
         let endpoint = try await MusadoraLabsKit.librarySongs()
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/me/library/songs")
     }
