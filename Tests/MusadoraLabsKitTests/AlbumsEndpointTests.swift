@@ -22,7 +22,7 @@ final class AlbumsEndpointTests: XCTestCase {
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/albums?ids=1564530719,1568819304")
     }
 
-    func testFetchMultipleCatalogByUPCEndpoint() async throws {
+    func testFetchMultipleCatalogAlbumsByUPCEndpoint() async throws {
         let upcs = ["5056167160984"]
         let endpoint = try await MusadoraLabsKit.catalogAlbums(upcs: upcs, storeFront: "us")
         XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/albums?filter[upc]=5056167160984")
