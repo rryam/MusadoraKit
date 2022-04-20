@@ -9,11 +9,9 @@ import Foundation
 import MusicKit
 
 /// A collection of recommendations.
-
 public typealias Recommendations = MusicItemCollection<Recommendation>
 
 /// An object that represents recommended resources for a user calculated using their selected preferences.
-
 public struct Recommendation: Codable, MusicItem {
 
     /// The identifier for the recommendation.
@@ -28,8 +26,40 @@ public struct Recommendation: Codable, MusicItem {
 
     /// The next date in UTC format for updating the recommendation.
     public let nextUpdate: Date
-}
 
+    /// A collection of recommended albums.
+    public var albums: Albums {
+        MusicItemCollection(contents.compactMap { item in
+            if case let .album(album) = item {
+                return album
+            } else {
+                return nil
+            }
+        })
+    }
+
+    /// A collection of recommended playlists.
+    public var playlists: Playlists {
+        MusicItemCollection(contents.compactMap { item in
+            if case let .playlist(playlist) = item {
+                return playlist
+            } else {
+                return nil
+            }
+        })
+    }
+
+    /// A collection of recommended stations.
+    public var stations: Stations {
+        MusicItemCollection(contents.compactMap { item in
+            if case let .station(station) = item {
+                return station
+            } else {
+                return nil
+            }
+        })
+    }
+}
 
 extension Recommendation {
     enum CodingKeys: String, CodingKey {
