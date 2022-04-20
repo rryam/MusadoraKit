@@ -11,7 +11,40 @@ import MusicKit
 public struct MusicHistoryResponse {
 
     /// A collection of historical resources based on the `MusicHistoryRequest`.
-    public let items: MusicItemCollection<UserMusicItem>
+    public let items: UserMusicItems
+
+    /// A collection of historical albums.
+    public var albums: Albums {
+        MusicItemCollection(items.compactMap { item in
+            if case let .album(album) = item {
+                return album
+            } else {
+                return nil
+            }
+        })
+    }
+
+    /// A collection of historical playlists.
+    public var playlists: Playlists {
+        MusicItemCollection(items.compactMap { item in
+            if case let .playlist(playlist) = item {
+                return playlist
+            } else {
+                return nil
+            }
+        })
+    }
+
+    /// A collection of historical stations.
+    public var stations: Stations {
+        MusicItemCollection(items.compactMap { item in
+            if case let .station(station) = item {
+                return station
+            } else {
+                return nil
+            }
+        })
+    }
 }
 
 extension MusicHistoryResponse: Equatable, Hashable, Codable {}
