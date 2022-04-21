@@ -8,4 +8,5 @@
 import MusicKit
 import Foundation
 
+/// MusadoraKit: The ultimate companion to MusicKit.
 public struct MusadoraKit {}

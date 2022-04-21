@@ -8,6 +8,8 @@
 import Foundation
 import MusicKit
 
+/// A protocol for music items that your app can fetch by
+/// using a catalog chart request.
 public protocol MusicCatalogChart {}
 
 extension MusicCatalogChart {
@@ -24,7 +26,10 @@ extension MusicVideo: MusicCatalogChart {}
 
 extension Album: MusicCatalogChart {}
 
+/// The response to a request for a chart.
 struct Charts: Codable {
+
+    /// A mapping of a requested type to an array of charts.
     let results: MusicCatalogChartResponse
 }
 

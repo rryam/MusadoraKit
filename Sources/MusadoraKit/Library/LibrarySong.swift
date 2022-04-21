@@ -7,8 +7,8 @@
 
 import MusicKit
 
-
 public extension MusadoraKit {
+
     /// Fetch a song from the user's library by using its identifier.
     /// - Parameters:
     ///   - id: The unique identifier for the song.

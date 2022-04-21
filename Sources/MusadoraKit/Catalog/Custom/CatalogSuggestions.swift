@@ -16,7 +16,6 @@ extension MusicCatalogSearchable {
     }
 }
 
-
 /// The suggestion kinds to include in the results.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 public enum SuggestionsKind: String, Codable {
@@ -169,27 +168,47 @@ extension MusicCatalogSuggestionsResponse: Codable {
     public func encode(to encoder: Encoder) throws {}
 }
 
+/// A suggested search term from a search suggestion response.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TermSuggestion: Codable, Equatable, Hashable {
+
+    /// The kind of suggestion.
+    /// Value: terms
     public let kind: SuggestionsKind
+
+    /// The term to use as a search input when using this suggestion.
     public let searchTerm: String
+
+    /// A potentially censored term to display to the user to select from. Use the `searchTerm` value for the actual search.
     public let displayTerm: String
 }
 
+/// A suggested popular result for similar search prefix terms.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TopResultsSuggestion: Codable, Equatable, Hashable {
+
+    /// The kind of suggestion.
+    /// Value: topResults
     public let kind: SuggestionsKind
+
+    /// The actual resource for the suggested content.
+    /// Possible types: Albums, RadioShows, Artists, Curators, MusicVideos, Playlists, RecordLabels, Songs, Stations.
     public let content: SearchSuggestionItem
 }
 
+/// The response to a request for search suggestions.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct Suggestions: Codable {
+
+    /// The results included in the response to a request for search suggestions.
     let results: MusicCatalogSuggestionsResponse
 }
 
+/// The top search suggestion types.
+/// Possible types: Albums, RadioShows, Artists, Curators, MusicVideos, Playlists, RecordLabels, Songs, Stations.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public enum SearchSuggestionItem: Equatable, Hashable {
