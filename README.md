@@ -10,6 +10,8 @@ MusadoraKit is a Swift framework that uses the latest MusicKit and Apple Music A
 
 It goes well with my book on [*Exploring MusicKit*](http://exploringmusickit.com), as all the documentation and references are mentioned in the book. Otherwise, the code itself is well documented.
 
+## Support 
+
 You can support my open-source by buying my book, ["Exploring MusicKit"](exploringmusickit.com) or by [buying me a book](https://www.buymeacoffee.com/rudrank)! 
 
 ## Catalog 
