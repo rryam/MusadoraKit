@@ -1,5 +1,7 @@
 # MusadoraKit
 
+The ultimate companion to MusicKit.
+
 <p align="center">
   <img src= "https://github.com/rryam/MusadoraKit/blob/main/MusadoraKitIcon.png" alt="MusadoraKit Logo" width="256"/>
 </p>
