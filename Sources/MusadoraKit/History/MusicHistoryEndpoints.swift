@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Different endpoints related to historial data.
+/// Possible types: Heavy rotation, recently added, and recently played resources.
 public enum MusicHistoryEndpoints {
     case heavyRotation
     case recentlyAdded

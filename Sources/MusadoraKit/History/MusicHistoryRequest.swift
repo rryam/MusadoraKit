@@ -9,21 +9,31 @@ import Foundation
 import MusicKit
 
 public extension MusadoraKit {
-    static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+
+    /// Fetch the recently played resources for the user.
+    /// - Parameter limit: The number of objects returned.
+    /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
+    static func recentlyPlayed(limit: Int? = nil) async throws -> UserMusicItems {
         var request = MusicHistoryRequest(for: .recentlyPlayed)
         request.limit = limit
         let response = try await request.response()
         return response.items
     }
 
-    static func heavyRotation(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+    /// Fetch the resources in heavy rotation for the user.
+    /// - Parameter limit: The number of objects returned.
+    /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
+    static func heavyRotation(limit: Int? = nil) async throws -> UserMusicItems {
         var request = MusicHistoryRequest(for: .heavyRotation)
         request.limit = limit
         let response = try await request.response()
         return response.items
     }
 
-    static func recentlyAdded(limit: Int? = nil) async throws -> MusicItemCollection<UserMusicItem> {
+    /// Fetch the recently added resources for the user.
+    /// - Parameter limit: The number of objects returned.
+    /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
+    static func recentlyAdded(limit: Int? = nil) async throws -> UserMusicItems {
         var request = MusicHistoryRequest(for: .recentlyAdded)
         request.limit = limit
         let response = try await request.response()
@@ -38,6 +48,8 @@ public struct MusicHistoryRequest {
     /// in the history response.
     public var limit: Int?
 
+    /// Endpoints to fetch historical information about the songs and stations the user played recently.
+    /// Possible values: `heavyRotation`, `recentlyAdded` and `recentlyPlayed`.
     public var endpoint: MusicHistoryEndpoints
 
     /// Creates a request to fetch historical data based on the history endpoint.
@@ -45,12 +57,12 @@ public struct MusicHistoryRequest {
         self.endpoint = endpoint
     }
 
+    /// Fetches historical information based on the user’s history for the given request.
     public func response() async throws -> MusicHistoryResponse {
         let url = try historyEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
         let items = try JSONDecoder().decode(MusicItemCollection<UserMusicItem>.self, from: response.data)
-
         return MusicHistoryResponse(items: items)
     }
 }
@@ -75,7 +87,6 @@ extension MusicHistoryRequest {
             guard let url = components.url else {
                 throw URLError(.badURL)
             }
-
             return url
         }
     }

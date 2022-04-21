@@ -7,8 +7,8 @@
 
 import MusicKit
 
-
 public extension MusadoraKit {
+
     /// Fetch a playlist from the user's library by using its identifier.
     /// - Parameters:
     ///   - id: The unique identifier for the playlist.
