@@ -39,6 +39,26 @@ public extension MusadoraKit {
         let response = try await request.response()
         return response.items
     }
+
+    /// Fetch the recently played tracks for the user.
+    /// - Parameter limit: The number of objects returned.
+    /// - Returns: Collection of `Tracks`.
+    static func recentlyPlayedTracks(limit: Int? = nil) async throws -> Tracks {
+        var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
+        request.limit = limit
+        let response = try await request.response()
+        return response.tracks
+    }
+
+    /// Fetch the recently played stations for the user.
+    /// - Parameter limit: The number of objects returned.
+    /// - Returns: Collection of `Stations`.
+    static func recentlyPlayedStations(limit: Int? = nil) async throws -> Stations {
+        var request = MusicHistoryRequest(for: .recentlyPlayedStations)
+        request.limit = limit
+        let response = try await request.response()
+        return response.stations
+    }
 }
 
 /// A  request that your app uses to fetch historical information about
@@ -62,7 +82,7 @@ public struct MusicHistoryRequest {
         let url = try historyEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-        let items = try JSONDecoder().decode(MusicItemCollection<UserMusicItem>.self, from: response.data)
+        let items = try JSONDecoder().decode(UserMusicItems.self, from: response.data)
         return MusicHistoryResponse(items: items)
     }
 }
@@ -79,7 +99,7 @@ extension MusicHistoryRequest {
             components.path += endpoint.path
 
             if let limit = limit {
-                queryItems = [URLQueryItem(name: "limit", value: "\(limit)"), URLQueryItem(name: "include", value: "catalog")]
+                queryItems = [.init(name: "limit", value: "\(limit)")]
             }
             
             components.queryItems = queryItems

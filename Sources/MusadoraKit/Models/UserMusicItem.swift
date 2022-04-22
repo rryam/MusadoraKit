@@ -15,6 +15,7 @@ public enum UserMusicItem: Equatable, Hashable, Identifiable {
     case album(Album)
     case playlist(Playlist)
     case station(Station)
+    case track(Track)
 }
 
 extension UserMusicItem: MusicItem {
@@ -25,6 +26,7 @@ extension UserMusicItem: MusicItem {
             case .album(let album): id = album.id
             case .playlist(let playlist): id = playlist.id
             case .station(let station): id = station.id
+            case .track(let track): id = track.id
         }
 
         return id
@@ -36,25 +38,35 @@ extension UserMusicItem: Decodable {
         case type
     }
 
+    private enum HistoryMusicItemTypes: String, Codable {
+        case album = "albums"
+        case libraryAlbum = "library-albums"
+        case playlist = "playlists"
+        case libraryPlaylist = "library-playlists"
+        case station = "stations"
+        case song = "songs"
+        case librarySong = "library-songs"
+        case musicVideo = "music-video"
+        case libraryMusicVideo = "library-music-video"
+    }
+
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try values.decode(String.self, forKey: .type)
+        let type = try values.decode(HistoryMusicItemTypes.self, forKey: .type)
+
         switch type {
-            case "albums", "library-albums":
+            case .album, .libraryAlbum:
                 let album = try Album(from: decoder)
                 self = .album(album)
-            case "playlists", "library-playlists":
+            case .playlist, .libraryPlaylist:
                 let playlist = try Playlist(from: decoder)
                 self = .playlist(playlist)
-            case "stations":
+            case .station:
                 let station = try Station(from: decoder)
                 self = .station(station)
-            default:
-                let decodingErrorContext = DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unexpected type \"\(type)\" encountered for UserMusicItem."
-                )
-                throw DecodingError.typeMismatch(UserMusicItem.self, decodingErrorContext)
+            case .song, .librarySong, .musicVideo, .libraryMusicVideo:
+                let track = try Track(from: decoder)
+                self = .track(track)
         }
     }
 }
