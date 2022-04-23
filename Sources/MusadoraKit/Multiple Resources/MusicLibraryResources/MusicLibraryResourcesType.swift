@@ -8,13 +8,9 @@
 import MusicKit
 
 /// A collection of music catalog resources types.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 typealias MusicLibraryResourcesTypes = MusicItemCollection<MusicLibraryResourcesType>
 
 /// A generic music item to represent each of the library music items.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 public enum MusicLibraryResourcesType {
     case album(Album)
     case song(Song)
@@ -35,8 +31,6 @@ public enum MusicLibraryResourcesType {
     }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 extension MusicLibraryResourcesType: MusicItem {
     public var id: MusicItemID {
         let id: MusicItemID
@@ -53,8 +47,6 @@ extension MusicLibraryResourcesType: MusicItem {
     }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 extension MusicLibraryResourcesType: Decodable {
     enum CodingKeys: CodingKey {
         case type

@@ -15,10 +15,12 @@ import Foundation
 public struct MusicCatalogResourcesRequest {
     private var types: [MusicCatalogResourcesType.Key: [MusicItemID]]
 
+    /// Creates a request to fetch multiple resources from the Apple Music catalog using their identifiers.
     public init(types: [MusicCatalogResourcesType.Key: [MusicItemID]]) {
         self.types = types
     }
 
+    /// Fetches different catalog music items based on the types for the given request.
     public func response() async throws -> MusicCatalogResourcesResponse {
         let url = try await multipleCatalogResourcesEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))

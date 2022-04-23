@@ -8,8 +8,6 @@
 import MusicKit
 
 /// An object that contains results for a catalog resources request.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 public struct MusicLibraryResourcesResponse {
 
     /// A collection of playlists.

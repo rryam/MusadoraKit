@@ -8,17 +8,17 @@
 import MusicKit
 import Foundation
 
-/// A request that your app uses to fetch multiple resources from the Apple Music catalog
+/// A request that your app uses to fetch multiple resources from the user's library
 /// using their identifiers.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 public struct MusicLibraryResourcesRequest {
     private var types: [MusicLibraryResourcesType.Key: [MusicItemID]]
 
+    /// Creates a request to fetch multiple resources from the user's library using their identifiers.
     public init(types: [MusicLibraryResourcesType.Key: [MusicItemID]]) {
         self.types = types
     }
 
+    /// Fetches different library music items based on the types for the given request.
     public func response() async throws -> MusicLibraryResourcesResponse {
         let url = try multipleLibraryResourcesEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
@@ -28,8 +28,6 @@ public struct MusicLibraryResourcesRequest {
     }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
 extension MusicLibraryResourcesRequest {
     private var multipleLibraryResourcesEndpointURL: URL {
         get throws {
