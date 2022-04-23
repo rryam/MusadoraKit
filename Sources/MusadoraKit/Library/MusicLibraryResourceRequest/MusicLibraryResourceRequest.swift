@@ -8,12 +8,16 @@
 import MusicKit
 import Foundation
 
-fileprivate enum LibraryMusicItemType: String {
+public enum LibraryMusicItemType: String, Codable {
     case songs
     case playlists
     case albums
     case artists
     case musicVideos = "music-videos"
+
+    public var type: String {
+        "ids[\(self.rawValue)]".removingPercentEncoding!
+    }
 }
 
 /// A request that your app uses to fetch items from the user's library

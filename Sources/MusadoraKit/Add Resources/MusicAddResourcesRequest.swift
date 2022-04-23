@@ -8,25 +8,13 @@
 import Foundation
 import MusicKit
 
-public enum MusicAddResourcesType: String, Codable {
-    case songs
-    case playlists
-    case artists
-    case albums
-    case musicVideos = "music-videos"
-
-    public var type: String {
-        "ids[\(self.rawValue)]".removingPercentEncoding!
-    }
-}
-
 /// A request that your app uses to add one or more catalog resources to a user’s iCloud Music Library.
 /// You can add multiple types in the same request.
 public struct MusicAddResourcesRequest {
-    private var types: [MusicAddResourcesType: [MusicItemID]]
+    private var types: [LibraryMusicItemType: [MusicItemID]]
 
     /// Creates a request to add multiple resources to the user's iCloud Music Library using their identifiers.
-    public init(types: [MusicAddResourcesType: [MusicItemID]]) {
+    public init(types: [LibraryMusicItemType: [MusicItemID]]) {
         self.types = types
     }
 
