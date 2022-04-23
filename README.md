@@ -80,4 +80,28 @@ let recentlyPlayedAlbums: [Album] = recentlyPlayedItems.compactMap { item in
 }
 ```
 
+## MusicCatalogResourcesRequest: 
+
+To fetch multiple catalog music items by their identifiers in the same request. For example:
+
+```swift 
+let request = MusicCatalogResourcesRequest(types: [.songs: ["1456313177"], .albums: ["1531125029", "1575203352"]])
+let response = try await request.response()
+
+print(response.songs)
+print(response.albums)
+```
+
+## MusicLibraryResourcesRequest:
+
+To fetch multiple library music items by their identifiers in the same request. For example:
+
+```swift
+let request = MusicLibraryResourcesRequest(types: [.songs: ["i.pmzqzM0S2rl5N4L"], .playlists: ["p.PkxVBgps2zOdV3r"]])
+let response = try await request.response()
+
+print(response.songs)
+print(response.playlists)
+```
+
 I hope you love working with MusadoraKit! 
