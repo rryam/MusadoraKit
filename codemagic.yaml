@@ -1,7 +1,7 @@
 workflows:
   musadorakit-test-workflow:
     name: MusadoraKit Testing Workflow
-    instance_type: linux_x2
+    instance_type: mac_mini
     environment:
       xcode: latest
     triggering:
