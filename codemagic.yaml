@@ -1,0 +1,13 @@
+workflows:
+  musadorakit-test-workflow:
+    name: MusadoraKit Testing Workflow
+    instance_type: linux_x2
+    environment:
+      xcode: latest
+    triggering:
+      events:
+        - push
+    scripts:
+      - name: Test
+        script: |
+          swift test
