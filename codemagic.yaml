@@ -1,7 +1,7 @@
 workflows:
   musadorakit-workflow:
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m1
+    instance_type: mac_pro
     environment:
       xcode: latest
     triggering:
