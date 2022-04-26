@@ -56,7 +56,7 @@ public struct MusicRecommendationRequest {
 }
 
 extension MusicRecommendationRequest {
-    private var recommendationEndpointURL: URL {
+  internal var recommendationEndpointURL: URL {
         get throws {
             var components = URLComponents()
             var queryItems: [URLQueryItem]?
