@@ -11,6 +11,7 @@ workflows:
       changeset:
         includes:
           - "Sources/MusadoraKit/"
+          - "Tests/MusadoraLabsKit/"
     scripts:
       - name: Build MusadoraKit
         script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12'
@@ -29,6 +30,7 @@ workflows:
       changeset:
         includes:
           - "Sources/MusadoraLabsKit/"
+          - "Tests/MusadoraLabsKit/"
     scripts:
       - name: Build MusadoraLabsKit
         script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12'
