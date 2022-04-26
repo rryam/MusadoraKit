@@ -88,7 +88,7 @@ public struct MusicHistoryRequest {
 }
 
 extension MusicHistoryRequest {
-    private var historyEndpointURL: URL {
+    internal var historyEndpointURL: URL {
         get throws {
             var components = URLComponents()
             var queryItems: [URLQueryItem]?
