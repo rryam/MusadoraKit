@@ -16,8 +16,8 @@ workflows:
       - name: Build MusadoraKit
         script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12'
       - name: Test
-        script: |
-          swift test
+        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty
+        test_report: build/ios/test/*.xml
   musadorlabskit-workflow:
     name: MusadoraLabsKit Workflow
     instance_type: mac_mini
@@ -35,5 +35,5 @@ workflows:
       - name: Build MusadoraLabsKit
         script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12'
       - name: Test
-        script: |
-          swift test
+        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty
+        test_report: build/ios/test/*.xml
