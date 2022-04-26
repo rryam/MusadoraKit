@@ -1,13 +1,37 @@
 workflows:
-  musadorakit-test-workflow:
-    name: MusadoraKit Testing Workflow
-    instance_type: mac_mini
+  musadorakit-workflow:
+    name: MusadoraKit Workflow
+    instance_type: mac_mini_m1
     environment:
       xcode: latest
     triggering:
       events:
         - push
+    when:
+      changeset:
+        includes:
+          - "Sources/MusadoraKit/"
     scripts:
+      - name: Build MusadoraKit
+        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12'
+      - name: Test
+        script: |
+          swift test
+  musadorlabskit-workflow:
+    name: MusadoraLabsKit Workflow
+    instance_type: mac_mini_m1
+    environment:
+      xcode: latest
+    triggering:
+      events:
+        - push
+    when:
+      changeset:
+        includes:
+          - "Sources/MusadoraLabsKit/"
+    scripts:
+      - name: Build MusadoraLabsKit
+        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12'
       - name: Test
         script: |
           swift test
