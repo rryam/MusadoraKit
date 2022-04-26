@@ -1,7 +1,7 @@
 workflows:
   musadorakit-workflow:
     name: MusadoraKit Workflow
-    instance_type: mac_mini
+    instance_type: mac_mini_m1
     environment:
       xcode: latest
     triggering:
@@ -20,7 +20,7 @@ workflows:
         test_report: build/reports/junit.xml
   musadorlabskit-workflow:
     name: MusadoraLabsKit Workflow
-    instance_type: mac_mini
+    instance_type: mac_pro
     environment:
       xcode: latest
     triggering:
