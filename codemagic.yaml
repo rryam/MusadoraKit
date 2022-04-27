@@ -1,51 +1,39 @@
-definitions:
-  env_versions: &env_versions
-    xcode: latest
-  triggering:
-    push: &push_event
-      events:
-        - push
-  scripts:
-    - &build
-      name: Build MusadoraKit
-      script: xcodebuild -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 12'
-    - &test
-      name: Test
-      script: xcodebuild -scheme $SCHEME -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty --report junit
-      test_report: build/reports/junit.xml
-
 workflows:
   musadorakit-workflow:
     name: MusadoraKit Workflow
     instance_type: mac_pro
     environment:
-      <<: *env_versions
-      vars:
-        SCHEME: "MusadoraKit"
+      xcode: latest
     triggering:
-      <<: *push_event
+      events:
+        - push
     when:
       changeset:
         includes:
           - "Sources/MusadoraKit/"
-          - "Tests/MusadoraLabsKit/"
+          - "Tests/MusadoraKitTests/"
     scripts:
-      - *build
-      - *test
+      - name: Build MusadoraKit
+        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12'
+      - name: Test
+        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty --report junit
+        test_report: build/reports/junit.xml
   musadorlabskit-workflow:
     name: MusadoraLabsKit Workflow
     instance_type: mac_pro
     environment:
-      <<: *env_versions
-      vars:
-        SCHEME: "MusadoraLabsKit"
+      xcode: latest
     triggering:
-      <<: *push_event
+      events:
+        - push
     when:
       changeset:
         includes:
           - "Sources/MusadoraLabsKit/"
-          - "Tests/MusadoraLabsKit/"
+          - "Tests/MusadoraLabsKitTests/"
     scripts:
-      - *build
-      - *test
+      - name: Build MusadoraLabsKit
+        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12'
+      - name: Test
+        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 12' test | xcpretty --report junit
+        test_report: build/reports/junit.xml
