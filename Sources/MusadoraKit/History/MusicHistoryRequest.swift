@@ -91,7 +91,6 @@ extension MusicHistoryRequest {
     internal var historyEndpointURL: URL {
         get throws {
             var components = URLComponents()
-            var queryItems: [URLQueryItem]?
 
             components.scheme = "https"
             components.host = "api.music.apple.com"
@@ -99,10 +98,20 @@ extension MusicHistoryRequest {
             components.path += endpoint.path
 
             if let limit = limit {
-                queryItems = [.init(name: "limit", value: "\(limit)")]
+                var maximumLimit: Int
+
+                switch endpoint {
+                    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
+                    case .recentlyAdded: maximumLimit = 25
+                    case .recentlyPlayedTracks: maximumLimit = 30
+                }
+
+                guard limit <= maximumLimit else {
+                    throw MusadoraKitError.historyOverLimit(limit: maximumLimit, overLimit: limit)
+                }
+
+                components.queryItems = [.init(name: "limit", value: "\(limit)")]
             }
-            
-            components.queryItems = queryItems
 
             guard let url = components.url else {
                 throw URLError(.badURL)
