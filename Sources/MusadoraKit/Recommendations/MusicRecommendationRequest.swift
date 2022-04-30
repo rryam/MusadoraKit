@@ -67,7 +67,13 @@ extension MusicRecommendationRequest {
 
             if let ids = ids {
                 queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
-            } else if let limit = limit {
+            }
+
+            if let limit = limit {
+                guard limit <= 30 else {
+                    throw MusadoraKitError.recommendationOverLimit(for: limit)
+                }
+
                 queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
             }
 
