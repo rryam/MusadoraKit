@@ -75,6 +75,12 @@ public struct MusicHistoryRequest {
     /// Creates a request to fetch historical data based on the history endpoint.
     public init(for endpoint: MusicHistoryEndpoints) {
         self.endpoint = endpoint
+
+        switch self.endpoint {
+            case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
+            case .recentlyAdded: maximumLimit = 25
+            case .recentlyPlayedTracks: maximumLimit = 30
+        }
     }
 
     /// Fetches historical information based on the user’s history for the given request.
@@ -85,6 +91,9 @@ public struct MusicHistoryRequest {
         let items = try JSONDecoder().decode(UserMusicItems.self, from: response.data)
         return MusicHistoryResponse(items: items)
     }
+
+    /// Maximum limit of the number of resources for each request.
+    internal var maximumLimit: Int = 0
 }
 
 extension MusicHistoryRequest {
@@ -98,14 +107,6 @@ extension MusicHistoryRequest {
             components.path += endpoint.path
 
             if let limit = limit {
-                var maximumLimit: Int
-
-                switch endpoint {
-                    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
-                    case .recentlyAdded: maximumLimit = 25
-                    case .recentlyPlayedTracks: maximumLimit = 30
-                }
-
                 guard limit <= maximumLimit else {
                     throw MusadoraKitError.historyOverLimit(limit: maximumLimit, overLimit: limit)
                 }
