@@ -31,12 +31,13 @@ class MusicRecommendationRequestEndpointTests: XCTestCase {
         XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations?ids=6-27s5hU6azhJY")
     }
 
-    func testDefaultRecommendationWithOverLimitEndpointURL() throws {
+    func testDefaultRecommendationEndpointURLWithOverLimit() throws {
+        let limit = 31
         var request = MusicRecommendationRequest()
-        request.limit = 31
+        request.limit = limit
 
         XCTAssertThrowsError(try request.recommendationEndpointURL) { error in
-            XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.recommendationOverLimit(for: 31))
+            XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.recommendationOverLimit(for: limit))
         }
     }
 }
