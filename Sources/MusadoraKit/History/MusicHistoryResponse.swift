@@ -19,44 +19,32 @@ public struct MusicHistoryResponse {
     /// A collection of historical albums.
     public var albums: Albums {
         MusicItemCollection(items.compactMap { item in
-            if case let .album(album) = item {
-                return album
-            } else {
-                return nil
-            }
+            guard case let .album(album) = item else { return nil }
+            return album
         })
     }
 
     /// A collection of historical playlists.
     public var playlists: Playlists {
         MusicItemCollection(items.compactMap { item in
-            if case let .playlist(playlist) = item {
-                return playlist
-            } else {
-                return nil
-            }
+            guard case let .playlist(playlist) = item else { return nil }
+            return playlist
         })
     }
 
     /// A collection of historical stations.
     public var stations: Stations {
         MusicItemCollection(items.compactMap { item in
-            if case let .station(station) = item {
-                return station
-            } else {
-                return nil
-            }
+            guard case let .station(station) = item else { return nil }
+            return station
         })
     }
 
     /// A collection of historical tracks.
     public var tracks: Tracks {
         MusicItemCollection(items.compactMap { item in
-            if case let .track(track) = item {
-                return track
-            } else {
-                return nil
-            }
+            guard case let .track(track) = item else { return nil }
+            return track
         })
     }
 }
