@@ -30,33 +30,24 @@ public struct Recommendation: Codable, MusicItem {
     /// A collection of recommended albums.
     public var albums: Albums {
         MusicItemCollection(contents.compactMap { item in
-            if case let .album(album) = item {
-                return album
-            } else {
-                return nil
-            }
+            guard case let .album(album) = item else { return nil }
+            return album
         })
     }
 
     /// A collection of recommended playlists.
     public var playlists: Playlists {
         MusicItemCollection(contents.compactMap { item in
-            if case let .playlist(playlist) = item {
-                return playlist
-            } else {
-                return nil
-            }
+            guard case let .playlist(playlist) = item else { return nil }
+            return playlist
         })
     }
 
     /// A collection of recommended stations.
     public var stations: Stations {
         MusicItemCollection(contents.compactMap { item in
-            if case let .station(station) = item {
-                return station
-            } else {
-                return nil
-            }
+            guard case let .station(station) = item else { return nil }
+            return station
         })
     }
 }
