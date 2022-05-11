@@ -8,12 +8,12 @@
 import Foundation
 import MusicKit
 
-fileprivate func fetchCatalog<Item>(item: Item, path: String) async throws -> Item where Item: MusicItem, Item: Decodable {
+fileprivate func fetchCatalog<Item>(item: Item, path: LibraryMusicItemType) async throws -> Item where Item: MusicItem, Item: Decodable {
     var components = URLComponents()
 
     components.scheme = "https"
     components.host = "api.music.apple.com"
-    components.path = "/v1/me/library/\(path)/\(item.id.rawValue)/catalog"
+    components.path = "/v1/me/library/\(path.rawValue)/\(item.id.rawValue)/catalog"
 
     guard let url = components.url else {
         throw URLError(.badURL)
@@ -34,7 +34,7 @@ extension Album {
     /// Fetch the equivalent catalog album for the given album in user's iCloud library.
     public var catalog: Album {
         get async throws {
-            try await fetchCatalog(item: self, path: "albums")
+            try await fetchCatalog(item: self, path: .albums)
         }
     }
 }
@@ -43,7 +43,7 @@ extension Song {
     /// Fetch the equivalent catalog song for the given song in user's iCloud library.
     public var catalog: Song {
         get async throws {
-            try await fetchCatalog(item: self, path: "songs")
+            try await fetchCatalog(item: self, path: .songs)
         }
     }
 }
@@ -52,7 +52,7 @@ extension Artist {
     /// Fetch the equivalent catalog artist for the given artist in user's iCloud library.
     public var catalog: Artist {
         get async throws {
-            try await fetchCatalog(item: self, path: "artists")
+            try await fetchCatalog(item: self, path: .artists)
         }
     }
 }
@@ -61,7 +61,7 @@ extension Playlist {
     /// Fetch the equivalent catalog playlist for the given playlist in user's iCloud library.
     public var catalog: Playlist {
         get async throws {
-            try await fetchCatalog(item: self, path: "playlists")
+            try await fetchCatalog(item: self, path: .playlists)
         }
     }
 }
@@ -72,9 +72,9 @@ extension Track {
         get async throws {
             switch self {
                 case .song:
-                    return try await fetchCatalog(item: self, path: "songs")
+                    return try await fetchCatalog(item: self, path: .songs)
                 case .musicVideo:
-                    return try await fetchCatalog(item: self, path: "musicVideos")
+                    return try await fetchCatalog(item: self, path: .musicVideos)
             }
         }
     }
