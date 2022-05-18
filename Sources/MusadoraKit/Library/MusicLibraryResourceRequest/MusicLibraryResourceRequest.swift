@@ -78,7 +78,7 @@ extension MusicLibraryResourceRequest {
         }
     }
 
-    private var libraryEndpointURL: URL {
+    internal var libraryEndpointURL: URL {
         get throws {
             guard let type = type else { throw URLError(.badURL) }
 
