@@ -21,14 +21,14 @@ public struct MusicAddResourcesRequest {
     /// Adds the given types to the user's iCloud Music Library and returns a successful/failure response.
     public func response() async throws -> Bool {
         let url = try addResourcesEndpointURL
-        var request = MusicDataPostRequest(urlRequest: .init(url: url))
+        let request = MusicDataPostRequest(url: url)
         let response = try await request.response()
         return response.urlResponse.statusCode == 202
     }
 }
 
 extension MusicAddResourcesRequest {
-    private var addResourcesEndpointURL: URL {
+    internal var addResourcesEndpointURL: URL {
         get throws {
             var components = URLComponents()
             var queryItems: [URLQueryItem] = []
