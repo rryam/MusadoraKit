@@ -1,15 +1,13 @@
 //
-//  MusicDataPostRequest.swift
-//  MusicDataPostRequest
+//  MusicDataDeleteRequest.swift
+//  MusicDataDeleteRequest
 //
-//  Created by Rudrank Riyam on 23/04/22.
+//  Created by Rudrank Riyam on 18/05/22.
 //
 
 import Foundation
-import MusicKit
 
-/// A request for uploading data from an arbitrary Apple Music API endpoint.
-public struct MusicDataPostRequest {
+public struct MusicDataDeleteRequest {
 
     /// The URL for the data request.
     public var url: URL
@@ -23,7 +21,7 @@ public struct MusicDataPostRequest {
     /// the URL request defines.
     public func response() async throws -> MusicDataPostResponse {
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = "DELETE"
 
         var request = MusicTokenRequest(urlRequest: urlRequest)
         let response = try await request.response()
