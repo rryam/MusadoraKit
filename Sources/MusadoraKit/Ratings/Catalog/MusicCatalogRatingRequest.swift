@@ -8,6 +8,152 @@
 import MusicKit
 import Foundation
 
+public extension MusadoraKit {
+    static func catalogAlbumRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicCatalogRatingRequest<Album>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func catalogAlbumsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicCatalogRatingRequest<Album>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func catalogSongRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicCatalogRatingRequest<Song>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func catalogSongsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicCatalogRatingRequest<Song>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func catalogMusicVideoRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicCatalogRatingRequest<MusicVideo>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func catalogMusicVideosRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicCatalogRatingRequest<MusicVideo>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func catalogPlaylistRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicCatalogRatingRequest<Playlist>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func catalogPlaylistsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicCatalogRatingRequest<Playlist>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func catalogStationRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicCatalogRatingRequest<Station>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func catalogStationsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicCatalogRatingRequest<Station>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func librarySongRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicLibraryRatingRequest<Song>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func librarySongsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicLibraryRatingRequest<Song>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func libraryMusicVideoRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func libraryMusicVideosRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func libraryPlaylistRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func libraryPlaylistsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+
+    static func libraryAlbumRating(id: MusicItemID) async throws -> Rating {
+        let request = MusicLibraryRatingRequest<Album>(matching: \.id, equalTo: id)
+        let response = try await request.response()
+
+        guard let rating = response.items.first else {
+            throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+        return rating
+    }
+
+    static func libraryAlbumsRating(id: [MusicItemID]) async throws -> [Rating] {
+        let request = MusicLibraryRatingRequest<Album>(matching: \.id, memberOf: id)
+        let response = try await request.response()
+        return response.items
+    }
+}
+
 /// A request that your app uses to fetch and set
 /// ratings for albums, songs, playlists, music videos, and stations
 /// for content in the Apple Music catalog.
@@ -85,4 +231,3 @@ extension MusicCatalogRatingRequest {
         }
     }
 }
-
