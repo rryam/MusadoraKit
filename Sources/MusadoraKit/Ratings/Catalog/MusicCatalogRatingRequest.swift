@@ -88,70 +88,6 @@ public extension MusadoraKit {
         let response = try await request.response()
         return response.items
     }
-
-    static func librarySongRating(id: MusicItemID) async throws -> Rating {
-        let request = MusicLibraryRatingRequest<Song>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-
-        guard let rating = response.items.first else {
-            throw MusadoraKitError.notFound(for: id.rawValue)
-        }
-        return rating
-    }
-
-    static func librarySongsRating(id: [MusicItemID]) async throws -> [Rating] {
-        let request = MusicLibraryRatingRequest<Song>(matching: \.id, memberOf: id)
-        let response = try await request.response()
-        return response.items
-    }
-
-    static func libraryMusicVideoRating(id: MusicItemID) async throws -> Rating {
-        let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-
-        guard let rating = response.items.first else {
-            throw MusadoraKitError.notFound(for: id.rawValue)
-        }
-        return rating
-    }
-
-    static func libraryMusicVideosRating(id: [MusicItemID]) async throws -> [Rating] {
-        let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, memberOf: id)
-        let response = try await request.response()
-        return response.items
-    }
-
-    static func libraryPlaylistRating(id: MusicItemID) async throws -> Rating {
-        let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-
-        guard let rating = response.items.first else {
-            throw MusadoraKitError.notFound(for: id.rawValue)
-        }
-        return rating
-    }
-
-    static func libraryPlaylistsRating(id: [MusicItemID]) async throws -> [Rating] {
-        let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, memberOf: id)
-        let response = try await request.response()
-        return response.items
-    }
-
-    static func libraryAlbumRating(id: MusicItemID) async throws -> Rating {
-        let request = MusicLibraryRatingRequest<Album>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-
-        guard let rating = response.items.first else {
-            throw MusadoraKitError.notFound(for: id.rawValue)
-        }
-        return rating
-    }
-
-    static func libraryAlbumsRating(id: [MusicItemID]) async throws -> [Rating] {
-        let request = MusicLibraryRatingRequest<Album>(matching: \.id, memberOf: id)
-        let response = try await request.response()
-        return response.items
-    }
 }
 
 /// A request that your app uses to fetch and set
@@ -192,7 +128,6 @@ public struct MusicCatalogRatingRequest<MusicItemType> where MusicItemType: Musi
     private var type: CatalogRatingMusicItemType?
     private var ids: [String]?
 }
-
 
 extension MusicCatalogRatingRequest {
     private mutating func setType() {
