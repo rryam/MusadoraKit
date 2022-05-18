@@ -11,29 +11,27 @@ import MusicKit
 /// A request for uploading data from an arbitrary Apple Music API endpoint.
 public struct MusicDataPostRequest {
 
-    /// The URL request for the data request.
-    public var urlRequest: URLRequest
+    /// The URL for the data request.
+    public var url: URL
 
-    /// Creates a data request with a URL request.
-    public init(urlRequest: URLRequest) {
-        self.urlRequest = urlRequest
+    /// Creates a data request with the given URL.
+    public init(url: URL) {
+        self.url = url
     }
 
     /// Uploads data the Apple Music API endpoint that
     /// the URL request defines.
-    public mutating func response() async throws -> MusicDataPostResponse {
-        try await updateURLRequest()
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
-        return MusicDataPostResponse(data: data, urlResponse: response as! HTTPURLResponse)
-    }
-
-    private mutating func updateURLRequest() async throws {
+    public func response() async throws -> MusicDataPostResponse {
         let developerToken = try await MusicDataRequest.tokenProvider.developerToken(options: .ignoreCache)
         let userToken = try await MusicDataRequest.tokenProvider.userToken(for: developerToken, options: .ignoreCache)
 
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
         urlRequest.addValue(userToken, forHTTPHeaderField: "Music-User-Token")
+
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        return MusicDataPostResponse(data: data, urlResponse: response as! HTTPURLResponse)
     }
 }
 
