@@ -12,7 +12,7 @@ public struct MusicCatalogRatingAddRequest<MusicItemType> where MusicItemType: M
 
     /// Creates a request to fetch items using a filter that matches
     /// a specific value.
-    public init<Value>(matching keyPath: KeyPath<MusicItemType.FilterableCatalogRatingType, Value>, equalTo value: Value, rating: RatingType) where MusicItemType: FilterableCatalogRatingItem {
+    public init<Value>(matching keyPath: KeyPath<MusicItemType.FilterableCatalogRatingType, Value>, equalTo value: Value, rating: RatingsType) where MusicItemType: FilterableCatalogRatingItem {
         self.rating = rating
 
         setType()
@@ -25,18 +25,20 @@ public struct MusicCatalogRatingAddRequest<MusicItemType> where MusicItemType: M
     public func response() async throws -> MusicRatingResponse {
         let url = try catalogAddRatingsEndpointURL
 
-        let rating = AddRating(attributes: .init(value: rating))
+        let rating = RatingRequest(attributes: .init(value: rating))
         let data = try JSONEncoder().encode(rating)
+
+        print(data.prettyPrintedJSONString)
 
         let request = MusicDataPutRequest(url: url, data: data)
         let response = try await request.response()
-        let items = try JSONDecoder().decode(Ratings.self, from: response.data)
+        let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)
         return MusicRatingResponse(items: items.data)
     }
 
     private var type: CatalogRatingMusicItemType?
     private var id: String?
-    private var rating: RatingType
+    private var rating: RatingsType
 }
 
 extension MusicCatalogRatingAddRequest {

@@ -9,7 +9,7 @@ import MusicKit
 import Foundation
 
 public extension MusadoraKit {
-    static func librarySongRating(id: MusicItemID) async throws -> Rating {
+    static func librarySongRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicLibraryRatingRequest<Song>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -19,13 +19,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func librarySongsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func librarySongsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicLibraryRatingRequest<Song>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func libraryMusicVideoRating(id: MusicItemID) async throws -> Rating {
+    static func libraryMusicVideoRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -35,13 +35,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func libraryMusicVideosRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func libraryMusicVideosRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicLibraryRatingRequest<MusicVideo>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func libraryPlaylistRating(id: MusicItemID) async throws -> Rating {
+    static func libraryPlaylistRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -51,13 +51,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func libraryPlaylistsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func libraryPlaylistsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicLibraryRatingRequest<Playlist>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func libraryAlbumRating(id: MusicItemID) async throws -> Rating {
+    static func libraryAlbumRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicLibraryRatingRequest<Album>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -67,7 +67,7 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func libraryAlbumsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func libraryAlbumsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicLibraryRatingRequest<Album>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
@@ -105,7 +105,7 @@ public struct MusicLibraryRatingRequest<MusicItemType> where MusicItemType: Musi
         let url = try libraryRatingsEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-        let items = try JSONDecoder().decode(Ratings.self, from: response.data)
+        let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)
         return MusicRatingResponse(items: items.data)
     }
 
