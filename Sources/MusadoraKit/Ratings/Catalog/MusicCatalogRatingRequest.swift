@@ -9,7 +9,7 @@ import MusicKit
 import Foundation
 
 public extension MusadoraKit {
-    static func catalogAlbumRating(id: MusicItemID) async throws -> Rating {
+    static func catalogAlbumRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicCatalogRatingRequest<Album>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -19,13 +19,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func catalogAlbumsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func catalogAlbumsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicCatalogRatingRequest<Album>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func catalogSongRating(id: MusicItemID) async throws -> Rating {
+    static func catalogSongRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicCatalogRatingRequest<Song>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -35,13 +35,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func catalogSongsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func catalogSongsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicCatalogRatingRequest<Song>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func catalogMusicVideoRating(id: MusicItemID) async throws -> Rating {
+    static func catalogMusicVideoRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicCatalogRatingRequest<MusicVideo>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -51,13 +51,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func catalogMusicVideosRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func catalogMusicVideosRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicCatalogRatingRequest<MusicVideo>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func catalogPlaylistRating(id: MusicItemID) async throws -> Rating {
+    static func catalogPlaylistRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicCatalogRatingRequest<Playlist>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -67,13 +67,13 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func catalogPlaylistsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func catalogPlaylistsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicCatalogRatingRequest<Playlist>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
     }
 
-    static func catalogStationRating(id: MusicItemID) async throws -> Rating {
+    static func catalogStationRating(id: MusicItemID) async throws -> Ratings {
         let request = MusicCatalogRatingRequest<Station>(matching: \.id, equalTo: id)
         let response = try await request.response()
 
@@ -83,7 +83,7 @@ public extension MusadoraKit {
         return rating
     }
 
-    static func catalogStationsRating(id: [MusicItemID]) async throws -> [Rating] {
+    static func catalogStationsRating(id: [MusicItemID]) async throws -> [Ratings] {
         let request = MusicCatalogRatingRequest<Station>(matching: \.id, memberOf: id)
         let response = try await request.response()
         return response.items
@@ -121,7 +121,7 @@ public struct MusicCatalogRatingRequest<MusicItemType> where MusicItemType: Musi
         let url = try catalogRatingsEndpointURL
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-        let items = try JSONDecoder().decode(Ratings.self, from: response.data)
+        let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)
         return MusicRatingResponse(items: items.data)
     }
 

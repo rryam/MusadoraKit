@@ -11,5 +11,5 @@ public struct MusicRatingResponse {
     /// A collection of items matching the filter used in
     /// the originating ``MusicCatalogRatingRequest`` and
     /// ``MusicLibraryRatingRequest``.
-    public let items: [Rating]
+    public let items: [Ratings]
 }
