@@ -11,7 +11,6 @@ import Foundation
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct Suggestions: Codable {
-
-    /// The results included in the response to a request for search suggestions.
-    let results: MusicCatalogSuggestionsResponse
+  /// The results included in the response to a request for search suggestions.
+  let results: MusicCatalogSuggestionsResponse
 }

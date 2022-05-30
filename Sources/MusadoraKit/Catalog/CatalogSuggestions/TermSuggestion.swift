@@ -11,14 +11,13 @@ import MusicKit
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public struct TermSuggestion: Codable, Equatable, Hashable {
+  /// The kind of suggestion.
+  /// Value: terms
+  public let kind: SuggestionsKind
 
-    /// The kind of suggestion.
-    /// Value: terms
-    public let kind: SuggestionsKind
+  /// The term to use as a search input when using this suggestion.
+  public let searchTerm: String
 
-    /// The term to use as a search input when using this suggestion.
-    public let searchTerm: String
-
-    /// A potentially censored term to display to the user to select from. Use the `searchTerm` value for the actual search.
-    public let displayTerm: String
+  /// A potentially censored term to display to the user to select from. Use the `searchTerm` value for the actual search.
+  public let displayTerm: String
 }

@@ -10,23 +10,22 @@ import MusicKit
 
 /// A request for uploading data from an arbitrary Apple Music API endpoint.
 public struct MusicDataPostRequest {
+  /// The URL for the data request.
+  public var url: URL
 
-    /// The URL for the data request.
-    public var url: URL
+  /// Creates a data request with the given URL.
+  public init(url: URL) {
+    self.url = url
+  }
 
-    /// Creates a data request with the given URL.
-    public init(url: URL) {
-        self.url = url
-    }
+  /// Uploads data the Apple Music API endpoint that
+  /// the URL request defines.
+  public func response() async throws -> MusicDataPostResponse {
+    var urlRequest = URLRequest(url: url)
+    urlRequest.httpMethod = "POST"
 
-    /// Uploads data the Apple Music API endpoint that
-    /// the URL request defines.
-    public func response() async throws -> MusicDataPostResponse {
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
-
-        var request = MusicTokenRequest(urlRequest: urlRequest)
-        let response = try await request.response()
-        return response
-    }
+    var request = MusicTokenRequest(urlRequest: urlRequest)
+    let response = try await request.response()
+    return response
+  }
 }

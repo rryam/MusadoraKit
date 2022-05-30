@@ -6,10 +6,9 @@
 //
 
 import Foundation
-public struct MusicRatingResponse {
 
-    /// A collection of items matching the filter used in
-    /// the originating ``MusicCatalogRatingRequest`` and
-    /// ``MusicLibraryRatingRequest``.
-    public let items: [Ratings]
+/// An object that contains results for a rating request.
+public struct MusicRatingResponse {
+  /// A collection of ratings
+  public let items: [Ratings]
 }

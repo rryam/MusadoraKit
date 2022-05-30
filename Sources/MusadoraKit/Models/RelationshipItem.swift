@@ -8,11 +8,11 @@
 import Foundation
 
 public enum RelationshipItem: String {
-    case albums
-    case artists
-    case composers
-    case genres
-    case library
-    case musicVideos = "music-videos"
-    case station
+  case albums
+  case artists
+  case composers
+  case genres
+  case library
+  case musicVideos = "music-videos"
+  case station
 }
