@@ -12,9 +12,9 @@ import MusicKit
 public protocol MusicLibrarySearchable: MusicItem {}
 
 extension MusicLibrarySearchable {
-    static var searchIdentifier: ObjectIdentifier {
-        ObjectIdentifier(Self.self)
-    }
+  static var searchIdentifier: ObjectIdentifier {
+    ObjectIdentifier(Self.self)
+  }
 }
 
 extension Song: MusicLibrarySearchable {}

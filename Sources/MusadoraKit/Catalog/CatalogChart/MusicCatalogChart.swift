@@ -12,9 +12,9 @@ import MusicKit
 public protocol MusicCatalogChart {}
 
 extension MusicCatalogChart {
-    static var objectIdentifier: ObjectIdentifier {
-        ObjectIdentifier(Self.self)
-    }
+  static var objectIdentifier: ObjectIdentifier {
+    ObjectIdentifier(Self.self)
+  }
 }
 
 extension Song: MusicCatalogChart {}

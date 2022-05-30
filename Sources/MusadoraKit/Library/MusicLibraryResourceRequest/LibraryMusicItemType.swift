@@ -8,13 +8,13 @@
 import Foundation
 
 public enum LibraryMusicItemType: String, Codable {
-    case songs
-    case playlists
-    case albums
-    case artists
-    case musicVideos = "music-videos"
+  case songs
+  case playlists
+  case albums
+  case artists
+  case musicVideos = "music-videos"
 
-    public var type: String {
-        "ids[\(self.rawValue)]".removingPercentEncoding!
-    }
+  public var type: String {
+    "ids[\(rawValue)]".removingPercentEncoding!
+  }
 }

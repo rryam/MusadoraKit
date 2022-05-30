@@ -9,11 +9,9 @@ import Foundation
 import MusicKit
 
 public struct MusicLibraryRatingAddRequest<MusicItemType> where MusicItemType: MusicItem, MusicItemType: Decodable {
-
   /// Creates a request to fetch items using a filter that matches
   /// a specific value.
-  public init<Value>(matching keyPath: KeyPath<MusicItemType.FilterableLibraryRatingType, Value>, equalTo value: Value, rating: RatingsType) where MusicItemType: FilterableLibraryRatingItem {
-
+  public init<Value>(matching _: KeyPath<MusicItemType.FilterableLibraryRatingType, Value>, equalTo value: Value, rating: RatingsType) where MusicItemType: FilterableLibraryRatingItem {
     self.rating = rating
 
     if let id = value as? MusicItemID {
@@ -21,11 +19,11 @@ public struct MusicLibraryRatingAddRequest<MusicItemType> where MusicItemType: M
     }
 
     switch MusicItemType.self {
-      case is Song.Type: type = .songs
-      case is Album.Type: type = .albums
-      case is MusicVideo.Type: type = .musicVideos
-      case is Playlist.Type: type = .playlists
-      default: type = nil
+    case is Song.Type: type = .songs
+    case is Album.Type: type = .albums
+    case is MusicVideo.Type: type = .musicVideos
+    case is Playlist.Type: type = .playlists
+    default: type = nil
     }
   }
 
@@ -47,7 +45,7 @@ public struct MusicLibraryRatingAddRequest<MusicItemType> where MusicItemType: M
 }
 
 extension MusicLibraryRatingAddRequest {
-  internal var libraryAddRatingsEndpointURL: URL {
+  var libraryAddRatingsEndpointURL: URL {
     get throws {
       guard let type = type else { throw URLError(.badURL) }
 

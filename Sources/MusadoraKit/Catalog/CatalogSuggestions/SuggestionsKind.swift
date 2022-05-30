@@ -10,6 +10,6 @@ import MusicKit
 /// The suggestion kinds to include in the results.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 public enum SuggestionsKind: String, Codable {
-    case terms
-    case topResults
+  case terms
+  case topResults
 }

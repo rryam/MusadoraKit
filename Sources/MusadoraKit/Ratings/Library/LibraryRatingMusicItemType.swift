@@ -8,8 +8,8 @@
 import Foundation
 
 public enum LibraryRatingMusicItemType: String, Codable {
-    case songs = "library-songs"
-    case albums = "library-albums"
-    case musicVideos = "library-music-videos"
-    case playlists = "library-playlists"
+  case songs = "library-songs"
+  case albums = "library-albums"
+  case musicVideos = "library-music-videos"
+  case playlists = "library-playlists"
 }

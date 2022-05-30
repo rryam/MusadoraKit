@@ -5,85 +5,83 @@
 //  Created by Rudrank Riyam on 02/04/22.
 //
 
-import MusicKit
 import Foundation
+import MusicKit
 
 public extension MusadoraKit {
-    static func recommendations(limit: Int? = nil) async throws -> Recommendations {
-        var request = MusicRecommendationRequest()
-        request.limit = limit
-        let response = try await request.response()
-        return response.items
-    }
+  static func recommendations(limit: Int? = nil) async throws -> Recommendations {
+    var request = MusicRecommendationRequest()
+    request.limit = limit
+    let response = try await request.response()
+    return response.items
+  }
 }
 
 /// A  request that your app uses to fetch recommendations from
 /// the user's library, either default ones or based on identifiers.
 public struct MusicRecommendationRequest {
+  /// A limit for the number of items to return
+  /// in the recommendation response.
+  public var limit: Int?
 
-    /// A limit for the number of items to return
-    /// in the recommendation response.
-    public var limit: Int?
+  /// Creates a request to fetch default recommendations.
+  public init() {}
 
-    /// Creates a request to fetch default recommendations.
-    public init() {}
+  /// Creates a request to fetch a recommendation by using its identifier.
+  public init(equalTo id: String) {
+    ids = [id]
+  }
 
-    /// Creates a request to fetch a recommendation by using its identifier.
-    public init(equalTo id: String) {
-        self.ids = [id]
-    }
+  /// Creates a request to fetch one or more recommendations by using their identifiers.
+  public init(memberOf ids: [String]) {
+    self.ids = ids
+  }
 
-    /// Creates a request to fetch one or more recommendations by using their identifiers.
-    public init(memberOf ids: [String]) {
-        self.ids = ids
-    }
+  /// Fetches recommendations based on the user’s library
+  /// and purchase history for the given request.
+  public func response() async throws -> MusicRecommendationResponse {
+    let url = try recommendationEndpointURL
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
 
-    private var ids: [String]?
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    let items = try decoder.decode(Recommendations.self, from: response.data)
 
-    /// Fetches recommendations based on the user’s library
-    /// and purchase history for the given request.
-    public func response() async throws -> MusicRecommendationResponse {
-        let url = try recommendationEndpointURL
-        let request = MusicDataRequest(urlRequest: .init(url: url))
-        let response = try await request.response()
+    return MusicRecommendationResponse(items: items)
+  }
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        let items = try decoder.decode(Recommendations.self, from: response.data)
-
-        return MusicRecommendationResponse(items: items)
-    }
+  private var ids: [String]?
 }
 
 extension MusicRecommendationRequest {
-    internal var recommendationEndpointURL: URL {
-        get throws {
-            var components = URLComponents()
-            var queryItems: [URLQueryItem]?
+  var recommendationEndpointURL: URL {
+    get throws {
+      var components = URLComponents()
+      var queryItems: [URLQueryItem]?
 
-            components.scheme = "https"
-            components.host = "api.music.apple.com"
-            components.path = "/v1/me/recommendations"
+      components.scheme = "https"
+      components.host = "api.music.apple.com"
+      components.path = "/v1/me/recommendations"
 
-            if let ids = ids {
-                queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
-            }
+      if let ids = ids {
+        queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
+      }
 
-            if let limit = limit {
-                guard limit <= 30 else {
-                    throw MusadoraKitError.recommendationOverLimit(for: limit)
-                }
-
-                queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
-            }
-
-            components.queryItems = queryItems
-
-            guard let url = components.url else {
-                throw URLError(.badURL)
-            }
-
-            return url
+      if let limit = limit {
+        guard limit <= 30 else {
+          throw MusadoraKitError.recommendationOverLimit(for: limit)
         }
+
+        queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+      }
+
+      components.queryItems = queryItems
+
+      guard let url = components.url else {
+        throw URLError(.badURL)
+      }
+      return url
     }
+  }
 }
