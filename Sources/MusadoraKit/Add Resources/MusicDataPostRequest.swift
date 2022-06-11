@@ -20,11 +20,11 @@ public struct MusicDataPostRequest {
 
   /// Uploads data the Apple Music API endpoint that
   /// the URL request defines.
-  public func response() async throws -> MusicDataPostResponse {
+  public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "POST"
 
-    var request = MusicTokenRequest(urlRequest: urlRequest)
+      let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
   }

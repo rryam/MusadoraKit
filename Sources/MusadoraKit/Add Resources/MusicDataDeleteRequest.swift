@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MusicKit
 
 public struct MusicDataDeleteRequest {
   /// The URL for the data request.
@@ -18,11 +19,11 @@ public struct MusicDataDeleteRequest {
 
   /// Uploads data the Apple Music API endpoint that
   /// the URL request defines.
-  public func response() async throws -> MusicDataPostResponse {
+  public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "DELETE"
 
-    var request = MusicTokenRequest(urlRequest: urlRequest)
+    let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
   }
