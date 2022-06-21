@@ -24,7 +24,7 @@ public struct MusicDataPostRequest {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "POST"
 
-      let request = MusicDataRequest(urlRequest: urlRequest)
+    let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
   }
