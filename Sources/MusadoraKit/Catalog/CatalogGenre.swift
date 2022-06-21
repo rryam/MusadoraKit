@@ -43,4 +43,18 @@ public extension MusadoraKit {
     let response = try await request.response()
     return response.items
   }
+
+  static func catalogTopChartsGenres() async throws -> Genres {
+    let countryCode = try await MusicDataRequest.currentCountryCode
+    let genreURL = "https://api.music.apple.com/v1/catalog/\(countryCode)/genres"
+
+    guard let url = URL(string: genreURL) else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    return try JSONDecoder().decode(Genres.self, from: response.data)
+  }
 }
