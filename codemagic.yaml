@@ -3,7 +3,7 @@ workflows:
     name: MusadoraKit Workflow
     instance_type: mac_pro
     environment:
-      xcode: latest
+      xcode: edge
     triggering:
       events:
         - push
