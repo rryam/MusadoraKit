@@ -1,7 +1,7 @@
 workflows:
   musadorakit-workflow:
     name: MusadoraKit Workflow
-    instance_type: mac_pro
+    instance_type: mac_min_m1
     environment:
       xcode: edge
     triggering:
@@ -20,9 +20,9 @@ workflows:
         test_report: build/reports/junit.xml
   musadorlabskit-workflow:
     name: MusadoraLabsKit Workflow
-    instance_type: mac_pro
+    instance_type: mac_min_m1
     environment:
-      xcode: latest
+      xcode: edge
     triggering:
       events:
         - push
