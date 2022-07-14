@@ -6,6 +6,7 @@
 //
 
 import MusicKit
+import MediaPlayer
 
 public extension MusadoraKit {
   /// Fetch a playlist from the user's library by using its identifier.
@@ -41,5 +42,21 @@ public extension MusadoraKit {
     let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
+  }
+
+  static var libraryPlaylistsCount: Int {
+    get async throws {
+      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
+        let request = MusicLibraryRequest<Playlist>()
+        let response = try await request.response()
+        return response.items.count
+      } else {
+        if let items = MPMediaQuery.playlists().items {
+          return items.count
+        } else {
+          throw MediaPlayError.notFound(for: "playlists")
+        }
+      }
+    }
   }
 }

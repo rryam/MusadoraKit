@@ -24,6 +24,19 @@ extension RatingsError: CustomStringConvertible {
   }
 }
 
+public enum MediaPlayError: Error, Equatable {
+  case notFound(for: String)
+}
+
+extension MediaPlayError: CustomStringConvertible {
+  public var description: String {
+    switch self {
+      case let .notFound(item):
+        return "Not able to count the music items for \(item)."
+    }
+  }
+}
+
 public enum MusadoraKitError: Error, Equatable {
   case notFound(for: String)
   case typeMissing
