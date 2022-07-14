@@ -6,6 +6,7 @@
 //
 
 import MusicKit
+import MediaPlayer
 
 public extension MusadoraKit {
   /// Fetch an album from the user's library by using its identifier.
@@ -65,6 +66,22 @@ public extension MusadoraKit {
       let request = MusicLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
+    }
+  }
+
+  static var libraryAlbumsCount: Int {
+    get async throws {
+      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
+        let request = MusicLibraryRequest<Album>()
+        let response = try await request.response()
+        return response.items.count
+      } else {
+        if let items = MPMediaQuery.albums().items {
+          return items.count
+        } else {
+          throw MediaPlayError.notFound(for: "albums")
+        }
+      }
     }
   }
 }
