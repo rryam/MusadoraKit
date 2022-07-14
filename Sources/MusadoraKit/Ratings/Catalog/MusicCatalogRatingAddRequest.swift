@@ -27,8 +27,6 @@ public struct MusicCatalogRatingAddRequest<MusicItemType> where MusicItemType: M
     let rating = RatingRequest(attributes: .init(value: rating))
     let data = try JSONEncoder().encode(rating)
 
-    print(data.prettyPrintedJSONString)
-
     let request = MusicDataPutRequest(url: url, data: data)
     let response = try await request.response()
     let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)

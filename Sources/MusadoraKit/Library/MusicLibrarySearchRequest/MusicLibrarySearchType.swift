@@ -1,20 +1,20 @@
 //
-//  MusicLibrarySearchType.swift
-//  MusicLibrarySearchType
+//  MusadoraLibrarySearchType.swift
+//  MusadoraLibrarySearchType
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
 import MusicKit
 
-enum MusicLibrarySearchType: String, CodingKey {
+enum MusadoraLibrarySearchType: String, CodingKey {
   case songs = "library-songs"
   case artists = "library-artists"
   case albums = "library-albums"
   case musicVideos = "library-music-videos"
   case playlists = "library-playlists"
 
-  static func getTypes(_ types: [MusicLibrarySearchable.Type]) -> String {
+  static func getTypes(_ types: [MusadoraLibrarySearchable.Type]) -> String {
     Set(types.map { $0.searchIdentifier }).compactMap {
       switch $0 {
       case Song.searchIdentifier: return songs.rawValue

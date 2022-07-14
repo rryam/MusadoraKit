@@ -9,18 +9,18 @@ import MusicKit
 
 /// A protocol for music items that your app can fetch by
 /// using a catalog chart request.
-public protocol MusicCatalogChart {}
+public protocol MusadoraCatalogChart {}
 
-extension MusicCatalogChart {
+extension MusadoraCatalogChart {
   static var objectIdentifier: ObjectIdentifier {
     ObjectIdentifier(Self.self)
   }
 }
 
-extension Song: MusicCatalogChart {}
+extension Song: MusadoraCatalogChart {}
 
-extension Playlist: MusicCatalogChart {}
+extension Playlist: MusadoraCatalogChart {}
 
-extension MusicVideo: MusicCatalogChart {}
+extension MusicVideo: MusadoraCatalogChart {}
 
-extension Album: MusicCatalogChart {}
+extension Album: MusadoraCatalogChart {}

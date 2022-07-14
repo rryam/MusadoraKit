@@ -8,6 +8,18 @@
 import Foundation
 import MusicKit
 
+#if compiler(>=5.7)
+public extension MusadoraKit {
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<RecentlyPlayedMusicItem> {
+    var request = MusicRecentlyPlayedContainerRequest()
+    request.limit = limit
+    let response = try await request.response()
+    return response.items
+  }
+}
+#endif
+
 public extension MusadoraKit {
   /// Fetch the recently played resources for the user.
   /// - Parameter limit: The number of objects returned.
