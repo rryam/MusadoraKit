@@ -27,7 +27,7 @@ public struct MusicCatalogChartRequest {
 
   /// Creates a request to fetch charts using the list of the
   /// types of charts to include in the results.
-  public init(types: [MusicCatalogChart.Type]) {
+  public init(types: [MusadoraCatalogChart.Type]) {
     self.types = Set(types.map { $0.objectIdentifier }).compactMap {
       switch $0 {
       case Song.objectIdentifier:

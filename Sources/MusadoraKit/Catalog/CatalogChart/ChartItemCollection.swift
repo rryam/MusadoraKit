@@ -37,7 +37,7 @@ public extension ChartItemCollection {
   }
 }
 
-extension ChartItemCollection where MusicItemType: MusicCatalogChart {}
+extension ChartItemCollection where MusicItemType: MusadoraCatalogChart {}
 
 extension ChartItemCollection: Decodable where MusicItemType: Decodable {}
 

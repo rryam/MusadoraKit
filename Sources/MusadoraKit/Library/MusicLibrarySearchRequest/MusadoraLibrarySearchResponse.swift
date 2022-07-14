@@ -1,6 +1,6 @@
 //
-//  MusicLibrarySearchResponse.swift
-//  MusicLibrarySearchResponse
+//  MusadoraLibrarySearchResponse.swift
+//  MusadoraLibrarySearchResponse
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
@@ -8,7 +8,7 @@
 import MusicKit
 
 /// An object that contains results for a library search request.
-public struct MusicLibrarySearchResponse: Equatable, Hashable {
+public struct MusadoraLibrarySearchResponse: Equatable, Hashable, Sendable {
   /// A collection of songs.
   public let songs: Songs
 
@@ -29,9 +29,9 @@ public struct MusicLibrarySearchResponse: Equatable, Hashable {
   }
 }
 
-extension MusicLibrarySearchResponse: Codable {
+extension MusadoraLibrarySearchResponse: Codable {
   public init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: MusicLibrarySearchType.self)
+    let container = try decoder.container(keyedBy: MusadoraLibrarySearchType.self)
 
     songs = try container.decodeIfPresent(Songs.self, forKey: .songs) ?? []
     artists = try container.decodeIfPresent(Artists.self, forKey: .artists) ?? []
@@ -41,7 +41,7 @@ extension MusicLibrarySearchResponse: Codable {
   }
 
   public func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: MusicLibrarySearchType.self)
+    var container = encoder.container(keyedBy: MusadoraLibrarySearchType.self)
 
     try container.encode(songs, forKey: .songs)
     try container.encode(artists, forKey: .artists)
@@ -51,7 +51,7 @@ extension MusicLibrarySearchResponse: Codable {
   }
 }
 
-extension MusicLibrarySearchResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MusadoraLibrarySearchResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
     var description = "MusicLibrarySearchResponse("
     let mirror = Mirror(reflecting: self)
@@ -61,7 +61,7 @@ extension MusicLibrarySearchResponse: CustomStringConvertible, CustomDebugString
     return description + "\n)"
   }
 
-  #warning("Figure out a better way to do this")
+#warning("Figure out a better way to do this")
   public var debugDescription: String {
     "MusicLibrarySearchResponse(\n\(songs.debugDescription),\n\(artists.debugDescription),\n\(albums.debugDescription),\n\(musicVideos.debugDescription),\(playlists.debugDescription)\n)"
   }
