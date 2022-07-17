@@ -1,9 +1,21 @@
+definitions:
+  scripts:
+    - &build_framework
+      name: Build framework
+      script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13'
+    - &test_framework
+      name: Test framework
+      script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
+      test_report: build/reports/junit.xml
+
 workflows:
   musadorakit-workflow:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
     environment:
-      xcode: edge
+      xcode: 14.0
+      vars:
+        XCODE_SCHEME: MusadoraKit
     triggering:
       events:
         - push
@@ -13,16 +25,15 @@ workflows:
           - "Sources/MusadoraKit/"
           - "Tests/MusadoraKitTests/"
     scripts:
-      - name: Build MusadoraKit
-        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 13'
-      - name: Test
-        script: xcodebuild -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
-        test_report: build/reports/junit.xml
+      - *build_framework
+      - *test_framework
   musadorlabskit-workflow:
     name: MusadoraLabsKit Workflow
     instance_type: mac_mini_m1
     environment:
-      xcode: edge
+      xcode: 14.0
+      vars:
+        XCODE_SCHEME: MusadoraLabsKit
     triggering:
       events:
         - push
@@ -32,8 +43,5 @@ workflows:
           - "Sources/MusadoraLabsKit/"
           - "Tests/MusadoraLabsKitTests/"
     scripts:
-      - name: Build MusadoraLabsKit
-        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 13'
-      - name: Test
-        script: xcodebuild -scheme MusadoraLabsKit -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
-        test_report: build/reports/junit.xml
+      - *build_framework
+      - *test_framework
