@@ -10,8 +10,8 @@ definitions:
   when:
     changeset: &change_set
       includes:
-        - "Sources/{$XCODE_SCHEME}/"
-        - "Tests/{$XCODE_SCHEME}Tests/"
+        - "Sources/${XCODE_SCHEME}/"
+        - "Tests/${XCODE_SCHEME}Tests/"
       excludes:
         - "**/*.md"
   scripts:
@@ -38,12 +38,6 @@ workflows:
     when:
       changeset: *change_set
     scripts:
-      - echo "Sources/{$XCODE_SCHEME}/"
-      - echo "Tests/{$XCODE_SCHEME}Tests/"
-      - echo "Sources/${XCODE_SCHEME}/"
-      - echo "Tests/${XCODE_SCHEME}Tests/"
-      - echo "Sources/$XCODE_SCHEME/"
-      - echo "Tests/$XCODE_SCHEMETests/"
       - *build_framework
       - *test_framework
   musadorlabskit-workflow:
