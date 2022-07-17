@@ -7,6 +7,11 @@ definitions:
     push: &push_event
       events:
         - push
+  when:
+    changeset: &change_set
+      includes:
+        - "Sources/%$XCODE_SCHEME%/"
+        - "Tests/%$XCODE_SCHEME%Tests/"
   scripts:
     - &build_framework
       name: Build framework
@@ -27,10 +32,7 @@ workflows:
     triggering:
       <<: *push_event
     when:
-      changeset:
-        includes:
-          - "Sources/MusadoraKit/"
-          - "Tests/MusadoraKitTests/"
+      changeset: *change_set
     scripts:
       - *build_framework
       - *test_framework
@@ -44,15 +46,12 @@ workflows:
     triggering:
       <<: *push_event
     when:
-      changeset:
-        includes:
-          - "Sources/MusadoraLabsKit/"
-          - "Tests/MusadoraLabsKitTests/"
+      changeset: *change_set
     scripts:
       - *build_framework
       - *test_framework
   musadorakit-workflow-old:
-    name: MusadoraKit Workflow
+    name: MusadoraKit Xcode 13 Workflow
     instance_type: mac_mini_m1
     environment:
       <<: *env_ver_13
@@ -61,15 +60,12 @@ workflows:
     triggering:
       <<: *push_event
     when:
-      changeset:
-        includes:
-          - "Sources/MusadoraKit/"
-          - "Tests/MusadoraKitTests/"
+      changeset: *change_set
     scripts:
       - *build_framework
       - *test_framework
   musadorlabskit-workflow-old:
-    name: MusadoraLabsKit Workflow
+    name: MusadoraLabsKit Xcode 13 Workflow
     instance_type: mac_mini_m1
     environment:
       <<: *env_ver_13
@@ -78,10 +74,7 @@ workflows:
     triggering:
       <<: *push_event
     when:
-      changeset:
-        includes:
-          - "Sources/MusadoraLabsKit/"
-          - "Tests/MusadoraLabsKitTests/"
+      changeset: *change_set
     scripts:
       - *build_framework
       - *test_framework
