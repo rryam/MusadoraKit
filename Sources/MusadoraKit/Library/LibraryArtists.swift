@@ -46,17 +46,17 @@ public extension MusadoraKit {
 
   static var libraryArtistsCount: Int {
     get async throws {
-      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
-        let request = MusicLibraryRequest<Artist>()
-        let response = try await request.response()
-        return response.items.count
+      //      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
+      //        let request = MusicLibraryRequest<Artist>()
+      //        let response = try await request.response()
+      //        return response.items.count
+      //      } else {
+      if let items = MPMediaQuery.artists().items {
+        return items.count
       } else {
-        if let items = MPMediaQuery.artists().items {
-          return items.count
-        } else {
-          throw MediaPlayError.notFound(for: "artists")
-        }
+        throw MediaPlayError.notFound(for: "artists")
       }
+      //      }
     }
   }
 }
