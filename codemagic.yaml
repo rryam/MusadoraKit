@@ -1,84 +1,52 @@
 definitions:
-  env_ver_13: &env_ver_13
-    xcode: 13.3.1
-  env_ver_14: &env_ver_14
-    xcode: 14.0
-  triggering:
-    push: &push_event
+  workflow: &base_workflow
+    instance_type: mac_mini_m1
+    triggering:
       events:
         - push
-  when:
-    changeset: &change_set
-      includes:
-        - "Sources/${XCODE_SCHEME}/"
-        - "Tests/${XCODE_SCHEME}Tests/"
-      excludes:
-        - "**/*.md"
-  scripts:
-    - &build_framework
-      name: Build framework
-      script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13'
-    - &test_framework
-      name: Test framework
-      script: |
-        set -o pipefail
-        xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
-      test_report: build/reports/junit.xml
+    when:
+      changeset:
+        includes:
+          - "Sources/${XCODE_SCHEME}/"
+          - "Tests/${XCODE_SCHEME}Tests/"
+        excludes:
+          - "**/*.md"
+    scripts:
+      - name: Build framework
+        script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13'
+      - name: Test framework
+        script: |
+          set -o pipefail
+          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
+        test_report: build/reports/junit.xml
 
 workflows:
-  musadorakit-workflow:
+  musadorakit:
+    <<: *base_workflow
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m1
     environment:
-      <<: *env_ver_14
+      xcode: 14.0
       vars:
         XCODE_SCHEME: MusadoraKit
-    triggering:
-      <<: *push_event
-    when:
-      changeset: *change_set
-    scripts:
-      - *build_framework
-      - *test_framework
-  musadorlabskit-workflow:
+  musadorlabskit:
+    <<: *base_workflow
     name: MusadoraLabsKit Workflow
-    instance_type: mac_mini_m1
     environment:
-      <<: *env_ver_14
+      xcode: 14.0
       vars:
         XCODE_SCHEME: MusadoraLabsKit
-    triggering:
-      <<: *push_event
-    when:
-      changeset: *change_set
-    scripts:
-      - *build_framework
-      - *test_framework
-  musadorakit-workflow-old:
+  musadorakit-old:
+    <<: *base_workflow
     name: MusadoraKit Xcode 13 Workflow
-    instance_type: mac_mini_m1
     environment:
-      <<: *env_ver_13
+      xcode: 13.3.1
       vars:
         XCODE_SCHEME: MusadoraKit
-    triggering:
-      <<: *push_event
-    when:
-      changeset: *change_set
-    scripts:
-      - *build_framework
-      - *test_framework
-  musadorlabskit-workflow-old:
+  musadorlabskit-old:
+    <<: *base_workflow
     name: MusadoraLabsKit Xcode 13 Workflow
-    instance_type: mac_mini_m1
     environment:
-      <<: *env_ver_13
+      xcode: 13.3.1
       vars:
         XCODE_SCHEME: MusadoraLabsKit
-    triggering:
-      <<: *push_event
-    when:
-      changeset: *change_set
-    scripts:
-      - *build_framework
-      - *test_framework
+
