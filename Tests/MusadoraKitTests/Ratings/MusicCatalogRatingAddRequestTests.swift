@@ -16,4 +16,11 @@ final class MusicCatalogRatingAddRequestTests: XCTestCase {
     let url = try request.catalogRatingsEndpointURL
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/ratings/albums?ids=1138988512")
   }
+
+  func testAddPersonalSongRatingEndpointURL() throws {
+    let id: MusicItemID = "907242702"
+    let request = MusicCatalogRatingRequest<Song>(matching: \.id, equalTo: id)
+    let url = try request.catalogRatingsEndpointURL
+    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/ratings/songs?ids=907242702")
+  }
 }
