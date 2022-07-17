@@ -40,6 +40,10 @@ workflows:
     scripts:
       - echo "Sources/{$XCODE_SCHEME}/"
       - echo "Tests/{$XCODE_SCHEME}Tests/"
+      - echo "Sources/${XCODE_SCHEME}/"
+      - echo "Tests/${XCODE_SCHEME}Tests/"
+      - echo "Sources/$XCODE_SCHEME/"
+      - echo "Tests/$XCODE_SCHEMETests/"
       - *build_framework
       - *test_framework
   musadorlabskit-workflow:
