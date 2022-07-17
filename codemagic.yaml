@@ -10,8 +10,8 @@ definitions:
   when:
     changeset: &change_set
       includes:
-        - "Sources/{$XCODE_SCHEME}/"
-        - "Tests/{$XCODE_SCHEME}Tests/"
+        - "Sources/$XCODE_SCHEME}"
+        - "Tests/$XCODE_SCHEMETests/"
   scripts:
     - &build_framework
       name: Build framework
