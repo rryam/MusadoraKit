@@ -18,7 +18,10 @@ definitions:
       script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13'
     - &test_framework
       name: Test framework
-      script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test
+      script: |
+        set -o pipefail
+        xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
+      test_report: build/reports/junit.xml
 
 workflows:
   musadorakit-workflow:
