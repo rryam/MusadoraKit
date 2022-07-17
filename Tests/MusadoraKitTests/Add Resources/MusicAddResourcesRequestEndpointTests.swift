@@ -20,12 +20,12 @@ class MusicAddResourcesRequestEndpointTests: XCTestCase {
   }
 
   func testAddPlaylistsToLibraryEndpointURL() throws {
-    let playlists: [MusicItemID] = ["1577502911", "1545146511"]
+    let playlists: [MusicItemID] = ["1577502911"]
 
     let request = MusicAddResourcesRequest([(item: .playlists, value: playlists)])
     let url = try request.addResourcesEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library?ids[playlists]=1577502911,1545146511")
+    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library?ids[playlists]=1577502911")
   }
 
   func testAddResourcesToLibraryEndpointURL() throws {
