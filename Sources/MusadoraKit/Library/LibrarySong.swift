@@ -59,4 +59,26 @@ public extension MusadoraKit {
       //    }
     }
   }
+
+  /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibrarySong.swift
+  /// Thanks @marcelmendesfilho!
+  /// Add a song to the user's library by using its identifier.
+  /// - Parameters:
+  ///   - id: The unique identifier for the song.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addSongToLibrary(id: MusicItemID) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .songs, value: [id])])
+    let response = try await request.response()
+    return response
+  }
+
+  /// Add multiple songs to the user's library by using their identifiers.
+  /// - Parameters:
+  ///   - ids: The unique identifiers for the songs.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addSongsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .songs, value: ids)])
+    let response = try await request.response()
+    return response
+  }
 }
