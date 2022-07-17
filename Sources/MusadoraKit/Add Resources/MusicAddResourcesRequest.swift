@@ -39,7 +39,8 @@ extension MusicAddResourcesRequest {
 
       for resource in resources {
         let values = resource.value.map { $0.rawValue }.joined(separator: ",")
-        queryItems.append(URLQueryItem(name: resource.item.type, value: values))
+        let query = URLQueryItem(name: resource.item.type, value: values)
+        queryItems.append(query)
       }
 
       components.queryItems = queryItems
