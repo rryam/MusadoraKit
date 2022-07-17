@@ -1,4 +1,12 @@
 definitions:
+  env_ver_13: &env_ver_13
+    xcode: 13.3.1
+  env_ver_14: &env_ver_14
+    xcode: 14.0
+  triggering:
+    push: &push_event
+      events:
+        - push
   scripts:
     - &build_framework
       name: Build framework
@@ -13,12 +21,11 @@ workflows:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
     environment:
-      xcode: 14.0
+      <<: *env_ver_14
       vars:
         XCODE_SCHEME: MusadoraKit
     triggering:
-      events:
-        - push
+      <<: *push_event
     when:
       changeset:
         includes:
@@ -31,12 +38,45 @@ workflows:
     name: MusadoraLabsKit Workflow
     instance_type: mac_mini_m1
     environment:
-      xcode: 14.0
+      <<: *env_ver_14
       vars:
         XCODE_SCHEME: MusadoraLabsKit
     triggering:
-      events:
-        - push
+      <<: *push_event
+    when:
+      changeset:
+        includes:
+          - "Sources/MusadoraLabsKit/"
+          - "Tests/MusadoraLabsKitTests/"
+    scripts:
+      - *build_framework
+      - *test_framework
+  musadorakit-workflow-old:
+    name: MusadoraKit Workflow
+    instance_type: mac_mini_m1
+    environment:
+      <<: *env_ver_13
+      vars:
+        XCODE_SCHEME: MusadoraKit
+    triggering:
+      <<: *push_event
+    when:
+      changeset:
+        includes:
+          - "Sources/MusadoraKit/"
+          - "Tests/MusadoraKitTests/"
+    scripts:
+      - *build_framework
+      - *test_framework
+  musadorlabskit-workflow-old:
+    name: MusadoraLabsKit Workflow
+    instance_type: mac_mini_m1
+    environment:
+      <<: *env_ver_13
+      vars:
+        XCODE_SCHEME: MusadoraLabsKit
+    triggering:
+      <<: *push_event
     when:
       changeset:
         includes:
