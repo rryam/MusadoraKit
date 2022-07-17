@@ -11,11 +11,11 @@ import MusicKit
 /// A request that your app uses to add one or more catalog resources to a user’s iCloud Music Library.
 /// You can add multiple types in the same request.
 public struct MusicAddResourcesRequest {
-  private var types: [LibraryMusicItemType: [MusicItemID]]
+  private var resources: [(item: LibraryMusicItemType, value: [MusicItemID])]
 
   /// Creates a request to add multiple resources to the user's iCloud Music Library using their identifiers.
-  public init(types: [LibraryMusicItemType: [MusicItemID]]) {
-    self.types = types
+  public init(_ resources: [(item: LibraryMusicItemType, value: [MusicItemID])]) {
+    self.resources = resources
   }
 
   /// Adds the given types to the user's iCloud Music Library and returns a successful/failure response.
@@ -37,9 +37,9 @@ extension MusicAddResourcesRequest {
       components.host = "api.music.apple.com"
       components.path = "/v1/me/library"
 
-      for (key, value) in types {
-        let values = value.map { $0.rawValue }.joined(separator: ",")
-        queryItems.append(URLQueryItem(name: key.type, value: values))
+      for resource in resources {
+        let values = resource.value.map { $0.rawValue }.joined(separator: ",")
+        queryItems.append(URLQueryItem(name: resource.item.type, value: values))
       }
 
       components.queryItems = queryItems

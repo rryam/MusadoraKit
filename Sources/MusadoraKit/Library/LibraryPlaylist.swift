@@ -59,4 +59,24 @@ public extension MusadoraKit {
       //      }
     }
   }
+
+  /// Add a playlist to the user's library by using its identifier.
+  /// - Parameters:
+  ///   - id: The unique identifier for the playlist.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .playlists, value: [id])])
+    let response = try await request.response()
+    return response
+  }
+
+  /// Add multiple playlists to the user's library by using their identifiers.
+  /// - Parameters:
+  ///   - ids: The unique identifiers for the playlists.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .playlists, value: ids)])
+    let response = try await request.response()
+    return response
+  }
 }

@@ -77,5 +77,26 @@ public extension MusadoraKit {
       }
     }
   }
-}
 
+  /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibraryAlbum.swift
+  /// Thanks @marcelmendesfilho!
+  /// Add an album to the user's library by using its identifier.
+  /// - Parameters:
+  ///   - id: The unique identifier for the album.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addAlbumToLibrary(id: MusicItemID) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .albums, value: [id])])
+    let response = try await request.response()
+    return response
+  }
+
+  /// Add multiple albums to the user's library by using their identifiers.
+  /// - Parameters:
+  ///   - ids: The unique identifiers for the albums.
+  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  static func addAlbumsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+    let request = MusicAddResourcesRequest([(item: .albums, value: ids)])
+    let response = try await request.response()
+    return response
+  }
+}
