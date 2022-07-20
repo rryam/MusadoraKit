@@ -14,7 +14,9 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Album` matching the given identifier.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   static func libraryAlbum(id: MusicItemID) async throws -> Album {
     var request = MusicLibraryRequest<Album>()
     request.filter(matching: \.id, equalTo: id)
@@ -42,7 +44,9 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  @available(iOS 16, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   static func libraryAlbums(limit: Int = 50) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
@@ -68,6 +72,8 @@ public extension MusadoraKit {
     return response.items
   }
 
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   static var libraryAlbumsCount: Int {
     get async throws {
       if let items = MPMediaQuery.albums().items {
