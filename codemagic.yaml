@@ -17,8 +17,8 @@ definitions:
       - name: Test framework
         script: |
           set -o pipefail
-          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report html
-        test_report: build/reports/tests.html
+          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
+        test_report: build/reports/junit.xml
 
 workflows:
   musadorakit:
