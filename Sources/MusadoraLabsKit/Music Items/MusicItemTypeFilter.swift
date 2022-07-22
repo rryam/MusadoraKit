@@ -10,3 +10,5 @@ import Foundation
 public protocol MusicItemTypeFilter {}
 
 extension SongPropertyType: MusicItemTypeFilter {}
+
+extension StationPropertyType: MusicItemTypeFilter {}

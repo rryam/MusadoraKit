@@ -9,7 +9,7 @@ import Foundation
 
 public typealias SongStructure = MusicItemStructure<SongPropertyType>
 
-public enum SongPropertyType: String, Codable {
+public enum SongPropertyType: String, SelfIdentifiable {
     // primary
     case id
     case title
@@ -54,8 +54,3 @@ public enum SongPropertyType: String, Codable {
     case workName
 }
 
-extension SongPropertyType: Identifiable {
-    public var id: Self {
-        self
-    }
-}
