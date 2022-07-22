@@ -17,8 +17,7 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
   static func catalogSong(id: MusicItemID,
-                          with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Song
-  {
+                          with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Song {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -29,14 +28,32 @@ public extension MusadoraKit {
     return song
   }
 
+#if compiler(>=5.7)
+  /// Fetch a song from the Apple Music catalog by using its identifier.
+  /// - Parameters:
+  ///   - id: The unique identifier for the song.
+  ///   - properties: Additional relationships to fetch with the song.
+  /// - Returns: `Song` matching the given identifier.
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func catalogSong(id: MusicItemID) async throws -> Song {
+    var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
+    request.properties = [.audioVariants, .albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
+    let response = try await request.response()
+
+    guard let song = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return song
+  }
+#endif
+
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
   static func catalogSongs(ids: [MusicItemID],
-                           with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs
-  {
+                           with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -51,8 +68,7 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
   static func catalogSong(isrc: String,
-                          with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs
-  {
+                          with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
@@ -67,8 +83,7 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
   static func catalogSongs(isrc: [String],
-                           with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs
-  {
+                           with properties: [PartialMusicAsyncProperty<Song>] = []) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()
