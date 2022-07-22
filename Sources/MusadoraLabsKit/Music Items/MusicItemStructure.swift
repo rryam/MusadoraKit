@@ -7,10 +7,19 @@
 
 import Foundation
 
-public typealias MusicItemTypeable = Codable & Identifiable & MusicItemTypeFilter & Hashable
+public protocol SelfIdentifiable: Hashable, Identifiable, Codable {}
+
+extension SelfIdentifiable {
+    public var id: Self {
+        self
+    }
+}
+
+public typealias MusicItemTypeable = SelfIdentifiable & MusicItemTypeFilter
 
 public struct MusicItemStructure<ItemType>: Codable where ItemType: MusicItemTypeable {
     public var name: String
     public var description: String
+    public var declaration: String
     public var properties: [MusicItemProperties<ItemType>]
 }

@@ -1,6 +1,6 @@
 //
-//  Song.swift
-//  Song
+//  SongDetail.swift
+//  SongDetail
 //
 //  Created by Rudrank Riyam on 22/07/22.
 //
@@ -52,9 +52,17 @@ extension Song {
             case .previewAssets:
                 return previewAssets?.description
             case .audioVariants:
-                return audioVariants?.description
+                if #available(macOS 13.0, *) {
+                    return audioVariants?.description
+                } else {
+                    return nil
+                }
             case .isAppleDigitalMaster:
-                return isAppleDigitalMaster?.description
+                if #available(macOS 13.0, *) {
+                    return isAppleDigitalMaster?.description
+                } else {
+                    return nil
+                }
             case .lastPlayedDate:
                 return lastPlayedDate?.description
             case .libraryAddedDate:

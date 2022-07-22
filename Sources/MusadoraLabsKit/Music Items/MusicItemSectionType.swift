@@ -7,15 +7,9 @@
 
 import Foundation
 
-public enum MusicItemSectionType: String, Codable {
+public enum MusicItemSectionType: String, SelfIdentifiable {
     case primary
     case secondary
     case relationships
     case classical
-}
-
-extension MusicItemSectionType: Identifiable {
-    public var id: Self {
-        self
-    }
 }
