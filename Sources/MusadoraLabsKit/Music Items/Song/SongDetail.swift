@@ -7,6 +7,7 @@
 
 import MusicKit
 
+#if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
@@ -94,3 +95,4 @@ extension Song {
         }
     }
 }
+#endif
