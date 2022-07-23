@@ -74,6 +74,8 @@ public extension MusadoraKit {
 
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
+  @available(tvOS, unavailable)
+  @available(watchOS, unavailable)
   static var libraryAlbumsCount: Int {
     get async throws {
       if let items = MPMediaQuery.albums().items {

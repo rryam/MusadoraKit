@@ -58,3 +58,16 @@ public extension MusadoraKit {
     return try JSONDecoder().decode(Genres.self, from: response.data)
   }
 }
+
+#if compiler(>=5.7)
+public extension MusadoraKit {
+  /// Fetch top genres from the Apple Music catalog.
+  /// - Returns: Top `Genres`.
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func catalogTopGenres() async throws -> Genres {
+    let request = MusicCatalogResourceRequest<Genre>()
+    let response = try await request.response()
+    return response.items
+  }
+}
+#endif

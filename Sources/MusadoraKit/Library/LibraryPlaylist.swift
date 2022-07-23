@@ -46,6 +46,8 @@ public extension MusadoraKit {
 
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
+  @available(tvOS, unavailable)
+  @available(watchOS, unavailable)
   static var libraryPlaylistsCount: Int {
     get async throws {
       //  if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {

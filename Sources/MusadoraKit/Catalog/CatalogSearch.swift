@@ -35,19 +35,19 @@ public enum MusicCatalogSearchType {
         return RecordLabel.self
 
       case .musicVideos:
-        if #available(iOS 15.4, *) {
+        if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) {
           return MusicVideo.self
         } else {
           return nil
         }
       case .curators:
-        if #available(iOS 15.4, *) {
+        if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) {
           return Curator.self
         } else {
           return nil
         }
       case .radioShows:
-        if #available(iOS 15.4, *) {
+        if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) {
           return RadioShow.self
         } else {
           return nil
