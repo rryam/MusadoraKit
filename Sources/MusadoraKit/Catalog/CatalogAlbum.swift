@@ -75,3 +75,15 @@ public extension MusadoraKit {
     return response.items
   }
 }
+
+extension Array where Element == PartialMusicAsyncProperty<Album> {
+  public static var all: Self {
+#if compiler(>=5.7)
+    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+      return [.artistURL, .genres, .artists, .audioVariants, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
+    }
+#else
+    return [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
+#endif
+  }
+}
