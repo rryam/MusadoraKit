@@ -8,6 +8,6 @@
 import Foundation
 
 public enum RatingsType: Int, Codable {
-  case loved = 1
-  case disliked = -1
+  case love = 1
+  case dislike = -1
 }
