@@ -44,6 +44,43 @@ public extension MusadoraKit {
     return response.items
   }
 
+#if compiler(>=5.7)
+  /// Fetch a song from the user's library by using its identifier from the local database.
+  /// - Parameters:
+  ///   - id: The unique identifier for the song.
+  /// - Returns: `Song` matching the given identifier.
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func localLibrarySong(id: MusicItemID) async throws -> Song {
+    var request = MusicLibraryRequest<Song>()
+    request.filter(matching: \.id, equalTo: id)
+    let response = try await request.response()
+
+    guard let song = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return song
+  }
+
+  /// Fetch a song from the user's library by using its identifier with all properties from the local database.
+  /// - Parameters:
+  ///   - id: The unique identifier for the song.
+  /// - Returns: `Song` matching the given identifier.
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func localLibrarySong(
+    id: MusicItemID,
+    with properties: [PartialMusicAsyncProperty<Song>] = .all
+  ) async throws -> Song {
+    var request = MusicLibraryRequest<Song>()
+    request.filter(matching: \.id, equalTo: id)
+    let response = try await request.response()
+
+    guard let song = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return try await song.with(properties)
+  }
+#endif
+
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
@@ -71,7 +108,8 @@ public extension MusadoraKit {
   ///   - id: The unique identifier for the song.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addSongToLibrary(id: MusicItemID) async throws -> Bool {
-    let request = MusicAddResourcesRequest([(item: .songs, value: [id])])
+    let song: SongResource = (item: .songs, value: [id])
+    let request = MusicAddResourcesRequest([song])
     let response = try await request.response()
     return response
   }
@@ -81,7 +119,8 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addSongsToLibrary(ids: [MusicItemID]) async throws -> Bool {
-    let request = MusicAddResourcesRequest([(item: .songs, value: ids)])
+    let songs: SongResource = (item: .songs, value: ids)
+    let request = MusicAddResourcesRequest([songs])
     let response = try await request.response()
     return response
   }
