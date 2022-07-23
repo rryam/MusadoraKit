@@ -67,11 +67,10 @@ public extension MusadoraKit {
   static func catalogSearch(for term: String,
                             types: [MusicCatalogSearchType],
                             limit: Int? = nil,
-                            offset: Int? = nil,
-                            includeTopResults: Bool = true) async throws -> MusicCatalogSearchResponse {
+                            offset: Int? = nil) async throws -> MusicCatalogSearchResponse {
     let searchTypes = types.compactMap { $0.type }
     var request = MusicCatalogSearchRequest(term: term, types: searchTypes)
-    request.includeTopResults = includeTopResults
+    // request.includeTopResults = includeTopResults /// Waiting for Beta 4 for it to be fixed.
     request.limit = limit
     request.offset = offset
     let response = try await request.response()
