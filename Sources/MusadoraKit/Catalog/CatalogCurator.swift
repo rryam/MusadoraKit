@@ -21,10 +21,24 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the curator.
   /// - Returns: `Curator` matching the given identifier.
   static func catalogCurator(id: MusicItemID,
-                             with properties: [PartialMusicAsyncProperty<Curator>] = []) async throws -> Curator
-  {
+                             with properties: [PartialMusicAsyncProperty<Curator>] = []) async throws -> Curator {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, equalTo: id)
     request.properties = properties
+    let response = try await request.response()
+
+    guard let curator = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return curator
+  }
+
+  /// Fetch a curator from the Apple Music catalog by using its identifier with all properties.
+  /// - Parameters:
+  ///   - id: The unique identifier for the curator.
+  /// - Returns: `Curator` matching the given identifier.
+  static func catalogCurator(id: MusicItemID) async throws -> Curator {
+    var request = MusicCatalogResourceRequest<Curator>(matching: \.id, equalTo: id)
+    request.properties = .all
     let response = try await request.response()
 
     guard let curator = response.items.first else {
@@ -43,6 +57,17 @@ public extension MusadoraKit {
   {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, memberOf: ids)
     request.properties = properties
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch multiple curators from the Apple Music catalog by using their identifiers with all properties.
+  /// - Parameters:
+  ///   - ids: The unique identifiers for the curators.
+  /// - Returns: `Curators` matching the given identifiers.
+  static func catalogCurators(ids: [MusicItemID]) async throws -> Curators {
+    var request = MusicCatalogResourceRequest<Curator>(matching: \.id, memberOf: ids)
+    request.properties = .all
     let response = try await request.response()
     return response.items
   }
