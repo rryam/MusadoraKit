@@ -75,3 +75,9 @@ public extension MusadoraKit {
     return response.items
   }
 }
+
+extension Array where Element == PartialMusicAsyncProperty<MusicVideo> {
+  public static var all: Self {
+    [.albums, .genres, .artists, .artistURL, .moreInGenre, .songs, .moreByArtist]
+  }
+}

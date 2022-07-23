@@ -90,9 +90,14 @@ public extension MusadoraKit {
   }
 }
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension Array where Element == PartialMusicAsyncProperty<Song> {
   public static var all: Self {
-    [.audioVariants, .albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
+#if compiler(>=5.7)
+    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+      return [.audioVariants, .albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
+    }
+#else
+    return [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
+#endif
   }
 }
