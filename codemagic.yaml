@@ -1,6 +1,6 @@
 definitions:
   workflow: &base_workflow
-    instance_type: mac_mini_m1
+    instance_type: mac_pro
     triggering:
       events:
         - push
