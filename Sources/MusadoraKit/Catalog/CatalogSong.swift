@@ -29,10 +29,9 @@ public extension MusadoraKit {
   }
 
 #if compiler(>=5.7)
-  /// Fetch a song from the Apple Music catalog by using its identifier.
+  /// Fetch a song from the Apple Music catalog by using its identifier with all properties.
   /// - Parameters:
   ///   - id: The unique identifier for the song.
-  ///   - properties: Additional relationships to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
   static func catalogSong(id: MusicItemID) async throws -> Song {
