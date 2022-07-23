@@ -6,9 +6,6 @@ definitions:
         - push
     when:
       changeset:
-        includes:
-          - "Sources/${XCODE_SCHEME}/"
-          - "Tests/${XCODE_SCHEME}Tests/"
         excludes:
           - "**/*.md"
     scripts:
@@ -49,4 +46,3 @@ workflows:
       xcode: 13.3.1
       vars:
         XCODE_SCHEME: MusadoraLabsKit
-
