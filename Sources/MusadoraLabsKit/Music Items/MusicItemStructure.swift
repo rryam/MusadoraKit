@@ -7,14 +7,6 @@
 
 import Foundation
 
-public protocol SelfIdentifiable: Hashable, Identifiable, Codable {}
-
-extension SelfIdentifiable {
-    public var id: Self {
-        self
-    }
-}
-
 public typealias MusicItemTypeable = SelfIdentifiable & MusicItemTypeFilter
 
 public struct MusicItemStructure<ItemType>: Codable where ItemType: MusicItemTypeable {
