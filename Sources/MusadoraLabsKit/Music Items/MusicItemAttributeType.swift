@@ -7,15 +7,9 @@
 
 import Foundation
 
-public enum MusicItemAttributeType: String {
+
+public enum MusicItemAttributeType: String, TypeIterable {
   case contentRating
   case editorialNotes
   case previewAsset
 }
-
-extension MusicItemAttributeType: Capitalizable {}
-
-extension MusicItemAttributeType: CaseIterable {}
-
-extension MusicItemAttributeType: SelfIdentifiable {}
-
