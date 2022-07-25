@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Capitalizable: RawRepresentable, CustomStringConvertible where RawValue == String {}
+public protocol Capitalizable: RawRepresentable, CustomStringConvertible where RawValue == String {}
 
 extension Capitalizable {
   public var description: String {
