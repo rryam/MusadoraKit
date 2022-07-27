@@ -125,3 +125,22 @@ public extension MusadoraKit {
     return response
   }
 }
+
+#if compiler(>=5.7)
+public extension MusadoraKit {
+  /// Fetch recently added songs from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of songs returned.
+  /// - Returns: `Songs` for the given limit.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func recentlyAddedSongs(limit: Int = 10) async throws -> Songs {
+    var request = MusicLibraryRequest<Song>()
+    request.limit = limit
+    request.sort(by: \.libraryAddedDate, ascending: true)
+    let response = try await request.response()
+    return response.items
+  }
+}
+#endif
