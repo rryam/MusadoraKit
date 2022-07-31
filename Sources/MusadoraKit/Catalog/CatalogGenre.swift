@@ -15,13 +15,9 @@ public extension MusadoraKit {
   /// Fetch a genre from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the genre.
-  ///   - properties: Additional relationships to fetch with the genre.
   /// - Returns: `Genre` matching the given identifier.
-  static func catalogGenre(id: MusicItemID,
-                           with properties: [PartialMusicAsyncProperty<Genre>] = []) async throws -> Genre
-  {
-    var request = MusicCatalogResourceRequest<Genre>(matching: \.id, equalTo: id)
-    request.properties = properties
+  static func catalogGenre(id: MusicItemID) async throws -> Genre {
+    let request = MusicCatalogResourceRequest<Genre>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
     guard let genre = response.items.first else {
@@ -33,22 +29,19 @@ public extension MusadoraKit {
   /// Fetch multiple genres from the Apple Music catalog by using their identifiers.
   /// - Parameters:
   ///   - ids: The unique identifiers for the genres.
-  ///   - properties: Additional relationships to fetch with the genres.
   /// - Returns: `Genres` matching the given identifiers.
-  static func catalogGenres(ids: [MusicItemID],
-                            with properties: [PartialMusicAsyncProperty<Genre>] = []) async throws -> Genres
-  {
-    var request = MusicCatalogResourceRequest<Genre>(matching: \.id, memberOf: ids)
-    request.properties = properties
+  static func catalogGenres(ids: [MusicItemID]) async throws -> Genres {
+    let request = MusicCatalogResourceRequest<Genre>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
 
   static func catalogTopChartsGenres() async throws -> Genres {
     let countryCode = try await MusicDataRequest.currentCountryCode
-    let genreURL = "https://api.music.apple.com/v1/catalog/\(countryCode)/genres"
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(countryCode)/genres"
 
-    guard let url = URL(string: genreURL) else {
+    guard let url = components.url else {
       throw URLError(.badURL)
     }
 

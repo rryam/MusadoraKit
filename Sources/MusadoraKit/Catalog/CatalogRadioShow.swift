@@ -12,6 +12,16 @@ import MusicKit
 @available(watchOS, unavailable)
 public typealias RadioShows = MusicItemCollection<RadioShow>
 
+/// Additional property/relationship of a radio show.
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
+@available(watchOS, unavailable)
+public typealias RadioShowProperty = PartialMusicAsyncProperty<RadioShow>
+
+/// Additional properties/relationships of a radio show.
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
+@available(watchOS, unavailable)
+public typealias RadioShowProperties = [RadioShowProperty]
+
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public extension MusadoraKit {
@@ -20,8 +30,7 @@ public extension MusadoraKit {
   ///   - id: The unique identifier for the radio show.
   ///   - properties: Additional relationships to fetch with the radio show.
   /// - Returns: `RadioShow` matching the given identifier.
-  static func catalogRadioShow(id: MusicItemID,
-                               with properties: [PartialMusicAsyncProperty<RadioShow>] = []) async throws -> RadioShow {
+  static func catalogRadioShow(id: MusicItemID, with properties: RadioShowProperties = []) async throws -> RadioShow {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -52,8 +61,7 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the radio shows.
   ///   - properties: Additional relationships to fetch with the radio shows.
   /// - Returns: `RadioShows` matching the given identifiers.
-  static func catalogCurators(ids: [MusicItemID],
-                              with properties: [PartialMusicAsyncProperty<RadioShow>] = []) async throws -> RadioShows {
+  static func catalogCurators(ids: [MusicItemID], with properties: RadioShowProperties = []) async throws -> RadioShows {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -74,7 +82,7 @@ public extension MusadoraKit {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
-extension Array where Element == PartialMusicAsyncProperty<RadioShow> {
+extension Array where Element == RadioShowProperty {
   public static var all: Self {
     [.playlists]
   }
