@@ -14,13 +14,13 @@ public typealias Songs = MusicItemCollection<Song>
 public typealias SongProperty = PartialMusicAsyncProperty<Song>
 
 /// Additional properties/relationships of a song.
-public typealias SongProperties = [PartialMusicAsyncProperty<Song>]
+public typealias SongProperties = [SongProperty]
 
 public extension MusadoraKit {
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
   ///
-  /// In the following example, the method fetched the details of the song **Me, Myself & I** by G-Eazy
+  /// In the following example, the method fetches the details of the song **Me, Myself & I** by G-Eazy
   /// with the ID `1544326470` without any additional properties, nor relationships:
   ///
   ///     let id: MusicItemID = "1544326470"
@@ -42,7 +42,7 @@ public extension MusadoraKit {
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
   ///
-  /// In the following example, the method fetched the details of the song **bad guy** by Billie Eilish
+  /// In the following example, the method fetches the details of the song **bad guy** by Billie Eilish
   /// with the ID `1544326470` with a single relationship `artists`:
   ///
   ///     let id: MusicItemID = "1450695739"

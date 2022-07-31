@@ -12,6 +12,16 @@ import MusicKit
 @available(watchOS, unavailable)
 public typealias Curators = MusicItemCollection<Curator>
 
+/// Additional property/relationship of an artist.
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
+@available(watchOS, unavailable)
+public typealias CuratorProperty = PartialMusicAsyncProperty<Curator>
+
+/// Additional properties/relationships of an artist.
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
+@available(watchOS, unavailable)
+public typealias CuratorProperties = [CuratorProperty]
+
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
 public extension MusadoraKit {
@@ -20,8 +30,7 @@ public extension MusadoraKit {
   ///   - id: The unique identifier for the curator.
   ///   - properties: Additional relationships to fetch with the curator.
   /// - Returns: `Curator` matching the given identifier.
-  static func catalogCurator(id: MusicItemID,
-                             with properties: [PartialMusicAsyncProperty<Curator>] = []) async throws -> Curator {
+  static func catalogCurator(id: MusicItemID, with properties: CuratorProperties = []) async throws -> Curator {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -52,9 +61,7 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the curators.
   ///   - properties: Additional relationships to fetch with the curators.
   /// - Returns: `Curators` matching the given identifiers.
-  static func catalogCurators(ids: [MusicItemID],
-                              with properties: [PartialMusicAsyncProperty<Curator>] = []) async throws -> Curators
-  {
+  static func catalogCurators(ids: [MusicItemID], with properties: CuratorProperties = []) async throws -> Curators {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -75,7 +82,7 @@ public extension MusadoraKit {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
-extension Array where Element == PartialMusicAsyncProperty<Curator> {
+extension Array where Element == CuratorProperty {
   public static var all: Self {
     [.playlists]
   }
