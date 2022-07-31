@@ -53,12 +53,9 @@ public struct MusadoraLibrarySearchRequest: Equatable, Hashable, Sendable {
 extension MusadoraLibrarySearchRequest {
   private var librarySearchEndpointURL: URL {
     get throws {
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/library/search"
+      components.path = "me/library/search"
 
       let termValue = term.replacingOccurrences(of: " ", with: "+")
       let termQuery = URLQueryItem(name: "term", value: termValue)

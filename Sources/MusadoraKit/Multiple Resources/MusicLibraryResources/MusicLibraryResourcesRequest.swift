@@ -31,12 +31,9 @@ public struct MusicLibraryResourcesRequest {
 extension MusicLibraryResourcesRequest {
   private var multipleLibraryResourcesEndpointURL: URL {
     get throws {
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/library"
+      components.path = "me/library"
 
       for (key, value) in types {
         let values = value.map { $0.rawValue }.joined(separator: ",")

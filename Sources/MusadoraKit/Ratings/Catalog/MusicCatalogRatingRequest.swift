@@ -142,12 +142,9 @@ extension MusicCatalogRatingRequest {
         throw RatingsError.typeMissing
       }
 
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem]?
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/ratings/\(type.rawValue)"
+      components.path = "me/ratings/\(type.rawValue)"
 
       if ids.isEmpty {
         throw RatingsError.idMissing

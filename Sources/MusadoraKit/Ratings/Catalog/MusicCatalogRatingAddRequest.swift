@@ -51,17 +51,12 @@ extension MusicCatalogRatingAddRequest {
 
   internal var catalogAddRatingsEndpointURL: URL {
     get throws {
-      guard let type = type else { throw URLError(.badURL) }
-
-      var components = URLComponents()
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/ratings/"
-
-      if let id = id {
-        components.path += "\(type.rawValue)/\(id)"
+      guard let type = type, let id = id else {
+        throw URLError(.badURL)
       }
+
+      var components = AppleMusicURLComponents()
+      components.path = "me/ratings/\(type.rawValue)/\(id)"
 
       guard let url = components.url else {
         throw URLError(.badURL)
