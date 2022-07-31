@@ -108,7 +108,7 @@ public struct MusicHistoryRequest {
 }
 
 extension MusicHistoryRequest {
-  var historyEndpointURL: URL {
+  internal var historyEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
       components.path = "me/\(endpoint.path)"

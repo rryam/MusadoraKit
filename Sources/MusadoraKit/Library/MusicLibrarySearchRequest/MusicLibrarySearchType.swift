@@ -15,15 +15,19 @@ enum MusadoraLibrarySearchType: String, CodingKey {
   case playlists = "library-playlists"
 
   static func getTypes(_ types: [MusadoraLibrarySearchable.Type]) -> String {
-    Set(types.map { $0.searchIdentifier }).compactMap {
-      switch $0 {
-      case Song.searchIdentifier: return songs.rawValue
-      case Album.searchIdentifier: return albums.rawValue
-      case MusicVideo.searchIdentifier: return musicVideos.rawValue
-      case Playlist.searchIdentifier: return playlists.rawValue
-      case Artist.searchIdentifier: return artists.rawValue
-      default: return nil
+    types
+      .map { $0.searchIdentifier }
+      .removeDuplicates()
+      .compactMap {
+        switch $0 {
+          case Song.searchIdentifier: return songs.rawValue
+          case Album.searchIdentifier: return albums.rawValue
+          case MusicVideo.searchIdentifier: return musicVideos.rawValue
+          case Playlist.searchIdentifier: return playlists.rawValue
+          case Artist.searchIdentifier: return artists.rawValue
+          default: return nil
+        }
       }
-    }.joined(separator: ",")
+      .joined(separator: ",")
   }
 }
