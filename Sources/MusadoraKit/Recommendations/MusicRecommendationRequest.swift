@@ -69,12 +69,9 @@ public struct MusicRecommendationRequest {
 extension MusicRecommendationRequest {
   var recommendationEndpointURL: URL {
     get throws {
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem]?
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/recommendations"
+      components.path = "me/recommendations"
 
       if let ids = ids {
         queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]

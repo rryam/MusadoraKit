@@ -12,7 +12,7 @@ extension MusadoraLabsKit {
   var url: URL {
     get async throws {
       var components = URLComponents()
-      components.scheme = "https"
+      
       components.host = "api.music.apple.com"
       components.path = library.path
 

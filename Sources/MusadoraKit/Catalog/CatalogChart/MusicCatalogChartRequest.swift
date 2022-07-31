@@ -63,12 +63,9 @@ extension MusicCatalogChartRequest {
     get async throws {
       let storefront = try await MusicDataRequest.currentCountryCode
 
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/catalog/\(storefront)/charts"
+      components.path = "catalog/\(storefront)/charts"
 
       queryItems.append(URLQueryItem(name: "types", value: types))
 

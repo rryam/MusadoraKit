@@ -37,12 +37,9 @@ extension MusicCatalogResourcesRequest {
     get async throws {
       let storefront = try await MusicDataRequest.currentCountryCode
 
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/catalog/\(storefront)"
+      components.path = "catalog/\(storefront)"
 
       for (key, value) in types {
         let values = value.map { $0.rawValue }.joined(separator: ",")

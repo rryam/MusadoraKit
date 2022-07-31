@@ -60,10 +60,8 @@ extension MusicCatalogSuggestionsRequest {
       let kinds = Set(kinds.map { $0.rawValue }).joined(separator: ",")
 
       var queryItems: [URLQueryItem] = []
-      var components = URLComponents()
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/catalog/\(storefront)/search/suggestions"
+      var components = AppleMusicURLComponents()
+      components.path = "catalog/\(storefront)/search/suggestions"
 
       queryItems.append(URLQueryItem(name: "kinds", value: kinds))
       queryItems.append(URLQueryItem(name: "term", value: term))

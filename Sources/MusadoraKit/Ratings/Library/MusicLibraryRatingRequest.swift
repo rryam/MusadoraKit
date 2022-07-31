@@ -125,13 +125,9 @@ extension MusicLibraryRatingRequest {
     get throws {
       guard let type = type else { throw URLError(.badURL) }
 
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem]?
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/ratings/"
-      components.path += type.rawValue
+      components.path = "me/ratings/\(type.rawValue)"
 
       if let ids = ids {
         queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]

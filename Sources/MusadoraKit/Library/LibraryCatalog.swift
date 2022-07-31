@@ -11,23 +11,19 @@ import MusicKit
 public extension FilterableLibraryItem {
   var catalog: Self {
     get async throws {
-      var components = URLComponents()
       let path: LibraryMusicItemType
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/library/"
+      var components = AppleMusicURLComponents()
 
       switch self {
-      case is Song: path = .songs
-      case is Album: path = .albums
-      case is Artist: path = .artists
-      case is MusicVideo: path = .musicVideos
-      case is Playlist: path = .playlists
-      default: throw NSError(domain: "Wrong library music item type.", code: 0)
+        case is Song: path = .songs
+        case is Album: path = .albums
+        case is Artist: path = .artists
+        case is MusicVideo: path = .musicVideos
+        case is Playlist: path = .playlists
+        default: throw NSError(domain: "Wrong library music item type.", code: 0)
       }
 
-      components.path += "\(path.rawValue)/\(id.rawValue)/catalog"
+      components.path = "me/library/\(path.rawValue)/\(id.rawValue)/catalog"
 
       guard let url = components.url else {
         throw URLError(.badURL)

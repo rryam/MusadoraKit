@@ -32,12 +32,9 @@ public struct MusicAddResourcesRequest {
 extension MusicAddResourcesRequest {
   var addResourcesEndpointURL: URL {
     get throws {
-      var components = URLComponents()
+      var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/library"
+      components.path = "me/library"
 
       for resource in resources {
         let values = resource.value.map { $0.rawValue }.joined(separator: ",")

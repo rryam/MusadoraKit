@@ -110,12 +110,8 @@ public struct MusicHistoryRequest {
 extension MusicHistoryRequest {
   var historyEndpointURL: URL {
     get throws {
-      var components = URLComponents()
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/"
-      components.path += endpoint.path
+      var components = AppleMusicURLComponents()
+      components.path = "me/\(endpoint.path)"
 
       if let limit = limit {
         guard limit <= maximumLimit else {

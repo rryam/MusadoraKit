@@ -32,27 +32,22 @@ public struct MusicCatalogRatingDeleteRequest<MusicItemType> where MusicItemType
 extension MusicCatalogRatingDeleteRequest {
   private mutating func setType() {
     switch MusicItemType.self {
-    case is Song.Type: type = .songs
-    case is Album.Type: type = .albums
-    case is MusicVideo.Type: type = .musicVideos
-    case is Playlist.Type: type = .playlists
-    default: type = nil
+      case is Song.Type: type = .songs
+      case is Album.Type: type = .albums
+      case is MusicVideo.Type: type = .musicVideos
+      case is Playlist.Type: type = .playlists
+      default: type = nil
     }
   }
 
   internal var catalogDeleteRatingsEndpointURL: URL {
     get throws {
-      guard let type = type else { throw URLError(.badURL) }
-
-      var components = URLComponents()
-
-      components.scheme = "https"
-      components.host = "api.music.apple.com"
-      components.path = "/v1/me/ratings/"
-
-      if let id = id {
-        components.path += "\(type.rawValue)/\(id)"
+      guard let type = type, let id = id else {
+        throw URLError(.badURL)
       }
+
+      var components = AppleMusicURLComponents()
+      components.path = "me/ratings/\(type.rawValue)/\(id)"
 
       guard let url = components.url else {
         throw URLError(.badURL)
