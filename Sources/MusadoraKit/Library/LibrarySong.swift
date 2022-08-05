@@ -13,7 +13,33 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
+  ///
+  /// - Note: This method fetches the song locally from the device when using iOS 16+
+  ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
+  ///  iOS 15 uses the custom structure `MusicLibraryResourceRequest` that
+  ///  fetches the data from Apple Music API.
   static func librarySong(id: MusicItemID) async throws -> Song {
+#if compiler(>=5.7)
+    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Song>()
+      request.filter(matching: \.id, equalTo: id)
+      let response = try await request.response()
+
+      guard let song = response.items.first else {
+        throw MusadoraKitError.notFound(for: id.rawValue)
+      }
+      return song
+    } else {
+      return try await fetchLibrarySong(id: id)
+    }
+#else
+    return try await fetchLibrarySong(id: id)
+#endif
+  }
+}
+
+public extension MusadoraKit {
+  static private func fetchLibrarySong(id: MusicItemID) async throws -> Song {
     let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -22,7 +48,9 @@ public extension MusadoraKit {
     }
     return song
   }
+}
 
+public extension MusadoraKit {
   /// Fetch all songs from the user's library in alphabetical order.
   /// - Parameters:
   ///   - limit: The number of songs returned.
@@ -45,31 +73,12 @@ public extension MusadoraKit {
   }
 
 #if compiler(>=5.7)
-  /// Fetch a song from the user's library by using its identifier from the local database.
-  /// - Parameters:
-  ///   - id: The unique identifier for the song.
-  /// - Returns: `Song` matching the given identifier.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  static func localLibrarySong(id: MusicItemID) async throws -> Song {
-    var request = MusicLibraryRequest<Song>()
-    request.filter(matching: \.id, equalTo: id)
-    let response = try await request.response()
-
-    guard let song = response.items.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return song
-  }
-
   /// Fetch a song from the user's library by using its identifier with all properties from the local database.
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  static func localLibrarySong(
-    id: MusicItemID,
-    with properties: [PartialMusicAsyncProperty<Song>] = .all
-  ) async throws -> Song {
+  static func localLibrarySong(id: MusicItemID, with properties: SongProperties = .all) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()

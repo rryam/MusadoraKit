@@ -16,33 +16,33 @@ public protocol FilterableLibraryItem: MusicItem, Decodable {
 }
 
 /// Album properties your app uses as a filter for a library resource request.
-public protocol AlbumLibraryFilter {
+public struct AlbumLibraryFilter {
   /// The unique identifier for the album.
-  var id: MusicItemID { get }
+  public var id: MusicItemID
 }
 
 /// Song properties your app uses as a filter for a library resource request.
-public protocol SongLibraryFilter {
+public struct SongLibraryFilter {
   /// The unique identifier for the song.
-  var id: MusicItemID { get }
+  public var id: MusicItemID
 }
 
 /// Artist properties your app uses as a filter for a library resource request.
-public protocol ArtistLibraryFilter {
+public struct ArtistLibraryFilter {
   /// The unique identifier for the artist.
-  var id: MusicItemID { get }
+  public var id: MusicItemID
 }
 
 /// Playlist properties your app uses as a filter for a library resource request.
-public protocol PlaylistLibraryFilter {
+public struct PlaylistLibraryFilter {
   /// The unique identifier for the playlist.
-  var id: MusicItemID { get }
+  public var id: MusicItemID
 }
 
 /// Music video properties your app uses as a filter for a library resource request.
-public protocol MusicVideoLibraryFilter {
+public struct MusicVideoLibraryFilter {
   /// The unique identifier for the music video.
-  var id: MusicItemID { get }
+  public var id: MusicItemID
 }
 
 /// Album properties your app uses as a filter for a library resource request.

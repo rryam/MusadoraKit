@@ -232,7 +232,7 @@ extension MusadoraKit {
 }
 
 extension Array where Element == SongProperty {
-  public static var all: Self {
+  public static var all: SongProperties {
     var properties: SongProperties = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
 #if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {

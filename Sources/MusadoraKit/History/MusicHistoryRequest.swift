@@ -31,6 +31,26 @@ public extension MusadoraKit {
     return response.items
   }
 
+  /// Fetch the recently played albums for the user.
+  /// - Parameter limit: The number of objects returned.
+  /// - Returns: A collection of albums.
+  static func recentlyPlayedAlbums(limit: Int? = nil) async throws -> Albums {
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
+    request.limit = limit
+    let response = try await request.response()
+    return response.albums
+  }
+
+  /// Fetch the recently played playlists for the user.
+  /// - Parameter limit: The number of objects returned.
+  /// - Returns: A collection of albums.
+  static func recentlyPlayedPlaylists(limit: Int? = nil) async throws -> Playlists {
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
+    request.limit = limit
+    let response = try await request.response()
+    return response.playlists
+  }
+
   /// Fetch the resources in heavy rotation for the user.
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
