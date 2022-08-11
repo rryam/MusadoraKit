@@ -20,7 +20,7 @@ public extension MusadoraKit {
 #if compiler(>=5.7)
 public extension MusadoraKit {
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  static func recommendations(limit: Int? = nil) async throws -> MusicItemCollection<MusicPersonalRecommendation> {
+  static func personalRecommendations(limit: Int? = nil) async throws -> MusicItemCollection<MusicPersonalRecommendation> {
     var request = MusicPersonalRecommendationsRequest()
     request.limit = limit
     let response = try await request.response()
