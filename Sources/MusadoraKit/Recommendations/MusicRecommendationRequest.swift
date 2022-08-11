@@ -15,6 +15,32 @@ public extension MusadoraKit {
     let response = try await request.response()
     return response.items
   }
+
+  static func recommendationPlaylists(limit: Int? = nil) async throws -> Playlists {
+    var request = MusicRecommendationRequest()
+    request.limit = limit
+    let response = try await request.response()
+
+    return MusicItemCollection(response.items.compactMap { item in
+      item.contents.compactMap { content in
+        guard case let .playlist(playlist) = content else { return nil }
+        return playlist
+      }
+    }.joined())
+  }
+
+  static func recommendationAlbums(limit: Int? = nil) async throws -> Albums {
+    var request = MusicRecommendationRequest()
+    request.limit = limit
+    let response = try await request.response()
+
+    return MusicItemCollection(response.items.compactMap { item in
+      item.contents.compactMap { content in
+        guard case let .album(album) = content else { return nil }
+        return album
+      }
+    }.joined())
+  }
 }
 
 #if compiler(>=5.7)
