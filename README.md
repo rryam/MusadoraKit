@@ -18,6 +18,11 @@ Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing a
 
 You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](exploringmusickit.com) or by [buying me a book](https://www.buymeacoffee.com/rudrank)! 
 
+## Apps Using MusadoraKit
+
+- Musadora - Apple Music client focused on playlists
+- Musadora Labs - A companion app to explore MusicKit
+
 ## Catalog 
 
 To easily access the Apple Music Catalog, you can use pre-defined methods from MusadoraKit. The method are similar across the music items. 
