@@ -1,6 +1,6 @@
 //
-//  Recommendation.swift
-//  Recommendation
+//  MusicRecommendation.swift
+//  MusicRecommendation
 //
 //  Created by Rudrank Riyam on 02/04/22.
 //
@@ -9,26 +9,23 @@ import Foundation
 import MusicKit
 
 /// A collection of recommendations.
-public typealias Recommendations = MusicItemCollection<Recommendation>
+public typealias MusicRecommendations = MusicItemCollection<MusicRecommendation>
 
 /// An object that represents recommended resources for a user calculated using their selected preferences.
-public struct Recommendation: Codable, MusicItem {
-  /// The identifier for the recommendation.
+public struct MusicRecommendation: Codable, MusicItem {
+
+  /// The unique identifier for the recommendation.
   public let id: MusicItemID
 
   /// The localized title for the recommendation.
-  public let title: String
-
-  /// The contents associated with the content recommendation type.
-  /// It is a collection of `UserMusicItem` that are a mixture of albums, playlists and stations.
-  public let contents: UserMusicItems
+  public let title: String?
 
   /// The next date in UTC format for updating the recommendation.
-  public let nextUpdate: Date
+  public let nextRefreshDate: Date?
 
   /// A collection of recommended albums.
   public var albums: Albums {
-    MusicItemCollection(contents.compactMap { item in
+    MusicItemCollection(items.compactMap { item in
       guard case let .album(album) = item else { return nil }
       return album
     })
@@ -36,7 +33,7 @@ public struct Recommendation: Codable, MusicItem {
 
   /// A collection of recommended playlists.
   public var playlists: Playlists {
-    MusicItemCollection(contents.compactMap { item in
+    MusicItemCollection(items.compactMap { item in
       guard case let .playlist(playlist) = item else { return nil }
       return playlist
     })
@@ -44,14 +41,18 @@ public struct Recommendation: Codable, MusicItem {
 
   /// A collection of recommended stations.
   public var stations: Stations {
-    MusicItemCollection(contents.compactMap { item in
+    MusicItemCollection(items.compactMap { item in
       guard case let .station(station) = item else { return nil }
       return station
     })
   }
+
+  /// The contents associated with the content recommendation type.
+  /// It is a collection of `UserMusicItem` that are a mixture of albums, playlists and stations.
+  public let items: UserMusicItems
 }
 
-extension Recommendation {
+extension MusicRecommendation {
   enum CodingKeys: String, CodingKey {
     case id, attributes, relationships
   }
@@ -62,7 +63,7 @@ extension Recommendation {
 
   enum AttributesKey: String, CodingKey {
     case title
-    case nextUpdate = "nextUpdateDate"
+    case nextRefreshDate = "nextUpdateDate"
   }
 
   enum TitleKey: String, CodingKey {
@@ -75,18 +76,18 @@ extension Recommendation {
     id = try container.decode(MusicItemID.self, forKey: .id)
 
     let relationshipContainer = try container.nestedContainer(keyedBy: RelationshipKey.self, forKey: .relationships)
-    contents = try relationshipContainer.decode(UserMusicItems.self, forKey: .contents)
+    items = try relationshipContainer.decode(UserMusicItems.self, forKey: .contents)
 
     let attributesContainer = try container.nestedContainer(keyedBy: AttributesKey.self, forKey: .attributes)
-    nextUpdate = try attributesContainer.decode(Date.self, forKey: .nextUpdate)
+    nextRefreshDate = try attributesContainer.decode(Date.self, forKey: .nextRefreshDate)
 
     let titleContainer = try attributesContainer.nestedContainer(keyedBy: TitleKey.self, forKey: .title)
     title = try titleContainer.decode(String.self, forKey: .stringForDisplay)
   }
 }
 
-public extension Recommendation {
+public extension MusicRecommendation {
   func encode(to _: Encoder) throws {}
 }
 
-extension Recommendation: Equatable, Hashable {}
+extension MusicRecommendation: Equatable, Hashable {}
