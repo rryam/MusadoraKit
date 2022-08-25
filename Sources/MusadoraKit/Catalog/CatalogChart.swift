@@ -31,15 +31,15 @@ public enum MusicCatalogChartType {
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-extension Array where Element == MusicCatalogChartType {
-  public static var all: [MusicCatalogChartType] {
+extension [MusicCatalogChartType] {
+  public static var all: Self {
     MusicCatalogChartType.allCases
   }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-extension Array where Element == MusicCatalogChartKind {
-  public static var all: [MusicCatalogChartKind] {
+extension [MusicCatalogChartKind] {
+  public static var all: Self {
     MusicCatalogChartKind.allCases
   }
 }

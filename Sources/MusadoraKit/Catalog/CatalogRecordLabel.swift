@@ -77,7 +77,7 @@ public extension MusadoraKit {
 }
 
 #if compiler(>=5.7)
-extension Array where Element == RecordLabelProperty {
+extension RecordLabelProperties {
   public static var all: Self {
     [.latestReleases, .topReleases]
   }

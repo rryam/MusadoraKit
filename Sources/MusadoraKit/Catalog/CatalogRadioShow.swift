@@ -82,7 +82,7 @@ public extension MusadoraKit {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
-extension Array where Element == RadioShowProperty {
+extension RadioShowProperties {
   public static var all: Self {
     [.playlists]
   }
