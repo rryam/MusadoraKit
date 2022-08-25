@@ -142,9 +142,9 @@ extension MusadoraKit {
   }
 }
 
-extension Array where Element == AlbumProperty {
+extension AlbumProperties {
   public static var all: Self {
-    var properties: AlbumProperties = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
+    var properties: Self = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
 #if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       properties += [.audioVariants]

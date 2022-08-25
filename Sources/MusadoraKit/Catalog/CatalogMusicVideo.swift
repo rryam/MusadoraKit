@@ -10,6 +10,13 @@ import MusicKit
 /// A collection of music videos.
 public typealias MusicVideos = MusicItemCollection<MusicVideo>
 
+/// Additional property/relationship of a music video.
+public typealias MusicVideoProperty = PartialMusicAsyncProperty<MusicVideo>
+
+/// Additional properties/relationships of a music video.
+public typealias MusicVideoProperties = [MusicVideoProperty]
+
+
 public extension MusadoraKit {
   /// Fetch a music video from the Apple Music catalog by using its identifier.
   /// - Parameters:
@@ -126,7 +133,8 @@ public extension MusadoraKit {
   }
 }
 
-extension Array where Element == PartialMusicAsyncProperty<MusicVideo> {
+
+extension MusicVideoProperties {
   public static var all: Self {
     [.albums, .genres, .artists, .artistURL, .moreInGenre, .songs, .moreByArtist]
   }
