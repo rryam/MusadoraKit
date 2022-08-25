@@ -10,7 +10,7 @@ import Foundation
 /// An object that contains results for a recommendation request.
 public struct MusicRecommendationResponse {
   /// A collection of recommendation based on the `MusicRecommendationRequest`.
-  public let items: Recommendations
+  public let items: MusicRecommendations
 }
 
 extension MusicRecommendationResponse: Equatable, Hashable, Codable {}

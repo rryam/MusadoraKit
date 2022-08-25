@@ -9,37 +9,27 @@ import Foundation
 import MusicKit
 
 public extension MusadoraKit {
-  static func recommendations(limit: Int? = nil) async throws -> Recommendations {
+  static func recommendations(limit: Int? = nil) async throws -> MusicRecommendations {
+    try await recommendations(limit)
+  }
+
+  static func recommendedPlaylists(limit: Int? = nil) async throws -> Playlists {
+    try await recommendations(limit).reduce(into: Playlists()) { $0 += $1.playlists }
+  }
+
+  static func recommendedAlbums(limit: Int? = nil) async throws -> Albums {
+    try await recommendations(limit).reduce(into: Albums()) { $0 += $1.albums }
+  }
+
+  static func recommendedStations(limit: Int? = nil) async throws -> Stations {
+    try await recommendations(limit).reduce(into: Stations()) { $0 += $1.stations }
+  }
+
+  private static func recommendations(_ limit: Int? = nil) async throws -> MusicRecommendations {
     var request = MusicRecommendationRequest()
     request.limit = limit
     let response = try await request.response()
     return response.items
-  }
-
-  static func recommendationPlaylists(limit: Int? = nil) async throws -> Playlists {
-    var request = MusicRecommendationRequest()
-    request.limit = limit
-    let response = try await request.response()
-
-    return MusicItemCollection(response.items.compactMap { item in
-      item.contents.compactMap { content in
-        guard case let .playlist(playlist) = content else { return nil }
-        return playlist
-      }
-    }.joined())
-  }
-
-  static func recommendationAlbums(limit: Int? = nil) async throws -> Albums {
-    var request = MusicRecommendationRequest()
-    request.limit = limit
-    let response = try await request.response()
-
-    return MusicItemCollection(response.items.compactMap { item in
-      item.contents.compactMap { content in
-        guard case let .album(album) = content else { return nil }
-        return album
-      }
-    }.joined())
   }
 }
 
@@ -84,7 +74,7 @@ public struct MusicRecommendationRequest {
 
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
-    let items = try decoder.decode(Recommendations.self, from: response.data)
+    let items = try decoder.decode(MusicRecommendations.self, from: response.data)
 
     return MusicRecommendationResponse(items: items)
   }
