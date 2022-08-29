@@ -102,25 +102,32 @@ public extension MusadoraKit {
   }
 #endif
 
+#if compiler(>=5.7)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static var librarySongsCount: Int {
+    get async throws {
+      let request = MusicLibraryRequest<Song>()
+      let response = try await request.response()
+      return response.items.count
+    }
+  }
+#else
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
   static var librarySongsCount: Int {
     get async throws {
-      //      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
-      //        let request = MusicLibraryRequest<Song>()
-      //        let response = try await request.response()
-      //        return response.items.count
-      //      } else {
       if let items = MPMediaQuery.songs().items {
         return items.count
       } else {
         throw MediaPlayError.notFound(for: "songs")
       }
-      //    }
     }
   }
+#endif
 
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibrarySong.swift
   /// Thanks @marcelmendesfilho!
@@ -148,18 +155,44 @@ public extension MusadoraKit {
 }
 
 #if compiler(>=5.7)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
 public extension MusadoraKit {
   /// Fetch recently added songs from the user's library sorted by the date added.
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
-  static func recentlyAddedSongs(limit: Int = 10) async throws -> Songs {
+  static func recentlyAddedSongs(limit: Int = 10, offset: Int = 0) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
-    request.sort(by: \.libraryAddedDate, ascending: true)
+    request.offset = offset
+    request.sort(by: \.libraryAddedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch recently played songs from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of songs returned.
+  /// - Returns: `Songs` for the given limit.
+  static func recentlyLibraryPlayedSongs(limit: Int = 0, offset: Int = 0) async throws -> Songs {
+    var request = MusicLibraryRequest<Song>()
+    request.limit = limit
+    request.offset = offset
+    request.sort(by: \.lastPlayedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch recently played songs sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of songs returned.
+  /// - Returns: `Songs` for the given limit.
+  static func recentlyPlayedSongs(limit: Int = 0, offset: Int = 0) async throws -> Songs {
+    var request = MusicRecentlyPlayedRequest<Song>()
+    request.limit = limit
+    request.offset = offset
     let response = try await request.response()
     return response.items
   }

@@ -72,6 +72,18 @@ public extension MusadoraKit {
     return response.items
   }
 
+#if compiler(>=5.7)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static var libraryAlbumsCount: Int {
+    get async throws {
+      let request = MusicLibraryRequest<Album>()
+      let response = try await request.response()
+      return response.items.count
+    }
+  }
+#else
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
@@ -85,6 +97,7 @@ public extension MusadoraKit {
       }
     }
   }
+#endif
 
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibraryAlbum.swift
   /// Thanks @marcelmendesfilho!
@@ -108,3 +121,36 @@ public extension MusadoraKit {
     return response
   }
 }
+
+#if compiler(>=5.7)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
+public extension MusadoraKit {
+  /// Fetch recently added albums from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of albums returned.
+  /// - Returns: `Albums` for the given limit.
+  static func recentlyAddedAlbums(limit: Int = 10, offset: Int = 0) async throws -> Albums {
+    var request = MusicLibraryRequest<Album>()
+    request.limit = limit
+    request.offset = offset
+    request.sort(by: \.libraryAddedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch recently played albums from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of albums returned.
+  /// - Returns: `Albums` for the given limit.
+  static func recentlyLibraryPlayedAlbums(limit: Int = 0, offset: Int = 0) async throws -> Albums {
+    var request = MusicLibraryRequest<Album>()
+    request.limit = limit
+    request.offset = offset
+    request.sort(by: \.lastPlayedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+}
+#endif

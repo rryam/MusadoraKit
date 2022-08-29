@@ -44,25 +44,32 @@ public extension MusadoraKit {
     return response.items
   }
 
+#if compiler(>=5.7)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static var libraryPlaylistsCount: Int {
+    get async throws {
+      let request = MusicLibraryRequest<Playlist>()
+      let response = try await request.response()
+      return response.items.count
+    }
+  }
+#else
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
   static var libraryPlaylistsCount: Int {
     get async throws {
-      //  if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
-      //        let request = MusicLibraryRequest<Playlist>()
-      //        let response = try await request.response()
-      //        return response.items.count
-      //      } else {
       if let items = MPMediaQuery.playlists().items {
         return items.count
       } else {
         throw MediaPlayError.notFound(for: "playlists")
       }
-      //      }
     }
   }
+#endif
 
   /// Add a playlist to the user's library by using its identifier.
   /// - Parameters:
@@ -84,3 +91,36 @@ public extension MusadoraKit {
     return response
   }
 }
+
+#if compiler(>=5.7)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
+public extension MusadoraKit {
+  /// Fetch recently added playlists from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of playlists returned.
+  /// - Returns: `Playlists` for the given limit.
+  static func recentlyAddedPlaylists(limit: Int = 10, offset: Int = 0) async throws -> Playlists {
+    var request = MusicLibraryRequest<Playlist>()
+    request.limit = limit
+    request.offset = offset
+    request.sort(by: \.libraryAddedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch recently played playlists from the user's library sorted by the date added.
+  /// - Parameters:
+  ///   - limit: The number of playlists returned.
+  /// - Returns: `Playlists` for the given limit.
+  static func recentlyLibraryPlayedPlaylists(limit: Int = 0, offset: Int = 0) async throws -> Playlists {
+    var request = MusicLibraryRequest<Playlist>()
+    request.limit = limit
+    request.offset = offset
+    request.sort(by: \.lastPlayedDate, ascending: false)
+    let response = try await request.response()
+    return response.items
+  }
+}
+#endif
