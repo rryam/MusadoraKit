@@ -76,6 +76,89 @@ public extension MusadoraKit {
     let response = try await request.response()
     return response
   }
+
+  static func catalogSearchSongs(for term: String,
+                                 limit: Int? = nil,
+                                 offset: Int? = nil) async throws -> Songs {
+    var request = MusicCatalogSearchRequest(term: term, types: [Song.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.songs
+  }
+
+  static func catalogSearchPlaylists(for term: String,
+                                     limit: Int? = nil,
+                                     offset: Int? = nil) async throws -> Playlists {
+    var request = MusicCatalogSearchRequest(term: term, types: [Playlist.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.playlists
+  }
+
+  static func catalogSearchAlbums(for term: String,
+                                  limit: Int? = nil,
+                                  offset: Int? = nil) async throws -> Albums {
+    var request = MusicCatalogSearchRequest(term: term, types: [Album.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.albums
+  }
+
+  static func catalogSearchArtists(for term: String,
+                                   limit: Int? = nil,
+                                   offset: Int? = nil) async throws -> Artists {
+    var request = MusicCatalogSearchRequest(term: term, types: [Artist.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.artists
+  }
+
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  static func catalogSearchMusicVideos(for term: String,
+                                       limit: Int? = nil,
+                                       offset: Int? = nil) async throws -> MusicVideos {
+    var request = MusicCatalogSearchRequest(term: term, types: [MusicVideo.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.musicVideos
+  }
+
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  static func catalogSearchCurators(for term: String,
+                                    limit: Int? = nil,
+                                    offset: Int? = nil) async throws -> Curators {
+    var request = MusicCatalogSearchRequest(term: term, types: [Curator.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.curators
+  }
+
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  static func catalogSearchRadioShows(for term: String,
+                                      limit: Int? = nil,
+                                      offset: Int? = nil) async throws -> RadioShows {
+    var request = MusicCatalogSearchRequest(term: term, types: [RadioShow.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.radioShows
+  }
+
+  static func catalogSearchStations(for term: String,
+                                    limit: Int? = nil,
+                                    offset: Int? = nil) async throws -> Stations {
+    var request = MusicCatalogSearchRequest(term: term, types: [Station.self])
+    request.limit = limit
+    request.offset = offset
+    let response = try await request.response()
+    return response.stations
+  }
 }
 
 #if compiler(>=5.7)
