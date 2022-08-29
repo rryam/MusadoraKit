@@ -10,7 +10,7 @@ import Foundation
 
 /// A protocol for music items that your app can fetch by
 /// using a recently added request.
-public protocol MusicRecentlyAddedRequestable : MusicItem {
+public protocol MusicRecentlyAddedRequestable: MusicItem {
 }
 
 /// A request that your app uses to fetch items the user has recently added.
@@ -46,9 +46,7 @@ extension MusicRecentlyAddedResponse: Sendable {
 }
 
 extension MusicRecentlyAddedResponse: Decodable where MusicItemType: Decodable {
-
 }
 
 extension MusicRecentlyAddedResponse: Encodable where MusicItemType: Encodable {
-
 }
