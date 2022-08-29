@@ -33,7 +33,7 @@ public extension MusadoraKit {
     }
     return artist
   }
-  #else
+#else
   static func libraryArtist(id: MusicItemID) async throws -> Artist {
     let request = MusicLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -43,7 +43,7 @@ public extension MusadoraKit {
     }
     return artist
   }
-  #endif
+#endif
 
   /// Fetch all artists from the user's library in alphabetical order.
   /// - Parameters:
@@ -66,23 +66,30 @@ public extension MusadoraKit {
     return response.items
   }
 
+#if compiler(>=5.7)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static var libraryArtistsCount: Int {
+    get async throws {
+      let request = MusicLibraryRequest<Artist>()
+      let response = try await request.response()
+      return response.items.count
+    }
+  }
+#else
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
   static var libraryArtistsCount: Int {
     get async throws {
-      //      if #available(iOS 16, tvOS 16.0, watchOS 9.0, *) {
-      //        let request = MusicLibraryRequest<Artist>()
-      //        let response = try await request.response()
-      //        return response.items.count
-      //      } else {
       if let items = MPMediaQuery.artists().items {
         return items.count
       } else {
         throw MediaPlayError.notFound(for: "artists")
       }
-      //      }
     }
   }
+#endif
 }
