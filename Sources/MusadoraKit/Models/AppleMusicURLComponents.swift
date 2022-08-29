@@ -15,7 +15,7 @@ struct AppleMusicURLComponents {
     components.scheme = "https"
     components.host = "api.music.apple.com"
   }
-
+  
   var queryItems: [URLQueryItem]? {
     get {
       components.queryItems

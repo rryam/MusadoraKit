@@ -23,10 +23,10 @@ extension UserMusicItem: MusicItem {
     let id: MusicItemID
 
     switch self {
-    case let .album(album): id = album.id
-    case let .playlist(playlist): id = playlist.id
-    case let .station(station): id = station.id
-    case let .track(track): id = track.id
+      case let .album(album): id = album.id
+      case let .playlist(playlist): id = playlist.id
+      case let .station(station): id = station.id
+      case let .track(track): id = track.id
     }
 
     return id
@@ -55,18 +55,18 @@ extension UserMusicItem: Decodable {
     let type = try values.decode(HistoryMusicItemTypes.self, forKey: .type)
 
     switch type {
-    case .album, .libraryAlbum:
-      let album = try Album(from: decoder)
-      self = .album(album)
-    case .playlist, .libraryPlaylist:
-      let playlist = try Playlist(from: decoder)
-      self = .playlist(playlist)
-    case .station:
-      let station = try Station(from: decoder)
-      self = .station(station)
-    case .song, .librarySong, .musicVideo, .libraryMusicVideo:
-      let track = try Track(from: decoder)
-      self = .track(track)
+      case .album, .libraryAlbum:
+        let album = try Album(from: decoder)
+        self = .album(album)
+      case .playlist, .libraryPlaylist:
+        let playlist = try Playlist(from: decoder)
+        self = .playlist(playlist)
+      case .station:
+        let station = try Station(from: decoder)
+        self = .station(station)
+      case .song, .librarySong, .musicVideo, .libraryMusicVideo:
+        let track = try Track(from: decoder)
+        self = .track(track)
     }
   }
 }

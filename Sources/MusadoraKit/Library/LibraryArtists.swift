@@ -9,10 +9,31 @@ import MusicKit
 import MediaPlayer
 
 public extension MusadoraKit {
+
+#if compiler(>=5.7)
   /// Fetch an artist from the user's library by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   /// - Returns: `Artist` matching the given identifier.
+  ///
+  /// - Note: This method fetches the artist locally from the device when using iOS 16+
+  ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
+  ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
+  ///  that fetches the data from Apple Music API.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func libraryArtist(id: MusicItemID) async throws -> Artist {
+    var request = MusicLibraryRequest<Artist>()
+    request.filter(matching: \.id, equalTo: id)
+    let response = try await request.response()
+
+    guard let artist = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return artist
+  }
+  #else
   static func libraryArtist(id: MusicItemID) async throws -> Artist {
     let request = MusicLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -22,6 +43,7 @@ public extension MusadoraKit {
     }
     return artist
   }
+  #endif
 
   /// Fetch all artists from the user's library in alphabetical order.
   /// - Parameters:
