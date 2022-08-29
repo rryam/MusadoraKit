@@ -72,10 +72,10 @@ public extension MusadoraKit {
 }
 
 #if compiler(>=5.7)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
 public extension MusadoraKit {
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func librarySearch(
     for term: String,
     types: [MusicLibrarySearchType],
@@ -87,6 +87,66 @@ public extension MusadoraKit {
       request.limit = limit
       request.includeTopResults = includeTopResults
       return try await request.response()
+    }
+
+  static func librarySearchSongs(
+    for term: String,
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false) async throws -> Songs {
+      var request = MusicLibrarySearchRequest(term: term, types: [Song.self])
+      request.limit = limit
+      request.includeTopResults = includeTopResults
+      let response = try await request.response()
+      return response.songs
+    }
+
+  static func librarySearchAlbums(
+    for term: String,
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false) async throws -> Albums {
+      var request = MusicLibrarySearchRequest(term: term, types: [Album.self])
+      request.limit = limit
+      request.includeTopResults = includeTopResults
+      let response = try await request.response()
+      return response.albums
+    }
+
+  static func librarySearchPlaylists(
+    for term: String,
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false) async throws -> Playlists {
+      var request = MusicLibrarySearchRequest(term: term, types: [Playlist.self])
+      request.limit = limit
+      request.includeTopResults = includeTopResults
+      let response = try await request.response()
+      return response.playlists
+    }
+
+  static func librarySearchMusicVideos(
+    for term: String,
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false) async throws -> MusicVideos {
+      var request = MusicLibrarySearchRequest(term: term, types: [MusicVideo.self])
+      request.limit = limit
+      request.includeTopResults = includeTopResults
+      let response = try await request.response()
+      return response.musicVideos
+    }
+
+  static func librarySearchArtists(
+    for term: String,
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false) async throws -> Artists {
+      var request = MusicLibrarySearchRequest(term: term, types: [Artist.self])
+      request.limit = limit
+      request.includeTopResults = includeTopResults
+      let response = try await request.response()
+      return response.artists
     }
 }
 #endif
