@@ -13,9 +13,13 @@ public struct MusicDataPostRequest {
   /// The URL for the data request.
   public var url: URL
 
+  /// Data to encode for the POST request.
+  public var data: Data?
+
   /// Creates a data request with the given URL.
-  public init(url: URL) {
+  public init(url: URL, data: Data? = nil) {
     self.url = url
+    self.data = data
   }
 
   /// Uploads data the Apple Music API endpoint that
@@ -23,6 +27,7 @@ public struct MusicDataPostRequest {
   public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "POST"
+    urlRequest.httpBody = data
 
     let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
