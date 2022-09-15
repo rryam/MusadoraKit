@@ -8,96 +8,15 @@
 import Foundation
 import MusicKit
 
-#if compiler(>=5.7)
-public extension MusadoraKit {
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<RecentlyPlayedMusicItem> {
-    var request = MusicRecentlyPlayedContainerRequest()
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-}
-#endif
-
-public extension MusadoraKit {
-  /// Fetch the recently played resources for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
-  static func recentlyPlayed(limit: Int? = nil) async throws -> UserMusicItems {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-
-  /// Fetch the recently played albums for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: A collection of albums.
-  static func recentlyPlayedAlbums(limit: Int? = nil) async throws -> Albums {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
-    request.limit = limit
-    let response = try await request.response()
-    return response.albums
-  }
-
-  /// Fetch the recently played playlists for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: A collection of albums.
-  static func recentlyPlayedPlaylists(limit: Int? = nil) async throws -> Playlists {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
-    request.limit = limit
-    let response = try await request.response()
-    return response.playlists
-  }
-
-  /// Fetch the resources in heavy rotation for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
-  static func heavyRotation(limit: Int? = nil) async throws -> UserMusicItems {
-    var request = MusicHistoryRequest(for: .heavyRotation)
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-
-  /// Fetch the recently added resources for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
-  static func recentlyAdded(limit: Int? = nil) async throws -> UserMusicItems {
-    var request = MusicHistoryRequest(for: .recentlyAdded)
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-
-  /// Fetch the recently played tracks for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: Collection of `Tracks`.
-  static func recentlyPlayedTracks(limit: Int? = nil) async throws -> Tracks {
-    var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
-    request.limit = limit
-    let response = try await request.response()
-    return response.tracks
-  }
-
-  /// Fetch the recently played stations for the user.
-  /// - Parameter limit: The number of objects returned.
-  /// - Returns: Collection of `Stations`.
-  static func recentlyPlayedStations(limit: Int? = nil) async throws -> Stations {
-    var request = MusicHistoryRequest(for: .recentlyPlayedStations)
-    request.limit = limit
-    let response = try await request.response()
-    return response.stations
-  }
-}
-
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
 public struct MusicHistoryRequest {
   /// A limit for the number of items to return
   /// in the history response.
   public var limit: Int?
+
+  /// An offet for the request.
+  public var offset: Int?
 
   /// Endpoints to fetch historical information about the songs and stations the user played recently.
   /// Possible values: `heavyRotation`, `recentlyAdded` and `recentlyPlayed`.
@@ -108,9 +27,9 @@ public struct MusicHistoryRequest {
     self.endpoint = endpoint
 
     switch self.endpoint {
-    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
-    case .recentlyAdded: maximumLimit = 25
-    case .recentlyPlayedTracks: maximumLimit = 30
+      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
+      case .recentlyAdded: maximumLimit = 25
+      case .recentlyPlayedTracks: maximumLimit = 30
     }
   }
 
@@ -131,14 +50,28 @@ extension MusicHistoryRequest {
   internal var historyEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
+      var queryItems: [URLQueryItem] = []
+
       components.path = "me/\(endpoint.path)"
+
+      if endpoint == .recentlyPlayed {
+        queryItems.append(URLQueryItem(name: "with", value: "library"))
+      }
 
       if let limit = limit {
         guard limit <= maximumLimit else {
           throw MusadoraKitError.historyOverLimit(limit: maximumLimit, overLimit: limit)
         }
 
-        components.queryItems = [.init(name: "limit", value: "\(limit)")]
+        queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+      }
+
+      if let offset = offset {
+        queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
+      }
+
+      if !queryItems.isEmpty {
+        components.queryItems = queryItems
       }
 
       guard let url = components.url else {

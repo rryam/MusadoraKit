@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  File
+//  RelationshipItem.swift
+//  RelationshipItem
 //
 //  Created by Rudrank Riyam on 04/08/21.
 //

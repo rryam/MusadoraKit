@@ -47,7 +47,16 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     let request = MusicHistoryRequest(for: .recentlyPlayed)
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played")
+    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played?with=library")
+  }
+
+  func testRecentlyPlayedEndpointURLWithOffset() throws {
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
+    request.offset = 10
+
+    let url = try request.historyEndpointURL
+
+    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played?with=library&offset=10")
   }
 
   func testRecentlyPlayedEndpointURLWithOverLimit() throws {
