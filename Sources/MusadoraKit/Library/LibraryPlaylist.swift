@@ -8,6 +8,8 @@
 import MusicKit
 import MediaPlayer
 
+
+
 public extension MusadoraKit {
   /// Fetch a playlist from the user's library by using its identifier.
   /// - Parameters:
@@ -174,5 +176,29 @@ public extension MusadoraKit {
     }
 
     return playlist
+  }
+}
+
+// MARK: - `LibraryPlaylist` methods
+extension MusadoraKit {
+
+  /// Fetch all playlists from the user's library in alphabetical order.
+  /// - Returns: `LibraryPlaylists` for the given limit.
+  static func libraryPlaylists() async throws -> LibraryPlaylists {
+    let playlistsURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
+    let request = MusicDataRequest(urlRequest: .init(url: playlistsURL))
+    let response = try await request.response()
+
+    var libraryPlaylists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
+
+    repeat {
+      if let nextBatchOfPlaylists = try await libraryPlaylists.nextBatch() {
+        libraryPlaylists += nextBatchOfPlaylists
+      } else {
+        break
+      }
+    } while libraryPlaylists.hasNextBatch
+
+    return libraryPlaylists
   }
 }
