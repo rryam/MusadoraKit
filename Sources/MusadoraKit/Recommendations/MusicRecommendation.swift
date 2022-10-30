@@ -12,7 +12,7 @@ import MusicKit
 public typealias MusicRecommendations = MusicItemCollection<MusicRecommendation>
 
 /// An object that represents recommended resources for a user calculated using their selected preferences.
-public struct MusicRecommendation: Codable, MusicItem {
+public struct MusicRecommendation: Codable, MusicItem, Identifiable {
 
   /// The unique identifier for the recommendation.
   public let id: MusicItemID

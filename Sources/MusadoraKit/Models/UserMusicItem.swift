@@ -31,6 +31,24 @@ extension UserMusicItem: MusicItem {
 
     return id
   }
+
+  public var artwork: Artwork? {
+    switch self {
+      case .album(let album): return album.artwork
+      case .playlist(let playlist): return playlist.artwork
+      case .station(let station): return station.artwork
+      case .track(let track): return track.artwork
+    }
+  }
+
+  public var title: String {
+    switch self {
+      case .album(let album): return album.title
+      case .playlist(let playlist): return playlist.name
+      case .station(let station): return station.name
+      case .track(let track): return track.title
+    }
+  }
 }
 
 extension UserMusicItem: Decodable {
