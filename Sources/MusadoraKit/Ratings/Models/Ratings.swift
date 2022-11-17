@@ -1,26 +1,26 @@
 //
-//  Ratings.swift
-//  Ratings
+//  Rating.swift
+//  Rating
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
 
 import Foundation
 
-public struct Ratings {
-  public let value: RatingsType
+public struct Rating {
+  public let value: RatingType
   public let href: String
   public let id: String
   public let type: String
 }
 
-extension Ratings: Identifiable {}
+extension Rating: Identifiable {}
 
-extension Ratings: Equatable {}
+extension Rating: Equatable {}
 
-extension Ratings: Hashable {}
+extension Rating: Hashable {}
 
-extension Ratings: Decodable {
+extension Rating: Decodable {
   enum CodingKeys: String, CodingKey {
     case attributes, href, id, type
   }
@@ -37,11 +37,11 @@ extension Ratings: Decodable {
     type = try container.decode(String.self, forKey: .type)
 
     let attributesContainer = try container.nestedContainer(keyedBy: AttributesKey.self, forKey: .attributes)
-    value = try attributesContainer.decode(RatingsType.self, forKey: .value)
+    value = try attributesContainer.decode(RatingType.self, forKey: .value)
   }
 }
 
-extension Ratings: Encodable {
+extension Rating: Encodable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(id, forKey: .id)

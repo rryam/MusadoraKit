@@ -8,51 +8,83 @@
 import Foundation
 import MusicKit
 
-public struct MusicLibraryRatingAddRequest<MusicItemType> where MusicItemType: MusicItem, MusicItemType: Decodable {
-  /// Creates a request to fetch items using a filter that matches
-  /// a specific value.
-  public init<Value>(matching _: KeyPath<MusicItemType.FilterableLibraryRatingType, Value>, equalTo value: Value, rating: RatingsType) where MusicItemType: FilterableLibraryRatingItem {
-    self.rating = rating
+public extension MusadoraKit {
+  static func librarySongAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicLibraryRatingAddRequest(for: id, item: .song, rating: rating)
+    let response = try await request.response()
 
-    if let id = value as? MusicItemID {
-      self.id = id.rawValue
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
     }
-
-    switch MusicItemType.self {
-    case is Song.Type: type = .songs
-    case is Album.Type: type = .albums
-    case is MusicVideo.Type: type = .musicVideos
-    case is Playlist.Type: type = .playlists
-    default: type = nil
-    }
+    return rating
   }
 
-  public func response() async throws -> MusicRatingResponse {
+  static func libraryAlbumAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicLibraryRatingAddRequest(for: id, item: .album, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  static func libraryPlaylistAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicLibraryRatingAddRequest(for: id, item: .playlist, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  static func libraryMusicVideoAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicLibraryRatingAddRequest(for: id, item: .musicVideo, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+}
+
+public struct MusicLibraryRatingAddRequest {
+
+  /// The type of the library item to add rating for.
+  private var type: LibraryRatingMusicItemType
+
+  /// The unique identifier of the library item to add rating for.
+  private var id: MusicItemID
+
+  /// The rating of the library item.
+  public var rating: RatingType
+
+  /// Creates a request to add rating using a filter that matches a specific value.
+  public init(for id: MusicItemID, item type: LibraryRatingMusicItemType, rating: RatingType) {
+    self.id = id
+    self.type = type
+    self.rating = rating
+  }
+
+  public func response() async throws -> RatingsResponse {
     let url = try libraryAddRatingsEndpointURL
 
-    let rating = RatingRequest(attributes: .init(value: rating))
+    let rating = RatingRequest(value: rating)
     let data = try JSONEncoder().encode(rating)
 
     let request = MusicDataPutRequest(url: url, data: data)
     let response = try await request.response()
-    let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)
-    return MusicRatingResponse(items: items.data)
+    return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
   }
-
-  private var type: LibraryRatingMusicItemType?
-  private var id: String?
-  private var rating: RatingsType
 }
 
 extension MusicLibraryRatingAddRequest {
   var libraryAddRatingsEndpointURL: URL {
     get throws {
-      guard let type = type, let id = id else {
-        throw URLError(.badURL)
-      }
-
       var components = AppleMusicURLComponents()
-      components.path = "me/ratings/\(type.rawValue)/\(id)"
+      components.path = "me/ratings/\(type.rawValue)/\(id.rawValue)"
 
       guard let url = components.url else {
         throw URLError(.badURL)

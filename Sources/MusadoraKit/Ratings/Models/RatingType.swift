@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum RatingsType: Int, Codable {
-  case love = 1
+public enum RatingType: Int, Codable {
+  case like = 1
   case dislike = -1
 }

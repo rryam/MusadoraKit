@@ -8,9 +8,9 @@
 import Foundation
 
 public enum CatalogRatingMusicItemType: String, Codable {
-  case songs
-  case playlists
-  case albums
-  case stations
-  case musicVideos = "music-videos"
+  case song = "songs"
+  case playlist = "playlist"
+  case album = "albums"
+  case station = "station"
+  case musicVideo = "music-videos"
 }

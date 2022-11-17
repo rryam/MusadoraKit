@@ -8,46 +8,63 @@
 import Foundation
 import MusicKit
 
-public struct MusicLibraryRatingDeleteRequest<MusicItemType> where MusicItemType: MusicItem, MusicItemType: Decodable {
+public extension MusadoraKit {
+  static func librarySongDeleteRating(id: MusicItemID) async throws -> Bool {
+    let request = MusicLibraryRatingDeleteRequest(for: id, item: .song)
+    let response = try await request.response()
+    return response
+  }
+
+  static func libraryAlbumDeleteRating(id: MusicItemID) async throws -> Bool {
+    let request = MusicLibraryRatingDeleteRequest(for: id, item: .album)
+    let response = try await request.response()
+    return response
+  }
+
+  static func libraryPlaylistDeleteRating(id: MusicItemID) async throws -> Bool {
+    let request = MusicLibraryRatingDeleteRequest(for: id, item: .playlist)
+    let response = try await request.response()
+    return response
+  }
+
+  static func libraryMusicVideoDeleteRating(id: MusicItemID) async throws -> Bool {
+    let request = MusicLibraryRatingDeleteRequest(for: id, item: .musicVideo)
+    let response = try await request.response()
+    return response
+  }
+}
+
+public struct MusicLibraryRatingDeleteRequest {
+
+  /// The type of the library item to
+  /// delete rating for.
+  private var type: LibraryRatingMusicItemType
+
+  /// The unique identifier of the library item to
+  /// delete rating for.
+  private var id: MusicItemID
+
   /// Creates a request to fetch items using a filter that matches
   /// a specific value.
-  public init<Value>(matching _: KeyPath<MusicItemType.FilterableLibraryRatingType, Value>, equalTo value: Value) where MusicItemType: FilterableLibraryRatingItem {
-    setType()
-
-    if let id = value as? MusicItemID {
-      self.id = id.rawValue
-    }
+  public init(for id: MusicItemID, item type: LibraryRatingMusicItemType) {
+    self.id = id
+    self.type = type
   }
 
-  public func response() async throws {
+  public func response() async throws -> Bool {
     let url = try libraryDeleteRatingsEndpointURL
     let request = MusicDataDeleteRequest(url: url)
-    _ = try await request.response()
+    let response = try await request.response()
+    // 204 EmptyBodyResponse - The modification was successful, but there’s no content in the response.
+    return response.urlResponse.statusCode == 204
   }
-
-  private var type: LibraryRatingMusicItemType?
-  private var id: String?
 }
 
 extension MusicLibraryRatingDeleteRequest {
-  private mutating func setType() {
-    switch MusicItemType.self {
-      case is Song.Type: type = .songs
-      case is Album.Type: type = .albums
-      case is MusicVideo.Type: type = .musicVideos
-      case is Playlist.Type: type = .playlists
-      default: type = nil
-    }
-  }
-
   internal var libraryDeleteRatingsEndpointURL: URL {
     get throws {
-      guard let type = type, let id = id else {
-        throw URLError(.badURL)
-      }
-
       var components = AppleMusicURLComponents()
-      components.path = "me/ratings/\(type.rawValue)/\(id)"
+      components.path = "me/ratings/\(type.rawValue)/\(id.rawValue)"
 
       guard let url = components.url else {
         throw URLError(.badURL)

@@ -8,55 +8,93 @@
 import Foundation
 import MusicKit
 
-public struct MusicCatalogRatingAddRequest<MusicItemType> where MusicItemType: MusicItem, MusicItemType: Decodable {
-  /// Creates a request to fetch items using a filter that matches
-  /// a specific value.
-  public init<Value>(matching _: KeyPath<MusicItemType.FilterableCatalogRatingType, Value>, equalTo value: Value, rating: RatingsType) where MusicItemType: FilterableCatalogRatingItem {
-    self.rating = rating
+public extension MusadoraKit {
+  static func catalogSongAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicCatalogRatingAddRequest(for: id, item: .song, rating: rating)
+    let response = try await request.response()
 
-    setType()
-
-    if let id = value as? MusicItemID {
-      self.id = id.rawValue
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
     }
+    return rating
   }
 
-  public func response() async throws -> MusicRatingResponse {
+  static func catalogAlbumAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicCatalogRatingAddRequest(for: id, item: .album, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  static func catalogPlaylistAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicCatalogRatingAddRequest(for: id, item: .playlist, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  static func catalogMusicVideoAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicCatalogRatingAddRequest(for: id, item: .musicVideo, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  static func catalogStationAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+    let request = MusicCatalogRatingAddRequest(for: id, item: .station, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+}
+
+public struct MusicCatalogRatingAddRequest {
+
+  /// The type of the catalog item to rating for.
+  private var type: CatalogRatingMusicItemType
+
+  /// The unique identifier of the catalog item to add rating for.
+  private var id: MusicItemID
+
+  /// The rating of the catalog item.
+  public var rating: RatingType
+
+  /// Creates a request to fetch items using a filter that matches a specific value.
+  public init(for id: MusicItemID, item type: CatalogRatingMusicItemType, rating: RatingType) {
+    self.id = id
+    self.type = type
+    self.rating = rating
+  }
+
+  public func response() async throws -> RatingsResponse {
     let url = try catalogAddRatingsEndpointURL
 
-    let rating = RatingRequest(attributes: .init(value: rating))
+    let rating = RatingRequest(value: rating)
     let data = try JSONEncoder().encode(rating)
 
     let request = MusicDataPutRequest(url: url, data: data)
     let response = try await request.response()
-    let items = try JSONDecoder().decode(RatingsResponse.self, from: response.data)
-    return MusicRatingResponse(items: items.data)
+    return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
   }
-
-  private var type: CatalogRatingMusicItemType?
-  private var id: String?
-  private var rating: RatingsType
 }
 
 extension MusicCatalogRatingAddRequest {
-  private mutating func setType() {
-    switch MusicItemType.self {
-    case is Song.Type: type = .songs
-    case is Album.Type: type = .albums
-    case is MusicVideo.Type: type = .musicVideos
-    case is Playlist.Type: type = .playlists
-    default: type = nil
-    }
-  }
-
   internal var catalogAddRatingsEndpointURL: URL {
     get throws {
-      guard let type = type, let id = id else {
-        throw URLError(.badURL)
-      }
-
       var components = AppleMusicURLComponents()
-      components.path = "me/ratings/\(type.rawValue)/\(id)"
+      components.path = "me/ratings/\(type.rawValue)/\(id.rawValue)"
 
       guard let url = components.url else {
         throw URLError(.badURL)
