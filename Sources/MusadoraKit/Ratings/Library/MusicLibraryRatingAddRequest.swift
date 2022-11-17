@@ -70,18 +70,21 @@ public struct MusicLibraryRatingAddRequest {
 
   public func response() async throws -> RatingsResponse {
     let url = try libraryAddRatingsEndpointURL
-
-    let rating = RatingRequest(value: rating)
-    let data = try JSONEncoder().encode(rating)
+    let data = try encodeRating()
 
     let request = MusicDataPutRequest(url: url, data: data)
     let response = try await request.response()
     return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
   }
+
+  internal func encodeRating() throws -> Data {
+    let rating = RatingRequest(value: rating)
+    return try JSONEncoder().encode(rating)
+  }
 }
 
 extension MusicLibraryRatingAddRequest {
-  var libraryAddRatingsEndpointURL: URL {
+  internal var libraryAddRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
       components.path = "me/ratings/\(type.rawValue)/\(id.rawValue)"
