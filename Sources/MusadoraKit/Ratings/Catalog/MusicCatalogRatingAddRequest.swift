@@ -9,7 +9,7 @@ import Foundation
 import MusicKit
 
 public extension MusadoraKit {
-  static func catalogSongAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+  static func addCatalogSongRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
     let request = MusicCatalogRatingAddRequest(for: id, item: .song, rating: rating)
     let response = try await request.response()
 
@@ -19,7 +19,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func catalogAlbumAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+  static func addCatalogAlbumRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
     let request = MusicCatalogRatingAddRequest(for: id, item: .album, rating: rating)
     let response = try await request.response()
 
@@ -29,7 +29,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func catalogPlaylistAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+  static func addCatalogPlaylistRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
     let request = MusicCatalogRatingAddRequest(for: id, item: .playlist, rating: rating)
     let response = try await request.response()
 
@@ -39,7 +39,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func catalogMusicVideoAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+  static func addCatalogMusicVideoRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
     let request = MusicCatalogRatingAddRequest(for: id, item: .musicVideo, rating: rating)
     let response = try await request.response()
 
@@ -49,7 +49,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func catalogStationAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
+  static func addCatalogStationRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
     let request = MusicCatalogRatingAddRequest(for: id, item: .station, rating: rating)
     let response = try await request.response()
 
@@ -60,24 +60,29 @@ public extension MusadoraKit {
   }
 }
 
+/// A request that your app uses to add ratings for albums, songs,
+/// playlists, music videos, and stations for content in the Apple Music catalog.
 public struct MusicCatalogRatingAddRequest {
 
-  /// The type of the catalog item to rating for.
   private var type: CatalogRatingMusicItemType
-
-  /// The unique identifier of the catalog item to add rating for.
   private var id: MusicItemID
 
   /// The rating of the catalog item.
   public var rating: RatingType
 
-  /// Creates a request to fetch items using a filter that matches a specific value.
+  /// Creates a request to get the rating for the unique identifier of the given library item.
+  /// - Parameters:
+  ///   - id: The unique identifier of the catalog item.
+  ///   - type: The type of the catalog item. Possible values: `song`, `album`, `playlist`, `musicVideo`, `station`.
+  ///   - rating: The rating to add for the given catalog item. Possible values: `like`, `dislike`.
   public init(for id: MusicItemID, item type: CatalogRatingMusicItemType, rating: RatingType) {
     self.id = id
     self.type = type
     self.rating = rating
   }
 
+  /// Adds the given rating for the given catalog item
+  /// that matches the unique identifier(s) for the request.
   public func response() async throws -> RatingsResponse {
     let url = try catalogAddRatingsEndpointURL
 
@@ -100,6 +105,20 @@ extension MusicCatalogRatingAddRequest {
         throw URLError(.badURL)
       }
       return url
+    }
+  }
+}
+
+
+public enum RatingError: Error, Equatable {
+  case notFound(for: String)
+}
+
+extension RatingError: CustomStringConvertible {
+  public var description: String {
+    switch self {
+      case let .notFound(id):
+        return "No rating be found for \(id)."
     }
   }
 }

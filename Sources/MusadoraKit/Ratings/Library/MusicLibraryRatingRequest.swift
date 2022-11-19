@@ -8,6 +8,8 @@
 import Foundation
 import MusicKit
 
+public typealias Ratings = [Rating]
+
 public extension MusadoraKit {
   static func librarySongRating(id: MusicItemID) async throws -> Rating {
     let request = MusicLibraryRatingRequest(for: id, item: .song)
@@ -19,7 +21,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func librarySongsRating(ids: [MusicItemID]) async throws -> [Rating] {
+  static func librarySongsRating(ids: [MusicItemID]) async throws -> Ratings {
     let request = MusicLibraryRatingRequest(for: ids, item: .song)
     let response = try await request.response()
     return response.data
@@ -35,7 +37,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func libraryMusicVideosRating(ids: [MusicItemID]) async throws -> [Rating] {
+  static func libraryMusicVideosRating(ids: [MusicItemID]) async throws -> Ratings {
     let request = MusicLibraryRatingRequest(for: ids, item: .musicVideo)
     let response = try await request.response()
     return response.data
@@ -51,7 +53,7 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func libraryPlaylistsRating(ids: [MusicItemID]) async throws -> [Rating] {
+  static func libraryPlaylistsRating(ids: [MusicItemID]) async throws -> Ratings {
     let request = MusicLibraryRatingRequest(for: ids, item: .playlist)
     let response = try await request.response()
     return response.data
@@ -67,43 +69,43 @@ public extension MusadoraKit {
     return rating
   }
 
-  static func libraryAlbumsRating(ids: [MusicItemID]) async throws -> [Rating] {
+  static func libraryAlbumsRating(ids: [MusicItemID]) async throws -> Ratings {
     let request = MusicLibraryRatingRequest(for: ids, item: .album)
     let response = try await request.response()
     return response.data
   }
 }
 
-/// A request that your app uses to fetch and set
-/// ratings for albums, songs, playlists, music videos, and stations
-/// for content in the user's iCloud library.
+/// A request that your app uses to get ratings for albums, songs,
+/// playlists, and music videos for content in the user's iCloud library.
 public struct MusicLibraryRatingRequest {
 
-  /// The type of the library item to
-  /// get rating for.
   private var type: LibraryRatingMusicItemType
-
-  /// The unique identifier(s) of the library item(s) to
-  /// get rating for.
   private var ids: [MusicItemID]
 
-  /// Creates a request to fetch items using a filter that matches
-  /// a specific value.
+  /// Creates a request to get the rating for the unique identifier of the given library item.
+  /// - Parameters:
+  ///   - id: The unique identifier of the library item.
+  ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
   public init(for id: MusicItemID, item type: LibraryRatingMusicItemType) {
     self.ids = [id]
     self.type = type
   }
 
-  /// Creates a request to get rating using a filter that matches
-  /// any value from an array of possible identifiers.
+  /// Creates a request to get ratings for the unique identifiers of the given library item.
+  /// - Parameters:
+  ///   - id: The unique identifiers of the library item.
+  ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
   public init(for ids: [MusicItemID], item type: LibraryRatingMusicItemType) {
     self.ids = ids
     self.type = type
   }
 
+  /// Fetches the given rating(s) of the given library item
+  /// that matches the unique identifier(s) for the request.
   public func response() async throws -> RatingsResponse {
     let url = try libraryRatingsEndpointURL
-    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
     let response = try await request.response()
     return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
   }
@@ -116,7 +118,8 @@ extension MusicLibraryRatingRequest {
       var queryItems: [URLQueryItem]?
       components.path = "me/ratings/\(type.rawValue)"
 
-      queryItems = [URLQueryItem(name: "ids", value: ids.map { $0.rawValue }.joined(separator: ","))]
+      let ids = ids.map { $0.rawValue }.joined(separator: ",")
+      queryItems = [URLQueryItem(name: "ids", value: ids)]
 
       components.queryItems = queryItems
 

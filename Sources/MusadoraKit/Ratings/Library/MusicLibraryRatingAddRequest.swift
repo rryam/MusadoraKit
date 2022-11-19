@@ -50,36 +50,38 @@ public extension MusadoraKit {
   }
 }
 
+/// A request that your app uses to add ratings for albums, songs,
+/// playlists, music videos, and stations for content in the user's iCloud library.
 public struct MusicLibraryRatingAddRequest {
 
-  /// The type of the library item to add rating for.
   private var type: LibraryRatingMusicItemType
-
-  /// The unique identifier of the library item to add rating for.
   private var id: MusicItemID
 
   /// The rating of the library item.
   public var rating: RatingType
 
-  /// Creates a request to add rating using a filter that matches a specific value.
+  /// Creates a request to add the rating for the unique identifier of the given library item.
+  /// - Parameters:
+  ///   - id: The unique identifier of the library item.
+  ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
+  ///   - rating: The rating to add for the given library item. Possible values: `like`, `dislike`.
   public init(for id: MusicItemID, item type: LibraryRatingMusicItemType, rating: RatingType) {
     self.id = id
     self.type = type
     self.rating = rating
   }
 
+  /// Adds the given rating for the given library item
+  /// that matches the unique identifier(s) for the request.
   public func response() async throws -> RatingsResponse {
     let url = try libraryAddRatingsEndpointURL
-    let data = try encodeRating()
+
+    let rating = RatingRequest(value: rating)
+    let data = try JSONEncoder().encode(rating)
 
     let request = MusicDataPutRequest(url: url, data: data)
     let response = try await request.response()
     return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
-  }
-
-  internal func encodeRating() throws -> Data {
-    let rating = RatingRequest(value: rating)
-    return try JSONEncoder().encode(rating)
   }
 }
 

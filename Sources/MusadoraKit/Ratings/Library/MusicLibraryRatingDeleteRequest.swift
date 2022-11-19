@@ -9,48 +9,49 @@ import Foundation
 import MusicKit
 
 public extension MusadoraKit {
-  static func librarySongDeleteRating(id: MusicItemID) async throws -> Bool {
+  static func deleteLibrarySongRating(for id: MusicItemID) async throws -> Bool {
     let request = MusicLibraryRatingDeleteRequest(for: id, item: .song)
     let response = try await request.response()
     return response
   }
 
-  static func libraryAlbumDeleteRating(id: MusicItemID) async throws -> Bool {
+  static func deleteLibraryAlbumRating(for id: MusicItemID) async throws -> Bool {
     let request = MusicLibraryRatingDeleteRequest(for: id, item: .album)
     let response = try await request.response()
     return response
   }
 
-  static func libraryPlaylistDeleteRating(id: MusicItemID) async throws -> Bool {
+  static func deleteLibraryPlaylistRating(for id: MusicItemID) async throws -> Bool {
     let request = MusicLibraryRatingDeleteRequest(for: id, item: .playlist)
     let response = try await request.response()
     return response
   }
 
-  static func libraryMusicVideoDeleteRating(id: MusicItemID) async throws -> Bool {
+  static func deleteLibraryMusicVideoRating(for id: MusicItemID) async throws -> Bool {
     let request = MusicLibraryRatingDeleteRequest(for: id, item: .musicVideo)
     let response = try await request.response()
     return response
   }
 }
 
+/// A request that your app uses to delete ratings for albums, songs,
+/// playlists, music videos, and stations for content in the user's iCloud library.
 public struct MusicLibraryRatingDeleteRequest {
 
-  /// The type of the library item to
-  /// delete rating for.
   private var type: LibraryRatingMusicItemType
-
-  /// The unique identifier of the library item to
-  /// delete rating for.
   private var id: MusicItemID
 
-  /// Creates a request to fetch items using a filter that matches
-  /// a specific value.
+  /// Creates a request to delete the rating for the unique identifier of the given library item.
+  /// - Parameters:
+  ///   - id: The unique identifier of the library item.
+  ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
   public init(for id: MusicItemID, item type: LibraryRatingMusicItemType) {
     self.id = id
     self.type = type
   }
 
+  /// Deletes the rating of the given library item
+  /// that matches the unique identifier for the request.
   public func response() async throws -> Bool {
     let url = try libraryDeleteRatingsEndpointURL
     let request = MusicDataDeleteRequest(url: url)
