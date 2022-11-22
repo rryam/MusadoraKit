@@ -135,22 +135,47 @@ public extension MusadoraKit {
 // MARK: - Creating/Editing Playlists
 
 struct LibraryPlaylistCreationRequest: Codable {
-  /// (Required) A dictionary that includes strings for the name and description of the new playlist.
+  /// A dictionary that includes strings for the name and description of the new playlist.
   var attributes: Attributes
 
-#warning("TODO: ADD RELATIONSHIPS")
+  /// To include tracks for the new playlist.
+  var relationships: Relationships?
 
   struct Attributes: Codable {
-    /// (Required) The name of the playlist.
+    /// The name of the playlist.
     var name: String
 
     /// The description of the playlist.
     var description: String?
   }
+
+  struct Relationships: Codable {
+    var tracks: Tracks
+
+    struct Tracks: Codable {
+      /// Data of the tracks to add to the created library playlist.
+      var data: [Data]
+
+      struct Data: Codable {
+        /// The unique identifier for the track.
+        /// This ID can be a catalog identifier or a library identifier, depending on the track type.
+        var id: String
+
+        /// The type of the track to be added.
+        var type: LibraryPlaylistCreationTrackType
+      }
+    }
+  }
+}
+
+enum LibraryPlaylistCreationTrackType: String, Codable {
+  case song = "songs"
+  case musicVideo = "music-videos"
+  case libraryMusicVideo = "library-music-videos"
+  case librarySong = "library-songs"
 }
 
 public extension MusadoraKit {
-#warning("TODO: OPTION TO ADD TRACKS")
 
   /// Creates a playlist in the user’s music library.
   ///
@@ -159,20 +184,38 @@ public extension MusadoraKit {
   ///   - description: An optional description of the playlist.
   /// - Returns: The newly created playlist.
   static func createPlaylist(name: String, description: String? = nil) async throws -> Playlist {
+    let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description))
+    return try await createPlaylist(with: creationRequest)
+  }
+
+  /// Creates a playlist in the user’s music library with songs.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the playlist.
+  ///   - description: An optional description of the playlist.
+  ///   - items: Add the songs to the playlist.
+  /// - Returns: The newly created playlist.
+  static func createPlaylist(name: String, description: String? = nil, items: Songs) async throws -> Playlist {
+    let tracksData: [LibraryPlaylistCreationRequest.Relationships.Tracks.Data] = items.map { .init(id: $0.id.rawValue, type: .song)}
+
+    let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description), relationships: .init(tracks: .init(data: tracksData)))
+    return try await createPlaylist(with: creationRequest)
+  }
+
+  static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
     let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists")
 
     guard let url = url else { throw URLError(.badURL) }
 
-    let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description))
     let data = try JSONEncoder().encode(creationRequest)
 
     let request = MusicDataPostRequest(url: url, data: data)
     let response = try await request.response()
 
     let playlists = try JSONDecoder().decode(Playlists.self, from: response.data)
-    
+
     guard let playlist = playlists.first else {
-      throw MusadoraKitError.notFound(for: name)
+      throw MusadoraKitError.notFound(for: creationRequest.attributes.name)
     }
 
     return playlist
