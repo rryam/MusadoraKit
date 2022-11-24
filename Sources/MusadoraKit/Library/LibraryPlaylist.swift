@@ -132,53 +132,6 @@ public extension MusadoraKit {
 }
 #endif
 
-// MARK: - Creating/Editing Playlists
-
-struct LibraryPlaylistCreationRequest: Codable {
-  /// (Required) A dictionary that includes strings for the name and description of the new playlist.
-  var attributes: Attributes
-
-#warning("TODO: ADD RELATIONSHIPS")
-
-  struct Attributes: Codable {
-    /// (Required) The name of the playlist.
-    var name: String
-
-    /// The description of the playlist.
-    var description: String?
-  }
-}
-
-public extension MusadoraKit {
-#warning("TODO: OPTION TO ADD TRACKS")
-
-  /// Creates a playlist in the user’s music library.
-  ///
-  /// - Parameters:
-  ///   - name: The name of the playlist.
-  ///   - description: An optional description of the playlist.
-  /// - Returns: The newly created playlist.
-  static func createPlaylist(name: String, description: String? = nil) async throws -> Playlist {
-    let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists")
-
-    guard let url = url else { throw URLError(.badURL) }
-
-    let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description))
-    let data = try JSONEncoder().encode(creationRequest)
-
-    let request = MusicDataPostRequest(url: url, data: data)
-    let response = try await request.response()
-
-    let playlists = try JSONDecoder().decode(Playlists.self, from: response.data)
-    
-    guard let playlist = playlists.first else {
-      throw MusadoraKitError.notFound(for: name)
-    }
-
-    return playlist
-  }
-}
-
 // MARK: - `LibraryPlaylist` methods
 extension MusadoraKit {
 

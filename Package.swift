@@ -7,8 +7,8 @@ let package = Package(
   name: "MusadoraKit",
   platforms: [.iOS(.v15), .macOS(.v12), .watchOS(.v8), .tvOS(.v15)],
   products: [
-    .library(name: "MusadoraKit", type: .static, targets: ["MusadoraKit"]),
-    .library(name: "MusadoraLabsKit", type: .static, targets: ["MusadoraLabsKit"]),
+    .library(name: "MusadoraKit", targets: ["MusadoraKit"]),
+    .library(name: "MusadoraLabsKit", targets: ["MusadoraLabsKit"]),
   ],
   dependencies: [],
   targets: [
