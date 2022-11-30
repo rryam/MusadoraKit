@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct AppleMusicURLComponents {
+public struct AppleMusicURLComponents {
   private var components: URLComponents
 
-  init() {
+  public init() {
     self.components = URLComponents()
     components.scheme = "https"
     components.host = "api.music.apple.com"
   }
   
-  var queryItems: [URLQueryItem]? {
+  public var queryItems: [URLQueryItem]? {
     get {
       components.queryItems
     } set {
@@ -24,7 +24,7 @@ struct AppleMusicURLComponents {
     }
   }
 
-  var path: String {
+ public var path: String {
     get {
       return components.path
     } set {
@@ -32,7 +32,7 @@ struct AppleMusicURLComponents {
     }
   }
 
-  var url: URL? {
+  public var url: URL? {
     components.url
   }
 }
