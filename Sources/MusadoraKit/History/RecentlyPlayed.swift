@@ -17,6 +17,14 @@ public extension MusadoraKit {
     let response = try await request.response()
     return response.items
   }
+  
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  static func recentlyPlayedSongs(limit: Int? = nil) async throws -> Songs {
+    var request = MusicRecentlyPlayedRequest<Song>()
+    request.limit = limit
+    let response = try await request.response()
+    return response.items
+  }
 }
 #endif
 
