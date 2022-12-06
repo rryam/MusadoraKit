@@ -127,6 +127,7 @@ public struct MusicPlayParameters: Codable {
   public var isLibrary: Bool?
   public var kind: String
   public var catalogId: MusicItemID?
+  public var globalId: MusicItemID?
 }
 
 enum LibraryPlaylistCreationTrackType: String, Codable {
