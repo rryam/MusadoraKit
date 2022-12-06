@@ -25,7 +25,22 @@ public extension MusadoraKit {
     let response = try await request.response()
     return response.items
   }
-
+  
+  ///  The @available attribute indicates that the `mostPlayedSongs(limit:)` function is available on iOS 16.0 and later, macOS 13.0 and later, tvOS 16.0 and later, and watchOS 9.0 and later.
+  ///
+  ///  Use this function to retrieve a list of the most played songs from the user's music library. The limit parameter specifies the maximum number of songs to return. The default value is 100. The songs are sorted by the number of times they have been played, in descending order.
+  ///
+  ///  This function is asynchronous and can be awaited. If the request is successful, it returns a list of `Song` objects. If an error occurs, the function throws an exception.
+  ///
+  ///  Example:
+  ///   ```
+  ///  do  {
+  ///    let songs = try await mostPlayedSongs(limit: 200)
+  ///    /// Use the list of songs.
+  ///  } catch {
+  ///    /// Handle the error.
+  ///  }
+  ///  ```
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
   static func mostPlayedSongs(limit: Int = 100) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
