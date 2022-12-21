@@ -1,14 +1,11 @@
 //
 //  CatalogMusicVideo.swift
-//  CatalogMusicVideo
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
 import MusicKit
-
-/// A collection of music videos.
-public typealias MusicVideos = MusicItemCollection<MusicVideo>
 
 /// Additional property/relationship of a music video.
 public typealias MusicVideoProperty = PartialMusicAsyncProperty<MusicVideo>

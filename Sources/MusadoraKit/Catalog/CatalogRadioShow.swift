@@ -1,16 +1,11 @@
 //
 //  CatalogRadioShow.swift
-//  CatalogRadioShow
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 10/04/22.
 //
 
 import MusicKit
-
-/// A collection of radio shows.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-public typealias RadioShows = MusicItemCollection<RadioShow>
 
 /// Additional property/relationship of a radio show.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)

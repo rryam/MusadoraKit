@@ -1,15 +1,12 @@
 //
 //  CatalogStation.swift
-//  CatalogStation
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
 import Foundation
 import MusicKit
-
-/// A collection of stations.
-public typealias Stations = MusicItemCollection<Station>
 
 public extension MusadoraKit {
   /// Fetch a station from the Apple Music catalog by using its identifier.

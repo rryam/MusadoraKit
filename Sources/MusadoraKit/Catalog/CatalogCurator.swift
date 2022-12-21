@@ -1,16 +1,11 @@
 //
 //  CatalogCurator.swift
-//  CatalogCurator
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 10/04/22.
 //
 
 import MusicKit
-
-/// A collection of curators.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-public typealias Curators = MusicItemCollection<Curator>
 
 /// Additional property/relationship of an artist.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
