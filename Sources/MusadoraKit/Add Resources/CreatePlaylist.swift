@@ -35,6 +35,20 @@ public extension MusadoraKit {
     return try await createPlaylist(with: creationRequest)
   }
 
+    /// Creates a playlist in the user’s music library with song IDs.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the playlist.
+    ///   - description: An optional description of the playlist.
+    ///   - songIds: IDs of Songs
+    /// - Returns: The newly created playlist.
+    static func createPlaylist(name: String, description: String? = nil, songIds: [MusicItemID]) async throws -> Playlist {
+      let tracksData: [PlaylistCreationData] = songIds.map { .init(id: $0.rawValue, type: .song) }
+
+      let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description), relationships: .init(tracks: .init(data: tracksData)))
+      return try await createPlaylist(with: creationRequest)
+    }
+
   static func createPlaylist(name: String, description: String? = nil, items: Tracks) async throws -> Playlist {
     let tracksData: [PlaylistCreationData] = try items.compactMap {
       let data = try JSONEncoder().encode($0.playParameters)
@@ -126,6 +140,8 @@ public struct MusicPlayParameters: Codable {
   public var id: MusicItemID
   public var isLibrary: Bool?
   public var kind: String
+  public var catalogId: MusicItemID?
+  public var globalId: MusicItemID?
 }
 
 enum LibraryPlaylistCreationTrackType: String, Codable {
