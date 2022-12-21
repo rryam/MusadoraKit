@@ -1,14 +1,11 @@
 //
 //  CatalogPlaylist.swift
-//  CatalogPlaylist
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
 import MusicKit
-
-/// A collection of playlists.
-public typealias Playlists = MusicItemCollection<Playlist>
 
 /// Additional property/relationship of a playlist.
 public typealias PlaylistProperty = PartialMusicAsyncProperty<Playlist>

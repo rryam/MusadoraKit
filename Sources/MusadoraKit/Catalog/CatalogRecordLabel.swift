@@ -1,14 +1,11 @@
 //
 //  CatalogRecordLabel.swift
-//  CatalogRecordLabel
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 10/04/22.
 //
 
 import MusicKit
-
-/// A collection of record labels.
-public typealias RecordLabels = MusicItemCollection<RecordLabel>
 
 /// Additional property/relationship of a record label.
 public typealias RecordLabelProperty = PartialMusicAsyncProperty<RecordLabel>

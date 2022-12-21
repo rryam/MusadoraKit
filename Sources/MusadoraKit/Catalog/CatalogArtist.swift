@@ -1,28 +1,20 @@
 //
 //  CatalogArtist.swift
-//  CatalogArtist
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 25/08/21.
 //
 
 import MusicKit
 
-/// A collection of artists.
-public typealias Artists = MusicItemCollection<Artist>
-
-/// Additional property/relationship of an artist.
-public typealias ArtistProperty = PartialMusicAsyncProperty<Artist>
-
-/// Additional properties/relationships of an artist.
-public typealias ArtistProperties = [ArtistProperty]
-
-public extension MusadoraKit {
+public extension MCatalog {
   /// Fetch an artist from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   ///   - properties: Additional relationships to fetch with the artist.
+  ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artist` matching the given identifier.
-  static func catalogArtist(id: MusicItemID, with properties: ArtistProperties = []) async throws -> Artist {
+  static func artist(for id: MusicItemID, with properties: ArtistProperties) async throws -> Artist {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -37,7 +29,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   /// - Returns: `Artist` matching the given identifier.
-  static func catalogArtist(id: MusicItemID) async throws -> Artist {
+  static func artist(for id: MusicItemID) async throws -> Artist {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -52,8 +44,9 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   ///   - properties: Additional relationships to fetch with the artists.
+  ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artists` matching the given identifiers.
-  static func catalogArtists(ids: [MusicItemID], with properties: ArtistProperties = []) async throws -> Artists {
+  static func artists(for ids: [MusicItemID], with properties: ArtistProperties) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -64,16 +57,10 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
-  static func catalogArtists(ids: [MusicItemID]) async throws -> Artists {
+  static func artists(for ids: [MusicItemID]) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
     return response.items
-  }
-}
-
-extension ArtistProperties {
-  public static var all: Self {
-    [.genres, .station, .musicVideos, .albums, .playlists, .appearsOnAlbums, .fullAlbums, .featuredAlbums, .liveAlbums, .compilationAlbums, .featuredPlaylists, .latestRelease, .topSongs, .topMusicVideos, .similarArtists, .singles]
   }
 }

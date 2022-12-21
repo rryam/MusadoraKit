@@ -1,15 +1,12 @@
 //
 //  CatalogGenre.swift
-//  CatalogGenre
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 17/08/21.
 //
 
-import Foundation
 import MusicKit
-
-/// A collection of genres.
-public typealias Genres = MusicItemCollection<Genre>
+import Foundation
 
 public extension MusadoraKit {
   /// Fetch a genre from the Apple Music catalog by using its identifier.

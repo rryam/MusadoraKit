@@ -1,14 +1,11 @@
 //
 //  CatalogSong.swift
-//  CatalogSong
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
 import MusicKit
-
-/// A collection of songs.
-public typealias Songs = MusicItemCollection<Song>
 
 /// Additional property/relationship of a song.
 public typealias SongProperty = PartialMusicAsyncProperty<Song>
