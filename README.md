@@ -20,8 +20,9 @@ You can support my open-source by buying my book, ["Exploring MusicKit and Apple
 
 ## Apps Using MusadoraKit
 
-- Musadora - Apple Music client focused on playlists
-- Musadora Labs - A companion app to explore MusicKit
+- Musadora: Apple Music client focused on playlists
+- Musadora Labs: A companion app to explore MusicKit
+- Euphonic: Apple Music client focused on recommendations
 
 ## Catalog 
 
