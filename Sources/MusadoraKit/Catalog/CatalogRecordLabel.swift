@@ -7,19 +7,14 @@
 
 import MusicKit
 
-/// Additional property/relationship of a record label.
-public typealias RecordLabelProperty = PartialMusicAsyncProperty<RecordLabel>
-
-/// Additional properties/relationships of a record label.
-public typealias RecordLabelProperties = [RecordLabelProperty]
-
-public extension MusadoraKit {
+public extension MCatalog {
   /// Fetch a record label from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the record label.
   ///   - properties: Additional relationships to fetch with the record label.
+  ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `RecordLabel` matching the given identifier.
-  static func catalogRecordLabel(id: MusicItemID, with properties: RecordLabelProperties = []) async throws -> RecordLabel {
+  static func recordLabel(for id: MusicItemID, with properties: RecordLabelProperties) async throws -> RecordLabel {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -35,7 +30,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the record label.
   /// - Returns: `RecordLabel` matching the given identifier.
-  static func catalogRecordLabel(id: MusicItemID) async throws -> RecordLabel {
+  static func recordLabel(for id: MusicItemID) async throws -> RecordLabel {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -51,8 +46,9 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the record labels.
   ///   - properties: Additional relationships to fetch with the record labels.
+  ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `RecordLabels` matching the given identifiers.
-  static func catalogRecordLabels(ids: [MusicItemID], with properties: RecordLabelProperties = []) async throws -> RecordLabels {
+  static func recordLabels(for ids: [MusicItemID], with properties: RecordLabelProperties) async throws -> RecordLabels {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -64,7 +60,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the record labels.
   /// - Returns: `RecordLabels` matching the given identifiers.
-  static func catalogRecordLabels(ids: [MusicItemID]) async throws -> RecordLabels {
+  static func recordLabels(for ids: [MusicItemID]) async throws -> RecordLabels {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
@@ -72,11 +68,3 @@ public extension MusadoraKit {
   }
 #endif
 }
-
-#if compiler(>=5.7)
-extension RecordLabelProperties {
-  public static var all: Self {
-    [.latestReleases, .topReleases]
-  }
-}
-#endif
