@@ -7,25 +7,15 @@
 
 import MusicKit
 
-/// Additional property/relationship of a radio show.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
 @available(watchOS, unavailable)
-public typealias RadioShowProperty = PartialMusicAsyncProperty<RadioShow>
-
-/// Additional properties/relationships of a radio show.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-public typealias RadioShowProperties = [RadioShowProperty]
-
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-public extension MusadoraKit {
+public extension MCatalog {
   /// Fetch a radio show from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the radio show.
   ///   - properties: Additional relationships to fetch with the radio show.
   /// - Returns: `RadioShow` matching the given identifier.
-  static func catalogRadioShow(id: MusicItemID, with properties: RadioShowProperties = []) async throws -> RadioShow {
+  static func radioShow(for id: MusicItemID, with properties: RadioShowProperties) async throws -> RadioShow {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -40,7 +30,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the radio show.
   /// - Returns: `RadioShow` matching the given identifier.
-  static func catalogRadioShow(id: MusicItemID) async throws -> RadioShow {
+  static func radioShow(for id: MusicItemID) async throws -> RadioShow {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -56,7 +46,7 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the radio shows.
   ///   - properties: Additional relationships to fetch with the radio shows.
   /// - Returns: `RadioShows` matching the given identifiers.
-  static func catalogCurators(ids: [MusicItemID], with properties: RadioShowProperties = []) async throws -> RadioShows {
+  static func radioShows(for ids: [MusicItemID], with properties: RadioShowProperties) async throws -> RadioShows {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -67,18 +57,10 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the radio shows.
   /// - Returns: `RadioShows` matching the given identifiers.
-  static func catalogCurators(ids: [MusicItemID]) async throws -> RadioShows {
+  static func radioShows(for ids: [MusicItemID]) async throws -> RadioShows {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
     return response.items
-  }
-}
-
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
-extension RadioShowProperties {
-  public static var all: Self {
-    [.playlists]
   }
 }
