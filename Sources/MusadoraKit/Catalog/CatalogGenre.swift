@@ -36,23 +36,33 @@ public extension MCatalog {
   /// Fetch top genres from the Apple Music catalog.
   /// - Returns: Top `Genres`.
   static func topGenres() async throws -> Genres {
+#if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       let request = MusicCatalogResourceRequest<Genre>()
       let response = try await request.response()
       return response.items
     } else {
-      let countryCode = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(countryCode)/genres"
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-      let response = try await request.response()
-
-      return try JSONDecoder().decode(Genres.self, from: response.data)
+      return try await topGenresAPI()
     }
+#else
+    return try await topGenresAPI()
+#endif
+  }
+}
+
+extension MCatalog {
+  static private func topGenresAPI() async throws -> Genres {
+    let countryCode = try await MusicDataRequest.currentCountryCode
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(countryCode)/genres"
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    return try JSONDecoder().decode(Genres.self, from: response.data)
   }
 }
