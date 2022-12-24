@@ -7,57 +7,59 @@
 
 import MusicKit
 
-public extension MRating {
+public extension MCatalog {
   /// Adds a rating for a song in the catalog.
   ///
   ///  Example:
   ///   ```
   ///  do  {
-  ///    let rating = try await MRating.addCatalogSong(for: "1632076865, rating: .like)
+  ///    let rating = try await MCatalog.addRating(for: song, rating: .like)
   ///  } catch {
   ///    // Handle the error.
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - id: The unique identifier of the song to add the rating for.
+  ///   - song: The song to add the rating for.
   ///   - rating: The rating to add for the song.
   /// - Returns: The added rating for the song as `Rating` object.
   ///
-  /// - Throws: `MusadoraKitError.notFound`: If the song with the specified ID is not found in the catalog.
-  static func addCatalogSong(for id: MusicItemID, rating: RatingType) async throws -> Rating {
+  /// - Throws: `MRatingError.notFound`: If the song is not found in the catalog.
+  static func addRating(for song: Song, rating: RatingType) async throws -> Rating {
+    let id = song.id
     let request = MCatalogRatingAddRequest(for: id, item: .song, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      throw MRatingError.notFound(for: id.rawValue)
     }
     return rating
   }
 
-  /// Adds a rating for a album in the catalog.
+  /// Adds a rating for an album in the catalog.
   ///
   ///  Example:
   ///   ```
   ///  do  {
-  ///    let rating = try await MRating.addCatalogAlbum(for: "1632076865, rating: .like)
+  ///    let rating = try await MCatalog.addRating(for: album, rating: .like)
   ///  } catch {
   ///    // Handle the error.
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - id: The unique identifier of the album to add the rating for.
+  ///   - album: The album to add the rating for.
   ///   - rating: The rating to add for the album.
   /// - Returns: The added rating for the album as `Rating` object.
   ///
-  /// - Throws: `MusadoraKitError.notFound`: If the album with the specified ID is not found in the catalog.
-  static func addCatalogAlbum(for id: MusicItemID, rating: RatingType) async throws -> Rating {
+  /// - Throws: `MRatingError.notFound`: If the album is not found in the catalog.
+  static func addRating(for album: Album, rating: RatingType) async throws -> Rating {
+    let id = album.id
     let request = MCatalogRatingAddRequest(for: id, item: .album, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      throw MRatingError.notFound(for: id.rawValue)
     }
     return rating
   }
@@ -67,24 +69,25 @@ public extension MRating {
   ///  Example:
   ///   ```
   ///  do  {
-  ///    let rating = try await MRating.addCatalogPlaylist(for: "1632076865, rating: .like)
+  ///    let rating = try await MCatalog.addRating(for: playlist, rating: .like)
   ///  } catch {
   ///    // Handle the error.
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - id: The unique identifier of the playlist to add the rating for.
+  ///   - playlist: The playlist to add the rating for.
   ///   - rating: The rating to add for the playlist.
   /// - Returns: The added rating for the playlist as `Rating` object.
   ///
-  /// - Throws: `MusadoraKitError.notFound`: If the playlist with the specified ID is not found in the catalog.
-  static func addCatalogPlaylist(for id: MusicItemID, rating: RatingType) async throws -> Rating {
+  /// - Throws: `MRatingError.notFound`: If the playlist with the specified ID is not found in the catalog.
+  static func addRating(for playlist: Playlist, rating: RatingType) async throws -> Rating {
+    let id = playlist.id
     let request = MCatalogRatingAddRequest(for: id, item: .playlist, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      throw MRatingError.notFound(for: id.rawValue)
     }
     return rating
   }
@@ -94,24 +97,25 @@ public extension MRating {
   ///  Example:
   ///   ```
   ///  do  {
-  ///    let rating = try await MRating.addCatalogMusicVideo(for: "1632076865, rating: .like)
+  ///    let rating = try await MCatalog.addRating(for: musicVideo, rating: .like)
   ///  } catch {
   ///    // Handle the error.
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - id: The unique identifier of the music video to add the rating for.
+  ///   - musicVideo: The music video to add the rating for.
   ///   - rating: The rating to add for the music video.
   /// - Returns: The added rating for the music video as `Rating` object.
   ///
-  /// - Throws: `MusadoraKitError.notFound`: If the music video with the specified ID is not found in the catalog.
-  static func addCatalogMusicVideo(for id: MusicItemID, rating: RatingType) async throws -> Rating {
+  /// - Throws: `MRatingError.notFound`: If the music video with the specified ID is not found in the catalog.
+  static func addRating(for musicVideo: MusicVideo, rating: RatingType) async throws -> Rating {
+    let id = musicVideo.id
     let request = MCatalogRatingAddRequest(for: id, item: .musicVideo, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      throw MRatingError.notFound(for: id.rawValue)
     }
     return rating
   }
@@ -121,24 +125,55 @@ public extension MRating {
   ///  Example:
   ///   ```
   ///  do  {
-  ///    let rating = try await MRating.addCatalogStation(for: "1632076865, rating: .like)
+  ///    let rating = try await MCatalog.addRating(for: station, rating: .like)
   ///  } catch {
   ///    // Handle the error.
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - id: The unique identifier of the station to add the rating for.
+  ///   - station: The station to add the rating for.
   ///   - rating: The rating to add for the station.
   /// - Returns: The added rating for the station as `Rating` object.
   ///
-  /// - Throws: `MusadoraKitError.notFound`: If the station with the specified ID is not found in the catalog.
-  static func addCatalogStation(for id: MusicItemID, rating: RatingType) async throws -> Rating {
+  /// - Throws: `MRatingError.notFound`: If the station with the specified ID is not found in the catalog.
+  static func addRating(for station: Station, rating: RatingType) async throws -> Rating {
+    let id = station.id
     let request = MCatalogRatingAddRequest(for: id, item: .station, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      throw MRatingError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  /// Adds a rating for a music item in the catalog.
+  ///
+  /// Use this method when you don't have the particular music item, but have access
+  /// to the unique identifier of the music item.
+  ///  Example:
+  ///   ```
+  ///  do  {
+  ///    let rating = try await MCatalog.addRating(for: "12345678", item: .playlist, rating: .dislike)
+  ///  } catch {
+  ///    // Handle the error.
+  ///  }
+  ///  ```
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the music item to add the rating for.
+  ///   - item: The music item to add the rating for.
+  ///   - rating: The rating to add for the music item.
+  /// - Returns: The added rating for the music item as `Rating` object.
+  ///
+  /// - Throws: `MRatingError.notFound`: If the music item with the specified ID is not found in the catalog.
+  static func addRating(for id: MusicItemID, item: CatalogRatingMusicItemType, rating: RatingType) async throws -> Rating {
+    let request = MCatalogRatingAddRequest(for: id, item: item, rating: rating)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MRatingError.notFound(for: id.rawValue)
     }
     return rating
   }

@@ -1,6 +1,6 @@
 //
-//  MusicCatalogRatingDeleteRequest.swift
-//  MusicCatalogRatingDeleteRequest
+//  MCatalogRatingDeleteRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
@@ -8,33 +8,33 @@
 import Foundation
 import MusicKit
 
-public extension MusadoraKit {
-  static func deleteCatalogSongRating(for id: MusicItemID) async throws -> Bool {
-    let request = MusicCatalogRatingDeleteRequest(for: id, item: .song)
+public extension MRating {
+  static func deleteCatalogSong(for id: MusicItemID) async throws -> Bool {
+    let request = MCatalogRatingDeleteRequest(for: id, item: .song)
     let response = try await request.response()
     return response
   }
 
-  static func deleteCatalogAlbumRating(for id: MusicItemID) async throws -> Bool {
-    let request = MusicCatalogRatingDeleteRequest(for: id, item: .album)
+  static func deleteCatalogAlbum(for id: MusicItemID) async throws -> Bool {
+    let request = MCatalogRatingDeleteRequest(for: id, item: .album)
     let response = try await request.response()
     return response
   }
 
-  static func deleteCatalogPlaylistRating(for id: MusicItemID) async throws -> Bool {
-    let request = MusicCatalogRatingDeleteRequest(for: id, item: .playlist)
+  static func deleteCatalogPlaylist(for id: MusicItemID) async throws -> Bool {
+    let request = MCatalogRatingDeleteRequest(for: id, item: .playlist)
     let response = try await request.response()
     return response
   }
 
-  static func deleteCatalogMusicVideoRating(for id: MusicItemID) async throws -> Bool {
-    let request = MusicCatalogRatingDeleteRequest(for: id, item: .musicVideo)
+  static func deleteCatalogMusicVideo(for id: MusicItemID) async throws -> Bool {
+    let request = MCatalogRatingDeleteRequest(for: id, item: .musicVideo)
     let response = try await request.response()
     return response
   }
 
-  static func deleteCatalogStationRating(for id: MusicItemID) async throws -> Bool {
-    let request = MusicCatalogRatingDeleteRequest(for: id, item: .station)
+  static func deleteCatalogStation(for id: MusicItemID) async throws -> Bool {
+    let request = MCatalogRatingDeleteRequest(for: id, item: .station)
     let response = try await request.response()
     return response
   }
@@ -42,7 +42,7 @@ public extension MusadoraKit {
 
 /// A request that your app uses to delete ratings for albums, songs,
 /// playlists, music videos, and stations for content in the Apple Music catalog.
-public struct MusicCatalogRatingDeleteRequest {
+public struct MCatalogRatingDeleteRequest {
 
   private var type: CatalogRatingMusicItemType
   private var id: MusicItemID
@@ -60,14 +60,14 @@ public struct MusicCatalogRatingDeleteRequest {
   /// that matches the unique identifier for the request.
   public func response() async throws -> Bool {
     let url = try catalogDeleteRatingsEndpointURL
-    let request = MusicDataDeleteRequest(url: url)
+    let request = MDataDeleteRequest(url: url)
     let response = try await request.response()
     // 204 EmptyBodyResponse - The modification was successful, but there’s no content in the response.
     return response.urlResponse.statusCode == 204
   }
 }
 
-extension MusicCatalogRatingDeleteRequest {
+extension MCatalogRatingDeleteRequest {
   internal var catalogDeleteRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
