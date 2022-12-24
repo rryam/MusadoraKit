@@ -12,11 +12,11 @@ definitions:
           - "**/*.md"
     scripts:
       - name: Build framework
-        script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13'
+        script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 14'
       - name: Test framework
         script: |
           set -o pipefail
-          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
+          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 14' test | xcpretty --report junit
         test_report: build/reports/junit.xml
 
 workflows:
