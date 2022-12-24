@@ -58,11 +58,11 @@ extension MCatalogRatingAddRequest {
 }
 
 
-public enum RatingError: Error, Equatable {
+public enum MRatingError: Error, Equatable {
   case notFound(for: String)
 }
 
-extension RatingError: CustomStringConvertible {
+extension MRatingError: CustomStringConvertible {
   public var description: String {
     switch self {
       case let .notFound(id):
