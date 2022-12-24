@@ -8,14 +8,12 @@
 import MusicKit
 import MediaPlayer
 
-
-
-public extension MusadoraKit {
+public extension MLibrary {
   /// Fetch a playlist from the user's library by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  static func libraryPlaylist(id: MusicItemID) async throws -> Playlist {
+  static func playlist(for id: MusicItemID) async throws -> Playlist {
     let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -29,7 +27,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func libraryPlaylists(limit: Int? = nil) async throws -> Playlists {
+  static func playlists(limit: Int? = nil) async throws -> Playlists {
     var request = MusicLibraryResourceRequest<Playlist>()
     request.limit = limit
     let response = try await request.response()
@@ -40,17 +38,18 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func libraryPlaylists(ids: [MusicItemID]) async throws -> Playlists {
+  static func playlists(for ids: [MusicItemID]) async throws -> Playlists {
     let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
 
 #if compiler(>=5.7)
+  /// Access the total number of playlists in the user's library.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static var libraryPlaylistsCount: Int {
+  static var playlistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
       let response = try await request.response()
@@ -58,11 +57,12 @@ public extension MusadoraKit {
     }
   }
 #else
+  /// Access the total number of playlists in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var libraryPlaylistsCount: Int {
+  static var playlistsCount: Int {
     get async throws {
       if let items = MPMediaQuery.playlists().items {
         return items.count
@@ -101,7 +101,7 @@ public extension MusadoraKit {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-public extension MusadoraKit {
+public extension MLibrary {
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///
   /// - Parameters:
@@ -121,7 +121,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyLibraryPlayedPlaylists(limit: Int = 0, offset: Int = 0) async throws -> Playlists {
+  static func recentlyPlayedPlaylists(limit: Int = 0, offset: Int = 0) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -133,25 +133,25 @@ public extension MusadoraKit {
 #endif
 
 // MARK: - `LibraryPlaylist` methods
-extension MusadoraKit {
+extension MLibrary {
 
   /// Fetch all playlists from the user's library in alphabetical order.
   /// - Returns: `LibraryPlaylists` for the given limit.
-  static func libraryPlaylists() async throws -> LibraryPlaylists {
+  static func playlists() async throws -> LibraryPlaylists {
     let playlistsURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
     let request = MusicDataRequest(urlRequest: .init(url: playlistsURL))
     let response = try await request.response()
 
-    var libraryPlaylists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
+    var playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
 
     repeat {
-      if let nextBatchOfPlaylists = try await libraryPlaylists.nextBatch() {
-        libraryPlaylists += nextBatchOfPlaylists
+      if let nextBatchOfPlaylists = try await playlists.nextBatch() {
+        playlists += nextBatchOfPlaylists
       } else {
         break
       }
-    } while libraryPlaylists.hasNextBatch
+    } while playlists.hasNextBatch
 
-    return libraryPlaylists
+    return playlists
   }
 }

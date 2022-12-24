@@ -8,7 +8,7 @@
 import MusicKit
 import MediaPlayer
 
-public extension MusadoraKit {
+public extension MLibrary {
 #if compiler(>=5.7)
   /// Fetch an album from the user's library by using its identifier.
   /// - Parameters:
@@ -17,7 +17,7 @@ public extension MusadoraKit {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func libraryAlbum(id: MusicItemID) async throws -> Album {
+  static func album(for id: MusicItemID) async throws -> Album {
     var request = MusicLibraryRequest<Album>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -28,7 +28,7 @@ public extension MusadoraKit {
     return album
   }
 #else
-  static func libraryAlbum(id: MusicItemID) async throws -> Album {
+  static func album(for id: MusicItemID) async throws -> Album {
     let request = MusicLibraryResourceRequest<Album>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -47,14 +47,14 @@ public extension MusadoraKit {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func libraryAlbums(limit: Int = 50) async throws -> Albums {
+  static func albums(limit: Int = 50) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     let response = try await request.response()
     return response.items
   }
 #else
-  static func libraryAlbums(limit: Int = 50) async throws -> Albums {
+  static func albums(limit: Int = 50) async throws -> Albums {
     var request = MusicLibraryResourceRequest<Album>()
     request.limit = limit
     let response = try await request.response()
@@ -66,17 +66,18 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
-  static func libraryAlbums(ids: [MusicItemID]) async throws -> Albums {
+  static func albums(for ids: [MusicItemID]) async throws -> Albums {
     let request = MusicLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
 
 #if compiler(>=5.7)
+  /// Access the total number of albums in the user's library.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static var libraryAlbumsCount: Int {
+  static var albumsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Album>()
       let response = try await request.response()
@@ -84,11 +85,12 @@ public extension MusadoraKit {
     }
   }
 #else
+  /// Access the total number of albums in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var libraryAlbumsCount: Int {
+  static var albumsCount: Int {
     get async throws {
       if let items = MPMediaQuery.albums().items {
         return items.count
@@ -105,7 +107,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbumToLibrary(id: MusicItemID) async throws -> Bool {
+  static func addAlbum(for id: MusicItemID) async throws -> Bool {
     let request = MusicAddResourcesRequest([(item: .albums, value: [id])])
     let response = try await request.response()
     return response
@@ -115,7 +117,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbumsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+  static func addAlbums(for ids: [MusicItemID]) async throws -> Bool {
     let request = MusicAddResourcesRequest([(item: .albums, value: ids)])
     let response = try await request.response()
     return response
@@ -126,7 +128,7 @@ public extension MusadoraKit {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-public extension MusadoraKit {
+public extension MCatalog {
   /// Fetch recently added albums from the user's library sorted by the date added.
   /// - Parameters:
   ///   - limit: The number of albums returned.
@@ -144,7 +146,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  static func recentlyLibraryPlayedAlbums(limit: Int = 0, offset: Int = 0) async throws -> Albums {
+  static func recentlyPlayedAlbums(limit: Int = 0, offset: Int = 0) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     request.offset = offset

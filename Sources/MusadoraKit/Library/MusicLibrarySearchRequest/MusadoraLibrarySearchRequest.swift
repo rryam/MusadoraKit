@@ -1,6 +1,6 @@
 //
-//  MusadoraLibrarySearchRequest.swift
-//  MusadoraLibrarySearchRequest
+//  MLibrarySearchRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
@@ -10,12 +10,12 @@ import MusicKit
 
 /// A request that your app uses to fetch items from the your library
 /// using a search term.
-public struct MusadoraLibrarySearchRequest: Equatable, Hashable, Sendable {
+public struct MLibrarySearchRequest: Equatable, Hashable, Sendable {
   /// The search term for the request.
   public let term: String
 
   /// The list of requested library searchable types.
-  public var types: [MusadoraLibrarySearchable.Type]
+  public var types: [MLibrarySearchable.Type]
 
   /// A limit for the number of items to return
   /// in the library search response.
@@ -26,22 +26,22 @@ public struct MusadoraLibrarySearchRequest: Equatable, Hashable, Sendable {
 
   /// Creates a library search request for a specified search term
   /// and list of library searchable types.
-  public init(term: String, types: [MusadoraLibrarySearchable.Type]) {
+  public init(term: String, types: [MLibrarySearchable.Type]) {
     self.term = term
     self.types = types
   }
 
   /// Fetches items of the requested library searchable types that match
   /// the search term of the request.
-  public func response() async throws -> MusadoraLibrarySearchResponse {
+  public func response() async throws -> MLibrarySearchResponse {
     let url = try librarySearchEndpointURL
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
-    let model = try JSONDecoder().decode(MusadoraLibrarySearchResponseResults.self, from: response.data)
+    let model = try JSONDecoder().decode(MLibrarySearchResponseResults.self, from: response.data)
     return model.results
   }
 
-  public static func == (a: MusadoraLibrarySearchRequest, b: MusadoraLibrarySearchRequest) -> Bool {
+  public static func == (a: MLibrarySearchRequest, b: MLibrarySearchRequest) -> Bool {
     a.self.term == b.self.term
   }
 
@@ -50,7 +50,7 @@ public struct MusadoraLibrarySearchRequest: Equatable, Hashable, Sendable {
   }
 }
 
-extension MusadoraLibrarySearchRequest {
+extension MLibrarySearchRequest {
   internal var librarySearchEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
@@ -61,7 +61,7 @@ extension MusadoraLibrarySearchRequest {
       let termQuery = URLQueryItem(name: "term", value: termValue)
       queryItems.append(termQuery)
 
-      let typesValue = MusadoraLibrarySearchType.getTypes(types)
+      let typesValue = MLibrarySearchType.getTypes(types)
       let typesQuery = URLQueryItem(name: "types", value: typesValue)
       queryItems.append(typesQuery)
 

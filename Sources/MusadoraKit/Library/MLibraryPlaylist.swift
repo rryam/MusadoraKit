@@ -1,6 +1,6 @@
 //
-//  LibraryPlaylists.swift
-//  LibraryPlaylists
+//  MLibraryPlaylist.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 06/10/22.
 //
@@ -8,10 +8,7 @@
 import Foundation
 import MusicKit
 
-/// A collection of library playlists.
-public typealias LibraryPlaylists = MusicItemCollection<LibraryPlaylist>
-
-public struct LibraryPlaylist: Codable, MusicItem {
+public struct MLibraryPlaylist: Codable, MusicItem {
   public let id: MusicItemID
   public let attributes: Attributes
 

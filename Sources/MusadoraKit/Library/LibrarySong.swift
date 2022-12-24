@@ -1,6 +1,6 @@
 //
 //  LibrarySong.swift
-//  LibrarySong
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
@@ -8,7 +8,7 @@
 import MusicKit
 import MediaPlayer
 
-public extension MusadoraKit {
+public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier.
@@ -23,7 +23,7 @@ public extension MusadoraKit {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func librarySong(id: MusicItemID) async throws -> Song {
+  static func song(for id: MusicItemID) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -34,7 +34,7 @@ public extension MusadoraKit {
     return song
   }
 #else
-  static func librarySong(id: MusicItemID) async throws -> Song {
+  static func song(for id: MusicItemID) async throws -> Song {
     let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -58,13 +58,13 @@ public extension MusadoraKit {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func librarySongs(limit: Int? = 50) async throws -> Songs {
+  static func songs(limit: Int? = 50) async throws -> Songs {
     let request = MusicLibraryRequest<Song>()
     let response = try await request.response()
     return response.items
   }
 #else
-  static func librarySongs(limit: Int? = nil) async throws -> Songs {
+  static func songs(limit: Int? = nil) async throws -> Songs {
     var request = MusicLibraryResourceRequest<Song>()
     request.limit = limit
     let response = try await request.response()
@@ -76,7 +76,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func librarySongs(ids: [MusicItemID]) async throws -> Songs {
+  static func songs(ids: [MusicItemID]) async throws -> Songs {
     let request = MusicLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
@@ -103,10 +103,11 @@ public extension MusadoraKit {
 #endif
 
 #if compiler(>=5.7)
+  /// Access the total number of songs in the user's library.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static var librarySongsCount: Int {
+  static var songsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Song>()
       let response = try await request.response()
@@ -114,11 +115,12 @@ public extension MusadoraKit {
     }
   }
 #else
+  /// Access the total number of songs in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var librarySongsCount: Int {
+  static var songsCount: Int {
     get async throws {
       if let items = MPMediaQuery.songs().items {
         return items.count
@@ -135,7 +137,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addSongToLibrary(id: MusicItemID) async throws -> Bool {
+  static func addSong(for id: MusicItemID) async throws -> Bool {
     let song: SongResource = (item: .songs, value: [id])
     let request = MusicAddResourcesRequest([song])
     let response = try await request.response()
@@ -146,7 +148,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addSongsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+  static func addSongs(for ids: [MusicItemID]) async throws -> Bool {
     let songs: SongResource = (item: .songs, value: ids)
     let request = MusicAddResourcesRequest([songs])
     let response = try await request.response()
@@ -158,7 +160,7 @@ public extension MusadoraKit {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-public extension MusadoraKit {
+public extension MLibrary {
   /// Fetch recently added songs from the user's library sorted by the date added.
   /// - Parameters:
   ///   - limit: The number of songs returned.
