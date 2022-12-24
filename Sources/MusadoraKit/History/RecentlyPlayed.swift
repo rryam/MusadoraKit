@@ -30,7 +30,7 @@ public extension MusadoraKit {
   ///
   ///  Use this function to retrieve a list of the most played songs from the user's music library. The limit parameter specifies the maximum number of songs to return. The default value is 100. The songs are sorted by the number of times they have been played, in descending order.
   ///
-  ///  This function is asynchronous and can be awaited. If the request is successful, it returns a list of `Song` objects. If an error occurs, the function throws an exception.
+  ///  This function is asynchronous. If the request is successful, it returns a list of `Song` objects. If an error occurs, the function throws an exception.
   ///
   ///  Example:
   ///   ```

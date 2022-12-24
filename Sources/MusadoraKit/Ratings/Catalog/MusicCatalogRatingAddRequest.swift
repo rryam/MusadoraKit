@@ -1,6 +1,6 @@
 //
-//  MusicCatalogRatingAddRequest.swift
-//  MusicCatalogRatingAddRequest
+//  MCatalogRatingAddRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
@@ -8,61 +8,9 @@
 import Foundation
 import MusicKit
 
-public extension MusadoraKit {
-  static func addCatalogSongRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicCatalogRatingAddRequest(for: id, item: .song, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func addCatalogAlbumRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicCatalogRatingAddRequest(for: id, item: .album, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func addCatalogPlaylistRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicCatalogRatingAddRequest(for: id, item: .playlist, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func addCatalogMusicVideoRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicCatalogRatingAddRequest(for: id, item: .musicVideo, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func addCatalogStationRating(for id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicCatalogRatingAddRequest(for: id, item: .station, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-}
-
 /// A request that your app uses to add ratings for albums, songs,
 /// playlists, music videos, and stations for content in the Apple Music catalog.
-public struct MusicCatalogRatingAddRequest {
+public struct MCatalogRatingAddRequest {
 
   private var type: CatalogRatingMusicItemType
   private var id: MusicItemID
@@ -95,7 +43,7 @@ public struct MusicCatalogRatingAddRequest {
   }
 }
 
-extension MusicCatalogRatingAddRequest {
+extension MCatalogRatingAddRequest {
   internal var catalogAddRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

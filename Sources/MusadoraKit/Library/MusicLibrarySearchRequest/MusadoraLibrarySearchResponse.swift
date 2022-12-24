@@ -1,6 +1,6 @@
 //
-//  MusadoraLibrarySearchResponse.swift
-//  MusadoraLibrarySearchResponse
+//  MLibrarySearchResponse.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
@@ -8,7 +8,7 @@
 import MusicKit
 
 /// An object that contains results for a library search request.
-public struct MusadoraLibrarySearchResponse: Equatable, Hashable, Sendable {
+public struct MLibrarySearchResponse: Equatable, Hashable, Sendable {
   /// A collection of songs.
   public let songs: Songs
 
@@ -29,9 +29,9 @@ public struct MusadoraLibrarySearchResponse: Equatable, Hashable, Sendable {
   }
 }
 
-extension MusadoraLibrarySearchResponse: Codable {
+extension MLibrarySearchResponse: Codable {
   public init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: MusadoraLibrarySearchType.self)
+    let container = try decoder.container(keyedBy: MLibrarySearchType.self)
 
     songs = try container.decodeIfPresent(Songs.self, forKey: .songs) ?? []
     artists = try container.decodeIfPresent(Artists.self, forKey: .artists) ?? []
@@ -41,7 +41,7 @@ extension MusadoraLibrarySearchResponse: Codable {
   }
 
   public func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: MusadoraLibrarySearchType.self)
+    var container = encoder.container(keyedBy: MLibrarySearchType.self)
 
     try container.encode(songs, forKey: .songs)
     try container.encode(artists, forKey: .artists)
@@ -51,7 +51,7 @@ extension MusadoraLibrarySearchResponse: Codable {
   }
 }
 
-extension MusadoraLibrarySearchResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MLibrarySearchResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
     var description = "MusicLibrarySearchResponse("
     let mirror = Mirror(reflecting: self)

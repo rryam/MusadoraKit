@@ -5,8 +5,8 @@
 //  Created by Rudrank Riyam on 22/12/22.
 //
 
-import MusicKit
+import Foundation
 
-/// Structure containing the methods related to the Apple Music Catalog.
+/// Structure containing the methods related to the Apple Music catalog.
 public struct MCatalog {
 }

@@ -1,6 +1,6 @@
 //
-//  MusadoraLibrarySearchResponseResults.swift
-//  MusadoraLibrarySearchResponseResults
+//  MLibrarySearchResponseResults.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
@@ -8,11 +8,11 @@
 import MusicKit
 
 /// The results from the library search request using a search term.
-struct MusadoraLibrarySearchResponseResults: Decodable {
-  var results: MusadoraLibrarySearchResponse
+struct MLibrarySearchResponseResults: Decodable {
+  var results: MLibrarySearchResponse
 }
 
-extension MusadoraLibrarySearchResponseResults: CustomStringConvertible, CustomDebugStringConvertible {
+extension MLibrarySearchResponseResults: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
     var description = "MusicLibrarySearchResponseResults("
     let mirror = Mirror(reflecting: self)
