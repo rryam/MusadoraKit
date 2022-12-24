@@ -8,8 +8,7 @@
 import MusicKit
 
 /// A suggested search term from a search suggestion response.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public struct TermSuggestion: Codable, Equatable, Hashable {
   /// The kind of suggestion.
   /// Value: terms

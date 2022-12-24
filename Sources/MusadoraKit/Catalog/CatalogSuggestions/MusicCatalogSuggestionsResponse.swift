@@ -9,8 +9,7 @@ import Foundation
 import MusicKit
 
 /// An object that contains results for a catalog suggestions request.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public struct MusicCatalogSuggestionsResponse {
   /// A collection of search and display terms.
   public var terms: [TermSuggestion] = []
@@ -19,8 +18,7 @@ public struct MusicCatalogSuggestionsResponse {
   public var topResults: [TopResultsSuggestion] = []
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 extension MusicCatalogSuggestionsResponse: Codable {
   private enum CodingKeys: String, CodingKey {
     case suggestions

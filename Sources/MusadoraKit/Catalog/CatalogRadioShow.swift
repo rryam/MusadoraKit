@@ -8,22 +8,18 @@
 import MusicKit
 
 /// A collection of radio shows.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias RadioShows = MusicItemCollection<RadioShow>
 
 /// Additional property/relationship of a radio show.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias RadioShowProperty = PartialMusicAsyncProperty<RadioShow>
 
 /// Additional properties/relationships of a radio show.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias RadioShowProperties = [RadioShowProperty]
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public extension MusadoraKit {
   /// Fetch a radio show from the Apple Music catalog by using its identifier.
   /// - Parameters:
@@ -80,8 +76,7 @@ public extension MusadoraKit {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 extension RadioShowProperties {
   public static var all: Self {
     [.playlists]

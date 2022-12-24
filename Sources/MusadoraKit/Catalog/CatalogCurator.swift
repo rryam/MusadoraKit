@@ -8,22 +8,18 @@
 import MusicKit
 
 /// A collection of curators.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias Curators = MusicItemCollection<Curator>
 
 /// Additional property/relationship of an artist.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias CuratorProperty = PartialMusicAsyncProperty<Curator>
 
 /// Additional properties/relationships of an artist.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias CuratorProperties = [CuratorProperty]
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public extension MusadoraKit {
   /// Fetch a curator from the Apple Music catalog by using its identifier.
   /// - Parameters:
@@ -80,8 +76,7 @@ public extension MusadoraKit {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 extension CuratorProperties {
   public static var all: Self {
     [.playlists]

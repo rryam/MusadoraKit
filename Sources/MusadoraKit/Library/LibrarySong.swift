@@ -189,6 +189,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
+  @available(macOS 13.0, *)
   static func recentlyPlayedSongs(limit: Int = 0, offset: Int = 0) async throws -> Songs {
     var request = MusicRecentlyPlayedRequest<Song>()
     request.limit = limit
