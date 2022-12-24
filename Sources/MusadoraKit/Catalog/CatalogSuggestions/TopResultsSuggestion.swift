@@ -8,8 +8,7 @@
 import Foundation
 
 /// A suggested popular result for similar search prefix terms.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public struct TopResultsSuggestion: Codable, Equatable, Hashable {
   /// The kind of suggestion.
   /// Value: topResults

@@ -8,6 +8,5 @@
 import MusicKit
 
 /// A collection of radio shows.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias RadioShows = MusicItemCollection<RadioShow>
