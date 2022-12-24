@@ -10,8 +10,7 @@ import MusicKit
 
 /// A request that your app uses to fetch search suggestions from the Apple Music catalog
 /// using a search term.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public struct MusicCatalogSuggestionsRequest {
   /// A limit for the number of items to return
   /// in the catalog suggestions response.
@@ -47,8 +46,7 @@ public struct MusicCatalogSuggestionsRequest {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, *)
-@available(watchOS, unavailable)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 extension MusicCatalogSuggestionsRequest {
   private var searchSuggestionsEndpointURL: URL {
     get async throws {
