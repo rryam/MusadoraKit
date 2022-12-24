@@ -18,20 +18,28 @@ definitions:
           set -o pipefail
           xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name=iPhone 13' test | xcpretty --report junit
         test_report: build/reports/junit.xml
+      - name: Build documentation 
+        script: |
+          swift package --allow-writing-to-directory ./docs \
+          generate-documentation --target MusadoraKit \
+          --disable-indexing \
+          --transform-for-static-hosting \
+          --hosting-base-path MusadoraKit \
+          --output-path ./docs
 
 workflows:
   musadorakit:
     <<: *base_workflow
     name: MusadoraKit Workflow
     environment:
-      xcode: 14.0
+      xcode: 14.2
       vars:
         XCODE_SCHEME: MusadoraKit
   musadorlabskit:
     <<: *base_workflow
     name: MusadoraLabsKit Workflow
     environment:
-      xcode: 14.0
+      xcode: 14.2
       vars:
         XCODE_SCHEME: MusadoraLabsKit
   musadorakit-old:
