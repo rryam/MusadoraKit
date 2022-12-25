@@ -10,14 +10,14 @@ import XCTest
 
 class MusicRecommendationRequestEndpointTests: XCTestCase {
   func testDefaultRecommendationEndpointURL() throws {
-    let request = MusicRecommendationRequest()
+    let request = MRecommendationRequest()
     let url = try request.recommendationEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations")
   }
 
   func testDefaultRecommendationWithLimitEndpointURL() throws {
-    var request = MusicRecommendationRequest()
+    var request = MRecommendationRequest()
     request.limit = 5
     let url = try request.recommendationEndpointURL
 
@@ -25,7 +25,7 @@ class MusicRecommendationRequestEndpointTests: XCTestCase {
   }
 
   func testRecommendationByIDEndpointURL() throws {
-    let request = MusicRecommendationRequest(equalTo: "6-27s5hU6azhJY")
+    let request = MRecommendationRequest(equalTo: "6-27s5hU6azhJY")
     let url = try request.recommendationEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations?ids=6-27s5hU6azhJY")
@@ -33,7 +33,7 @@ class MusicRecommendationRequestEndpointTests: XCTestCase {
 
   func testDefaultRecommendationEndpointURLWithOverLimit() throws {
     let limit = 31
-    var request = MusicRecommendationRequest()
+    var request = MRecommendationRequest()
     request.limit = limit
 
     XCTAssertThrowsError(try request.recommendationEndpointURL) { error in
