@@ -8,16 +8,17 @@
 import Foundation
 import MusicKit
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MCatalog {
 
   /// Get the rating for an album in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRating(for: album)
   ///  } catch {
-  ///    // Handle the error.
+  ///    print("Error getting the rating for the album \(album) from catalog: \(error).")
   ///  }
   ///  ```
   ///
@@ -27,20 +28,13 @@ public extension MCatalog {
   ///
   /// - Throws: `MCatalogError.notFound`: If the album is not found in the catalog.
   static func getRating(for album: Album) async throws -> Rating {
-    let id = album.id
-    let request = MCatalogRatingRequest(for: id, item: .album)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await getRating(for: album.id, item: .album)
   }
 
   /// Get the ratings for albums in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let ratings = try await MCatalog.getRatings(for: albums)
   ///  } catch {
@@ -51,21 +45,18 @@ public extension MCatalog {
   /// - Parameters:
   ///   - albums: The albums to get the rating for.
   /// - Returns: The ratings for the albums as an array of `Rating` object.
-  static func getRatings(for albums: Albums) async throws -> [Rating] {
-    let ids = albums.map { $0.id }
-    let request = MCatalogRatingRequest(for: ids, item: .album)
-    let response = try await request.response()
-    return response.data
+  static func getRatings(for albums: Albums) async throws -> Ratings {
+    try await getRating(for: albums.map { $0.id }, item: .album)
   }
 
   /// Get the rating for a song in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRating(for: song)
   ///  } catch {
-  ///    // Handle the error.
+  ///    print("Error getting the rating for the song \(song) from catalog: \(error).")
   ///  }
   ///  ```
   ///
@@ -73,22 +64,15 @@ public extension MCatalog {
   ///   - song: The song to get the rating for.
   /// - Returns: The rating for the song as `Rating` object.
   ///
-  /// - Throws: `MCatalogError.notFound`: If the song with the specified ID is not found in the catalog.
+  /// - Throws: `MCatalogError.notFound`: If the song is not found in the catalog.
   static func getRating(for song: Song) async throws -> Rating {
-    let id = song.id
-    let request = MCatalogRatingRequest(for: id, item: .song)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await getRating(for: song.id, item: .song)
   }
 
   /// Get the ratings for songs in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let ratings = try await MCatalog.getRatings(for: songs)
   ///  } catch {
@@ -99,21 +83,18 @@ public extension MCatalog {
   /// - Parameters:
   ///   - songs: The songs to get the rating for.
   /// - Returns: The ratings for the songs as an array of `Rating` object.
-  static func getRatings(for songs: Songs) async throws -> [Rating] {
-    let ids = songs.map { $0.id }
-    let request = MCatalogRatingRequest(for: ids, item: .song)
-    let response = try await request.response()
-    return response.data
+  static func getRatings(for songs: Songs) async throws -> Ratings {
+    try await getRating(for: songs.map { $0.id }, item: .song)
   }
 
   /// Get the rating for a music video in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRating(for: musicVideo)
   ///  } catch {
-  ///    // Handle the error.
+  ///    print("Error getting the rating for the music video \(musicVideo) from catalog: \(error).")
   ///  }
   ///  ```
   ///
@@ -121,22 +102,15 @@ public extension MCatalog {
   ///   - musicVideo: The music video to get the rating for.
   /// - Returns: The rating for the music video as `Rating` object.
   ///
-  /// - Throws: `MCatalogError.notFound`: If the music video with the specified ID is not found in the catalog.
+  /// - Throws: `MCatalogError.notFound`: If the music video is not found in the catalog.
   static func getRating(for musicVideo: MusicVideo) async throws -> Rating {
-    let id = musicVideo.id
-    let request = MCatalogRatingRequest(for: id, item: .musicVideo)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await getRating(for: musicVideo.id, item: .musicVideo)
   }
 
   /// Get the ratings for music videos in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRatings(for: musicVideos)
   ///  } catch {
@@ -147,21 +121,18 @@ public extension MCatalog {
   /// - Parameters:
   ///   - musicVideos: The music videos to get the rating for.
   /// - Returns: The ratings for the music videos as an array of `Rating` object.
-  static func getRatings(for musicVideos: MusicVideos) async throws -> [Rating] {
-    let ids = musicVideos.map { $0.id }
-    let request = MCatalogRatingRequest(for: ids, item: .musicVideo)
-    let response = try await request.response()
-    return response.data
+  static func getRatings(for musicVideos: MusicVideos) async throws -> Ratings {
+    try await getRating(for: musicVideos.map { $0.id }, item: .musicVideo)
   }
 
   /// Get the rating for a playlist in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRating(for: playlist)
   ///  } catch {
-  ///    // Handle the error.
+  ///    print("Error getting the rating for the playlist \(playlist) from catalog: \(error).")
   ///  }
   ///  ```
   ///
@@ -169,22 +140,15 @@ public extension MCatalog {
   ///   - playlist: The playlist to get the rating for.
   /// - Returns: The rating for the playlist as `Rating` object.
   ///
-  /// - Throws: `MCatalogError.notFound`: If the playlist with the specified ID is not found in the catalog.
+  /// - Throws: `MCatalogError.notFound`: If the playlist is not found in the catalog.
   static func getRating(for playlist: Playlist) async throws -> Rating {
-    let id = playlist.id
-    let request = MCatalogRatingRequest(for: id, item: .playlist)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await getRating(for: playlist.id, item: .playlist)
   }
 
   /// Get the ratings for playlists in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRatings(for: playlists)
   ///  } catch {
@@ -195,21 +159,18 @@ public extension MCatalog {
   /// - Parameters:
   ///   - playlists: The playlists to get the rating for.
   /// - Returns: The ratings for the playlists as an array of `Rating` object.
-  static func getRatings(for playlists: Playlists) async throws -> [Rating] {
-    let ids = playlists.map { $0.id }
-    let request = MCatalogRatingRequest(for: ids, item: .playlist)
-    let response = try await request.response()
-    return response.data
+  static func getRatings(for playlists: Playlists) async throws -> Ratings {
+    try await getRating(for: playlists.map { $0.id }, item: .playlist)
   }
 
   /// Get the rating for a station in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRating(for: station)
   ///  } catch {
-  ///    // Handle the error.
+  ///    print("Error getting the rating for the station \(station) from catalog: \(error).")
   ///  }
   ///  ```
   ///
@@ -217,22 +178,15 @@ public extension MCatalog {
   ///   - station: The station to get the rating for.
   /// - Returns: The rating for the station as `Rating` object.
   ///
-  /// - Throws: `MCatalogError.notFound`: If the station with the specified ID is not found in the catalog.
+  /// - Throws: `MCatalogError.notFound`: If the station is not found in the catalog.
   static func getRating(for station: Station) async throws -> Rating {
-    let id = station.id
-    let request = MCatalogRatingRequest(for: id, item: .station)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await getRating(for: station.id, item: .station)
   }
 
   /// Get the ratings for stations in the catalog.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.getRatings(for: stations)
   ///  } catch {
@@ -243,11 +197,59 @@ public extension MCatalog {
   /// - Parameters:
   ///   - stations: The stations to get the rating for.
   /// - Returns: The ratings for the stations as an array of `Rating` object.
-  static func getRatings(for stations: Stations) async throws -> [Rating] {
-    let ids = stations.map { $0.id }
-    let request = MCatalogRatingRequest(for: ids, item: .station)
+  static func getRatings(for stations: Stations) async throws -> Ratings {
+    try await getRating(for: stations.map { $0.id }, item: .station)
+  }
+
+  /// Get the rating for a music item in the catalog.
+  ///
+  ///  Example:
+  ///   ```swift
+  ///  do  {
+  ///    let id: MusicItemID = "12345678"
+  ///    let rating = try await MCatalog.getRating(for: id)
+  ///  } catch {
+  ///    print("Error getting the rating for the music item with ID \(id) from catalog: \(error).")
+  ///  }
+  ///  ```
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier of the music item to get the rating for.
+  ///   - item: The type of the music item to get the rating for.
+  /// - Returns: The rating for the music item as `Rating` object.
+  ///
+  /// - Throws: `MCatalogError.notFound`: If the music item with the specified ID is not found in the catalog.
+  static func getRating(for id: MusicItemID, item: CatalogRatingMusicItemType) async throws -> Rating {
+    let request = MCatalogRatingRequest(for: id, item: item)
+    let response = try await request.response()
+
+    guard let rating = response.data.first else {
+      throw MRatingError.notFound(for: id.rawValue)
+    }
+    return rating
+  }
+
+  /// Get the ratings for music items in the catalog.
+  ///
+  ///  Example:
+  ///   ```swift
+  ///  do  {
+  ///    let ids: [MusicItemID] = ["12345678", "87653214"]
+  ///    let rating = try await MCatalog.getRating(for: ids)
+  ///  } catch {
+  ///    print("Error getting the rating for the music items with IDs \(ids) from catalog: \(error).")
+  ///  }
+  ///  ```
+  ///
+  /// - Parameters:
+  ///   - ids: The unique identifiers of the music items to get the rating for.
+  ///   - item: The type of the music items to get the rating for.
+  /// - Returns: The ratings for the music items as an array of `Rating` object.
+  ///
+  /// - Throws: `MCatalogError.notFound`: If the music items with the IDs is not found in the catalog.
+  static func getRating(for ids: [MusicItemID], item: CatalogRatingMusicItemType) async throws -> Ratings {
+    let request = MCatalogRatingRequest(for: ids, item: item)
     let response = try await request.response()
     return response.data
   }
 }
-
