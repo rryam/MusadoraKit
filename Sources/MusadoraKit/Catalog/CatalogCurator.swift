@@ -9,6 +9,7 @@ import MusicKit
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public extension MCatalog {
+
   /// Fetch a curator from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the curator.
