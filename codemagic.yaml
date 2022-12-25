@@ -27,13 +27,6 @@ workflows:
       xcode: 14.0
       vars:
         XCODE_SCHEME: MusadoraKit
-  musadorlabskit:
-    <<: *base_workflow
-    name: MusadoraLabsKit Workflow
-    environment:
-      xcode: 14.0
-      vars:
-        XCODE_SCHEME: MusadoraLabsKit
   musadorakit-old:
     <<: *base_workflow
     name: MusadoraKit Xcode 13 Workflow
@@ -41,10 +34,3 @@ workflows:
       xcode: 13.4.1
       vars:
         XCODE_SCHEME: MusadoraKit
-  musadorlabskit-old:
-    <<: *base_workflow
-    name: MusadoraLabsKit Xcode 13 Workflow
-    environment:
-      xcode: 13.4.1
-      vars:
-        XCODE_SCHEME: MusadoraLabsKit
