@@ -12,11 +12,11 @@ definitions:
           - "**/*.md"
     scripts:
       - name: Build framework
-        script: xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name="$PHONE_NAME"'
+        script: xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME"
       - name: Test framework
         script: |
           set -o pipefail
-          xcodebuild -scheme $XCODE_SCHEME -destination 'platform=iOS Simulator,name="$PHONE_NAME"' test | xcpretty --report junit
+          xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME" test | xcpretty --report junit
         test_report: build/reports/junit.xml
 
 workflows:
@@ -27,7 +27,7 @@ workflows:
       xcode: 14.2
       vars:
         XCODE_SCHEME: MusadoraKit
-        PHONE_NAME: iPhone 14
+        PHONE_NAME: "iPhone 14"
   musadorakit-old:
     <<: *base_workflow
     name: MusadoraKit Xcode 13 Workflow
@@ -35,4 +35,4 @@ workflows:
       xcode: 13.4.1
       vars:
         XCODE_SCHEME: MusadoraKit
-        PHONE_NAME: iPhone 13
+        PHONE_NAME: "iPhone 13"
