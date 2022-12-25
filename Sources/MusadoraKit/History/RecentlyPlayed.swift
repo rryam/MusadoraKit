@@ -33,7 +33,7 @@ public extension MusadoraKit {
   ///  This function is asynchronous. If the request is successful, it returns a list of `Song` objects. If an error occurs, the function throws an exception.
   ///
   ///  Example:
-  ///   ```
+  ///   ```swift
   ///  do  {
   ///    let songs = try await mostPlayedSongs(limit: 200)
   ///    /// Use the list of songs.

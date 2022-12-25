@@ -1,5 +1,5 @@
 //
-//  GetRating.swift
+//  GetCatalogRating.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 24/12/22.

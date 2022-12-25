@@ -1,6 +1,6 @@
 //
-//  MusicLibraryRatingAddRequest.swift
-//  MusicLibraryRatingAddRequest
+//  MLibraryRatingAddRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
@@ -8,51 +8,9 @@
 import Foundation
 import MusicKit
 
-public extension MusadoraKit {
-  static func librarySongAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicLibraryRatingAddRequest(for: id, item: .song, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryAlbumAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicLibraryRatingAddRequest(for: id, item: .album, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryPlaylistAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicLibraryRatingAddRequest(for: id, item: .playlist, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryMusicVideoAddRating(id: MusicItemID, rating: RatingType) async throws -> Rating {
-    let request = MusicLibraryRatingAddRequest(for: id, item: .musicVideo, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-}
-
 /// A request that your app uses to add ratings for albums, songs,
 /// playlists, music videos, and stations for content in the user's iCloud library.
-public struct MusicLibraryRatingAddRequest {
+public struct MLibraryRatingAddRequest {
 
   private var type: LibraryRatingMusicItemType
   private var id: MusicItemID
@@ -85,7 +43,7 @@ public struct MusicLibraryRatingAddRequest {
   }
 }
 
-extension MusicLibraryRatingAddRequest {
+extension MLibraryRatingAddRequest {
   internal var libraryAddRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

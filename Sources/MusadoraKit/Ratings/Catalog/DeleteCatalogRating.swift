@@ -1,5 +1,5 @@
 //
-//  DeleteRating.swift
+//  DeleteCatalogRating.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 25/12/22.

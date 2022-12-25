@@ -12,7 +12,7 @@ public typealias Ratings = [Rating]
 
 public extension MusadoraKit {
   static func librarySongRating(id: MusicItemID) async throws -> Rating {
-    let request = MusicLibraryRatingRequest(for: id, item: .song)
+    let request = MLibraryRatingRequest(for: id, item: .song)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -22,13 +22,13 @@ public extension MusadoraKit {
   }
 
   static func librarySongsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MusicLibraryRatingRequest(for: ids, item: .song)
+    let request = MLibraryRatingRequest(for: ids, item: .song)
     let response = try await request.response()
     return response.data
   }
 
   static func libraryMusicVideoRating(id: MusicItemID) async throws -> Rating {
-    let request = MusicLibraryRatingRequest(for: id, item: .musicVideo)
+    let request = MLibraryRatingRequest(for: id, item: .musicVideo)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -38,13 +38,13 @@ public extension MusadoraKit {
   }
 
   static func libraryMusicVideosRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MusicLibraryRatingRequest(for: ids, item: .musicVideo)
+    let request = MLibraryRatingRequest(for: ids, item: .musicVideo)
     let response = try await request.response()
     return response.data
   }
 
   static func libraryPlaylistRating(id: MusicItemID) async throws -> Rating {
-    let request = MusicLibraryRatingRequest(for: id, item: .playlist)
+    let request = MLibraryRatingRequest(for: id, item: .playlist)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -54,13 +54,13 @@ public extension MusadoraKit {
   }
 
   static func libraryPlaylistsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MusicLibraryRatingRequest(for: ids, item: .playlist)
+    let request = MLibraryRatingRequest(for: ids, item: .playlist)
     let response = try await request.response()
     return response.data
   }
 
   static func libraryAlbumRating(id: MusicItemID) async throws -> Rating {
-    let request = MusicLibraryRatingRequest(for: id, item: .album)
+    let request = MLibraryRatingRequest(for: id, item: .album)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -70,7 +70,7 @@ public extension MusadoraKit {
   }
 
   static func libraryAlbumsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MusicLibraryRatingRequest(for: ids, item: .album)
+    let request = MLibraryRatingRequest(for: ids, item: .album)
     let response = try await request.response()
     return response.data
   }
@@ -78,7 +78,7 @@ public extension MusadoraKit {
 
 /// A request that your app uses to get ratings for albums, songs,
 /// playlists, and music videos for content in the user's iCloud library.
-public struct MusicLibraryRatingRequest {
+public struct MLibraryRatingRequest {
 
   private var type: LibraryRatingMusicItemType
   private var ids: [MusicItemID]
@@ -111,7 +111,7 @@ public struct MusicLibraryRatingRequest {
   }
 }
 
-extension MusicLibraryRatingRequest {
+extension MLibraryRatingRequest {
   internal var libraryRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
