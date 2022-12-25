@@ -1,5 +1,5 @@
 //
-//  DeleteCatalogRating.swift
+//  DeleteLibraryRating.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 25/12/22.
@@ -9,20 +9,20 @@ import Foundation
 import MusicKit
 
 @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-public extension MCatalog {
+public extension MLibrary {
 
-  /// Delete a rating for a song in the catalog.
+  /// Delete a rating for a song in the user's library.
   ///
   ///  Example:
   ///   ```swift
   ///  do {
-  ///    let success = try await MCatalog.deleteRating(for: song)
+  ///    let success = try await MLibrary.deleteRating(for: song)
   ///
   ///    if success {
-  ///      print("Rating for song \(song) successfully deleted from catalog.")
+  ///      print("Rating for song \(song) successfully deleted from user's library.")
   ///    }
   ///  } catch {
-  ///    print("Error deleting the rating for the song \(song) from catalog: \(error).")
+  ///    print("Error deleting the rating for the song \(song) from user's library: \(error).")
   ///  }
   ///  ```
   ///
@@ -33,18 +33,18 @@ public extension MCatalog {
     try await deleteRating(for: song.id, item: .song)
   }
 
-  /// Delete a rating for an album in the catalog.
+  /// Delete a rating for an album in the user's library.
   ///
   ///  Example:
   ///   ```swift
   ///  do {
-  ///    let success = try await MCatalog.deleteRating(for: album)
+  ///    let success = try await MLibrary.deleteRating(for: album)
   ///
   ///    if success {
-  ///      print("Rating for album \(album) successfully deleted from catalog.")
+  ///      print("Rating for album \(album) successfully deleted from user's library.")
   ///    }
   ///  } catch {
-  ///    print("Error deleting the rating for the album \(album) from catalog: \(error).")
+  ///    print("Error deleting the rating for the album \(album) from user's library: \(error).")
   ///  }
   ///  ```
   ///
@@ -55,23 +55,23 @@ public extension MCatalog {
     try await deleteRating(for: album.id, item: .album)
   }
 
-  /// Delete a rating for a playlist in the catalog.
+  /// Delete a rating for a playlist in the user's library.
   ///
   ///  Example:
   ///   ```swift
   ///  do {
-  ///    let success = try await MCatalog.deleteRating(for: playlist)
+  ///    let success = try await MLibrary.deleteRating(for: playlist)
   ///
   ///    if success {
-  ///      print("Rating for playlist \(playlist) successfully deleted from catalog.")
+  ///      print("Rating for playlist \(playlist) successfully deleted from user's library.")
   ///    }
   ///  } catch {
-  ///    print("Error deleting the rating for the playlist \(playlist) from catalog: \(error).")
+  ///    print("Error deleting the rating for the playlist \(playlist) from user's library: \(error).")
   ///  }
   ///  ```
   ///
   /// - Parameters:
-  ///   - album: The playlist to delete the rating for.
+  ///   - playlist: The playlist to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for playlist: Playlist) async throws -> Bool {
     try await deleteRating(for: playlist.id, item: .playlist)
@@ -85,10 +85,10 @@ public extension MCatalog {
   ///    let success = try await MLibrary.deleteRating(for: musicVideo)
   ///
   ///    if success {
-  ///      print("Rating for music video \(playlist) successfully deleted from user's library.")
+  ///      print("Rating for music video \(musicVideo) successfully deleted from user's library.")
   ///    }
   ///  } catch {
-  ///    print("Error deleting the rating for the music video \(playlist) from user's library: \(error).")
+  ///    print("Error deleting the rating for the music video \(musicVideo) from user's library: \(error).")
   ///  }
   ///  ```
   ///
@@ -99,41 +99,19 @@ public extension MCatalog {
     try await deleteRating(for: musicVideo.id, item: .musicVideo)
   }
 
-  /// Delete a rating for a station in the catalog.
-  ///
-  ///  Example:
-  ///   ```swift
-  ///  do {
-  ///    let success = try await MCatalog.deleteRating(for: station)
-  ///
-  ///    if success {
-  ///      print("Rating for station \(station) successfully deleted from catalog.")
-  ///    }
-  ///  } catch {
-  ///    print("Error deleting the rating for the station \(station) from catalog: \(error).")
-  ///  }
-  ///  ```
-  ///
-  /// - Parameters:
-  ///   - album: The station to delete the rating for.
-  /// - Returns: A boolean value indicating whether the delete operation was successful.
-  static func deleteRating(for station: Station) async throws -> Bool {
-    try await deleteRating(for: station.id, item: .station)
-  }
-
-  /// Delete a rating for a music item in the catalog.
+  /// Delete a rating for a music item in the user's library.
   ///
   ///  Example:
   ///   ```swift
   ///  do {
   ///    let id: MusicItemID = "12345678"
-  ///    let success = try await MCatalog.deleteRating(for: id)
+  ///    let success = try await MLibrary.deleteRating(for: id)
   ///
   ///    if success {
-  ///      print("Rating for music item with ID \(id) successfully deleted from catalog.")
+  ///      print("Rating for music item with ID \(id) successfully deleted from user's library.")
   ///    }
   ///  } catch {
-  ///    print("Error deleting the rating for the music item with ID \(id) from catalog: \(error).")
+  ///    print("Error deleting the rating for the music item with ID \(id) from user's library: \(error).")
   ///  }
   ///  ```
   ///
@@ -141,8 +119,8 @@ public extension MCatalog {
   ///   - id: The unique identifier of the music item to delete the rating for.
   ///   - item: The type of the music item to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
-  static func deleteRating(for id: MusicItemID, item: CatalogRatingMusicItemType) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: item)
+  static func deleteRating(for id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Bool {
+    let request = MLibraryRatingDeleteRequest(for: id, item: item)
     let response = try await request.response()
     return response
   }

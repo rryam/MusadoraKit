@@ -8,34 +8,9 @@
 import Foundation
 import MusicKit
 
-public extension MusadoraKit {
-  static func deleteLibrarySongRating(for id: MusicItemID) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(for: id, item: .song)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteLibraryAlbumRating(for id: MusicItemID) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(for: id, item: .album)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteLibraryPlaylistRating(for id: MusicItemID) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(for: id, item: .playlist)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteLibraryMusicVideoRating(for id: MusicItemID) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(for: id, item: .musicVideo)
-    let response = try await request.response()
-    return response
-  }
-}
-
 /// A request that your app uses to delete ratings for albums, songs,
 /// playlists, music videos, and stations for content in the user's iCloud library.
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct MLibraryRatingDeleteRequest {
 
   private var type: LibraryRatingMusicItemType
