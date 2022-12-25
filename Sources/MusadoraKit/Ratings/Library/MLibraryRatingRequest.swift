@@ -10,87 +10,12 @@ import MusicKit
 
 public typealias Ratings = [Rating]
 
-public extension MusadoraKit {
-  static func librarySongRating(id: MusicItemID) async throws -> Rating {
-    let request = MLibraryRatingRequest(for: id, item: .song)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func librarySongsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MLibraryRatingRequest(for: ids, item: .song)
-    let response = try await request.response()
-    return response.data
-  }
-
-  static func libraryMusicVideoRating(id: MusicItemID) async throws -> Rating {
-    let request = MLibraryRatingRequest(for: id, item: .musicVideo)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryMusicVideosRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MLibraryRatingRequest(for: ids, item: .musicVideo)
-    let response = try await request.response()
-    return response.data
-  }
-
-  static func libraryPlaylistRating(id: MusicItemID) async throws -> Rating {
-    let request = MLibraryRatingRequest(for: id, item: .playlist)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryPlaylistsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MLibraryRatingRequest(for: ids, item: .playlist)
-    let response = try await request.response()
-    return response.data
-  }
-
-  static func libraryAlbumRating(id: MusicItemID) async throws -> Rating {
-    let request = MLibraryRatingRequest(for: id, item: .album)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return rating
-  }
-
-  static func libraryAlbumsRating(ids: [MusicItemID]) async throws -> Ratings {
-    let request = MLibraryRatingRequest(for: ids, item: .album)
-    let response = try await request.response()
-    return response.data
-  }
-}
-
 /// A request that your app uses to get ratings for albums, songs,
 /// playlists, and music videos for content in the user's iCloud library.
 public struct MLibraryRatingRequest {
 
   private var type: LibraryRatingMusicItemType
   private var ids: [MusicItemID]
-
-  /// Creates a request to get the rating for the unique identifier of the given library item.
-  /// - Parameters:
-  ///   - id: The unique identifier of the library item.
-  ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
-  public init(for id: MusicItemID, item type: LibraryRatingMusicItemType) {
-    self.ids = [id]
-    self.type = type
-  }
 
   /// Creates a request to get ratings for the unique identifiers of the given library item.
   /// - Parameters:
