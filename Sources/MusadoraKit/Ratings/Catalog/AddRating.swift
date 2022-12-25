@@ -26,14 +26,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the song is not found in the catalog.
   static func addRating(for song: Song, rating: RatingType) async throws -> Rating {
-    let id = song.id
-    let request = MCatalogRatingAddRequest(for: id, item: .song, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await addRating(for: song.id, item: .song, rating: rating)
   }
 
   /// Adds a rating for an album in the catalog.
@@ -54,14 +47,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the album is not found in the catalog.
   static func addRating(for album: Album, rating: RatingType) async throws -> Rating {
-    let id = album.id
-    let request = MCatalogRatingAddRequest(for: id, item: .album, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await addRating(for: album.id, item: .album, rating: rating)
   }
 
   /// Adds a rating for a playlist in the catalog.
@@ -82,14 +68,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the playlist with the specified ID is not found in the catalog.
   static func addRating(for playlist: Playlist, rating: RatingType) async throws -> Rating {
-    let id = playlist.id
-    let request = MCatalogRatingAddRequest(for: id, item: .playlist, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await addRating(for: playlist.id, item: .playlist, rating: rating)
   }
 
   /// Adds a rating for a music video in the catalog.
@@ -110,14 +89,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the music video with the specified ID is not found in the catalog.
   static func addRating(for musicVideo: MusicVideo, rating: RatingType) async throws -> Rating {
-    let id = musicVideo.id
-    let request = MCatalogRatingAddRequest(for: id, item: .musicVideo, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await addRating(for: musicVideo.id, item: .musicVideo, rating: rating)
   }
 
   /// Adds a rating for a station in the catalog.
@@ -138,14 +110,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the station with the specified ID is not found in the catalog.
   static func addRating(for station: Station, rating: RatingType) async throws -> Rating {
-    let id = station.id
-    let request = MCatalogRatingAddRequest(for: id, item: .station, rating: rating)
-    let response = try await request.response()
-
-    guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
-    }
-    return rating
+    try await addRating(for: station.id, item: .station, rating: rating)
   }
 
   /// Adds a rating for a music item in the catalog.
