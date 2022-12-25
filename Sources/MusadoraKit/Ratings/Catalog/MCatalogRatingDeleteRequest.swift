@@ -8,38 +8,6 @@
 import Foundation
 import MusicKit
 
-public extension MRating {
-  static func deleteCatalogSong(for id: MusicItemID) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: .song)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteCatalogAlbum(for id: MusicItemID) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: .album)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteCatalogPlaylist(for id: MusicItemID) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: .playlist)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteCatalogMusicVideo(for id: MusicItemID) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: .musicVideo)
-    let response = try await request.response()
-    return response
-  }
-
-  static func deleteCatalogStation(for id: MusicItemID) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(for: id, item: .station)
-    let response = try await request.response()
-    return response
-  }
-}
-
 /// A request that your app uses to delete ratings for albums, songs,
 /// playlists, music videos, and stations for content in the Apple Music catalog.
 public struct MCatalogRatingDeleteRequest {
