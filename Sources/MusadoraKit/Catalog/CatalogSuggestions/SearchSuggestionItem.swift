@@ -1,6 +1,6 @@
 //
 //  SearchSuggestionItem.swift
-//  SearchSuggestionItem
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
 //

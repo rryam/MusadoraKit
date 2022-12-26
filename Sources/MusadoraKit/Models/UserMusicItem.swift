@@ -7,9 +7,6 @@
 
 import MusicKit
 
-/// A collection of user music items.
-public typealias UserMusicItems = MusicItemCollection<UserMusicItem>
-
 /// A generic music item that may either contain an album, playlist or a station.
 public enum UserMusicItem: Equatable, Hashable, Identifiable {
   case album(Album)

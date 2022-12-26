@@ -1,6 +1,6 @@
 //
 //  CreatePlaylist.swift
-//  
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/11/22.
 //
@@ -111,7 +111,7 @@ public extension MusadoraKit {
 
     let data = try JSONEncoder().encode(creationRequest)
 
-    let request = MusicDataPostRequest(url: url, data: data)
+    let request = MDataPostRequest(url: url, data: data)
     let response = try await request.response()
 
     let playlists = try JSONDecoder().decode(Playlists.self, from: response.data)

@@ -1,6 +1,6 @@
 //
 //  SuggestionsKind.swift
-//  SuggestionsKind
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
 //

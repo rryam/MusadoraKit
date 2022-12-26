@@ -108,7 +108,7 @@ public extension MLibrary {
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addAlbum(for id: MusicItemID) async throws -> Bool {
-    let request = MusicAddResourcesRequest([(item: .albums, value: [id])])
+    let request = MAddResourcesRequest([(item: .albums, value: [id])])
     let response = try await request.response()
     return response
   }
@@ -118,7 +118,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addAlbums(for ids: [MusicItemID]) async throws -> Bool {
-    let request = MusicAddResourcesRequest([(item: .albums, value: ids)])
+    let request = MAddResourcesRequest([(item: .albums, value: ids)])
     let response = try await request.response()
     return response
   }

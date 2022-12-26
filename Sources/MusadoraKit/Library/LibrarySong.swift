@@ -139,7 +139,7 @@ public extension MLibrary {
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addSong(for id: MusicItemID) async throws -> Bool {
     let song: SongResource = (item: .songs, value: [id])
-    let request = MusicAddResourcesRequest([song])
+    let request = MAddResourcesRequest([song])
     let response = try await request.response()
     return response
   }
@@ -150,7 +150,7 @@ public extension MLibrary {
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addSongs(for ids: [MusicItemID]) async throws -> Bool {
     let songs: SongResource = (item: .songs, value: ids)
-    let request = MusicAddResourcesRequest([songs])
+    let request = MAddResourcesRequest([songs])
     let response = try await request.response()
     return response
   }

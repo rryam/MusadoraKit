@@ -1,6 +1,6 @@
 //
-//  MusicDataDeleteRequest.swift
-//  MusicDataDeleteRequest
+//  MDataDeleteRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
@@ -8,18 +8,18 @@
 import Foundation
 import MusicKit
 
-public struct MDataDeleteRequest {
+struct MDataDeleteRequest {
   /// The URL for the data request.
-  public var url: URL
+  var url: URL
   
   /// Creates a data request with the given URL.
-  public init(url: URL) {
+  init(url: URL) {
     self.url = url
   }
   
   /// Uploads data the Apple Music API endpoint that
   /// the URL request defines.
-  public func response() async throws -> MusicDataResponse {
+  func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "DELETE"
     
