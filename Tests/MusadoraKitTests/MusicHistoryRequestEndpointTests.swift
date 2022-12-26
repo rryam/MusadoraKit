@@ -10,7 +10,7 @@ import XCTest
 
 class MusicHistoryRequestEndpointTests: XCTestCase {
   func testHeavyRoationEndpointURL() throws {
-    let request = MusicHistoryRequest(for: .heavyRotation)
+    let request = MHistoryRequest(for: .heavyRotation)
     let url = try request.historyEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/history/heavy-rotation")
@@ -18,7 +18,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
   func testHeavyRoationEndpointURLWithOverLimit() throws {
     let limit = 11
-    var request = MusicHistoryRequest(for: .heavyRotation)
+    var request = MHistoryRequest(for: .heavyRotation)
     request.limit = limit
 
     XCTAssertThrowsError(try request.historyEndpointURL) { error in
@@ -27,7 +27,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
   }
 
   func testRecentlyAddedEndpointURL() throws {
-    let request = MusicHistoryRequest(for: .recentlyAdded)
+    let request = MHistoryRequest(for: .recentlyAdded)
     let url = try request.historyEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library/recently-added")
@@ -35,7 +35,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
   func testRecentlyAddedEndpointURLWithOverLimit() throws {
     let limit = 26
-    var request = MusicHistoryRequest(for: .recentlyAdded)
+    var request = MHistoryRequest(for: .recentlyAdded)
     request.limit = limit
 
     XCTAssertThrowsError(try request.historyEndpointURL) { error in
@@ -44,14 +44,14 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
   }
 
   func testRecentlyPlayedEndpointURL() throws {
-    let request = MusicHistoryRequest(for: .recentlyPlayed)
+    let request = MHistoryRequest(for: .recentlyPlayed)
     let url = try request.historyEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played?with=library")
   }
 
   func testRecentlyPlayedEndpointURLWithOffset() throws {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
+    var request = MHistoryRequest(for: .recentlyPlayed)
     request.offset = 10
 
     let url = try request.historyEndpointURL
@@ -61,7 +61,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
   func testRecentlyPlayedEndpointURLWithOverLimit() throws {
     let limit = 11
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
+    var request = MHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
 
     XCTAssertThrowsError(try request.historyEndpointURL) { error in
@@ -70,7 +70,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
   }
 
   func testRecentlyPlayedTracksEndpointURL() throws {
-    let request = MusicHistoryRequest(for: .recentlyPlayedTracks)
+    let request = MHistoryRequest(for: .recentlyPlayedTracks)
     let url = try request.historyEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played/tracks")
@@ -78,7 +78,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
   func testRecentlyPlayedTracksEndpointURLWithOverLimit() throws {
     let limit = 31
-    var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
+    var request = MHistoryRequest(for: .recentlyPlayedTracks)
     request.limit = limit
 
     XCTAssertThrowsError(try request.historyEndpointURL) { error in
@@ -87,7 +87,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
   }
 
   func testRecentlyPlayedStationsEndpointURL() throws {
-    let request = MusicHistoryRequest(for: .recentlyPlayedStations)
+    let request = MHistoryRequest(for: .recentlyPlayedStations)
     let url = try request.historyEndpointURL
 
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/radio-stations")
@@ -95,7 +95,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
   func testRecentlyPlayedStationsEndpointURLWithOverLimit() throws {
     let limit = 11
-    var request = MusicHistoryRequest(for: .recentlyPlayedStations)
+    var request = MHistoryRequest(for: .recentlyPlayedStations)
     request.limit = limit
 
     XCTAssertThrowsError(try request.historyEndpointURL) { error in

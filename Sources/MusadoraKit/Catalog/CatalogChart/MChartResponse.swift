@@ -37,12 +37,12 @@ extension MChartResponse: Decodable {
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
 
-    songs = try container.decodeIfPresent([MusicItemCollection<Song>].self, forKey: .songs)?.first ?? []
-    playlists = try container.decodeIfPresent([MusicItemCollection<Playlist>].self, forKey: .playlists)?.first ?? []
-    musicVideos = try container.decodeIfPresent([MusicItemCollection<MusicVideo>].self, forKey: .musicVideos)?.first ?? []
-    albums = try container.decodeIfPresent([MusicItemCollection<Album>].self, forKey: .albums)?.first ?? []
-    cityCharts = try container.decodeIfPresent([MusicItemCollection<Playlist>].self, forKey: .cityCharts)?.first ?? []
-    dailyGlobalTopCharts = try container.decodeIfPresent([MusicItemCollection<Playlist>].self, forKey: .dailyGlobalTopCharts)?.first ?? []
+    songs = try container.decodeIfPresent([Songs].self, forKey: .songs)?.first ?? []
+    playlists = try container.decodeIfPresent([Playlists].self, forKey: .playlists)?.first ?? []
+    musicVideos = try container.decodeIfPresent([MusicVideos].self, forKey: .musicVideos)?.first ?? []
+    albums = try container.decodeIfPresent([Albums].self, forKey: .albums)?.first ?? []
+    cityCharts = try container.decodeIfPresent([Playlists].self, forKey: .cityCharts)?.first ?? []
+    dailyGlobalTopCharts = try container.decodeIfPresent([Playlists].self, forKey: .dailyGlobalTopCharts)?.first ?? []
   }
 }
 
