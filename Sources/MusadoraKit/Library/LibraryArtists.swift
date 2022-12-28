@@ -35,7 +35,7 @@ public extension MLibrary {
   }
 #else
   static func artist(for id: MusicItemID) async throws -> Artist {
-    let request = MusicLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
+    let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
     guard let artist = response.items.first else {
@@ -49,8 +49,29 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of artists returned.
   /// - Returns: `Artists` for the given limit.
+  ///
+  /// - Note: This method fetches the artist locally from the device when using iOS 16+
+  ///  and is much faster because it uses the latest `MusicLibraryRequest` structure.
+  ///
+  ///  For iOS 15, it uses the custom structure `MusicLibraryResourceRequest`
+  ///  that fetches the data from Apple Music API that does not fetch all the artists in one request.
   static func artists(limit: Int? = nil) async throws -> Artists {
-    var request = MusicLibraryResourceRequest<Artist>()
+#if compiler(>=5.7)
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Artist>()
+      request.limit = limit ?? 0
+      let response = try await request.response()
+      return response.items
+    } else {
+      return try await artistsAPI(limit: limit)
+    }
+#else
+    return try await artistsAPI(limit: limit)
+#endif
+  }
+
+  static private func artistsAPI(limit: Int? = nil) async throws -> Artists {
+    var request = MLibraryResourceRequest<Artist>()
     request.limit = limit
     let response = try await request.response()
     return response.items
@@ -61,7 +82,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
   static func artists(for ids: [MusicItemID]) async throws -> Artists {
-    let request = MusicLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
+    let request = MLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }

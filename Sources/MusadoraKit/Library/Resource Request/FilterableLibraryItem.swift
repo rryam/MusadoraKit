@@ -1,6 +1,6 @@
 //
 //  FilterableLibraryItem.swift
-//  FilterableLibraryItem
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
 //

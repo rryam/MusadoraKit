@@ -1,6 +1,6 @@
 //
-//  MusicLibraryResourceRequest.swift
-//  MusicLibraryResourceRequest
+//  MLibraryResourceRequest.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
 //
@@ -10,7 +10,7 @@ import MusicKit
 
 /// A request that your app uses to fetch items from the user's library
 /// using a filter.
-public struct MusicLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
+public struct MLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
   /// A limit for the number of items to return
   /// in the catalog resource response.
   public var limit: Int?
@@ -41,19 +41,19 @@ public struct MusicLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
   }
   
   /// Fetches items from the user's library that match a specific filter.
-  public func response() async throws -> MusicLibraryResourceResponse<MusicItemType> {
+  public func response() async throws -> MLibraryResourceResponse<MusicItemType> {
     let url = try libraryEndpointURL
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
     let items = try JSONDecoder().decode(MusicItemCollection<MusicItemType>.self, from: response.data)
-    return MusicLibraryResourceResponse(items: items)
+    return MLibraryResourceResponse(items: items)
   }
   
   private var type: LibraryMusicItemType?
   private var ids: [String]?
 }
 
-extension MusicLibraryResourceRequest {
+extension MLibraryResourceRequest {
   private mutating func setType() {
     switch MusicItemType.self {
       case is Song.Type: type = .songs
