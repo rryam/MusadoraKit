@@ -14,7 +14,7 @@ public extension MLibrary {
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
   static func playlist(for id: MusicItemID) async throws -> Playlist {
-    let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
+    let request = MLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
     guard let playlist = response.items.first else {
@@ -28,7 +28,7 @@ public extension MLibrary {
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
   static func playlists(limit: Int? = nil) async throws -> Playlists {
-    var request = MusicLibraryResourceRequest<Playlist>()
+    var request = MLibraryResourceRequest<Playlist>()
     request.limit = limit
     let response = try await request.response()
     return response.items
@@ -39,7 +39,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
   static func playlists(for ids: [MusicItemID]) async throws -> Playlists {
-    let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
+    let request = MLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }

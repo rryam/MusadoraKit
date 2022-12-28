@@ -1,6 +1,6 @@
 //
 //  AppleMusicURLComponents.swift
-//  AppleMusicURLComponents
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 31/07/22.
 //

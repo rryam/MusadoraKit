@@ -1,6 +1,6 @@
 //
-//  MusicLibraryResourceResponse.swift
-//  MusicLibraryResourceResponse
+//  MLibraryResourceResponse.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
 //
@@ -8,17 +8,17 @@
 import MusicKit
 
 /// An object that contains results for a library resource request.
-public struct MusicLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
+public struct MLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
   /// A collection of items matching the filter used in
   /// the originating ``MusicLibraryResourceRequest``.
   public let items: MusicItemCollection<MusicItemType>
 }
 
-extension MusicLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
+extension MLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
 
-extension MusicLibraryResourceResponse: Hashable where MusicItemType: Hashable {}
+extension MLibraryResourceResponse: Hashable where MusicItemType: Hashable {}
 
-extension MusicLibraryResourceResponse: Decodable where MusicItemType: Decodable {
+extension MLibraryResourceResponse: Decodable where MusicItemType: Decodable {
   /// Creates a new instance by decoding from the given decoder.
   ///
   /// This initializer throws an error if reading from the decoder fails, or
@@ -30,7 +30,7 @@ extension MusicLibraryResourceResponse: Decodable where MusicItemType: Decodable
 //    }
 }
 
-extension MusicLibraryResourceResponse: Encodable where MusicItemType: Encodable {
+extension MLibraryResourceResponse: Encodable where MusicItemType: Encodable {
   /// Encodes this value into the given encoder.
   ///
   /// If the value fails to encode anything, `encoder` will encode an empty
@@ -43,7 +43,7 @@ extension MusicLibraryResourceResponse: Encodable where MusicItemType: Encodable
   // public func encode(to encoder: Encoder) throws { }
 }
 
-extension MusicLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
     ""
   }

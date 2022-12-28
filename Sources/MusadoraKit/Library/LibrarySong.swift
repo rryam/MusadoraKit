@@ -35,7 +35,7 @@ public extension MLibrary {
   }
 #else
   static func song(for id: MusicItemID) async throws -> Song {
-    let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
+    let request = MLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
     guard let song = response.items.first else {
@@ -65,7 +65,7 @@ public extension MLibrary {
   }
 #else
   static func songs(limit: Int? = nil) async throws -> Songs {
-    var request = MusicLibraryResourceRequest<Song>()
+    var request = MLibraryResourceRequest<Song>()
     request.limit = limit
     let response = try await request.response()
     return response.items
@@ -77,7 +77,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
   static func songs(ids: [MusicItemID]) async throws -> Songs {
-    let request = MusicLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
+    let request = MLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
