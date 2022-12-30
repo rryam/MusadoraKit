@@ -104,6 +104,31 @@ public extension MusadoraKit {
 
   }
 
+  @discardableResult static func addSongIds(
+    _ songIds: [MusicItemID],
+    toPlaylist playlistId: MusicItemID
+  ) async throws -> Bool {
+    let songData = songIds.map { PlaylistCreationData(id: $0.rawValue, type: .song) }
+    let tracks = PlaylistCreationTracks(data: songData)
+
+    let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists/\(playlistId.rawValue)/tracks")
+
+    guard let url = url else { throw URLError(.badURL) }
+
+    let data = try JSONEncoder().encode(tracks)
+
+    let request = MusicDataPostRequest(url: url, data: data)
+    let response = try await request.response()
+    return response.urlResponse.statusCode == 201
+  }
+
+  @discardableResult static func add(
+    songs: Songs,
+    to playlist: Playlist
+  ) async throws -> Bool {
+    try await addSongIds(songs.map(\.id), toPlaylist: playlist.id)
+  }
+
   static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
     let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists")
 
