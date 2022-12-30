@@ -104,11 +104,11 @@ public extension MusadoraKit {
 
   }
 
-  static func addSongs(_ songs: Songs, toPlaylist id: MusicItemID) async throws {
-    let songData = songs.map { PlaylistCreationData(id: $0.id.rawValue, type: .song) }
+  static func addSongIds(_ songIds: [MusicItemID], toPlaylist playlistId: MusicItemID) async throws {
+    let songData = songIds.map { PlaylistCreationData(id: $0.rawValue, type: .song) }
     let tracks = PlaylistCreationTracks(data: songData)
 
-    let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists/\(id.rawValue)/tracks")
+    let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists/\(playlistId.rawValue)/tracks")
 
     guard let url = url else { throw URLError(.badURL) }
 
@@ -116,6 +116,10 @@ public extension MusadoraKit {
 
     let request = MusicDataPostRequest(url: url, data: data)
     let _ = try await request.response()
+  }
+
+  static func add(songs: Songs, to playlist: Playlist) async throws {
+    try await addSongIds(songs.map(\.id), toPlaylist: playlist.id)
   }
 
   static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
