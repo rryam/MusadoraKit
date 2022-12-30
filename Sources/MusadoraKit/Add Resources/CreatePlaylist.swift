@@ -104,7 +104,10 @@ public extension MusadoraKit {
 
   }
 
-  static func addSongIds(_ songIds: [MusicItemID], toPlaylist playlistId: MusicItemID) async throws {
+  @discardableResult static func addSongIds(
+    _ songIds: [MusicItemID],
+    toPlaylist playlistId: MusicItemID
+  ) async throws -> Bool {
     let songData = songIds.map { PlaylistCreationData(id: $0.rawValue, type: .song) }
     let tracks = PlaylistCreationTracks(data: songData)
 
@@ -115,10 +118,14 @@ public extension MusadoraKit {
     let data = try JSONEncoder().encode(tracks)
 
     let request = MusicDataPostRequest(url: url, data: data)
-    let _ = try await request.response()
+    let response = try await request.response()
+    return response.urlResponse.statusCode == 201
   }
 
-  static func add(songs: Songs, to playlist: Playlist) async throws {
+  @discardableResult static func add(
+    songs: Songs,
+    to playlist: Playlist
+  ) async throws -> Bool {
     try await addSongIds(songs.map(\.id), toPlaylist: playlist.id)
   }
 
