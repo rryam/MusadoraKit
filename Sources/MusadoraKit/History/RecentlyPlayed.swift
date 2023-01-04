@@ -43,6 +43,7 @@ public extension MusadoraKit {
   ///  ```
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   static func mostPlayedSongs(limit: Int = 100) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
