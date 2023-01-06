@@ -23,7 +23,7 @@ struct MCatalogRatingAddRequest {
   ///   - id: The unique identifier of the catalog item.
   ///   - type: The type of the catalog item. Possible values: `song`, `album`, `playlist`, `musicVideo`, `station`.
   ///   - rating: The rating to add for the given catalog item. Possible values: `like`, `dislike`.
-  init(for id: MusicItemID, item type: CatalogRatingMusicItemType, rating: RatingType) {
+  init(with id: MusicItemID, item type: CatalogRatingMusicItemType, rating: RatingType) {
     self.id = id
     self.type = type
     self.rating = rating

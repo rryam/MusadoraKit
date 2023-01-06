@@ -14,7 +14,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the album.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Album` matching the given identifier.
-  static func album(for id: MusicItemID, with properties: AlbumProperties) async throws -> Album {
+  static func album(with id: MusicItemID, with properties: AlbumProperties) async throws -> Album {
     try await album(id: id, with: properties)
   }
 
@@ -23,7 +23,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the album.
   ///   - properties: Additional relationships to fetch with the album.
   /// - Returns: `Album` matching the given identifier.
-  static func album(for id: MusicItemID, with properties: AlbumProperty...) async throws -> Album {
+  static func album(with id: MusicItemID, with properties: AlbumProperty...) async throws -> Album {
     try await album(id: id, with: properties)
   }
 
@@ -32,7 +32,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the album.
   ///   - property: Additional property or relationship to fetch with the album.
   /// - Returns: `Album` matching the given identifier.
-  static func album(for id: MusicItemID, with property: AlbumProperty) async throws -> Album {
+  static func album(with id: MusicItemID, with property: AlbumProperty) async throws -> Album {
     try await album(id: id, with: [property])
   }
   
@@ -40,7 +40,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Album` matching the given identifier.
-  static func album(for id: MusicItemID) async throws -> Album {
+  static func album(with id: MusicItemID) async throws -> Album {
     try await album(id: id, with: .all)
   }
   
@@ -50,7 +50,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the albums.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Albums` matching the given identifiers.
-  static func albums(for ids: [MusicItemID], with properties: AlbumProperties) async throws -> Albums {
+  static func albums(with ids: [MusicItemID], with properties: AlbumProperties) async throws -> Albums {
     try await albums(ids: ids, with: properties)
   }
   
@@ -58,7 +58,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
-  static func albums(for ids: [MusicItemID]) async throws -> Albums {
+  static func albums(with ids: [MusicItemID]) async throws -> Albums {
     try await albums(ids: ids, with: .all)
   }
   

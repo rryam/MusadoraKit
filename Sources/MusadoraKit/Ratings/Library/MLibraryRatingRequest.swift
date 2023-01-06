@@ -21,7 +21,7 @@ public struct MLibraryRatingRequest {
   /// - Parameters:
   ///   - id: The unique identifiers of the library item.
   ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
-  public init(for ids: [MusicItemID], item type: LibraryRatingMusicItemType) {
+  public init(with ids: [MusicItemID], item type: LibraryRatingMusicItemType) {
     self.ids = ids
     self.type = type
   }

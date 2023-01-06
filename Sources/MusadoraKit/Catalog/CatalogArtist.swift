@@ -14,7 +14,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artist.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artist` matching the given identifier.
-  static func artist(for id: MusicItemID, with properties: ArtistProperties) async throws -> Artist {
+  static func artist(with id: MusicItemID, with properties: ArtistProperties) async throws -> Artist {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -29,7 +29,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   /// - Returns: `Artist` matching the given identifier.
-  static func artist(for id: MusicItemID) async throws -> Artist {
+  static func artist(with id: MusicItemID) async throws -> Artist {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -46,7 +46,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artists.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artists` matching the given identifiers.
-  static func artists(for ids: [MusicItemID], with properties: ArtistProperties) async throws -> Artists {
+  static func artists(with ids: [MusicItemID], with properties: ArtistProperties) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -57,7 +57,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
-  static func artists(for ids: [MusicItemID]) async throws -> Artists {
+  static func artists(with ids: [MusicItemID]) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()

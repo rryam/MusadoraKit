@@ -14,7 +14,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the record label.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `RecordLabel` matching the given identifier.
-  static func recordLabel(for id: MusicItemID, with properties: RecordLabelProperties) async throws -> RecordLabel {
+  static func recordLabel(with id: MusicItemID, with properties: RecordLabelProperties) async throws -> RecordLabel {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -30,7 +30,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the record label.
   /// - Returns: `RecordLabel` matching the given identifier.
-  static func recordLabel(for id: MusicItemID) async throws -> RecordLabel {
+  static func recordLabel(with id: MusicItemID) async throws -> RecordLabel {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -48,7 +48,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the record labels.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `RecordLabels` matching the given identifiers.
-  static func recordLabels(for ids: [MusicItemID], with properties: RecordLabelProperties) async throws -> RecordLabels {
+  static func recordLabels(with ids: [MusicItemID], with properties: RecordLabelProperties) async throws -> RecordLabels {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -60,7 +60,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the record labels.
   /// - Returns: `RecordLabels` matching the given identifiers.
-  static func recordLabels(for ids: [MusicItemID]) async throws -> RecordLabels {
+  static func recordLabels(with ids: [MusicItemID]) async throws -> RecordLabels {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()

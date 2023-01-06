@@ -19,7 +19,7 @@ public struct MCatalogRatingDeleteRequest {
   /// - Parameters:
   ///   - id: The unique identifier of the catalog item.
   ///   - type: The type of the catalog item. Possible values: `song`, `album`, `playlist`, `musicVideo`, `station`.
-  public init(for id: MusicItemID, item type: CatalogRatingMusicItemType) {
+  public init(with id: MusicItemID, item type: CatalogRatingMusicItemType) {
     self.id = id
     self.type = type
   }

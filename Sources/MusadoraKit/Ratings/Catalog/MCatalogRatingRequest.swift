@@ -19,7 +19,7 @@ public struct MCatalogRatingRequest {
   /// - Parameters:
   ///   - ids: The unique identifiers of the catalog item.
   ///   - type: The type of the catalog item. Possible values: `song`, `album`, `playlist`, `musicVideo`, `station`.
-  public init(for ids: [MusicItemID], item type: CatalogRatingMusicItemType) {
+  public init(with ids: [MusicItemID], item type: CatalogRatingMusicItemType) {
     self.type = type
     self.ids = ids
   }
@@ -28,7 +28,7 @@ public struct MCatalogRatingRequest {
   /// - Parameters:
   ///   - id: The unique identifier of the catalog item.
   ///   - type: The type of the catalog item. Possible values: `song`, `album`, `playlist`, `musicVideo`, `station`.
-  public init(for id: MusicItemID, item type: CatalogRatingMusicItemType) {
+  public init(with id: MusicItemID, item type: CatalogRatingMusicItemType) {
     self.type = type
     self.ids = [id]
   }

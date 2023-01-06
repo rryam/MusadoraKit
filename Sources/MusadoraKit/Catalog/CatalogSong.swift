@@ -27,7 +27,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the song.
   ///   - properties: Additional relationships to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
-  static func song(for id: MusicItemID, with properties: SongProperties) async throws -> Song {
+  static func song(with id: MusicItemID, with properties: SongProperties) async throws -> Song {
     try await song(id: id, with: properties)
   }
 
@@ -52,7 +52,7 @@ public extension MCatalog {
   ///
   /// - Note: It is a personal preference to either use the method where the `with` parameter takes an array of
   ///  `SongProperty` or as a variadic parameter.
-  static func song(for id: MusicItemID, with properties: SongProperty...) async throws -> Song {
+  static func song(with id: MusicItemID, with properties: SongProperty...) async throws -> Song {
     try await song(id: id, with: properties)
   }
 
@@ -61,7 +61,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the song.
   ///   - property: Additional property or relationship to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
-  static func song(for id: MusicItemID, with property: SongProperty) async throws -> Song {
+  static func song(with id: MusicItemID, with property: SongProperty) async throws -> Song {
     try await song(id: id, with: [property])
   }
 
@@ -69,7 +69,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
-  static func song(for id: MusicItemID) async throws -> Song {
+  static func song(with id: MusicItemID) async throws -> Song {
     try await song(id: id, with: .all)
   }
 
@@ -78,7 +78,7 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func songs(for ids: [MusicItemID], with properties: SongProperties) async throws -> Songs {
+  static func songs(with ids: [MusicItemID], with properties: SongProperties) async throws -> Songs {
     try await songs(ids: ids, with: properties)
   }
 
@@ -87,7 +87,7 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func songs(for ids: [MusicItemID], with properties: SongProperty...) async throws -> Songs {
+  static func songs(with ids: [MusicItemID], with properties: SongProperty...) async throws -> Songs {
     try await songs(ids: ids, with: properties)
   }
 
@@ -96,7 +96,7 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the songs.
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func songs(for ids: [MusicItemID], with property: SongProperty) async throws -> Songs {
+  static func songs(with ids: [MusicItemID], with property: SongProperty) async throws -> Songs {
     try await songs(ids: ids, with: [property])
   }
 
@@ -104,7 +104,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func songs(for ids: [MusicItemID]) async throws -> Songs {
+  static func songs(with ids: [MusicItemID]) async throws -> Songs {
     try await songs(ids: ids, with: .all)
   }
 
