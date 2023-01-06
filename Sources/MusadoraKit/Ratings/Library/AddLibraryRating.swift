@@ -28,7 +28,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MRatingError.notFound`: If the song is not found in the user's library.
   static func addRating(for song: Song, rating: RatingType) async throws -> Rating {
-    try await addRating(for: song.id, item: .song, rating: rating)
+    try await addRating(with: song.id, item: .song, rating: rating)
   }
 
   /// Adds a rating for an album in the user's library.
@@ -49,7 +49,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MRatingError.notFound`: If the album is not found in the user's library.
   static func addRating(for album: Album, rating: RatingType) async throws -> Rating {
-    try await addRating(for: album.id, item: .album, rating: rating)
+    try await addRating(with: album.id, item: .album, rating: rating)
   }
 
   /// Adds a rating for a playlist in the user's library.
@@ -70,7 +70,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MRatingError.notFound`: If the playlist is not found in the user's library.
   static func addRating(for playlist: Playlist, rating: RatingType) async throws -> Rating {
-    try await addRating(for: playlist.id, item: .playlist, rating: rating)
+    try await addRating(with: playlist.id, item: .playlist, rating: rating)
   }
 
   /// Adds a rating for a music video in the user's library.
@@ -91,7 +91,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MRatingError.notFound`: If the music video is not found in the user's library.
   static func addRating(for musicVideo: MusicVideo, rating: RatingType) async throws -> Rating {
-    try await addRating(for: musicVideo.id, item: .musicVideo, rating: rating)
+    try await addRating(with: musicVideo.id, item: .musicVideo, rating: rating)
   }
 
   /// Adds a rating for a music item in the user's library.
@@ -114,8 +114,8 @@ public extension MLibrary {
   /// - Returns: The added rating for the music item as `Rating` object.
   ///
   /// - Throws: `MRatingError.notFound`: If the music item with the specified ID is not found in the user's library.
-  static func addRating(for id: MusicItemID, item: CatalogRatingMusicItemType, rating: RatingType) async throws -> Rating {
-    let request = MLibraryRatingAddRequest(for: id, item: .song, rating: rating)
+  static func addRating(with id: MusicItemID, item: CatalogRatingMusicItemType, rating: RatingType) async throws -> Rating {
+    let request = MLibraryRatingAddRequest(with: id, item: .song, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {

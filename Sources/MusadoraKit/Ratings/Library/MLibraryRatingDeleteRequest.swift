@@ -20,7 +20,7 @@ public struct MLibraryRatingDeleteRequest {
   /// - Parameters:
   ///   - id: The unique identifier of the library item.
   ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
-  public init(for id: MusicItemID, item type: LibraryRatingMusicItemType) {
+  public init(with id: MusicItemID, item type: LibraryRatingMusicItemType) {
     self.id = id
     self.type = type
   }

@@ -28,7 +28,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the album is not found in the user's library.
   static func getRating(for album: Album) async throws -> Rating {
-    try await getRating(for: album.id, item: .album)
+    try await getRating(with: album.id, item: .album)
   }
 
   /// Get the ratings for albums in the user's library.
@@ -46,7 +46,7 @@ public extension MLibrary {
   ///   - albums: The albums to get the rating for.
   /// - Returns: The ratings for the albums as an array of `Rating` object.
   static func getRatings(for albums: Albums) async throws -> Ratings {
-    try await getRatings(for: albums.map { $0.id }, item: .album)
+    try await getRatings(with: albums.map { $0.id }, item: .album)
   }
 
   /// Get the rating for a song in the user's library.
@@ -66,7 +66,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the song is not found in the user's library.
   static func getRating(for song: Song) async throws -> Rating {
-    try await getRating(for: song.id, item: .song)
+    try await getRating(with: song.id, item: .song)
   }
 
   /// Get the ratings for songs in the user's library.
@@ -84,7 +84,7 @@ public extension MLibrary {
   ///   - songs: The songs to get the rating for.
   /// - Returns: The ratings for the songs as an array of `Rating` object.
   static func getRatings(for songs: Songs) async throws -> Ratings {
-    try await getRatings(for: songs.map { $0.id }, item: .song)
+    try await getRatings(with: songs.map { $0.id }, item: .song)
   }
 
   /// Get the rating for a music video in the user's library.
@@ -104,7 +104,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the music video is not found in the user's library.
   static func getRating(for musicVideo: MusicVideo) async throws -> Rating {
-    try await getRating(for: musicVideo.id, item: .musicVideo)
+    try await getRating(with: musicVideo.id, item: .musicVideo)
   }
 
   /// Get the ratings for music videos in the user's library.
@@ -122,7 +122,7 @@ public extension MLibrary {
   ///   - musicVideos: The music videos to get the rating for.
   /// - Returns: The ratings for the music videos as an array of `Rating` object.
   static func getRatings(for musicVideos: MusicVideos) async throws -> Ratings {
-    try await getRatings(for: musicVideos.map { $0.id }, item: .musicVideo)
+    try await getRatings(with: musicVideos.map { $0.id }, item: .musicVideo)
   }
 
   /// Get the rating for a playlist in the user's library.
@@ -142,7 +142,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the playlist is not found in the user's library.
   static func getRating(for playlist: Playlist) async throws -> Rating {
-    try await getRating(for: playlist.id, item: .playlist)
+    try await getRating(with: playlist.id, item: .playlist)
   }
 
   /// Get the ratings for playlists in the user's library.
@@ -160,7 +160,7 @@ public extension MLibrary {
   ///   - playlists: The playlists to get the rating for.
   /// - Returns: The ratings for the playlists as an array of `Rating` object.
   static func getRatings(for playlists: Playlists) async throws -> Ratings {
-    try await getRatings(for: playlists.map { $0.id }, item: .playlist)
+    try await getRatings(with: playlists.map { $0.id }, item: .playlist)
   }
 
   /// Get the rating for a music item in the user's library.
@@ -181,8 +181,8 @@ public extension MLibrary {
   /// - Returns: The rating for the music item as `Rating` object.
   ///
   /// - Throws: `MLibraryError.notFound`: If the music item with the specified ID is not found in the user's library.
-  static func getRating(for id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Rating {
-    let request = MLibraryRatingRequest(for: [id], item: item)
+  static func getRating(with id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Rating {
+    let request = MLibraryRatingRequest(with: [id], item: item)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -209,8 +209,8 @@ public extension MLibrary {
   /// - Returns: The ratings for the music items as an array of `Rating` object.
   ///
   /// - Throws: `MLibraryError.notFound`: If the music items with the IDs is not found in the user's library.
-  static func getRatings(for ids: [MusicItemID], item: LibraryRatingMusicItemType) async throws -> Ratings {
-    let request = MLibraryRatingRequest(for: ids, item: item)
+  static func getRatings(with ids: [MusicItemID], item: LibraryRatingMusicItemType) async throws -> Ratings {
+    let request = MLibraryRatingRequest(with: ids, item: item)
     let response = try await request.response()
     return response.data
   }

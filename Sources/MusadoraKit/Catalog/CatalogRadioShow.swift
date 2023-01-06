@@ -14,7 +14,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the radio show.
   ///   - properties: Additional relationships to fetch with the radio show.
   /// - Returns: `RadioShow` matching the given identifier.
-  static func radioShow(for id: MusicItemID, with properties: RadioShowProperties) async throws -> RadioShow {
+  static func radioShow(with id: MusicItemID, with properties: RadioShowProperties) async throws -> RadioShow {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -29,7 +29,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the radio show.
   /// - Returns: `RadioShow` matching the given identifier.
-  static func radioShow(for id: MusicItemID) async throws -> RadioShow {
+  static func radioShow(with id: MusicItemID) async throws -> RadioShow {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -45,7 +45,7 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the radio shows.
   ///   - properties: Additional relationships to fetch with the radio shows.
   /// - Returns: `RadioShows` matching the given identifiers.
-  static func radioShows(for ids: [MusicItemID], with properties: RadioShowProperties) async throws -> RadioShows {
+  static func radioShows(with ids: [MusicItemID], with properties: RadioShowProperties) async throws -> RadioShows {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -56,7 +56,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the radio shows.
   /// - Returns: `RadioShows` matching the given identifiers.
-  static func radioShows(for ids: [MusicItemID]) async throws -> RadioShows {
+  static func radioShows(with ids: [MusicItemID]) async throws -> RadioShows {
     var request = MusicCatalogResourceRequest<RadioShow>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()

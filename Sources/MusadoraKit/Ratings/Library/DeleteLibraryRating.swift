@@ -30,7 +30,7 @@ public extension MLibrary {
   ///   - song: The song to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for song: Song) async throws -> Bool {
-    try await deleteRating(for: song.id, item: .song)
+    try await deleteRating(with: song.id, item: .song)
   }
 
   /// Delete a rating for an album in the user's library.
@@ -52,7 +52,7 @@ public extension MLibrary {
   ///   - album: The album to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for album: Album) async throws -> Bool {
-    try await deleteRating(for: album.id, item: .album)
+    try await deleteRating(with: album.id, item: .album)
   }
 
   /// Delete a rating for a playlist in the user's library.
@@ -74,7 +74,7 @@ public extension MLibrary {
   ///   - playlist: The playlist to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for playlist: Playlist) async throws -> Bool {
-    try await deleteRating(for: playlist.id, item: .playlist)
+    try await deleteRating(with: playlist.id, item: .playlist)
   }
 
   /// Delete a rating for a music video in the user's library.
@@ -96,7 +96,7 @@ public extension MLibrary {
   ///   - musicVideo: The music video to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for musicVideo: MusicVideo) async throws -> Bool {
-    try await deleteRating(for: musicVideo.id, item: .musicVideo)
+    try await deleteRating(with: musicVideo.id, item: .musicVideo)
   }
 
   /// Delete a rating for a music item in the user's library.
@@ -119,8 +119,8 @@ public extension MLibrary {
   ///   - id: The unique identifier of the music item to delete the rating for.
   ///   - item: The type of the music item to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
-  static func deleteRating(for id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(for: id, item: item)
+  static func deleteRating(with id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Bool {
+    let request = MLibraryRatingDeleteRequest(with: id, item: item)
     let response = try await request.response()
     return response
   }

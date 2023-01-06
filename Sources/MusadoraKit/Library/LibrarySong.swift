@@ -23,7 +23,7 @@ public extension MLibrary {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func song(for id: MusicItemID) async throws -> Song {
+  static func song(with id: MusicItemID) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -34,7 +34,7 @@ public extension MLibrary {
     return song
   }
 #else
-  static func song(for id: MusicItemID) async throws -> Song {
+  static func song(with id: MusicItemID) async throws -> Song {
     let request = MLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -137,7 +137,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addSong(for id: MusicItemID) async throws -> Bool {
+  static func addSong(with id: MusicItemID) async throws -> Bool {
     let song: SongResource = (item: .songs, value: [id])
     let request = MAddResourcesRequest([song])
     let response = try await request.response()
@@ -148,7 +148,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addSongs(for ids: [MusicItemID]) async throws -> Bool {
+  static func addSongs(with ids: [MusicItemID]) async throws -> Bool {
     let songs: SongResource = (item: .songs, value: ids)
     let request = MAddResourcesRequest([songs])
     let response = try await request.response()

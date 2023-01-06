@@ -12,7 +12,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the station.
   /// - Returns: `Station` matching the given identifier.
-  static func station(for id: MusicItemID) async throws -> Station {
+  static func station(with id: MusicItemID) async throws -> Station {
     let request = MusicCatalogResourceRequest<Station>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -26,7 +26,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifier for the stations.
   /// - Returns: `Stations` matching the given identifiers.
-  static func stations(for ids: [MusicItemID]) async throws -> Stations {
+  static func stations(with ids: [MusicItemID]) async throws -> Stations {
     let request = MusicCatalogResourceRequest<Station>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items

@@ -135,7 +135,7 @@ public extension MCatalog {
   ///
   /// - Throws: `MRatingError.notFound`: If the music item with the specified ID is not found in the Apple Music catalog.
   static func addRating(for id: MusicItemID, item: CatalogRatingMusicItemType, rating: RatingType) async throws -> Rating {
-    let request = MCatalogRatingAddRequest(for: id, item: item, rating: rating)
+    let request = MCatalogRatingAddRequest(with: id, item: item, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {

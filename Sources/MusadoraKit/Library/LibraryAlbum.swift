@@ -17,7 +17,7 @@ public extension MLibrary {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func album(for id: MusicItemID) async throws -> Album {
+  static func album(with id: MusicItemID) async throws -> Album {
     var request = MusicLibraryRequest<Album>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -28,7 +28,7 @@ public extension MLibrary {
     return album
   }
 #else
-  static func album(for id: MusicItemID) async throws -> Album {
+  static func album(with id: MusicItemID) async throws -> Album {
     let request = MLibraryResourceRequest<Album>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -66,7 +66,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
-  static func albums(for ids: [MusicItemID]) async throws -> Albums {
+  static func albums(with ids: [MusicItemID]) async throws -> Albums {
     let request = MLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
@@ -107,7 +107,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbum(for id: MusicItemID) async throws -> Bool {
+  static func addAlbum(with id: MusicItemID) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .albums, value: [id])])
     let response = try await request.response()
     return response
@@ -117,7 +117,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbums(for ids: [MusicItemID]) async throws -> Bool {
+  static func addAlbums(with ids: [MusicItemID]) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .albums, value: ids)])
     let response = try await request.response()
     return response

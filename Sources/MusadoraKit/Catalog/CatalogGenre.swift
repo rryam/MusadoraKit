@@ -13,7 +13,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the genre.
   /// - Returns: `Genre` matching the given identifier.
-  static func genre(for id: MusicItemID) async throws -> Genre {
+  static func genre(with id: MusicItemID) async throws -> Genre {
     let request = MusicCatalogResourceRequest<Genre>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -27,7 +27,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the genres.
   /// - Returns: `Genres` matching the given identifiers.
-  static func genres(for ids: [MusicItemID]) async throws -> Genres {
+  static func genres(with ids: [MusicItemID]) async throws -> Genres {
     let request = MusicCatalogResourceRequest<Genre>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
