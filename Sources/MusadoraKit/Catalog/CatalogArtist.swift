@@ -14,7 +14,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artist.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artist` matching the given identifier.
-  static func artist(with id: MusicItemID, with properties: ArtistProperties) async throws -> Artist {
+  static func artist(with id: MusicItemID, fetch properties: ArtistProperties) async throws -> Artist {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -46,9 +46,22 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artists.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artists` matching the given identifiers.
-  static func artists(with ids: [MusicItemID], with properties: ArtistProperties) async throws -> Artists {
+  static func artists(with ids: [MusicItemID], fetch properties: ArtistProperties) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = properties
+    let response = try await request.response()
+    return response.items
+  }
+
+  /// Fetch multiple artists from the Apple Music catalog by using their identifiers.
+  /// - Parameters:
+  ///   - ids: The unique identifiers for the artists.
+  ///   - properties: Additional relationships to fetch with the artists.
+  ///   Pass an empty array to avoid fetching additional properties.
+  /// - Returns: `Artists` matching the given identifiers.
+  static func artists(with ids: [MusicItemID], fetch property: ArtistProperty...) async throws -> Artists {
+    var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
+    request.properties = property
     let response = try await request.response()
     return response.items
   }
