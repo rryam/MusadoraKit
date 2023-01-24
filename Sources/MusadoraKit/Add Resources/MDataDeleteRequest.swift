@@ -8,7 +8,7 @@
 import Foundation
 import MusicKit
 
-struct MDataDeleteRequest {
+public struct MDataDeleteRequest {
   /// The URL for the data request.
   var url: URL
   
