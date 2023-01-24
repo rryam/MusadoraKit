@@ -14,7 +14,7 @@ Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing a
 
 ## Support 
 
-You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](exploringmusickit.com) or by [buying me a book](https://www.buymeacoffee.com/rudrank)! 
+You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](http://exploringmusickit.com) or by [buying me a book](https://www.buymeacoffee.com/rudrank)! 
 
 ## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/)
 
