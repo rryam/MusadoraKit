@@ -117,7 +117,7 @@ public extension MusadoraKit {
 
     let data = try JSONEncoder().encode(tracks)
 
-    let request = MusicDataPostRequest(url: url, data: data)
+    let request = MDataPostRequest(url: url, data: data)
     let response = try await request.response()
     return response.urlResponse.statusCode == 201
   }
