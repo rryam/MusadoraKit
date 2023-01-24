@@ -13,13 +13,13 @@ public struct MDataDeleteRequest {
   var url: URL
   
   /// Creates a data request with the given URL.
-  init(url: URL) {
+  public init(url: URL) {
     self.url = url
   }
   
   /// Uploads data the Apple Music API endpoint that
   /// the URL request defines.
-  func response() async throws -> MusicDataResponse {
+  public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "DELETE"
     
