@@ -1,6 +1,6 @@
 //
 //  ChartItemCollection.swift
-//  ChartItemCollection
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
 //
@@ -37,7 +37,7 @@ public extension ChartItemCollection {
   }
 }
 
-extension ChartItemCollection where MusicItemType: MusadoraCatalogChart {}
+extension ChartItemCollection where MusicItemType: MChartItem {}
 
 extension ChartItemCollection: Decodable where MusicItemType: Decodable {}
 

@@ -1,20 +1,20 @@
 //
 //  MusicRecentlyAddedRequest.swift
-//  MusicRecentlyAddedRequest
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 30/06/22.
 //
 
 import Foundation
-@preconcurrency import MusicKit
+import MusicKit
 
 /// A protocol for music items that your app can fetch by
 /// using a recently added request.
-public protocol MusicRecentlyAddedRequestable: MusicItem {
+public protocol MRecentlyAddedRequestable: MusicItem {
 }
 
 /// A request that your app uses to fetch items the user has recently added.
-public struct MusicRecentlyAddedRequest<MusicItemType> where MusicItemType: MusicRecentlyAddedRequestable, MusicItemType: Decodable {
+public struct MusicRecentlyAddedRequest<MusicItemType> where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
 
     /// Creates a request for items the user has recently added.
     public init() {}
@@ -36,17 +36,17 @@ public struct MusicRecentlyAddedRequest<MusicItemType> where MusicItemType: Musi
 //    }
 }
 
-public struct MusicRecentlyAddedResponse<MusicItemType> where MusicItemType: MusicRecentlyAddedRequestable {
+public struct MRecentlyAddedResponse<MusicItemType> where MusicItemType: MRecentlyAddedRequestable {
 
     /// A collection of items the user has recently added.
     public let items: MusicItemCollection<MusicItemType>
 }
 
-extension MusicRecentlyAddedResponse: Sendable {
+extension MRecentlyAddedResponse: Sendable {
 }
 
-extension MusicRecentlyAddedResponse: Decodable where MusicItemType: Decodable {
+extension MRecentlyAddedResponse: Decodable where MusicItemType: Decodable {
 }
 
-extension MusicRecentlyAddedResponse: Encodable where MusicItemType: Encodable {
+extension MRecentlyAddedResponse: Encodable where MusicItemType: Encodable {
 }

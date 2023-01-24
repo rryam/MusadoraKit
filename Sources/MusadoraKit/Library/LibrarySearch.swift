@@ -7,7 +7,7 @@
 
 import MusicKit
 
-public enum MusicLibrarySearchType {
+public enum MLibrarySearchableType {
   case songs
   case albums
   case playlists
@@ -34,7 +34,7 @@ public enum MusicLibrarySearchType {
   }
 #endif
 
-  public var type: MusadoraLibrarySearchable.Type {
+  public var type: MLibrarySearchable.Type {
     switch self {
       case .songs:
         return Song.self
@@ -50,7 +50,7 @@ public enum MusicLibrarySearchType {
   }
 }
 
-public extension MusadoraKit {
+public extension MLibrary {
   /// Search the user's library by using a query.
   /// - Parameters:
   ///   - term: The text for the search
@@ -58,13 +58,13 @@ public extension MusadoraKit {
   ///   - limit: The number of objects returned. Default: 5, maximum Value: 25
   ///   - offset: The next page or group of objects to fetch.
   /// - Returns: `MusicLibrarySearchResponse` that contains results for a library search request.
-  static func librarySearch(
+  static func search(
     for term: String,
-    types: [MusicLibrarySearchType],
+    types: [MLibrarySearchableType],
     limit: Int? = nil,
-    offset: Int? = nil) async throws -> MusadoraLibrarySearchResponse {
+    offset: Int? = nil) async throws -> MLibrarySearchResponse {
       let searchTypes = types.map { $0.type }
-      var request = MusadoraLibrarySearchRequest(term: term, types: searchTypes)
+      var request = MLibrarySearchRequest(term: term, types: searchTypes)
       request.limit = limit
       request.offset = offset
       return try await request.response()
@@ -75,10 +75,10 @@ public extension MusadoraKit {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-public extension MusadoraKit {
-  static func librarySearch(
+public extension MLibrary {
+  static func search(
     for term: String,
-    types: [MusicLibrarySearchType],
+    types: [MLibrarySearchableType],
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> MusicLibrarySearchResponse {
@@ -89,7 +89,7 @@ public extension MusadoraKit {
       return try await request.response()
     }
 
-  static func librarySearchSongs(
+  static func searchSongs(
     for term: String,
     limit: Int = 5,
     offset: Int? = nil,
@@ -101,7 +101,7 @@ public extension MusadoraKit {
       return response.songs
     }
 
-  static func librarySearchAlbums(
+  static func searchAlbums(
     for term: String,
     limit: Int = 5,
     offset: Int? = nil,
@@ -113,7 +113,7 @@ public extension MusadoraKit {
       return response.albums
     }
 
-  static func librarySearchPlaylists(
+  static func searchPlaylists(
     for term: String,
     limit: Int = 5,
     offset: Int? = nil,
@@ -125,7 +125,7 @@ public extension MusadoraKit {
       return response.playlists
     }
 
-  static func librarySearchMusicVideos(
+  static func searchMusicVideos(
     for term: String,
     limit: Int = 5,
     offset: Int? = nil,
@@ -137,7 +137,7 @@ public extension MusadoraKit {
       return response.musicVideos
     }
 
-  static func librarySearchArtists(
+  static func searchArtists(
     for term: String,
     limit: Int = 5,
     offset: Int? = nil,
