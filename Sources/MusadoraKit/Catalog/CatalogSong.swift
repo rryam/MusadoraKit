@@ -1,22 +1,13 @@
 //
 //  CatalogSong.swift
-//  CatalogSong
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
 import MusicKit
 
-/// A collection of songs.
-public typealias Songs = MusicItemCollection<Song>
-
-/// Additional property/relationship of a song.
-public typealias SongProperty = PartialMusicAsyncProperty<Song>
-
-/// Additional properties/relationships of a song.
-public typealias SongProperties = [SongProperty]
-
-public extension MusadoraKit {
+public extension MCatalog {
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
   ///
@@ -24,20 +15,20 @@ public extension MusadoraKit {
   /// with the ID `1544326470` without any additional properties, nor relationships:
   ///
   ///     let id: MusicItemID = "1544326470"
-  ///     let song = try await MusadoraKit.catalogSong(id: id)
+  ///     let song = try await MCatalog.song(id: id, fetch: [])
   ///
   /// To fetch additional relationships like `albums` or properties like `artistURL` in the same request,
   /// specify them in the `with` parameter:
   ///
   ///     let id: MusicItemID = "1544326470"
-  ///     let song = try await MusadoraKit.catalogSong(id: id, with: [.albums, .artistURL])
+  ///     let song = try await MCatalog.song(for: id, with: [.albums, .artistURL])
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   ///   - properties: Additional relationships to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
-  static func catalogSong(id: MusicItemID, with properties: SongProperties = []) async throws -> Song {
-    try await fetchCatalogSong(id: id, with: properties)
+  static func song(id: MusicItemID, fetch properties: SongProperties) async throws -> Song {
+    try await song(id: id, properties: properties)
   }
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
@@ -46,13 +37,13 @@ public extension MusadoraKit {
   /// with the ID `1544326470` with a single relationship `artists`:
   ///
   ///     let id: MusicItemID = "1450695739"
-  ///     let song = try await MusadoraKit.catalogSong(id: id, with .artists)
+  ///     let song = try await MCatalog.song(for: id, with .artists)
   ///
   /// To fetch additional relationships like `genres` or properties like `artistURL` in the same request,
   /// specify them in the `with` parameter:
   ///
   ///     let id: MusicItemID = "1450695739"
-  ///     let song = try await MusadoraKit.catalogSong(id: id, with: .genres, .artistURL)
+  ///     let song = try await MCatalog.song(for: id, with: .genres, .artistURL)
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
@@ -61,8 +52,8 @@ public extension MusadoraKit {
   ///
   /// - Note: It is a personal preference to either use the method where the `with` parameter takes an array of
   ///  `SongProperty` or as a variadic parameter.
-  static func catalogSong(id: MusicItemID, with properties: SongProperty...) async throws -> Song {
-    try await fetchCatalogSong(id: id, with: properties)
+  static func song(id: MusicItemID, fetch properties: SongProperty...) async throws -> Song {
+    try await song(id: id, properties: properties)
   }
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
@@ -70,16 +61,16 @@ public extension MusadoraKit {
   ///   - id: The unique identifier for the song.
   ///   - property: Additional property or relationship to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
-  static func catalogSong(id: MusicItemID, with property: SongProperty) async throws -> Song {
-    try await fetchCatalogSong(id: id, with: [property])
+  static func song(id: MusicItemID, fetch property: SongProperty) async throws -> Song {
+    try await song(id: id, properties: [property])
   }
 
-  /// Fetch a song from the Apple Music catalog by using its identifier with all properties.
+  /// Fetch a song from the Apple Music catalog by using its identifier with no properties.
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
-  static func catalogSong(id: MusicItemID) async throws -> Song {
-    try await fetchCatalogSong(id: id, with: .all)
+  static func song(id: MusicItemID) async throws -> Song {
+    try await song(id: id, properties: [])
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
@@ -87,8 +78,8 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func catalogSongs(ids: [MusicItemID], with properties: SongProperties = []) async throws -> Songs {
-    try await fetchCatalogSongs(ids: ids, with: properties)
+  static func songs(ids: [MusicItemID], fetch properties: SongProperties) async throws -> Songs {
+    try await songs(ids: ids, properties: properties)
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
@@ -96,8 +87,8 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func catalogSongs(ids: [MusicItemID], with properties: SongProperty...) async throws -> Songs {
-    try await fetchCatalogSongs(ids: ids, with: properties)
+  static func songs(ids: [MusicItemID], fetch properties: SongProperty...) async throws -> Songs {
+    try await songs(ids: ids, properties: properties)
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
@@ -105,16 +96,16 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the songs.
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func catalogSongs(ids: [MusicItemID], with property: SongProperty) async throws -> Songs {
-    try await fetchCatalogSongs(ids: ids, with: [property])
+  static func songs(ids: [MusicItemID], fetch property: SongProperty) async throws -> Songs {
+    try await songs(ids: ids, properties: [property])
   }
 
-  /// Fetch multiple songs from the Apple Music catalog by using their identifiers with all properties.
+  /// Fetch multiple songs from the Apple Music catalog by using their identifiers with no properties.
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  static func catalogSongs(ids: [MusicItemID]) async throws -> Songs {
-    try await fetchCatalogSongs(ids: ids, with: .all)
+  static func songs(ids: [MusicItemID]) async throws -> Songs {
+    try await songs(ids: ids, properties: [])
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
@@ -123,8 +114,8 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSong(isrc: String, with properties: SongProperties = []) async throws -> Songs {
-    try await fetchCatalogSong(isrc: isrc, with: properties)
+  static func song(isrc: String, fetch properties: SongProperties) async throws -> Songs {
+    try await song(isrc: isrc, properties: properties)
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
@@ -133,8 +124,8 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSong(isrc: String, with properties: SongProperty...) async throws -> Songs {
-    try await fetchCatalogSong(isrc: isrc, with: properties)
+  static func song(isrc: String, fetch properties: SongProperty...) async throws -> Songs {
+    try await song(isrc: isrc, properties: properties)
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
@@ -143,17 +134,17 @@ public extension MusadoraKit {
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSong(isrc: String, with property: SongProperty) async throws -> Songs {
-    try await fetchCatalogSong(isrc: isrc, with: [property])
+  static func song(isrc: String, fetch property: SongProperty) async throws -> Songs {
+    try await song(isrc: isrc, properties: [property])
   }
 
-  /// Fetch one or more songs from Apple Music catalog by using their ISRC value with all properties.
+  /// Fetch one or more songs from Apple Music catalog by using their ISRC value with no properties.
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   /// - Returns: `Songs` matching the given ISRC value.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSong(isrc: String) async throws -> Songs {
-    try await fetchCatalogSong(isrc: isrc, with: .all)
+  static func song(isrc: String) async throws -> Songs {
+    try await song(isrc: isrc, properties: [])
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
@@ -162,8 +153,8 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSongs(isrc: [String], with properties: SongProperties = []) async throws -> Songs {
-    try await fetchCatalogSongs(isrc: isrc, with: properties)
+  static func songs(isrc: [String], fetch properties: SongProperties) async throws -> Songs {
+    try await songs(isrc: isrc, properties: properties)
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
@@ -172,8 +163,8 @@ public extension MusadoraKit {
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSongs(isrc: [String], with properties: SongProperty...) async throws -> Songs {
-    try await fetchCatalogSongs(isrc: isrc, with: properties)
+  static func songs(isrc: [String], fetch properties: SongProperty...) async throws -> Songs {
+    try await songs(isrc: isrc, properties: properties)
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
@@ -182,23 +173,23 @@ public extension MusadoraKit {
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
   /// - Note: One ISRC value may return more than one song.
-  static func catalogSongs(isrc: [String], with property: SongProperty) async throws -> Songs {
-    try await fetchCatalogSongs(isrc: isrc, with: [property])
+  static func songs(isrc: [String], fetch property: SongProperty) async throws -> Songs {
+    try await songs(isrc: isrc, properties: [property])
   }
 
-  /// Fetch multiple songs from Apple Music catalog by using their ISRC values with all properties.
+  /// Fetch multiple songs from Apple Music catalog by using their ISRC values with no properties.
   ///
   /// Note that one ISRC value may return more than one song.
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   /// - Returns: `Songs` matching the given ISRC values.
-  static func catalogSongs(isrc: [String]) async throws -> Songs {
-    try await fetchCatalogSongs(isrc: isrc, with: .all)
+  static func songs(isrc: [String]) async throws -> Songs {
+    try await songs(isrc: isrc, properties: [])
   }
 }
 
-extension MusadoraKit {
-  static private func fetchCatalogSong(id: MusicItemID, with properties: SongProperties) async throws -> Song {
+extension MCatalog {
+  static private func song(id: MusicItemID, properties: SongProperties) async throws -> Song {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -209,40 +200,24 @@ extension MusadoraKit {
     return song
   }
 
-  static private func fetchCatalogSongs(ids: [MusicItemID], with properties: SongProperties) async throws -> Songs {
+  static private func songs(ids: [MusicItemID], properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
     return response.items
   }
 
-  static private func fetchCatalogSong(isrc: String, with properties: SongProperties) async throws -> Songs {
+  static private func song(isrc: String, properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
     return response.items
   }
 
-  static private func fetchCatalogSongs(isrc: [String], with properties: SongProperties) async throws -> Songs {
+  static private func songs(isrc: [String], properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()
     return response.items
-  }
-}
-
-extension SongProperties {
-  public static var all: Self {
-    var properties: Self = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
-#if compiler(>=5.7)
-    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-      properties += [.audioVariants]
-      return properties
-    } else {
-      return properties
-    }
-#else
-    return properties
-#endif
   }
 }

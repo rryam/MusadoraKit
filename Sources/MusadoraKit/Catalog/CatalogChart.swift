@@ -1,6 +1,6 @@
 //
 //  CatalogChart.swift
-//  CatalogChart
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 22/06/22.
 //

@@ -1,6 +1,6 @@
 //
-//  MusadoraLibrarySearchable.swift
-//  MusadoraLibrarySearchable
+//  MLibrarySearchable.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
@@ -9,20 +9,20 @@ import MusicKit
 
 /// A protocol for music items that your app can fetch by
 /// using a library search request.
-public protocol MusadoraLibrarySearchable: MusicItem {}
+public protocol MLibrarySearchable: MusicItem {}
 
-extension MusadoraLibrarySearchable {
+extension MLibrarySearchable {
   static var searchIdentifier: ObjectIdentifier {
     ObjectIdentifier(Self.self)
   }
 }
 
-extension Song: MusadoraLibrarySearchable {}
+extension Song: MLibrarySearchable {}
 
-extension Artist: MusadoraLibrarySearchable {}
+extension Artist: MLibrarySearchable {}
 
-extension Album: MusadoraLibrarySearchable {}
+extension Album: MLibrarySearchable {}
 
-extension MusicVideo: MusadoraLibrarySearchable {}
+extension MusicVideo: MLibrarySearchable {}
 
-extension Playlist: MusadoraLibrarySearchable {}
+extension Playlist: MLibrarySearchable {}

@@ -1,30 +1,19 @@
 //
 //  CatalogMusicVideo.swift
-//  CatalogMusicVideo
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
 import MusicKit
 
-/// A collection of music videos.
-public typealias MusicVideos = MusicItemCollection<MusicVideo>
-
-/// Additional property/relationship of a music video.
-public typealias MusicVideoProperty = PartialMusicAsyncProperty<MusicVideo>
-
-/// Additional properties/relationships of a music video.
-public typealias MusicVideoProperties = [MusicVideoProperty]
-
-
-public extension MusadoraKit {
+public extension MCatalog {
   /// Fetch a music video from the Apple Music catalog by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the music video.
   ///   - properties: Additional relationships to fetch with the music video.
   /// - Returns: `MusicVideo` matching the given identifier.
-  static func catalogMusicVideo(id: MusicItemID,
-                                with properties: [PartialMusicAsyncProperty<MusicVideo>] = []) async throws -> MusicVideo {
+  static func musicVideo(with id: MusicItemID, with properties: MusicVideoProperties) async throws -> MusicVideo {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -39,7 +28,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - id: The unique identifier for the music video.
   /// - Returns: `MusicVideo` matching the given identifier.
-  static func catalogMusicVideo(id: MusicItemID) async throws -> MusicVideo {
+  static func musicVideo(with id: MusicItemID) async throws -> MusicVideo {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -55,8 +44,7 @@ public extension MusadoraKit {
   ///   - ids: The unique identifiers for the  music videos.
   ///   - properties: Additional relationships to fetch with the  music videos.
   /// - Returns: `MusicVideos` matching the given identifiers.
-  static func catalogMusicVideos(ids: [MusicItemID],
-                                 with properties: [PartialMusicAsyncProperty<MusicVideo>] = []) async throws -> MusicVideos {
+  static func musicVideos(with ids: [MusicItemID], with properties: MusicVideoProperties) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -67,7 +55,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - ids: The unique identifiers for the  music videos.
   /// - Returns: `MusicVideos` matching the given identifiers.
-  static func catalogMusicVideos(ids: [MusicItemID]) async throws -> MusicVideos {
+  static func musicVideos(with ids: [MusicItemID]) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
@@ -81,8 +69,7 @@ public extension MusadoraKit {
   ///   - isrc: The ISRC values for the music videos.
   ///   - properties: Additional relationships to fetch with the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC value.
-  static func catalogMusicVideo(isrc: String,
-                                with properties: [PartialMusicAsyncProperty<MusicVideo>] = []) async throws -> MusicVideos
+  static func musicVideo(isrc: String, with properties: MusicVideoProperties) async throws -> MusicVideos
   {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
@@ -96,7 +83,7 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC value.
-  static func catalogMusicVideo(isrc: String) async throws -> MusicVideos {
+  static func musicVideo(isrc: String) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = .all
     let response = try await request.response()
@@ -110,8 +97,7 @@ public extension MusadoraKit {
   ///   - isrc: The ISRC values for the music videos.
   ///   - properties: Additional relationships to fetch with the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC values.
-  static func catalogMusicVideos(isrc: [String],
-                                 with properties: [PartialMusicAsyncProperty<MusicVideo>] = []) async throws -> MusicVideos
+  static func musicVideos(isrc: [String], with properties: MusicVideoProperties) async throws -> MusicVideos
   {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
@@ -125,17 +111,10 @@ public extension MusadoraKit {
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC values.
-  static func catalogMusicVideos(isrc: [String]) async throws -> MusicVideos {
+  static func musicVideos(isrc: [String]) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = .all
     let response = try await request.response()
     return response.items
-  }
-}
-
-
-extension MusicVideoProperties {
-  public static var all: Self {
-    [.albums, .genres, .artists, .artistURL, .moreInGenre, .songs, .moreByArtist]
   }
 }

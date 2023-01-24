@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Array.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 01/08/22.
 //
