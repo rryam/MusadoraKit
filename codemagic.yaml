@@ -35,7 +35,7 @@ workflows:
     environment:
       xcode: 14.2
       groups: 
-        - Github
+        - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 14"
@@ -45,7 +45,7 @@ workflows:
     environment:
       xcode: 13.4.1
       groups: 
-        - Github
+        - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 13"
