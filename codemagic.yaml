@@ -21,11 +21,9 @@ definitions:
       - name: Update DocC Documentation
         script: | 
           sh build_docs.sh 
-          git config user.email $mail
-          git config user.name $username
-          git remote set-url origin https://${token}@github.com/rryam/MusadoraKit.git
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
+          git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
           git push origin main
 
 workflows:
