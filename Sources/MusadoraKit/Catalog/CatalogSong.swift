@@ -50,7 +50,7 @@ public extension MCatalog {
   ///   - properties: Additional relationships to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
   ///
-  /// - Note: It is a personal preference to either use the method where the `with` parameter takes an array of
+  /// - Note: It is a personal preference to either use the method where the `fetch` parameter takes an array of
   ///  `SongProperty` or as a variadic parameter.
   static func song(id: MusicItemID, fetch properties: SongProperty...) async throws -> Song {
     try await song(id: id, properties: properties)
