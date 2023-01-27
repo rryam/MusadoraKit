@@ -1,24 +1,22 @@
 definitions:
-  workflow: &base_workflow
-    instance_type: mac_mini_m1
-    triggering:
+  triggering:
+    push: &events
       events:
         - push
         - pull_request
         - tag
-    when:
-      changeset:
-        excludes:
-          - "**/*.md"
     scripts:
-      - name: Build Framework
+      - &buildFramework
+        name: Build Framework
         script: xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME"
-      - name: Test Framework
+      - &testFramework
+        name: Test Framework
         script: |
           set -o pipefail
           xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME" test | xcpretty --report junit
         test_report: build/reports/junit.xml
-      - name: Update DocC Documentation
+      - &updateDocs
+        name: Update DocC Documentation
         script: | 
           sh build_docs.sh 
           git add .
@@ -28,7 +26,6 @@ definitions:
 
 workflows:
   musadorakit:
-    <<: *base_workflow
     name: MusadoraKit Workflow
     environment:
       xcode: 14.2
@@ -37,8 +34,13 @@ workflows:
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 14"
+    triggering:
+      <<: *events
+    scripts: 
+      - *buildFramework
+      - *testFramework
+      - *updateDocs
   musadorakit-old:
-    <<: *base_workflow
     name: MusadoraKit Xcode 13 Workflow
     environment:
       xcode: 13.4.1
@@ -47,3 +49,9 @@ workflows:
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 13"
+    triggering:
+      <<: *events
+    scripts: 
+      - *buildFramework
+      - *testFramework
+      - *updateDocs
