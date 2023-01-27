@@ -11,13 +11,22 @@ definitions:
         excludes:
           - "**/*.md"
     scripts:
-      - name: Build framework
+      - name: Build Framework
         script: xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME"
-      - name: Test framework
+      - name: Test Framework
         script: |
           set -o pipefail
           xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME" test | xcpretty --report junit
         test_report: build/reports/junit.xml
+      - name: Update DocC Documentation
+        script: | 
+          sh build_docs.sh 
+          git config user.email $mail
+          git config user.name $username
+          git remote add origin https://${token}@github.com/rryam/MusadoraKit.git
+          git add .
+          git commit -m "[skip ci] Update DocC Documentation"
+          git push --set-upstream origin main
 
 workflows:
   musadorakit:
@@ -25,6 +34,8 @@ workflows:
     name: MusadoraKit Workflow
     environment:
       xcode: 14.2
+      groups: 
+        - github
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 14"
@@ -33,6 +44,8 @@ workflows:
     name: MusadoraKit Xcode 13 Workflow
     environment:
       xcode: 13.4.1
+      groups: 
+        - github
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 13"
