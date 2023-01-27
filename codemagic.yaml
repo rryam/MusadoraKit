@@ -23,6 +23,7 @@ definitions:
           sh build_docs.sh 
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
+          git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
           git push origin main
 
 workflows:
