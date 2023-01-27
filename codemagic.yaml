@@ -26,7 +26,7 @@ definitions:
           git remote add origin https://${token}@github.com/rryam/MusadoraKit.git
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
-          git push --set-upstream origin main
+          git push origin main
 
 workflows:
   musadorakit:
