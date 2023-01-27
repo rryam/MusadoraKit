@@ -18,10 +18,10 @@ public extension MCatalog {
   ///     let song = try await MCatalog.song(id: id, fetch: [])
   ///
   /// To fetch additional relationships like `albums` or properties like `artistURL` in the same request,
-  /// specify them in the `with` parameter:
+  /// specify them in the `fetch` parameter:
   ///
   ///     let id: MusicItemID = "1544326470"
-  ///     let song = try await MCatalog.song(for: id, with: [.albums, .artistURL])
+  ///     let song = try await MCatalog.song(id: id, fetch: [.albums, .artistURL])
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
@@ -37,13 +37,13 @@ public extension MCatalog {
   /// with the ID `1544326470` with a single relationship `artists`:
   ///
   ///     let id: MusicItemID = "1450695739"
-  ///     let song = try await MCatalog.song(for: id, with .artists)
+  ///     let song = try await MCatalog.song(id: id, fetch: .artists)
   ///
   /// To fetch additional relationships like `genres` or properties like `artistURL` in the same request,
-  /// specify them in the `with` parameter:
+  /// specify them in the `fetch` parameter:
   ///
   ///     let id: MusicItemID = "1450695739"
-  ///     let song = try await MCatalog.song(for: id, with: .genres, .artistURL)
+  ///     let song = try await MCatalog.song(id: id, fetch: .genres, .artistURL)
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
