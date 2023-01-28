@@ -11,7 +11,7 @@ definitions:
         script: |
           xcodebuild \
             -scheme $XCODE_SCHEME \
-            -destination $DESTINATION \
+            -destination "$DESTINATION" \
             -skipPackagePluginValidation \
             clean build
       - &testFramework
@@ -50,17 +50,3 @@ workflows:
       - *buildFramework
       - *testFramework
       - *updateDocs
-  musadorakit-old:
-    name: MusadoraKit Xcode 13 Workflow
-    environment:
-      xcode: 13.4.1
-      groups: 
-        - GitHub
-      vars:
-        XCODE_SCHEME: MusadoraKit
-        DESTINATION: "platform=iOS Simulator,name=iPhone 13"
-    triggering:
-      <<: *events
-    scripts: 
-      - *buildFramework
-      - *testFramework
