@@ -10,6 +10,37 @@ import MusicKit
 
 public extension MLibrary {
 
+  /// Creates a playlist in the user’s music library.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the playlist.
+  ///   - author: The display name of the author for the playlist.
+  ///     A `nil` value will use your app’s name.
+  ///   - description: An optional description of the playlist.
+  /// - Returns: The newly created playlist.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func createPlaylist(with name: String, author: String? = nil, description: String? = nil) async throws -> Playlist {
+    try await MusicLibrary.shared.createPlaylist(name: name, description: description, authorDisplayName: author)
+  }
+
+  /// Creates a playlist in the user’s music library.
+  ///
+  /// - Parameters:
+  ///   - name: The name of the playlist.
+  ///   - author: The display name of the author for the playlist.
+  ///     A `nil` value will use your app’s name.
+  ///   - description: An optional description of the playlist.
+  ///   - items: The songs to add to the playlist.
+  /// - Returns: The newly created playlist.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func createPlaylist(with name: String, author: String? = nil, description: String? = nil, items: Songs) async throws -> Playlist {
+    try await MusicLibrary.shared.createPlaylist(name: name, description: description, authorDisplayName: author, items: items)
+  }
+
 	/// Creates a playlist in the user’s music library.
 	///
 	/// - Parameters:
