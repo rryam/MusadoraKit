@@ -21,8 +21,9 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     var request = MHistoryRequest(for: .heavyRotation)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit))
+    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
+      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
+      XCTAssertEqual(historyOverLimitError as! MusadoraKitError, error)
     }
   }
 
@@ -38,8 +39,9 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     var request = MHistoryRequest(for: .recentlyAdded)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit))
+    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
+      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
+      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
     }
   }
 
@@ -64,8 +66,9 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     var request = MHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit))
+    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
+      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
+      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
     }
   }
 
@@ -81,8 +84,9 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     var request = MHistoryRequest(for: .recentlyPlayedTracks)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit))
+    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
+      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
+      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
     }
   }
 
@@ -98,8 +102,9 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     var request = MHistoryRequest(for: .recentlyPlayedStations)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit))
+    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
+      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
+      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
     }
   }
 }

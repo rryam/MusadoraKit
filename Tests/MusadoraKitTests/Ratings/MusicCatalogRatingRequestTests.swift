@@ -5,9 +5,9 @@
 //  Created by Rudrank Riyam on 17/07/22.
 //
 
-import XCTest
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import XCTest
 
 final class MusicCatalogRatingRequestTests: XCTestCase {
   func testAddPersonalAlbumRatingEndpointURL() throws {

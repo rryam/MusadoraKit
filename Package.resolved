@@ -9,6 +9,15 @@
           "revision": "3303b164430d9a7055ba484c8ead67a52f7b74f6",
           "version": "1.0.0"
         }
+      },
+      {
+        "package": "SwiftLintPlugin",
+        "repositoryURL": "https://github.com/lukepistrol/SwiftLintPlugin",
+        "state": {
+          "branch": null,
+          "revision": "f69b412a765396d44dc9f4788a5b79919c1ca9e3",
+          "version": "0.2.2"
+        }
       }
     ]
   },
