@@ -1,38 +1,57 @@
 definitions:
-  workflow: &base_workflow
-    instance_type: mac_mini_m1
-    triggering:
+  triggering:
+    push: &events
       events:
         - push
         - pull_request
         - tag
-    when:
-      changeset:
-        excludes:
-          - "**/*.md"
     scripts:
-      - name: Build framework
+      - &buildFramework
+        name: Build Framework
         script: xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME"
-      - name: Test framework
+      - &testFramework
+        name: Test Framework
         script: |
           set -o pipefail
           xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME" test | xcpretty --report junit
         test_report: build/reports/junit.xml
+      - &updateDocs
+        name: Update DocC Documentation
+        script: | 
+          sh build_docs.sh 
+          git add .
+          git commit -m "[skip ci] Update DocC Documentation"
+          git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
+          git pull
+          git push origin main
 
 workflows:
   musadorakit:
-    <<: *base_workflow
     name: MusadoraKit Workflow
     environment:
       xcode: 14.2
+      groups: 
+        - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 14"
+    triggering:
+      <<: *events
+    scripts: 
+      - *buildFramework
+      - *testFramework
+      - *updateDocs
   musadorakit-old:
-    <<: *base_workflow
     name: MusadoraKit Xcode 13 Workflow
     environment:
       xcode: 13.4.1
+      groups: 
+        - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
         PHONE_NAME: "iPhone 13"
+    triggering:
+      <<: *events
+    scripts: 
+      - *buildFramework
+      - *testFramework
