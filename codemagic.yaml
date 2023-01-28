@@ -20,7 +20,7 @@ definitions:
           set -o pipefail
           xcodebuild \
             -scheme $XCODE_SCHEME \
-            -destination $DESTINATION \
+            -destination "$DESTINATION" \
             -skipPackagePluginValidation \
             test | xcpretty --report junit
         test_report: build/reports/junit.xml
