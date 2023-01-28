@@ -23,7 +23,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
 
     XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
       let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as! MusadoraKitError, error)
+      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
     }
   }
 
