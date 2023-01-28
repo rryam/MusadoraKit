@@ -8,12 +8,21 @@ definitions:
     scripts:
       - &buildFramework
         name: Build Framework
-        script: xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME"
+        script: |
+          xcodebuild \
+            -scheme $XCODE_SCHEME \
+            -destination $DESTINATION \
+            -skipPackagePluginValidation \
+            clean build
       - &testFramework
         name: Test Framework
         script: |
           set -o pipefail
-          xcodebuild -scheme $XCODE_SCHEME -destination "platform=iOS Simulator,name=$PHONE_NAME" test | xcpretty --report junit
+          xcodebuild \
+            -scheme $XCODE_SCHEME \
+            -destination $DESTINATION \
+            -skipPackagePluginValidation \
+            test | xcpretty --report junit
         test_report: build/reports/junit.xml
       - &updateDocs
         name: Update DocC Documentation
@@ -34,7 +43,7 @@ workflows:
         - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
-        PHONE_NAME: "iPhone 14"
+        DESTINATION: "platform=iOS Simulator,name=iPhone 14"
     triggering:
       <<: *events
     scripts: 
@@ -49,7 +58,7 @@ workflows:
         - GitHub
       vars:
         XCODE_SCHEME: MusadoraKit
-        PHONE_NAME: "iPhone 13"
+        DESTINATION: "platform=iOS Simulator,name=iPhone 13"
     triggering:
       <<: *events
     scripts: 

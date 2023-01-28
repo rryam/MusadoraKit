@@ -15,14 +15,16 @@ class PlaylistsEndpointTests: XCTestCase {
 
   func testFetchACatalogPlaylistsByIDEndpoint() async throws {
     let id = "pl.f4d106fed2bd41149aaacabb233eb5eb"
-    let endpoint = try await MusadoraLabsKit.catalogPlaylist(id: id, storeFront: "us")
-    XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/playlists/pl.f4d106fed2bd41149aaacabb233eb5eb")
+    let url = try await MusadoraLabsKit.catalogPlaylist(id: id, storeFront: "us")
+    let endpointURL = "https://api.music.apple.com/v1/catalog/us/playlists/pl.f4d106fed2bd41149aaacabb233eb5eb"
+    XCTAssertEqualEndpoint(url, endpointURL)
   }
 
   func testFetchMultipleCatalogPlaylistsByIDsEndpoint() async throws {
     let ids = ["pl.f4d106fed2bd41149aaacabb233eb5eb"]
-    let endpoint = try await MusadoraLabsKit.catalogPlaylists(ids: ids, storeFront: "us")
-    XCTAssertEqualEndpoint(endpoint, "https://api.music.apple.com/v1/catalog/us/playlists?ids=pl.f4d106fed2bd41149aaacabb233eb5eb")
+    let url = try await MusadoraLabsKit.catalogPlaylists(ids: ids, storeFront: "us")
+    let endpointURL = "https://api.music.apple.com/v1/catalog/us/playlists?ids=pl.f4d106fed2bd41149aaacabb233eb5eb"
+    XCTAssertEqualEndpoint(url, endpointURL)
   }
 
   // MARK: - Library Playlists Tests

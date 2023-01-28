@@ -36,8 +36,9 @@ class MusicRecommendationRequestEndpointTests: XCTestCase {
     var request = MRecommendationRequest()
     request.limit = limit
 
-    XCTAssertThrowsError(try request.recommendationEndpointURL) { error in
-      XCTAssertEqual(error as! MusadoraKitError, MusadoraKitError.recommendationOverLimit(for: limit))
+    XCTAssertThrowsError(try request.recommendationEndpointURL) { recommendationOverLimitError in
+      let error = MusadoraKitError.recommendationOverLimit(for: limit)
+      XCTAssertEqual(recommendationOverLimitError as? MusadoraKitError, error)
     }
   }
 }
