@@ -8,9 +8,8 @@
 import Foundation
 import MusicKit
 
-/// A request for deleting data to an arbitrary Apple Music API endpoint.
+/// A request for deleting data for an arbitrary Apple Music API endpoint.
 public struct MDataDeleteRequest {
-  
   /// The URL for the data request.
   private var url: URL
   

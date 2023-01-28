@@ -13,7 +13,7 @@ public extension MCatalog {
   ///   - id: The unique identifier for the playlist.
   ///   - properties: Additional relationships to fetch with the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  static func playlist(with id: MusicItemID, with properties: PlaylistProperties) async throws -> Playlist {
+  static func playlist(id: MusicItemID, fetch properties: PlaylistProperties) async throws -> Playlist {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -28,7 +28,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  static func playlist(with id: MusicItemID) async throws -> Playlist {
+  static func playlist(id: MusicItemID) async throws -> Playlist {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
     request.properties = .all
     let response = try await request.response()
@@ -44,7 +44,7 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the playlists.
   ///   - properties: Additional relationships to fetch with the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func playlists(with ids: [MusicItemID], with properties: PlaylistProperties) async throws -> Playlists {
+  static func playlists(ids: [MusicItemID], fetch properties: PlaylistProperties) async throws -> Playlists {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -55,7 +55,7 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func playlists(with ids: [MusicItemID]) async throws -> Playlists {
+  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
