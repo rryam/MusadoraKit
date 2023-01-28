@@ -8,7 +8,7 @@
 import Foundation
 import MusicKit
 
-/// A request for uploading data from an arbitrary Apple Music API endpoint.
+/// A request for uploading data to an arbitrary Apple Music API endpoint.
 public struct MDataPostRequest {
 
   /// The URL for the data request.
@@ -23,7 +23,7 @@ public struct MDataPostRequest {
     self.data = data
   }
 
-  /// Uploads data the Apple Music API endpoint that
+  /// Uploads data to the Apple Music API endpoint that
   /// the URL request defines.
   public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)

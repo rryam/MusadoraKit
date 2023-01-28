@@ -8,16 +8,17 @@
 import Foundation
 import MusicKit
 
+/// A request for deleting data for an arbitrary Apple Music API endpoint.
 public struct MDataDeleteRequest {
   /// The URL for the data request.
-  var url: URL
+  private var url: URL
   
   /// Creates a data request with the given URL.
   public init(url: URL) {
     self.url = url
   }
   
-  /// Uploads data the Apple Music API endpoint that
+  /// Delete data for the Apple Music API endpoint that
   /// the URL request defines.
   public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)

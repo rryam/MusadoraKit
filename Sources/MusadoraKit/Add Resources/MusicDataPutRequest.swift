@@ -8,23 +8,24 @@
 import Foundation
 import MusicKit
 
-struct MDataPutRequest {
+/// A request for updating data for an arbitrary Apple Music API endpoint.
+public struct MDataPutRequest {
   
   /// The URL for the data request.
-  var url: URL
+  private var url: URL
 
   /// Data to encode for the PUT request.
-  var data: Data
+  private var data: Data
 
   /// Creates a data request with the given URL.
-  init(url: URL, data: Data) {
+  public init(url: URL, data: Data) {
     self.url = url
     self.data = data
   }
 
   /// Uploads data the Apple Music API endpoint that
   /// the URL request defines.
-  func response() async throws -> MusicDataResponse {
+  public func response() async throws -> MusicDataResponse {
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = "PUT"
     urlRequest.httpBody = data
