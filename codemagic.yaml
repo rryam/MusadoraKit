@@ -22,7 +22,7 @@ definitions:
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
           git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
-          git pull
+          git pull --ff-only
           git push origin main
 
 workflows:
