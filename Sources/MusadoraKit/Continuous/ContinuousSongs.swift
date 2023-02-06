@@ -7,7 +7,7 @@
 
 import MusicKit
 
-public extension MusadoraKit {
+public extension MRecommendation {
   /// Retrieve recommended songs from Apple Music catalog for a given song, with the option to limit the number of results.
   ///
   /// - Parameters:
