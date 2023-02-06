@@ -31,13 +31,13 @@ To easily access the Apple Music Catalog, you can use pre-defined methods from M
 Example of working with fetching a catalog song by its identifier: 
 
 ```swift 
-let song = try await MusadoraKit.catalogSong(id: "1613834314", with: [.albums])
+let song = try await MCatalog.song(id: "1613834314", with: [.albums])
 ```
 
 Example of searching the catalog: 
 
 ```swift 
-let searchResponse = try await MusadoraKit.catalogSearch(for: "weeknd", types: [Song.self, Artist.self])
+let searchResponse = try await MCatalog.search(for: "weeknd", types: [Song.self, Artist.self])
 
 print(searchResponse.songs)
 print(searchResponse.artists)
@@ -50,13 +50,13 @@ While this is natively not available in MusicKit, you can fetch library resource
 Example of fetching all library songs in alphabetical order: 
 
 ```swift 
-let songs = try await MusadoraKit.librarySongs()
+let songs = try await MLibrary.songs()
 ```
 
 Example of searching the user's library: 
 
 ```swift 
-let searchResponse = try await MusadoraKit.librarySearch(for: "hello", types: [Song.self])
+let searchResponse = try await MLibrary.search(for: "hello", types: [Song.self])
 
 print(searchResponse.songs)
 ```
@@ -66,7 +66,7 @@ print(searchResponse.songs)
 You can take advantage of Apple's Music recommendation system and use it in your app. For example, to fetch the default recommendations: 
 
 ```swift 
-let recommendations = try await MusadoraKit.recommendations()
+let recommendations = try await MRecommendation.default()
 
 guard let recommendation = recommendations.first else { return }
 
@@ -80,11 +80,9 @@ print(recommendation.stations)
 You can also fetch historial data from the user's library. For example, to get the recently played resources: 
 
 ```swift 
-let recentlyPlayedItems = try await MusadoraKit.recentlyPlayed()
+let recentlyPlayedItems = try await MLibrary.recentlyPlayed()
 
-let recentlyPlayedAlbums: [Album] = recentlyPlayedItems.compactMap { item in
-    guard case let .album(album) = item else { return nil }
-    return album
+let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
 }
 ```
 
