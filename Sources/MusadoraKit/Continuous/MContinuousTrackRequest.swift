@@ -51,7 +51,7 @@ struct MContinuousTrackRequest {
     try await withThrowingTaskGroup(of: Songs.self) { group in
       let iteratorLimit = limit / 10
 
-      for _ in stride(from: 0, to: limit, by: 1) {
+      for _ in stride(from: 0, to: iteratorLimit, by: 1) {
         group.addTask {
           let response = try await postRequest.response()
           return try JSONDecoder().decode(MContinuousTrackResponse.self, from: response.data).results.songs
