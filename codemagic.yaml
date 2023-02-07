@@ -4,7 +4,6 @@ definitions:
       events:
         - push
         - pull_request
-        - tag
     scripts:
       - &buildFramework
         name: Build Framework
