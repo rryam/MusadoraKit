@@ -36,6 +36,7 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
+    instance_type: mac_mini_m1
     environment:
       xcode: 14.2
       groups: 
