@@ -8,7 +8,7 @@
 import Foundation
 import MusicKit
 
-extension MRecommendation {
+public extension MRecommendation {
   /// Retrieve the station songs from Apple Music catalog for a given station, with the option to limit the number of results.
   /// This is not possible to do in the official Apple Music app.
   ///
