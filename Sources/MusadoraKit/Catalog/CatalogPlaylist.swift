@@ -64,7 +64,7 @@ public extension MCatalog {
   }
 }
 
-extension MCatalog {
+public extension MCatalog {
 
   /// Fetch the charting playlists from the Apple Music catalog for the particular storefront.
   ///
