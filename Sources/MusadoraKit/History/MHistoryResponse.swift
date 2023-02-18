@@ -8,12 +8,12 @@
 import MusicKit
 
 /// An object that contains results for a history request.
-public struct MHistoryResponse {
+struct MHistoryResponse {
   /// A collection of historical resources based on the `MusicHistoryRequest`.
-  public let items: UserMusicItems
+  let items: UserMusicItems
 
   /// A collection of historical albums.
-  public var albums: Albums {
+  var albums: Albums {
     MusicItemCollection(items.compactMap { item in
       guard case let .album(album) = item else { return nil }
       return album
@@ -21,7 +21,7 @@ public struct MHistoryResponse {
   }
 
   /// A collection of historical playlists.
-  public var playlists: Playlists {
+  var playlists: Playlists {
     MusicItemCollection(items.compactMap { item in
       guard case let .playlist(playlist) = item else { return nil }
       return playlist
@@ -29,7 +29,7 @@ public struct MHistoryResponse {
   }
 
   /// A collection of historical stations.
-  public var stations: Stations {
+  var stations: Stations {
     MusicItemCollection(items.compactMap { item in
       guard case let .station(station) = item else { return nil }
       return station
@@ -37,7 +37,7 @@ public struct MHistoryResponse {
   }
 
   /// A collection of historical tracks.
-  public var tracks: Tracks {
+  var tracks: Tracks {
     MusicItemCollection(items.compactMap { item in
       guard case let .track(track) = item else { return nil }
       return track
@@ -48,7 +48,7 @@ public struct MHistoryResponse {
 extension MHistoryResponse: Equatable, Hashable, Codable {}
 
 extension MHistoryResponse: CustomStringConvertible {
-  public var description: String {
+  var description: String {
     "MusicHistoryResponse(\(items.description)"
   }
 }

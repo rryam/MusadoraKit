@@ -8,10 +8,10 @@
 import MusicKit
 
 /// An object that contains results for a library resource request.
-public struct MLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
+struct MLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
   /// A collection of items matching the filter used in
   /// the originating ``MusicLibraryResourceRequest``.
-  public let items: MusicItemCollection<MusicItemType>
+  let items: MusicItemCollection<MusicItemType>
 }
 
 extension MLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
@@ -25,7 +25,7 @@ extension MLibraryResourceResponse: Decodable where MusicItemType: Decodable {
   /// if the data read is corrupted or otherwise invalid.
   ///
   /// - Parameter decoder: The decoder to read data from.
-//    public init(from decoder: Decoder) throws {
+//    init(from decoder: Decoder) throws {
 //
 //    }
 }
@@ -40,15 +40,15 @@ extension MLibraryResourceResponse: Encodable where MusicItemType: Encodable {
   /// encoder's format.
   ///
   /// - Parameter encoder: The encoder to write data to.
-  // public func encode(to encoder: Encoder) throws { }
+  // func encode(to encoder: Encoder) throws { }
 }
 
 extension MLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
-  public var description: String {
+  var description: String {
     ""
   }
 
-  public var debugDescription: String {
+  var debugDescription: String {
     ""
   }
 }
