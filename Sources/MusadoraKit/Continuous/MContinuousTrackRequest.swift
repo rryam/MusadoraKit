@@ -34,8 +34,11 @@ struct MContinuousTrackRequest {
     let playParameters = try JSONDecoder().decode(MusicPlayParameters.self, from: playParametersData)
     var postRequest: MDataPostRequest
 
-    if let isLibrary = playParameters.isLibrary, isLibrary, (playParameters.globalId != nil && playParameters.catalogId != nil) {
-      let detailedSong = try await MCatalog.song(id: playParameters.globalId ?? playParameters.catalogId ?? song.id).with(.albums)
+    if let isLibrary = playParameters.isLibrary, isLibrary {
+      let globalID = playParameters.globalId
+      let catalogID = playParameters.catalogId
+
+      let detailedSong = try await MCatalog.song(id: globalID ?? catalogID ?? song.id).with(.albums)
       let album = detailedSong.albums?.first
       postRequest = try createPostRequest(for: detailedSong, album: album)
     } else {
