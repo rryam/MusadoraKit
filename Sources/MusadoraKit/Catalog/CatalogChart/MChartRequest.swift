@@ -8,26 +8,26 @@
 import Foundation
 import MusicKit
 
-public enum MChartType: String {
+enum MChartType: String {
   case cityCharts
   case dailyGlobalTopCharts
 }
 
 /// A  chart request that your app uses to fetch charts from the Apple Music catalog
 /// using the types of charts and for the genre identifier.
-public struct MChartRequest {
+struct MChartRequest {
   /// The identifier for the genre to use in the chart results.
-  public var genre: MusicItemID?
+  var genre: MusicItemID?
 
   /// A limit for the number of items to return
   /// in the catalog chart response.
-  public var limit: Int?
+  var limit: Int?
 
-  public var chartType: [MChartType]?
+  var chartType: [MChartType]?
 
   /// Creates a request to fetch charts using the list of the
   /// types of charts to include in the results.
-  public init(types: [MChartItem.Type]) {
+  init(types: [MChartItem.Type]) {
     self.types = Set(types.map { $0.objectIdentifier }).compactMap {
       switch $0 {
       case Song.objectIdentifier:
@@ -46,7 +46,7 @@ public struct MChartRequest {
 
   /// Fetches charts of the requested catalog chart types that match
   /// the genre identifier of the request.
-  public func response() async throws -> MChartResponse {
+  func response() async throws -> MChartResponse {
     let url = try await chartsURL
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()

@@ -8,16 +8,16 @@
 import Foundation
 import MusicKit
 
-public struct MStationTrackRequest {
-  public var limit: Int = 20
+struct MStationTrackRequest {
+  var limit: Int = 20
 
   private let station: Station
 
-  public init(for station: Station) {
+  init(for station: Station) {
     self.station = station
   }
 
-  public func response() async throws -> Songs {
+  func response() async throws -> Songs {
     let url = try await stationTracksEndpointURL
     let postRequest = MDataPostRequest(url: url)
 

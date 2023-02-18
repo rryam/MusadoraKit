@@ -9,10 +9,10 @@ import Foundation
 import MusicKit
 
 struct MContinuousTrackRequest {
-  public var limit: Int = 20
+  var limit: Int = 20
   private let song: Song
 
-  public init(for song: Song) {
+  init(for song: Song) {
     self.song = song
   }
 
@@ -29,7 +29,7 @@ struct MContinuousTrackRequest {
     return postRequest
   }
 
-  public func response() async throws -> Songs {
+  func response() async throws -> Songs {
     let playParametersData = try JSONEncoder().encode(song.playParameters)
     let playParameters = try JSONDecoder().decode(MusicPlayParameters.self, from: playParametersData)
     var postRequest: MDataPostRequest

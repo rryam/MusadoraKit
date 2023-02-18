@@ -12,12 +12,12 @@ struct MFavoritesRequest {
   private var artistID: MusicItemID
   private var type: MFavoriteRequestType
 
-  public init(artist: Artist, type: MFavoriteRequestType) {
+  init(artist: Artist, type: MFavoriteRequestType) {
     self.artistID = artist.id
     self.type = type
   }
 
-  public func response() async throws -> Bool {
+  func response() async throws -> Bool {
     switch type {
       case .favorite:
         let url = try favortiesEndpointURL
