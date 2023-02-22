@@ -45,7 +45,6 @@ public extension MLibrary {
   }
 #endif
 
-#if compiler(>=5.7)
   /// Fetch all songs from the user's library in alphabetical order.
   /// - Parameters:
   ///   - limit: The number of songs returned.
@@ -55,22 +54,21 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func songs(limit: Int? = 50) async throws -> Songs {
-    let request = MusicLibraryRequest<Song>()
-    let response = try await request.response()
-    return response.items
+  static func songs(limit: Int = 50) async throws -> Songs {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Song>()
+      request.limit = limit
+      let response = try await request.response()
+      return response.items
+    } else {
+      var request = MLibraryResourceRequest<Song>()
+      request.limit = limit
+      let response = try await request.response()
+      return response.items
+    }
   }
-#else
-  static func songs(limit: Int? = nil) async throws -> Songs {
-    var request = MLibraryResourceRequest<Song>()
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-#endif
 
   /// Fetch multiple songs from the user's library by using their identifiers.
   /// - Parameters:
