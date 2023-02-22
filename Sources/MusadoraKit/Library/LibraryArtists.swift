@@ -57,27 +57,20 @@ public extension MLibrary {
   ///  that fetches the data from Apple Music API that does not fetch all the artists in one request.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func artists(limit: Int? = nil) async throws -> Artists {
-#if compiler(>=5.7)
+  static func artists(limit: Int = 50) async throws -> Artists {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
       var request = MusicLibraryRequest<Artist>()
-      request.limit = limit ?? 0
+      request.limit = limit
       let response = try await request.response()
       return response.items
     } else {
-      return try await artistsAPI(limit: limit)
+      var request = MLibraryResourceRequest<Artist>()
+      request.limit = limit
+      let response = try await request.response()
+      return response.items
     }
-#else
-    return try await artistsAPI(limit: limit)
-#endif
   }
 
-  static private func artistsAPI(limit: Int? = nil) async throws -> Artists {
-    var request = MLibraryResourceRequest<Artist>()
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
 
   /// Fetch multiple artists from the user's library by using their identifiers.
   /// - Parameters:

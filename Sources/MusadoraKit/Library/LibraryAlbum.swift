@@ -39,28 +39,25 @@ public extension MLibrary {
   }
 #endif
 
-#if compiler(>=5.7)
   /// Fetch all albums from the user's library in alphabetical order.
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func albums(limit: Int = 50) async throws -> Albums {
-    var request = MusicLibraryRequest<Album>()
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Album>()
+      request.limit = limit
+      let response = try await request.response()
+      return response.items
+    } else {
+      var request = MLibraryResourceRequest<Album>()
+      request.limit = limit
+      let response = try await request.response()
+      return response.items
+    }
   }
-#else
-  static func albums(limit: Int = 50) async throws -> Albums {
-    var request = MLibraryResourceRequest<Album>()
-    request.limit = limit
-    let response = try await request.response()
-    return response.items
-  }
-#endif
 
   /// Fetch multiple albums from the user's library by using their identifiers.
   /// - Parameters:
