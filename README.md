@@ -34,10 +34,12 @@ Example of working with fetching a catalog song by its identifier:
 let song = try await MCatalog.song(id: "1613834314", with: [.albums])
 ```
 
+## Searching the Catalog
+
 Example of searching the catalog: 
 
 ```swift 
-let searchResponse = try await MCatalog.search(for: "weeknd", types: [Song.self, Artist.self])
+let searchResponse = try await MCatalog.search(for: "the weeknd", types: [.songs, .stations, .albums, .playlists, .artists], limit: 10)
 
 print(searchResponse.songs)
 print(searchResponse.artists)
