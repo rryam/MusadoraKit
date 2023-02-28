@@ -133,10 +133,10 @@ public extension MLibrary {
 #endif
 
 // MARK: - `LibraryPlaylist` methods
-extension MLibrary {
+public extension MLibrary {
 
   /// Fetch all playlists from the user's library in alphabetical order.
-  /// - Returns: `LibraryPlaylists` for the given limit.
+  /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   static func playlists() async throws -> LibraryPlaylists {
     let playlistsURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
     let request = MusicDataRequest(urlRequest: .init(url: playlistsURL))
