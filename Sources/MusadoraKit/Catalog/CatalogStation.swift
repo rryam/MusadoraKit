@@ -31,4 +31,32 @@ public extension MCatalog {
     let response = try await request.response()
     return response.items
   }
+
+#warning("This method is fragile. I have already filed a feedback (FB12018181) to provide the `kind` property which is better for identifying the stations by Apple Music.")
+  /// Fetch the streaming and editorial stations of Apple Music.
+  /// - Returns: `Stations` by Apple Music.
+  ///
+  /// Thanks to [Daniel Steinberg](https://dimsumthinking.com)!
+  static func appleStations() async throws -> Stations {
+    var request = MusicCatalogSearchRequest(term: "Apple Music", types: [Station.self])
+    request.limit = 25
+    let response = try await request.response()
+    var stations = response.stations
+
+    let appleStreamingStations = stations.filter { station in
+      return station.name.starts(with: "Apple Music")
+    }
+
+    let appleEditorialStations = stations.filter { station in
+      guard let tagline = station.editorialNotes?.tagline else {
+        return false
+      }
+
+      return tagline.starts(with: "Apple Music")
+    }
+
+    let appleStations = appleEditorialStations + appleStreamingStations
+
+    return MusicItemCollection(appleStations)
+  }
 }
