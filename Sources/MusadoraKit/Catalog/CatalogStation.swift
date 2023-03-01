@@ -38,25 +38,35 @@ public extension MCatalog {
   ///
   /// Thanks to [Daniel Steinberg](https://dimsumthinking.com)!
   static func appleStations() async throws -> Stations {
-    var request = MusicCatalogSearchRequest(term: "Apple Music", types: [Station.self])
-    request.limit = 25
-    let response = try await request.response()
-    var stations = response.stations
+    try await withThrowingTaskGroup(of: Stations.self) { group in
+      var searchTerms = ["Apple Music", "Stations", "Station"]
+      var applestations: Stations = []
 
-    let appleStreamingStations = stations.filter { station in
-      return station.name.starts(with: "Apple Music")
-    }
-
-    let appleEditorialStations = stations.filter { station in
-      guard let tagline = station.editorialNotes?.tagline else {
-        return false
+      for searchTerm in searchTerms {
+        group.addTask {
+          return try await MCatalog.searchStations(for: searchTerm, limit: 25)
+        }
       }
 
-      return tagline.starts(with: "Apple Music")
+      for try await stations in group {
+        applestations += stations
+      }
+
+      let appleStreamingStations = applestations.filter { station in
+        return station.name.starts(with: "Apple Music")
+      }
+
+      let appleEditorialStations = applestations.filter { station in
+        guard let tagline = station.editorialNotes?.tagline else {
+          return false
+        }
+
+        return tagline.starts(with: "Apple Music")
+      }
+
+      let allAppleStations = appleEditorialStations + appleStreamingStations
+      let stations: Set<Station> = Set(allAppleStations)
+      return MusicItemCollection(stations)
     }
-
-    let appleStations = appleEditorialStations + appleStreamingStations
-
-    return MusicItemCollection(appleStations)
   }
 }
