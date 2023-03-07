@@ -17,8 +17,8 @@ struct MContinuousTrackData: Encodable {
 }
 
 struct MContinuousTrackDatum: Encodable {
-	let type = "songs"
 	let id: MusicItemID
+  let type = "songs"
 	let meta: MContinuousTrackMetadata
 
 	init(songID: MusicItemID, albumID: MusicItemID) {

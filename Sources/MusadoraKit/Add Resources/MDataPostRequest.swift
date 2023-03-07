@@ -9,13 +9,13 @@ import Foundation
 import MusicKit
 
 /// A request for uploading data to an arbitrary Apple Music API endpoint.
-public struct MDataPostRequest {
+public struct MDataPostRequest : Sendable{
 
   /// The URL for the data request.
-  private var url: URL
+  var url: URL
 
   /// Data to encode for the POST request.
-  private var data: Data?
+  var data: Data?
 
   /// Creates a data request with the given URL.
   public init(url: URL, data: Data? = nil) {
