@@ -121,7 +121,7 @@ public extension MCatalog {
   ///   - limit: The number of objects returned.
   /// - Returns: `MusicCatalogSearchSuggestionsResponse` that returns different top music items and suggestions.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  static func search(for term: String,
+  static func searchSuggestions(for term: String,
                      types: [MCatalogSearchType],
                      limit: Int? = nil) async throws -> MusicCatalogSearchSuggestionsResponse {
     let searchTypes = types.compactMap { $0.type }
