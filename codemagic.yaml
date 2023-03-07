@@ -12,11 +12,7 @@ definitions:
         name: Test Framework
         script: |
           set -o pipefail
-          xcodebuild \
-            -scheme $XCODE_SCHEME \
-            -destination "$DESTINATION" \
-            -skipPackagePluginValidation \
-            test | xcpretty --report junit
+          sh test.sh
         test_report: build/reports/junit.xml
       - &updateDocs
         name: Update DocC Documentation
