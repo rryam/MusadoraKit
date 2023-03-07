@@ -13,7 +13,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  static func playlist(with id: MusicItemID) async throws -> Playlist {
+  static func playlist(id: MusicItemID) async throws -> Playlist {
     let request = MLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -38,7 +38,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func playlists(with ids: [MusicItemID]) async throws -> Playlists {
+  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     let request = MLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
