@@ -8,11 +8,6 @@ definitions:
       - &buildFramework
         name: Build Framework
         script: |
-          xcodebuild \
-            -scheme $XCODE_SCHEME \
-            -destination "$DESTINATION" \
-            -skipPackagePluginValidation \
-            clean build
       - &testFramework
         name: Test Framework
         script: |
@@ -41,9 +36,6 @@ workflows:
       xcode: 14.2
       groups: 
         - GitHub
-      vars:
-        XCODE_SCHEME: MusadoraKit
-        DESTINATION: "platform=iOS Simulator,name=iPhone 14"
     triggering:
       <<: *events
     scripts: 
