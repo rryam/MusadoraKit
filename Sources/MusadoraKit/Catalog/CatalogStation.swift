@@ -39,7 +39,7 @@ public extension MCatalog {
   /// Thanks to [Daniel Steinberg](https://dimsumthinking.com)!
   static func appleStations() async throws -> Stations {
     try await withThrowingTaskGroup(of: Stations.self) { group in
-      var searchTerms = ["Apple Music", "Stations", "Station"]
+      let searchTerms = ["Apple Music", "Stations", "Station"]
       var applestations: Stations = []
 
       for searchTerm in searchTerms {

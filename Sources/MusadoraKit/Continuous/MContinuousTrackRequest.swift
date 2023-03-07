@@ -16,7 +16,7 @@ struct MContinuousTrackRequest {
     self.song = song
   }
 
-  private func createPostRequest(for song: Song, album: Album?) throws -> MDataPostRequest {
+  internal func createPostRequest(for song: Song, album: Album?) throws -> MDataPostRequest {
     guard let album = album else {
       throw NSError(domain: "No album exists for this song.", code: 0)
     }

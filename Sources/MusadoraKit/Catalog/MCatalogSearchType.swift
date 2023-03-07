@@ -7,8 +7,9 @@
 
 import MusicKit
 
-public enum MCatalogSearchType {
+public typealias MCatalogSearchTypes = [MCatalogSearchType]
 
+public enum MCatalogSearchType {
   case songs
   case albums
   case playlists
@@ -18,11 +19,6 @@ public enum MCatalogSearchType {
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
   case musicVideos, curators, radioShows
-
-  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
-  public var all: [MCatalogSearchType] {
-    [.songs, .albums, .playlists, .artists, .stations, .recordLabels, .musicVideos, .curators, .radioShows]
-  }
 
   public var type: MusicCatalogSearchable.Type? {
     switch self {
@@ -58,5 +54,21 @@ public enum MCatalogSearchType {
           return nil
         }
     }
+  }
+}
+
+extension MCatalogSearchTypes {
+  public static var all: Self {
+    var types: Self = [.songs, .albums, .playlists, .artists, .stations, .recordLabels]
+#if compiler(>=5.7)
+    if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) {
+      types += [.musicVideos, .curators, .radioShows]
+      return types
+    } else {
+      return types
+    }
+#else
+    return types
+#endif
   }
 }
