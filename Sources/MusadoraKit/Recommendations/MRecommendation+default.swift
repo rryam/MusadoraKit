@@ -7,7 +7,6 @@
 
 import MusicKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension MRecommendation {
 
   /// Retrieve the default recommendations for a user.
@@ -92,7 +91,6 @@ public extension MRecommendation {
   }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 extension MRecommendation {
   private static func recommendations(_ limit: Int? = nil) async throws -> MRecommendations {
     var request = MRecommendationRequest()
