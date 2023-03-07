@@ -23,7 +23,7 @@ public extension MLibrary {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func artist(with id: MusicItemID) async throws -> Artist {
+  static func artist(id: MusicItemID) async throws -> Artist {
     var request = MusicLibraryRequest<Artist>()
     request.filter(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -34,7 +34,7 @@ public extension MLibrary {
     return artist
   }
 #else
-  static func artist(with id: MusicItemID) async throws -> Artist {
+  static func artist(id: MusicItemID) async throws -> Artist {
     let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
     let response = try await request.response()
 
@@ -76,7 +76,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
-  static func artists(with ids: [MusicItemID]) async throws -> Artists {
+  static func artists(ids: [MusicItemID]) async throws -> Artists {
     let request = MLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
