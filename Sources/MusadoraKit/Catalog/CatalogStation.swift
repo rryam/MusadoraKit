@@ -32,11 +32,11 @@ public extension MCatalog {
     return response.items
   }
 
-#warning("This method is fragile. I have already filed a feedback (FB12018181) to provide the `kind` property which is better for identifying the stations by Apple Music.")
   /// Fetch the streaming and editorial stations of Apple Music.
   /// - Returns: `Stations` by Apple Music.
   ///
   /// Thanks to [Daniel Steinberg](https://dimsumthinking.com)!
+  @available(*, message: "This method is fragile. I have already filed a feedback (FB12018181) to provide the `kind` property which is better for identifying the stations by Apple Music.")
   static func appleStations() async throws -> Stations {
     try await withThrowingTaskGroup(of: Stations.self) { group in
       let searchTerms = ["Apple Music", "Stations", "Station"]
