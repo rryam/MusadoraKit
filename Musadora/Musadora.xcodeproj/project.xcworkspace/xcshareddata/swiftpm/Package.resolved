@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "musadorakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rryam/MusadoraKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6a8791fd9f62cdcbd21e262a007449a64e7d661a"
+      }
+    },
+    {
+      "identity" : "swiftlintplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukepistrol/SwiftLintPlugin",
+      "state" : {
+        "revision" : "f69b412a765396d44dc9f4788a5b79919c1ca9e3",
+        "version" : "0.2.2"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -14,9 +14,18 @@ definitions:
           set -o pipefail
           sh test.sh
         test_report: build/reports/junit.xml
+      - &buildMusadoraApp
+        name: Build Musadora App
+        working_directory: Musadora
+        script: |
+          xcodebuild clean build \
+           -project Musadora.xcodeproj \
+           -scheme Musadora \
+           -destination "platform=iOS Simulator,name=iPhone 14" \
+           -skipPackagePluginValidation
       - &updateDocs
         name: Update DocC Documentation
-        script: | 
+        script: |
           sh build_docs.sh 
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
@@ -30,11 +39,11 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       xcode: 14.2
-      groups: 
+      groups:
         - GitHub
     triggering:
       <<: *events
-    scripts: 
+    scripts:
       - *buildFramework
       - *testFramework
       - *updateDocs
