@@ -18,7 +18,7 @@ struct MStationTrackRequest {
   }
 
   func response() async throws -> Songs {
-    let url = try await stationTracksEndpointURL
+    let url = try stationTracksEndpointURL
     let postRequest = MDataPostRequest(url: url)
 
     return try await stationSongs(for: postRequest)
@@ -54,7 +54,7 @@ struct MStationTrackRequest {
 
 extension MStationTrackRequest {
   internal var stationTracksEndpointURL: URL {
-    get async throws {
+    get throws {
       var components = AppleMusicURLComponents()
       components.path = "me/stations/next-tracks/\(station.id.rawValue)"
 
