@@ -18,6 +18,11 @@ You can support my open-source by buying my book, ["Exploring MusicKit and Apple
 
 ## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/)
 
+## Musadora Sample App
+I am open-sourcing an app I worked on last year called Musadora. (MusadoraKit started as RRMusicKit for the Musadora app!) 
+
+I am slowly adding all the methods used in MusadoraKit to it, so you can refer to how easy it is to use the Swift package.
+
 ## Apps Using MusadoraKit
 
 - Musadora: Apple Music client focused on playlists
