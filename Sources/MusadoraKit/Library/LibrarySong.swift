@@ -70,15 +70,27 @@ public extension MLibrary {
     }
   }
 
+#if compiler(>=5.7)
   /// Fetch multiple songs from the user's library by using their identifiers.
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func songs(ids: [MusicItemID]) async throws -> Songs {
+    var request = MusicLibraryRequest<Song>()
+    request.filter(matching: \.id, memberOf: ids)
+    let response = try await request.response()
+    return response.items
+  }
+#else
   static func songs(ids: [MusicItemID]) async throws -> Songs {
     let request = MLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
+#endif
 
 #if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier with all properties from the local database.
