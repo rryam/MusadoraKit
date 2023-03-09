@@ -9,10 +9,26 @@ import MusicKit
 import MediaPlayer
 
 public extension MLibrary {
+
+#if compiler(>=5.7)
   /// Fetch a playlist from the user's library by using its identifier.
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func playlist(id: MusicItemID) async throws -> Playlist {
+    var request = MusicLibraryRequest<Playlist>()
+    request.filter(matching: \.id, equalTo: id)
+    let response = try await request.response()
+
+    guard let playlist = response.items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
+    return playlist
+  }
+#else
   static func playlist(id: MusicItemID) async throws -> Playlist {
     let request = MLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
     let response = try await request.response()
@@ -22,6 +38,7 @@ public extension MLibrary {
     }
     return playlist
   }
+  #endif
 
   /// Fetch all playlists from the user's library in alphabetical order.
   /// - Parameters:
@@ -34,15 +51,28 @@ public extension MLibrary {
     return response.items
   }
 
+#if compiler(>=5.7)
   /// Fetch multiple playlists from the user's library by using their identifiers.
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
+    var request = MusicLibraryRequest<Playlist>()
+    request.filter(matching: \.id, memberOf: ids)
+    let response = try await request.response()
+    return response.items
+  }
+#else
   static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     let request = MLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
+}
+#endif
 
 #if compiler(>=5.7)
   /// Access the total number of playlists in the user's library.
