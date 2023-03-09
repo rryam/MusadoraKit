@@ -60,15 +60,27 @@ public extension MLibrary {
     }
   }
 
+#if compiler(>=5.7)
   /// Fetch multiple albums from the user's library by using their identifiers.
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func albums(ids: [MusicItemID]) async throws -> Albums {
+    var request = MusicLibraryRequest<Album>()
+    request.filter(matching: \.id, memberOf: ids)
+    let response = try await request.response()
+    return response.items
+  }
+#else
   static func albums(ids: [MusicItemID]) async throws -> Albums {
     let request = MLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
     let response = try await request.response()
     return response.items
   }
+#endif
 
 #if compiler(>=5.7)
   /// Access the total number of albums in the user's library.
