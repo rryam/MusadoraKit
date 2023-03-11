@@ -26,12 +26,13 @@ definitions:
       - &updateDocs
         name: Update DocC Documentation
         script: |
-          sh build_docs.sh 
+          git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
+          git merge our-team
+          sh build_docs.sh
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
-          git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
           git pull --ff-only
-          git push origin main
+          git push origin docs
 
 workflows:
   musadorakit:
