@@ -121,4 +121,22 @@ public extension MCatalog {
 
     return stationsGenres
   }
+
+  /// Fetches the list of station genres available in the current country's storefront from Apple Music catalog.
+  ///
+  /// - Returns: `StationGenres` representing the list of station genres available in the current country's storefront.
+  static func stationGenres(for storefront: StorefrontsData.Storefront) async throws -> StationGenres {
+    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront.id)/station-genres")
+
+    guard let url = url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    let stationsGenres = try JSONDecoder().decode(StationGenres.self, from: response.data)
+
+    return stationsGenres
+  }
 }

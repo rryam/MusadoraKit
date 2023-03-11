@@ -77,7 +77,7 @@ public extension MCatalog {
   ///
   /// - Parameter genre: The `StationGenre` object representing the genre for which to retrieve the stations.
   /// - Returns: `Stations` representing the list of stations belonging to the specified genre.
-  static func stations(for genre: StationGenre) async throws-> Stations {
+  static func stations(for genre: StationGenre) async throws -> Stations {
     let storefront = try await MusicDataRequest.currentCountryCode
 
     let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/station-genres/\(genre.id.rawValue)/stations")
@@ -91,5 +91,27 @@ public extension MCatalog {
 
     let stations = try JSONDecoder().decode(Stations.self, from: response.data)
     return stations
+  }
+
+  /// Fetch a list of stations in the current country's storefront that belongs to all station genres in the Apple Music catalog.
+  ///
+  /// - Returns: `Stations` representing the list of stations belonging to all the station genres.
+  static func allCountryStations() async throws -> Stations {
+    try await withThrowingTaskGroup(of: Stations.self) { group in
+      let stationGenres = try await MCatalog.stationGenres()
+      var allCountryStations: Stations = []
+
+      for genre in stationGenres {
+        group.addTask {
+          return try await stations(for: genre)
+        }
+      }
+
+      for try await stations in group {
+        allCountryStations += stations
+      }
+
+      return allCountryStations
+    }
   }
 }
