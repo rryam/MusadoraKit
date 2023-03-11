@@ -26,7 +26,7 @@ definitions:
       - &updateDocs
         name: Update DocC Documentation
         script: |
-          sh build_docs.sh 
+          sh build_docs.sh
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
           git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
@@ -36,9 +36,7 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m1
     environment:
-      xcode: 14.2
       groups:
         - GitHub
     when:
@@ -51,12 +49,16 @@ workflows:
     scripts:
       - *buildFramework
       - *testFramework
+  musadorakit-update-docs:
+    name: MusadoraKit Docs Update Workflow
+    environment:
+      groups:
+        - GitHub
+    scripts:
       - *updateDocs
   musadora:
     name: Musadora Workflow
-    instance_type: mac_mini_m1
     environment:
-      xcode: 14.2
       groups:
         - GitHub
     when:
