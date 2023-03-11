@@ -159,9 +159,10 @@ public extension MLibrary {
   }
 
   static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
-    let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists")
+    var components = AppleMusicURLComponents()
+    components.path = "me/library/playlists"
 
-    guard let url = url else {
+    guard let url = components.url else {
       throw URLError(.badURL)
     }
 
