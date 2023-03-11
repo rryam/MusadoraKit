@@ -41,10 +41,30 @@ workflows:
       xcode: 14.2
       groups:
         - GitHub
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Tests'
     triggering:
       <<: *events
     scripts:
       - *buildFramework
       - *testFramework
-      - *buildMusadoraApp
       - *updateDocs
+  musadora:
+    name: Musadora Workflow
+    instance_type: mac_mini_m1
+    environment:
+      xcode: 14.2
+      groups:
+        - GitHub
+    when:
+      changeset:
+        includes:
+          - 'Musadora'
+          - 'Tests'
+    triggering:
+      <<: *events
+    scripts:
+      - *buildMusadoraApp
