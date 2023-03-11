@@ -66,3 +66,34 @@ extension MCatalog {
     return try JSONDecoder().decode(Genres.self, from: response.data)
   }
 }
+
+extension MCatalog {
+  static func allGenres() async throws -> Genres {
+    try await withThrowingTaskGroup(of: Genres.self) { group in
+      let storefronts = try await MCatalog.storefronts().map { $0.id }
+      var allGenres: Set<Genre> = []
+
+      for storefront in storefronts {
+        group.addTask {
+          let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/genres")!
+          let request = MusicDataRequest(urlRequest: .init(url: url))
+          let response = try await request.response()
+
+          return try JSONDecoder().decode(Genres.self, from: response.data)
+        }
+      }
+
+      for try await genres in group {
+        for genre in genres {
+          if allGenres.contains(where: { $0.id == genre.id && $0.name == $0.name }) {
+            // Duplicate. Ignore
+          } else {
+            allGenres.insert(genre)
+          }
+        }
+      }
+
+      return MusicItemCollection(allGenres)
+    }
+  }
+}
