@@ -67,7 +67,10 @@ extension MCatalog {
   }
 }
 
-extension MCatalog {
+public extension MCatalog {
+  /// Fetch all genres from the Apple Music catalog across all Apple Music storefronts.
+  ///
+  /// - Returns: Unique `Genres` from all storefronts.
   static func allGenres() async throws -> Genres {
     try await withThrowingTaskGroup(of: Genres.self) { group in
       let storefronts = try await MCatalog.storefronts().map { $0.id }
