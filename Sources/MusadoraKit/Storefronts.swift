@@ -6,9 +6,11 @@
 //
 
 import MusicKit
-import StoreKit
+import Foundation
 
-public struct Storefronts: Codable {
+public typealias Storefronts = [StorefrontsData.Storefront]
+
+public struct StorefrontsData: Codable {
   let data: [Storefront]
 
   public struct Storefront: Codable {
@@ -36,11 +38,14 @@ public struct Storefronts: Codable {
 }
 
 public extension MCatalog {
-  static func storefronts() async throws -> [Storefronts.Storefront] {
+  /// Fetch all storefronts of Apple Music.
+  ///
+  /// - Returns: `Storefronts` as array of storefronts.
+  static func storefronts() async throws -> Storefronts {
     let url = URL(string: "https://api.music.apple.com/v1/storefronts")!
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
-    let storefronts = try JSONDecoder().decode(Storefronts.self, from: response.data)
+    let storefronts = try JSONDecoder().decode(StorefrontsData.self, from: response.data)
     return storefronts.data
   }
 }
