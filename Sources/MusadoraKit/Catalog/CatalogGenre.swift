@@ -102,6 +102,9 @@ public extension MCatalog {
 }
 
 public extension MCatalog {
+  /// Fetches the list of station genres available in the current country's storefront from Apple Music catalog.
+  ///
+  /// - Returns: `StationGenres` representing the list of station genres available in the current country's storefront.
   static func stationGenres() async throws -> StationGenres {
     let storefront = try await MusicDataRequest.currentCountryCode
 
