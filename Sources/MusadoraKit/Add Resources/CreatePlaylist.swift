@@ -143,7 +143,9 @@ public extension MLibrary {
 
     let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists/\(playlistID.rawValue)/tracks")
 
-    guard let url = url else { throw URLError(.badURL) }
+    guard let url = url else {
+      throw URLError(.badURL)
+    }
 
     let data = try JSONEncoder().encode(tracks)
 
@@ -159,7 +161,9 @@ public extension MLibrary {
   static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
     let url = URL(string: "https://api.music.apple.com/v1/me/library/playlists")
 
-    guard let url = url else { throw URLError(.badURL) }
+    guard let url = url else {
+      throw URLError(.badURL)
+    }
 
     let data = try JSONEncoder().encode(creationRequest)
 
