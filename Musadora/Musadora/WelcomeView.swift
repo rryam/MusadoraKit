@@ -8,6 +8,11 @@
 import SwiftUI
 import MusicKit
 
+// NOTE:- MOST OF THE CODE HERE IS TAKEN FROM THE SAMPLE PROJECT BY APPLE.
+// Using MusicKit to Integrate with Apple Music
+//
+// https://developer.apple.com/documentation/musickit/using_musickit_to_integrate_with_apple_music
+
 struct WelcomeView: View {
   @Binding var musicAuthorizationStatus: MusicAuthorization.Status
   @Environment(\.openURL) private var openURL
@@ -124,6 +129,9 @@ struct WelcomeView: View {
 
     private init() {
       let authorizationStatus = MusicAuthorization.currentStatus
+
+      debugPrint(MusicAuthorization.currentStatus.rawValue)
+
       musicAuthorizationStatus = authorizationStatus
       isWelcomeViewPresented = (authorizationStatus != .authorized)
     }
