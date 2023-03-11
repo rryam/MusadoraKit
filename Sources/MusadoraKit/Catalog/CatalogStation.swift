@@ -6,6 +6,7 @@
 //
 
 import MusicKit
+import Foundation
 
 public extension MCatalog {
   /// Fetch a station from the Apple Music catalog by using its identifier.
@@ -68,5 +69,27 @@ public extension MCatalog {
       let stations: Set<Station> = Set(allAppleStations)
       return MusicItemCollection(stations)
     }
+  }
+}
+
+public extension MCatalog {
+  /// Fetch a list of stations in the current country's storefront that belong to a specific station genre in the Apple Music catalog.
+  ///
+  /// - Parameter genre: The `StationGenre` object representing the genre for which to retrieve the stations.
+  /// - Returns: `Stations` representing the list of stations belonging to the specified genre.
+  static func stations(for genre: StationGenre) async throws-> Stations {
+    let storefront = try await MusicDataRequest.currentCountryCode
+
+    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/station-genres/\(genre.id.rawValue)/stations")
+
+    guard let url = url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+    return stations
   }
 }
