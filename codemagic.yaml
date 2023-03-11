@@ -36,6 +36,7 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
+    instance_type: mac_mini_m1
     environment:
       groups:
         - GitHub
@@ -59,7 +60,6 @@ workflows:
   musadora:
     name: Musadora Workflow
     environment:
-      xcode: 14.2
       groups:
         - GitHub
     when:
