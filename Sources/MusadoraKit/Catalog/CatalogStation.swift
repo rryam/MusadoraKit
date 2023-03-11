@@ -114,4 +114,27 @@ public extension MCatalog {
       return allCountryStations
     }
   }
+
+  static func personalStation() async throws -> Station {
+    let storefront = try await MusicDataRequest.currentCountryCode
+
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/stations"
+    components.queryItems = [URLQueryItem(name: "filter[identity]", value: "personal")]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+
+    guard let personalStation = stations.first else {
+      throw MusadoraKitError.notFound(for: "personal")
+    }
+
+    return personalStation
+  }
 }
