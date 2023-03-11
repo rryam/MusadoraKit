@@ -59,6 +59,7 @@ workflows:
   musadora:
     name: Musadora Workflow
     environment:
+      xcode: 14.2
       groups:
         - GitHub
     when:
