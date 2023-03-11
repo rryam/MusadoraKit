@@ -100,3 +100,22 @@ public extension MCatalog {
     }
   }
 }
+
+public extension MCatalog {
+  static func stationGenres() async throws -> StationGenres {
+    let storefront = try await MusicDataRequest.currentCountryCode
+
+    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/station-genres")
+    
+    guard let url = url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    let stationsGenres = try JSONDecoder().decode(StationGenres.self, from: response.data)
+
+    return stationsGenres
+  }
+}
