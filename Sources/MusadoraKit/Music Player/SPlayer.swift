@@ -58,3 +58,23 @@ public extension SPlayer {
     try await play()
   }
 }
+
+@available(iOS 16, *, tvOS 16, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+public extension SPlayer {
+  func play(item: MusicPersonalRecommendation.Item) async throws {
+    switch item {
+      case .album(let album):
+        queue = [album]
+      case .playlist(let playlist):
+        queue = [playlist]
+      case .station(let station):
+        queue = [station]
+      @unknown default:
+        fatalError()
+    }
+
+    try await play()
+  }
+}
