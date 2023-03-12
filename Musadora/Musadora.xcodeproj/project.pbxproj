@@ -15,6 +15,9 @@
 		0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */; };
 		0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFE29B9248F0029A91F /* Assets.xcassets */; };
 		0A8FFF0229B9248F0029A91F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */; };
+		8F85810E29BE124F00BDC749 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85810D29BE124F00BDC749 /* CatalogView.swift */; };
+		8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811029BE145F00BDC749 /* StationGenresView.swift */; };
+		8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusadoraApp.swift; sourceTree = "<group>"; };
 		0A8FFEFE29B9248F0029A91F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8F85810D29BE124F00BDC749 /* CatalogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
+		8F85811029BE145F00BDC749 /* StationGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenresView.swift; sourceTree = "<group>"; };
+		8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenreDetailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,7 @@
 		0A8FFEF929B9248F0029A91F /* Musadora */ = {
 			isa = PBXGroup;
 			children = (
+				8F85810C29BE124100BDC749 /* Catalog */,
 				0A834F2629B92C800063AA6C /* Library */,
 				0A834F2529B928510063AA6C /* Info.plist */,
 				0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */,
@@ -86,6 +93,24 @@
 				0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8F85810C29BE124100BDC749 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				8F85810F29BE145800BDC749 /* Station Genres */,
+				8F85810D29BE124F00BDC749 /* CatalogView.swift */,
+			);
+			path = Catalog;
+			sourceTree = "<group>";
+		};
+		8F85810F29BE145800BDC749 /* Station Genres */ = {
+			isa = PBXGroup;
+			children = (
+				8F85811029BE145F00BDC749 /* StationGenresView.swift */,
+				8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */,
+			);
+			path = "Station Genres";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +192,10 @@
 				0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */,
 				0A834F1D29B9257D0063AA6C /* MTabView.swift in Sources */,
 				0A834F2129B926410063AA6C /* LibraryView.swift in Sources */,
+				8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */,
 				0A834F2829B92C890063AA6C /* LibraryViewModel.swift in Sources */,
+				8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */,
+				8F85810E29BE124F00BDC749 /* CatalogView.swift in Sources */,
 				0A834F1F29B925A30063AA6C /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,7 +341,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.Musadora;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -345,7 +373,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.Musadora;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
