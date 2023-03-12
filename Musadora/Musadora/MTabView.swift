@@ -14,6 +14,11 @@ struct MTabView: View {
         .tabItem {
           Label("Library", systemImage: "music.quarternote.3")
         }
+
+      CatalogView()
+        .tabItem {
+          Label("Catalog", systemImage: "music.note.list")
+        }
     }
     .welcomeSheet()
     .tint(.purple)
