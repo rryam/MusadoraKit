@@ -10,14 +10,24 @@ import SwiftUI
 struct MTabView: View {
   var body: some View {
     TabView {
+      CatalogView()
+        .tabItem {
+          Label("Catalog", systemImage: "music.note.list")
+        }
+
       LibraryView()
         .tabItem {
           Label("Library", systemImage: "music.quarternote.3")
         }
 
-      CatalogView()
+      RecommendationsView()
         .tabItem {
-          Label("Catalog", systemImage: "music.note.list")
+          Label("Recommendations", systemImage: "recordingtape")
+        }
+
+      HistoryView()
+        .tabItem {
+          Label("History", systemImage: "music.mic")
         }
     }
     .welcomeSheet()

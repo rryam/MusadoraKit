@@ -15,11 +15,9 @@ struct StationGenreDetailedView: View {
   @State private var stations: Stations = []
 
   var body: some View {
-    NavigationStack {
-      List {
-        ForEach(stations) { station in
-          StationGenreDetailedRow(station: station)
-        }
+    List {
+      ForEach(stations) { station in
+        StationGenreDetailedRow(station: station)
       }
       .navigationTitle(stationGenre.name)
     }
