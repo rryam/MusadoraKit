@@ -12,9 +12,9 @@ It goes well with my book on [*Exploring MusicKit and Apple Music API*](http://e
 
 Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing anything about MusadoraKit, the book "Exploring MusicKit", MusicKit or your favorite music!
 
-## Support 
+## Exploring MusicKit and Apple Music API Book 
 
-You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](http://exploringmusickit.com) or by [buying me a book](https://www.buymeacoffee.com/rudrank)! 
+You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](http://exploringmusickit.com). 2 books a day, and I can happily continue working on MusadoraKit.
 
 ## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/)
 
