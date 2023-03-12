@@ -26,3 +26,10 @@ public extension APlayer {
     try await play()
   }
 }
+
+public extension APlayer {
+  func play(station: Station) async throws {
+    queue = [station]
+    try await play()
+  }
+}
