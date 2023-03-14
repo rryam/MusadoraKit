@@ -9,15 +9,12 @@ import SwiftUI
 
 struct CatalogView: View {
   var body: some View {
-    NavigationStack {
-      List {
-        NavigationLink(destination: {
-          StationGenresView()
-        }, label: {
-          Text("Station Genres")
-        })
-      }
-      .navigationTitle("Catalog")
+    NavigationListStack("Catalog") {
+      NavigationLink(destination: {
+        StationGenresView()
+      }, label: {
+        Text("Station Genres")
+      })
     }
   }
 }

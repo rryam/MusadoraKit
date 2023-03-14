@@ -12,27 +12,16 @@ struct ChartsView: View {
   @State private var genres: Genres = []
 
   var body: some View {
-    NavigationStack {
-      List {
-        ForEach(genres) { genre in
-          NavigationLink(destination: {
-            ChartView(genre: genre)
-          }, label: {
-            Text(genre.name)
-          })
-        }
+    NavigationListStack("Charts") {
+      ForEach(genres) { genre in
+        NavigationLink(destination: {
+          ChartView(genre: genre)
+        }, label: {
+          Text(genre.name)
+        })
       }
-      .navigationTitle("Charts")
     }
-    .onAppear {
-      fetchGenres()
-    }
-  }
-}
-
-extension ChartsView {
-  private func fetchGenres() {
-    Task {
+    .task {
       do {
         genres = try await MCatalog.topGenres()
       } catch {
@@ -42,8 +31,21 @@ extension ChartsView {
   }
 }
 
-struct ChartsView_Previews: PreviewProvider {
-  static var previews: some View {
-    ChartsView()
+struct NavigationListStack<Content>: View where Content: View {
+  var title: String
+  var content: () -> Content
+
+  init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
+    self.title = title
+    self.content = content
+  }
+
+  var body: some View {
+    NavigationStack {
+      List {
+        content()
+      }
+      .navigationTitle(title)
+    }
   }
 }

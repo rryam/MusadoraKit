@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MusadoraKit
-import MusicKit
+
 
 struct RecommendationView: View {
   var recommendation: MusicPersonalRecommendation
