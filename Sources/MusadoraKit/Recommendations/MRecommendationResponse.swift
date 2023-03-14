@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// An object that contains results for a recommendation request.
 public struct MRecommendationResponse {

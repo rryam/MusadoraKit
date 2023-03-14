@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 22/07/22.
 //
 
-import MusicKit
-
 #if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)

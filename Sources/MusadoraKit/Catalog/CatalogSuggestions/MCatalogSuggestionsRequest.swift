@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// A request that your app uses to fetch search suggestions from the Apple Music catalog
 /// using a search term.

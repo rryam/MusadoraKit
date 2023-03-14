@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// An object that contains results for a catalog suggestions request.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)

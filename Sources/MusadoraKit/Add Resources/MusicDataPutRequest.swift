@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// A request for updating data for an arbitrary Apple Music API endpoint.
 public struct MDataPutRequest {

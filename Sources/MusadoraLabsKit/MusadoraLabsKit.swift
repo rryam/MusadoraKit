@@ -6,6 +6,7 @@
 //
 
 import Foundation
+@_exported import MusicKit
 
 public struct MusadoraLabsKit {
   var library: LibraryPath

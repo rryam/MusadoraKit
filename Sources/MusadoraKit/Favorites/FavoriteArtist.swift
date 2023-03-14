@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 extension MCatalog {
   /// Mark an artist as favorite for the User.

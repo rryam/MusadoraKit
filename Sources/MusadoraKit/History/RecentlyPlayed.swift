@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 #if compiler(>=5.7)
 public extension MLibrary {

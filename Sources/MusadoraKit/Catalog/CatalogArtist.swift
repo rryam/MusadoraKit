@@ -5,7 +5,7 @@
 //  Created by Rudrank Riyam on 25/08/21.
 //
 
-import MusicKit
+
 
 public extension MCatalog {
   /// Fetch an artist from the Apple Music catalog by using its identifier.
