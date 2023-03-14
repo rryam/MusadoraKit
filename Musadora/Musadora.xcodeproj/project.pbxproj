@@ -17,6 +17,13 @@
 		0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */; };
 		0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFE29B9248F0029A91F /* Assets.xcassets */; };
 		0A8FFF0229B9248F0029A91F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */; };
+		0AEDB6EC29C0DFF600B6AB8A /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */; };
+		0AEDB6EE29C0E09F00B6AB8A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */; };
+		0AEDB6F029C0E0C100B6AB8A /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */; };
+		0AEDB6F229C0E2A800B6AB8A /* SongChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */; };
+		0AEDB6F429C0F0C900B6AB8A /* AlbumChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */; };
+		0AEDB6F629C0F16200B6AB8A /* PlaylistChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */; };
+		0AEDB6F829C0F22400B6AB8A /* MusicVideoChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */; };
 		8F85810E29BE124F00BDC749 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85810D29BE124F00BDC749 /* CatalogView.swift */; };
 		8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811029BE145F00BDC749 /* StationGenresView.swift */; };
 		8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */; };
@@ -34,6 +41,13 @@
 		0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusadoraApp.swift; sourceTree = "<group>"; };
 		0A8FFEFE29B9248F0029A91F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
+		0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongChartView.swift; sourceTree = "<group>"; };
+		0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumChartView.swift; sourceTree = "<group>"; };
+		0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistChartView.swift; sourceTree = "<group>"; };
+		0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVideoChartView.swift; sourceTree = "<group>"; };
 		8F85810D29BE124F00BDC749 /* CatalogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		8F85811029BE145F00BDC749 /* StationGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenresView.swift; sourceTree = "<group>"; };
 		8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenreDetailedView.swift; sourceTree = "<group>"; };
@@ -63,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				0A1986A729BE66CD00876C60 /* RecommendationsView.swift */,
+				0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */,
 			);
 			path = Recommendations;
 			sourceTree = "<group>";
@@ -95,16 +110,16 @@
 		0A8FFEF929B9248F0029A91F /* Musadora */ = {
 			isa = PBXGroup;
 			children = (
+				0AEDB6EA29C0DFE500B6AB8A /* Onboarding */,
+				0AEDB6E929C0DFDB00B6AB8A /* Main */,
+				0AEDB6E829C0DFD300B6AB8A /* Charts */,
 				0A1986A929BE66D500876C60 /* Recommendations */,
 				0A1986A429BE66B900876C60 /* History */,
 				8F85810C29BE124100BDC749 /* Catalog */,
 				0A834F2629B92C800063AA6C /* Library */,
 				0A834F2529B928510063AA6C /* Info.plist */,
-				0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */,
 				0A8FFEFE29B9248F0029A91F /* Assets.xcassets */,
 				0A8FFF0029B9248F0029A91F /* Preview Content */,
-				0A834F1C29B9257D0063AA6C /* MTabView.swift */,
-				0A834F1E29B925A30063AA6C /* WelcomeView.swift */,
 			);
 			path = Musadora;
 			sourceTree = "<group>";
@@ -115,6 +130,36 @@
 				0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0AEDB6E829C0DFD300B6AB8A /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */,
+				0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */,
+				0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */,
+				0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */,
+				0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */,
+				0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		0AEDB6E929C0DFDB00B6AB8A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */,
+				0A834F1C29B9257D0063AA6C /* MTabView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		0AEDB6EA29C0DFE500B6AB8A /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0A834F1E29B925A30063AA6C /* WelcomeView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		8F85810C29BE124100BDC749 /* Catalog */ = {
@@ -212,15 +257,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */,
+				0AEDB6F629C0F16200B6AB8A /* PlaylistChartView.swift in Sources */,
 				0A834F1D29B9257D0063AA6C /* MTabView.swift in Sources */,
 				0A834F2129B926410063AA6C /* LibraryView.swift in Sources */,
 				8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */,
+				0AEDB6F429C0F0C900B6AB8A /* AlbumChartView.swift in Sources */,
+				0AEDB6F829C0F22400B6AB8A /* MusicVideoChartView.swift in Sources */,
 				0A834F2829B92C890063AA6C /* LibraryViewModel.swift in Sources */,
+				0AEDB6F029C0E0C100B6AB8A /* RecommendationView.swift in Sources */,
 				8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */,
 				8F85810E29BE124F00BDC749 /* CatalogView.swift in Sources */,
 				0A1986A629BE66C300876C60 /* HistoryView.swift in Sources */,
 				0A834F1F29B925A30063AA6C /* WelcomeView.swift in Sources */,
+				0AEDB6F229C0E2A800B6AB8A /* SongChartView.swift in Sources */,
 				0A1986A829BE66CD00876C60 /* RecommendationsView.swift in Sources */,
+				0AEDB6EC29C0DFF600B6AB8A /* ChartsView.swift in Sources */,
+				0AEDB6EE29C0E09F00B6AB8A /* ChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
