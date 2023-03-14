@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MusadoraKit
-import MusicKit
+
 
 struct ChartView: View {
   var genre: Genre
@@ -57,20 +57,18 @@ struct ChartView: View {
       }
     }
     .navigationTitle(genre.name)
-    .onAppear {
-      fetchChart()
+    .task {
+      await fetchChart()
     }
   }
 }
 
 extension ChartView {
-  private func fetchChart() {
-    Task {
+  private func fetchChart() async {
       do {
         chart = try await MCatalog.charts(genre: genre, kinds: .all, types: .all)
       } catch {
         print(error)
       }
-    }
   }
 }

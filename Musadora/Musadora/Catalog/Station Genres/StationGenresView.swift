@@ -22,20 +22,18 @@ struct StationGenresView: View {
       }
       .navigationTitle("Station Genres")
     }
-    .onAppear {
-      fetchStationGenres()
+    .task {
+      await fetchStationGenres()
     }
   }
 }
 
 extension StationGenresView {
-  private func fetchStationGenres() {
-    Task {
+  private func fetchStationGenres() async {
       do {
         stationGenres = try await MCatalog.stationGenres()
       } catch {
         print(error)
-      }
     }
   }
 }
