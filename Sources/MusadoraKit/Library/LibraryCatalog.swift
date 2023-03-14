@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 public extension FilterableLibraryItem {
   var catalog: Self {

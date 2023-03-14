@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 public typealias Ratings = [Rating]
 

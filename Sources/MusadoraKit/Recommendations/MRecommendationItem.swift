@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// An object that represents recommended resources for a user calculated using their selected preferences.
 public struct MRecommendationItem: Codable, MusicItem, Identifiable {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 struct MFavoritesRequest {
   private var artistID: MusicItemID

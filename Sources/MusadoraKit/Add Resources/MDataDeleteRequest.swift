@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// A request for deleting data for an arbitrary Apple Music API endpoint.
 public struct MDataDeleteRequest {

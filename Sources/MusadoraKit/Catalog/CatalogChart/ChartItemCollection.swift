@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// A collection of chart items.
 public struct ChartItemCollection<MusicItemType> where MusicItemType: MusicItem {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 public enum RatingsError: Error, Equatable {
   case typeMissing

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+@_exported import MusicKit
 
 /// MusadoraKit: The ultimate companion to MusicKit.
 public struct MusadoraKit {}

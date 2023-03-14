@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MusicKit
+
 
 /// A request for uploading data to an arbitrary Apple Music API endpoint.
 public struct MDataPostRequest : Sendable{
