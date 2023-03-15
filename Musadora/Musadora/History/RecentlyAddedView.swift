@@ -9,7 +9,6 @@ import SwiftUI
 import MusadoraKit
 
 struct RecentlyAddedView: View {
-  @State private var recentlyAddedItems: UserMusicItems = []
   @State private var recentlyAddedPlaylists: Playlists = []
   @State private var recentlyAddedAlbums: Albums = []
 
@@ -21,17 +20,8 @@ struct RecentlyAddedView: View {
     .navigationTitle("Recently Added")
     .task {
       do {
-        recentlyAddedItems = try await MHistory.recentlyAdded(limit: 25, offset: 0)
-
-        recentlyAddedPlaylists = MusicItemCollection(recentlyAddedItems.compactMap { item in
-          guard case let .playlist(playlist) = item else { return nil }
-          return playlist
-        })
-
-        recentlyAddedAlbums = MusicItemCollection(recentlyAddedItems.compactMap { item in
-          guard case let .album(album) = item else { return nil }
-          return album
-        })
+        recentlyAddedPlaylists = try await MHistory.recentlyAddedPlaylists(limit: 25, offset: 0)
+        recentlyAddedAlbums = try await MHistory.recentlyAddedAlbums(limit: 25, offset: 0)
       } catch {
         print(error)
       }

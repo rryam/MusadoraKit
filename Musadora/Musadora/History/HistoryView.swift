@@ -11,6 +11,7 @@ struct HistoryView: View {
   var body: some View {
     NavigationListStack("History") {
       NavigationLink("Recently added", destination: RecentlyAddedView())
+      NavigationLink("Recently played", destination: RecentlyPlayedView())
     }
   }
 }
