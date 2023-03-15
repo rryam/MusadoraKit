@@ -5,13 +5,13 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
-
 import MediaPlayer
 
 public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier.
+  /// 
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
@@ -46,6 +46,7 @@ public extension MLibrary {
 #endif
 
   /// Fetch all songs from the user's library in alphabetical order.
+  ///
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
@@ -72,6 +73,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch multiple songs from the user's library by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
@@ -94,6 +96,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier with all properties from the local database.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
@@ -144,6 +147,7 @@ public extension MLibrary {
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibrarySong.swift
   /// Thanks @marcelmendesfilho!
   /// Add a song to the user's library by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
@@ -155,6 +159,7 @@ public extension MLibrary {
   }
 
   /// Add multiple songs to the user's library by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
@@ -172,10 +177,11 @@ public extension MLibrary {
 @available(macCatalyst, unavailable)
 public extension MLibrary {
   /// Fetch recently added songs from the user's library sorted by the date added.
+  ///
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
-  static func recentlyAddedSongs(limit: Int = 10, offset: Int = 0) async throws -> Songs {
+  static func recentlyAddedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
     request.offset = offset
@@ -185,10 +191,11 @@ public extension MLibrary {
   }
 
   /// Fetch recently played songs from the user's library sorted by the date added.
+  ///
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
-  static func recentlyLibraryPlayedSongs(limit: Int = 0, offset: Int = 0) async throws -> Songs {
+  static func recentlyLibraryPlayedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
     request.offset = offset
@@ -198,11 +205,12 @@ public extension MLibrary {
   }
 
   /// Fetch recently played songs sorted by the date added.
+  ///
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
   @available(macOS 13.0, *)
-  static func recentlyPlayedSongs(limit: Int = 0, offset: Int = 0) async throws -> Songs {
+  static func recentlyPlayedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicRecentlyPlayedRequest<Song>()
     request.limit = limit
     request.offset = offset

@@ -1,10 +1,9 @@
 //
 //  LibraryPlaylist.swift
-//  LibraryPlaylist
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
-
 
 import MediaPlayer
 
@@ -12,6 +11,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch a playlist from the user's library by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
@@ -41,6 +41,7 @@ public extension MLibrary {
   #endif
 
   /// Fetch all playlists from the user's library in alphabetical order.
+  ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
@@ -53,6 +54,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch multiple playlists from the user's library by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
@@ -137,7 +139,7 @@ public extension MHistory {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyAddedPlaylists(limit: Int = 25, offset: Int = 0) async throws -> Playlists {
+  static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -151,7 +153,7 @@ public extension MHistory {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int = 0) async throws -> Playlists {
+  static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -166,8 +168,9 @@ public extension MHistory {
 public extension MLibrary {
 
   /// Fetch all playlists from the user's library in alphabetical order.
+  ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
-  static func playlists() async throws -> LibraryPlaylists {
+  static func playlists(limit: Int) async throws -> LibraryPlaylists {
     let playlistsURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
     let request = MusicDataRequest(urlRequest: .init(url: playlistsURL))
     let response = try await request.response()
