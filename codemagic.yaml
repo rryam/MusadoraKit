@@ -25,13 +25,12 @@ workflows:
       - name: Build Framework
         script: |
           #!/bin/zsh
-          echo "${DESTINATIONS[@]}"
-          echo $XCODE_SCHEME
-          for DESTINATION in "${DESTINATIONS[@]}"
+          for DESTINATION in ${DESTINATIONS[@]}
+          echo "DESTINATION: $DESTINATION"  
             do
               xcodebuild clean build \
                 -scheme "$XCODE_SCHEME" \
-                -destination "'${DESTINATION}'" \
+                -destination "$DESTINATION" \
                 -skipPackagePluginValidation
           done
       - name: Test Framework
@@ -88,7 +87,6 @@ workflows:
         script: xcode-project use-profiles
       - name: Increment build number
         script: |
-          cd $CM_BUILD_DIR
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$APP_ID")
           agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
       - name: Build ipa for distribution
