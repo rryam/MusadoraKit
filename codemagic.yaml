@@ -25,11 +25,13 @@ workflows:
       - name: Build Framework
         script: |
           #!/bin/zsh
+          echo "${DESTINATIONS[@]}"
+          echo $XCODE_SCHEME
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               xcodebuild clean build \
                 -scheme "$XCODE_SCHEME" \
-                -destination "$DESTINATION" \
+                -destination "'${DESTINATION}'" \
                 -skipPackagePluginValidation
           done
       - name: Test Framework
@@ -40,7 +42,7 @@ workflows:
               set -o pipefail
               xcodebuild clean test \
                 -scheme "$XCODE_SCHEME" \
-                -destination "$DESTINATION" \
+                -destination "'${DESTINATION}'" \
                 -skipPackagePluginValidation | xcpretty --report junit
           done
         test_report: build/reports/junit.xml
