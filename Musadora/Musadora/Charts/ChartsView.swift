@@ -14,11 +14,7 @@ struct ChartsView: View {
   var body: some View {
     NavigationListStack("Charts") {
       ForEach(genres) { genre in
-        NavigationLink(destination: {
-          ChartView(genre: genre)
-        }, label: {
-          Text(genre.name)
-        })
+        NavigationLink(genre.name, destination: ChartView(genre: genre))
       }
     }
     .task {

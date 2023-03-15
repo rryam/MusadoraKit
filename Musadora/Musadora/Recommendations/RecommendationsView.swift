@@ -14,11 +14,7 @@ struct RecommendationsView: View {
   var body: some View {
     NavigationListStack("Recommendations") {
       ForEach(recommendations) { recommendation in
-        NavigationLink(destination: {
-          RecommendationView(recommendation: recommendation)
-        }, label: {
-          Text(recommendation.title ?? "")
-        })
+        NavigationLink((recommendation.title ?? ""), destination: RecommendationView(recommendation: recommendation))
       }
     }
     .task {

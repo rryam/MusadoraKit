@@ -18,41 +18,25 @@ struct ChartView: View {
     List {
       Section("Playlists Chart") {
         ForEach(chart?.playlistCharts ?? []) { playlistChart in
-          NavigationLink(destination: {
-            PlaylistChartView(playlistChart: playlistChart)
-          }, label: {
-            Text(playlistChart.title)
-          })
+          NavigationLink(playlistChart.title, destination: PlaylistChartView(playlistChart: playlistChart))
         }
       }
 
       Section("Songs Chart") {
         ForEach(chart?.songCharts ?? []) { songChart in
-          NavigationLink(destination: {
-            SongChartView(songChart: songChart)
-          }, label: {
-            Text(songChart.title)
-          })
+          NavigationLink(songChart.title, destination: SongChartView(songChart: songChart))
         }
       }
 
       Section("Albums Chart") {
         ForEach(chart?.albumCharts ?? []) { albumChart in
-          NavigationLink(destination: {
-            AlbumChartView(albumChart: albumChart)
-          }, label: {
-            Text(albumChart.title)
-          })
+          NavigationLink(albumChart.title, destination: AlbumChartView(albumChart: albumChart))
         }
       }
 
       Section("Music Videos Chart") {
         ForEach(chart?.musicVideoCharts ?? []) { musicVideoChart in
-          NavigationLink(destination: {
-            MusicVideoChartView(musicVideoChart: musicVideoChart)
-          }, label: {
-            Text(musicVideoChart.title)
-          })
+          NavigationLink(musicVideoChart.title, destination: MusicVideoChartView(musicVideoChart: musicVideoChart))
         }
       }
     }
@@ -65,10 +49,10 @@ struct ChartView: View {
 
 extension ChartView {
   private func fetchChart() async {
-      do {
-        chart = try await MCatalog.charts(genre: genre, kinds: .all, types: .all)
-      } catch {
-        print(error)
-      }
+    do {
+      chart = try await MCatalog.charts(genre: genre, kinds: .all, types: .all)
+    } catch {
+      print(error)
+    }
   }
 }

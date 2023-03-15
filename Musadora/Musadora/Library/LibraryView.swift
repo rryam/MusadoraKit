@@ -11,23 +11,9 @@ import MusadoraKit
 struct LibraryView: View {
   var body: some View {
     NavigationListStack("Library") {
-      NavigationLink(destination: {
-        LibrarySongsView()
-      }, label: {
-        Text("Songs")
-      })
-
-      NavigationLink(destination: {
-        LibraryAlbumsView()
-      }, label: {
-        Text("Albums")
-      })
-
-      NavigationLink(destination: {
-        LibraryPlaylistsView()
-      }, label: {
-        Text("Playlists")
-      })
+      NavigationLink("Songs", destination: LibrarySongsView())
+      NavigationLink("Albums", destination: LibraryAlbumsView())
+      NavigationLink("Playlists", destination: LibraryPlaylistsView())
     }
   }
 }

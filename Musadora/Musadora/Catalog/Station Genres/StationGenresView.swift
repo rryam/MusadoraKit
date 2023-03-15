@@ -14,11 +14,7 @@ struct StationGenresView: View {
   var body: some View {
     List {
       ForEach(stationGenres) { stationGenre in
-        NavigationLink(destination: {
-          StationGenreDetailedView(stationGenre: stationGenre)
-        }, label: {
-          Text(stationGenre.name)
-        })
+        NavigationLink(stationGenre.name, destination: StationGenreDetailedView(stationGenre: stationGenre))
       }
       .navigationTitle("Station Genres")
     }
