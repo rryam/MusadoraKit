@@ -8,21 +8,11 @@ definitions:
       - &buildFramework
         name: Build Framework
         script: sh build.sh
-        when:
-          changeset:
-            includes:
-              - 'Sources'
-              - 'Tests'
       - &testFramework
         name: Test Framework
         script: |
           set -o pipefail
           sh test.sh
-        when:
-          changeset:
-            includes:
-              - 'Sources'
-              - 'Tests'
         test_report: build/reports/junit.xml
       - &buildMusadoraApp
         name: Build Musadora App
@@ -33,10 +23,6 @@ definitions:
            -scheme Musadora \
            -destination "platform=iOS Simulator,name=iPhone 14" \
            -skipPackagePluginValidation
-        when:
-          changeset:
-            includes:
-              - 'Musadora'
       - &updateDocs
         name: Update DocC Documentation
         script: |
@@ -51,6 +37,12 @@ workflows:
   musadorakit:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Tests'
+          - 'Musadora'
     environment:
       groups:
         - GitHub
