@@ -64,6 +64,7 @@ workflows:
 
   musadora: 
     name: Musadora TestFlight Workflow
+    working_directory: Musadora
     instance_type: mac_mini_m1
     environment:
       ios_signing:
@@ -81,7 +82,7 @@ workflows:
       changeset:
         excludes: 
           - '**/*.md'
-    working_directory: Musadora
+    
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
