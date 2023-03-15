@@ -4,37 +4,54 @@ definitions:
       events:
         - push
         - pull_request
+
+workflows:
+  musadorakit:
+    name: MusadoraKit Workflow
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        XCODE_SCHEME: "MusadoraKit"
+        DESTINATIONS: ("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
+        APP_ID: "Musadora"
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Tests'
+    triggering:
+      <<: *events
     scripts:
-      - &buildFramework
-        name: Build Framework
-        script: sh build.sh
-        when:
-          changeset:
-            includes:
-              - 'Sources'
-              - 'Tests'
-      - &testFramework
-        name: Test Framework
+      - name: Build Framework
         script: |
-          set -o pipefail
-          sh test.sh
+          #!/bin/zsh
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              xcodebuild clean build \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation
+          done
+      - name: Test Framework
+        script: |
+          #!/bin/zsh
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              set -o pipefail
+              xcodebuild clean test \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation | xcpretty --report junit
+          done
         test_report: build/reports/junit.xml
-        when:
-          changeset:
-            includes:
-              - 'Sources'
-              - 'Tests'
-      - &buildMusadoraApp
-        name: Build Musadora App
-        working_directory: Musadora
-        script: |
-          xcodebuild clean build \
-           -project Musadora.xcodeproj \
-           -scheme Musadora \
-           -destination "platform=iOS Simulator,name=iPhone 14" \
-           -skipPackagePluginValidation
-      - &updateDocs
-        name: Update DocC Documentation
+    
+  musadorakit-update-docs:
+    name: MusadoraKit Docs Update Workflow
+    environment:
+      groups:
+        - GitHub
+    scripts:
+      - name: Update DocC Documentation
         script: |
           sh build_docs.sh
           git add .
@@ -43,23 +60,53 @@ definitions:
           git pull --ff-only
           git push origin main
 
-workflows:
-  musadorakit:
-    name: MusadoraKit Workflow
+  musadora: 
+    name: Musadora TestFlight Workflow
     instance_type: mac_mini_m1
     environment:
-      groups:
-        - GitHub
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.rudrankriyam.musadora
+      vars:
+        XCODE_PROJECT: "Musadora.xcodeproj"
+        XCODE_SCHEME: "Musadora"
+        APP_ID: "Musadora"
+    integrations:
+      app_store_connect: Rudrank ASC API Key
     triggering:
       <<: *events
+    when:
+      changeset:
+        excludes: 
+          - '**/*.md'
+    working_directory: Musadora
     scripts:
-      - *buildFramework
-      - *testFramework
-      - *buildMusadoraApp
-  musadorakit-update-docs:
-    name: MusadoraKit Docs Update Workflow
-    environment:
-      groups:
-        - GitHub
-    scripts:
-      - *updateDocs
+      - name: Set up provisioning profiles settings on Xcode project
+        script: xcode-project use-profiles
+      - name: Increment build number
+        script: |
+          cd $CM_BUILD_DIR
+          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-testflight-build-number "$APP_ID")
+          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
+      - name: Build ipa for distribution
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME" \
+            --archive-flags "-destination 'generic/platform=iOS' -skipPackagePluginValidation"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      email:
+        recipients:
+          - rudrankriyam@gmail.com
+        notify:
+          success: true
+          failure: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        beta_groups:
+          - Testers
+        submit_to_app_store: false
