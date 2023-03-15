@@ -26,7 +26,6 @@ workflows:
         script: |
           #!/bin/bash
           for DESTINATION in "${DESTINATIONS[@]}"
-          echo "DESTINATION: $DESTINATION"  
             do
               xcodebuild clean build \
                 -scheme "$XCODE_SCHEME" \
