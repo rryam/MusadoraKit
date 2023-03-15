@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct HistoryView: View {
-    var body: some View {
-        Text("HistoryView")
+  var body: some View {
+    NavigationListStack("History") {
+      NavigationLink("Recently added", destination: RecentlyAddedView())
     }
-}
-
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        HistoryView()
-    }
+  }
 }
