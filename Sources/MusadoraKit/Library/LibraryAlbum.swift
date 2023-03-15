@@ -1,10 +1,9 @@
 //
 //  LibraryAlbum.swift
-//  LibraryAlbum
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 14/08/21.
 //
-
 
 import MediaPlayer
 
@@ -41,6 +40,7 @@ public extension MLibrary {
 #endif
 
   /// Fetch all albums from the user's library in alphabetical order.
+  ///
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
@@ -62,6 +62,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch multiple albums from the user's library by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
@@ -114,6 +115,7 @@ public extension MLibrary {
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibraryAlbum.swift
   /// Thanks @marcelmendesfilho!
   /// Add an album to the user's library by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
@@ -124,6 +126,7 @@ public extension MLibrary {
   }
 
   /// Add multiple albums to the user's library by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
@@ -140,10 +143,11 @@ public extension MLibrary {
 @available(macCatalyst, unavailable)
 public extension MHistory {
   /// Fetch recently added albums from the user's library sorted by the date added.
+  ///
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  static func recentlyAddedAlbums(limit: Int = 25, offset: Int = 0) async throws -> Albums {
+  static func recentlyAddedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     request.offset = offset
@@ -153,10 +157,11 @@ public extension MHistory {
   }
 
   /// Fetch recently played albums from the user's library sorted by the date added.
+  ///
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  static func recentlyPlayedAlbums(limit: Int = 25, offset: Int = 0) async throws -> Albums {
+  static func recentlyPlayedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     request.offset = offset

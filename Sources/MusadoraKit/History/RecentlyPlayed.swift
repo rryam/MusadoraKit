@@ -1,12 +1,11 @@
 //
 //  RecentlyPlayed.swift
-//  RecentlyPlayed
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 25/08/22.
 //
 
 import Foundation
-
 
 #if compiler(>=5.7)
 public extension MHistory {
