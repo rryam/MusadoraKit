@@ -12,6 +12,7 @@ workflows:
     environment:
       vars:
         XCODE_SCHEME: "MusadoraKit"
+        DESTINATIONS: "("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")"
         APP_ID: "Musadora"
     when:
       changeset:
@@ -25,7 +26,7 @@ workflows:
         script: |
           #!/bin/zsh
 
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
+          #declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               xcodebuild clean build \
@@ -37,13 +38,13 @@ workflows:
         script: |
           #!/bin/zsh
           
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
+          #declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               set -o pipefail
               xcodebuild clean test \
                 -scheme "$XCODE_SCHEME" \
-                -destination "'${DESTINATION}'" \
+                -destination "$DESTINATION" \
                 -skipPackagePluginValidation | xcpretty --report junit
           done
         test_report: build/reports/junit.xml
