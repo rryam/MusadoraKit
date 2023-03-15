@@ -8,12 +8,22 @@ definitions:
       - &buildFramework
         name: Build Framework
         script: sh build.sh
+        when:
+          changeset:
+            includes:
+              - 'Sources'
+              - 'Tests'
       - &testFramework
         name: Test Framework
         script: |
           set -o pipefail
           sh test.sh
         test_report: build/reports/junit.xml
+        when:
+          changeset:
+            includes:
+              - 'Sources'
+              - 'Tests'
       - &buildMusadoraApp
         name: Build Musadora App
         working_directory: Musadora
@@ -37,12 +47,6 @@ workflows:
   musadorakit:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
-    when:
-      changeset:
-        includes:
-          - 'Sources'
-          - 'Tests'
-          - 'Musadora'
     environment:
       groups:
         - GitHub
