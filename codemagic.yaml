@@ -25,7 +25,7 @@ workflows:
       - name: Build Framework
         script: |
           #!/bin/zsh
-          for DESTINATION in "${DESTINATIONS[@]}"
+          for DESTINATION "${DESTINATIONS[@]}"
           echo "DESTINATION: $DESTINATION"  
             do
               xcodebuild clean build \
@@ -36,7 +36,7 @@ workflows:
       - name: Test Framework
         script: |
           #!/bin/zsh
-          for DESTINATION in "${DESTINATIONS[@]}"
+          for DESTINATION "${DESTINATIONS[@]}"
             do
               set -o pipefail
               xcodebuild clean test \
