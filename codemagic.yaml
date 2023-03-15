@@ -97,6 +97,9 @@ workflows:
       <<: *events
     when:
       changeset:
+        includes:
+          - 'Sources'
+          - 'Musadora'
         excludes: 
           - '**/*.md'
     scripts:
