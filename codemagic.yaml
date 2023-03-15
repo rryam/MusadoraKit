@@ -4,7 +4,13 @@ definitions:
       events:
         - push
         - pull_request
-
+  email: &email
+    email:
+      recipients:
+        - rudrankriyam@gmail.com
+      notify:
+        success: true
+        failure: true
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
@@ -47,7 +53,9 @@ workflows:
                 -skipPackagePluginValidation | xcpretty --report junit
           done
         test_report: build/reports/junit.xml
-    
+    publishing:
+      <<: *email
+
   musadorakit-update-docs:
     name: MusadoraKit Docs Update Workflow
     environment:
@@ -56,7 +64,15 @@ workflows:
     scripts:
       - name: Update DocC Documentation
         script: |
-          sh build_docs.sh
+          #!/bin/zsh
+
+          swift package --allow-writing-to-directory ./docs \
+          generate-documentation --target MusadoraKit \
+          --disable-indexing \
+          --transform-for-static-hosting \
+          --hosting-base-path MusadoraKit \
+          --output-path ./docs
+
           git add .
           git commit -m "[skip ci] Update DocC Documentation"
           git remote set-url origin https://rudrankriyam:$token@github.com/rryam/MusadoraKit.git
@@ -83,7 +99,6 @@ workflows:
       changeset:
         excludes: 
           - '**/*.md'
-    
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
@@ -101,12 +116,7 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
     publishing:
-      email:
-        recipients:
-          - rudrankriyam@gmail.com
-        notify:
-          success: true
-          failure: true
+      <<: *email
       app_store_connect:
         auth: integration
         submit_to_testflight: true
