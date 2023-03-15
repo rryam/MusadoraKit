@@ -131,13 +131,13 @@ public extension MLibrary {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-public extension MLibrary {
+public extension MHistory {
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyAddedPlaylists(limit: Int = 10, offset: Int = 0) async throws -> Playlists {
+  static func recentlyAddedPlaylists(limit: Int = 25, offset: Int = 0) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -151,7 +151,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyPlayedPlaylists(limit: Int = 0, offset: Int = 0) async throws -> Playlists {
+  static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int = 0) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
