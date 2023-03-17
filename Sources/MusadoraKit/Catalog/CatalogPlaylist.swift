@@ -53,11 +53,39 @@ public extension MCatalog {
     try await playlist(id: id, properties: properties)
   }
 
+  /// Fetch a playlist from the Apple Music catalog by using its identifier.
+  ///
+  /// In the following example, the method fetches the details of the playlist **Verified Hits**
+  /// by Apple Music Pop with the ID `pl.c189b515739547ab93ce464867bb3e09` and a
+  /// single relationship `moreByCurator` to fetch in the same request:
+  ///
+  ///     let id: MusicItemID = "pl.c189b515739547ab93ce464867bb3e09e"
+  ///     let playlist = try await MCatalog.playlist(id: id, fetch: .moreByCurator)
+  ///
+  /// - Parameters:
+  ///   - id: The unique identifier for the playlist.
+  ///   - properties: Additional relationships to fetch with the playlist.
+  /// - Returns: `Playlist` matching the given identifier.
+  ///
+  /// - Note: Use this method when you have to fetch only one particular relationship.
+  static func playlist(id: MusicItemID, fetch property: PlaylistProperty) async throws -> Playlist {
+    try await playlist(id: id, properties: [property])
+  }
+
   /// Fetch a playlist from the Apple Music catalog by using its identifier with no properties.
+  ///
+  /// In the following example, the method fetches the details of the playlist **Today's Hits**
+  /// by Apple Music Hits with the ID `pl.f4d106fed2bd41149aaacabb233eb5eb`:
+  ///
+  ///     let id: MusicItemID = "pl.f4d106fed2bd41149aaacabb233eb5eb"
+  ///     let playlist = try await MCatalog.playlist(id: id)
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Playlist` matching the given identifier.
+  ///
+  /// - Note: Use this method when you want a faster response with no
+  /// additional properties to fetch with the playlist.
   static func playlist(id: MusicItemID) async throws -> Playlist {
     try await playlist(id: id, properties: [])
   }

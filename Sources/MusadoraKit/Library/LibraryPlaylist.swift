@@ -171,8 +171,14 @@ public extension MLibrary {
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   static func playlists(limit: Int) async throws -> LibraryPlaylists {
-    let playlistsURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
-    let request = MusicDataRequest(urlRequest: .init(url: playlistsURL))
+    var components = AppleMusicURLComponents()
+    components.path = "me/library/playlists"
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
 
     var playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
@@ -184,6 +190,26 @@ public extension MLibrary {
         break
       }
     } while playlists.hasNextBatch
+
+    return playlists
+  }
+
+  /// Fetch user's made for you playlists.
+  ///
+  /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
+  static func madeForYouPlaylists() async throws -> LibraryPlaylists {
+    var components = AppleMusicURLComponents()
+    components.path = "me/library/playlists"
+    components.queryItems = [URLQueryItem(name: "filter[featured]", value: "made-for-you")]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
+
+    let playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
 
     return playlists
   }
