@@ -34,6 +34,11 @@ struct MTabView: View {
         .tabItem {
           Label("Charts", systemImage: "chart.bar")
         }
+
+      SettingsView()
+        .tabItem {
+          Label("Settings", systemImage: "gear")
+        }
     }
     .welcomeSheet()
     .tint(.purple)
