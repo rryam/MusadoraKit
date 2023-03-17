@@ -35,6 +35,8 @@
 		0AEDB6FB29C0F6AF00B6AB8A /* SongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FA29C0F6AF00B6AB8A /* SongRow.swift */; };
 		0AEDB6FE29C0F76D00B6AB8A /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */; };
 		0AEDB70029C0F87600B6AB8A /* LibrarySongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FF29C0F87600B6AB8A /* LibrarySongsView.swift */; };
+		0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF15F8129C4D9FE00FFEF63 /* release_notes.json */; };
+		0AF15F8429C4DA3C00FFEF63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */; };
 		8F85810E29BE124F00BDC749 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85810D29BE124F00BDC749 /* CatalogView.swift */; };
 		8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811029BE145F00BDC749 /* StationGenresView.swift */; };
 		8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */; };
@@ -70,6 +72,8 @@
 		0AEDB6FA29C0F6AF00B6AB8A /* SongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongRow.swift; sourceTree = "<group>"; };
 		0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsView.swift; sourceTree = "<group>"; };
 		0AEDB6FF29C0F87600B6AB8A /* LibrarySongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySongsView.swift; sourceTree = "<group>"; };
+		0AF15F8129C4D9FE00FFEF63 /* release_notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = release_notes.json; sourceTree = SOURCE_ROOT; };
+		0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8F85810D29BE124F00BDC749 /* CatalogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		8F85811029BE145F00BDC749 /* StationGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenresView.swift; sourceTree = "<group>"; };
 		8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenreDetailedView.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 		0A8FFEF929B9248F0029A91F /* Musadora */ = {
 			isa = PBXGroup;
 			children = (
+				0AF15F8529C4DA4200FFEF63 /* Settings */,
+				0AF15F8129C4D9FE00FFEF63 /* release_notes.json */,
 				0AEDB6E929C0DFDB00B6AB8A /* Main */,
 				0AEDB6F929C0F6A900B6AB8A /* Music Items */,
 				0AEDB6EA29C0DFE500B6AB8A /* Onboarding */,
@@ -233,6 +239,14 @@
 				0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */,
 			);
 			path = Song;
+			sourceTree = "<group>";
+		};
+		0AF15F8529C4DA4200FFEF63 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		8F85810C29BE124100BDC749 /* Catalog */ = {
@@ -317,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */,
 				0A8FFF0229B9248F0029A91F /* Preview Assets.xcassets in Resources */,
 				0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */,
 			);
@@ -347,6 +362,7 @@
 				0A1986A629BE66C300876C60 /* HistoryView.swift in Sources */,
 				0A8664B029C0FCC200CA6E3F /* PlaylistRow.swift in Sources */,
 				0A834F1F29B925A30063AA6C /* WelcomeView.swift in Sources */,
+				0AF15F8429C4DA3C00FFEF63 /* SettingsView.swift in Sources */,
 				0AEDB6F229C0E2A800B6AB8A /* SongChartView.swift in Sources */,
 				0AEDB6FE29C0F76D00B6AB8A /* SongsView.swift in Sources */,
 				0AEDB6FB29C0F6AF00B6AB8A /* SongRow.swift in Sources */,

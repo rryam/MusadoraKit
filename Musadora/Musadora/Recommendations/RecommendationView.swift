@@ -25,9 +25,25 @@ struct RecommendationRow: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      if let artwork = item.artwork {
-        ArtworkImage(artwork, width: 80, height: 80)
-          .cornerRadius(8)
+      HStack {
+        if let artwork = item.artwork {
+          ArtworkImage(artwork, width: 100, height: 100)
+            .cornerRadius(8)
+        }
+
+        Spacer()
+
+        Image(systemName: "play.fill")
+          .foregroundColor(.secondary)
+          .onTapGesture {
+            Task {
+              do {
+                try await APlayer.shared.play(item: item)
+              } catch {
+                print(error)
+              }
+            }
+          }
       }
 
       Text(item.title)
@@ -36,19 +52,6 @@ struct RecommendationRow: View {
 
       Text(item.subtitle ?? "")
         .font(.subheadline)
-    }
-    .onLongPressGesture(perform: { playItem(item) })
-  }
-}
-
-extension RecommendationRow {
-  private func playItem(_ item: MusicPersonalRecommendation.Item) {
-    Task {
-      do {
-        try await APlayer.shared.play(item: item)
-      } catch {
-        print(error)
-      }
     }
   }
 }

@@ -16,9 +16,25 @@ struct PlaylistChartView: View {
     List {
       ForEach(playlistChart.items) { playlist in
         VStack(alignment: .leading) {
-          if let artwork = playlist.artwork {
-            ArtworkImage(artwork, width: 80, height: 80)
-              .cornerRadius(8)
+          HStack {
+            if let artwork = playlist.artwork {
+              ArtworkImage(artwork, width: 100, height: 100)
+                .cornerRadius(8)
+            }
+
+            Spacer()
+
+            Image(systemName: "play.fill")
+              .foregroundColor(.secondary)
+              .onTapGesture {
+                Task {
+                  do {
+                    try await APlayer.shared.play(playlist: playlist)
+                  } catch {
+                    print(error)
+                  }
+                }
+              }
           }
 
           Text(playlist.name)
@@ -28,21 +44,8 @@ struct PlaylistChartView: View {
           Text(playlist.curatorName ?? "")
             .font(.subheadline)
         }
-        .onLongPressGesture(perform: { playItem(playlist) })
       }
     }
     .navigationTitle(playlistChart.title)
-  }
-}
-
-extension PlaylistChartView {
-  private func playItem(_ playlist: Playlist) {
-    Task {
-      do {
-        try await APlayer.shared.play(playlist: playlist)
-      } catch {
-        print(error)
-      }
-    }
   }
 }

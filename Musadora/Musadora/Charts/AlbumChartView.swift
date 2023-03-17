@@ -16,9 +16,25 @@ struct AlbumChartView: View {
     List {
       ForEach(albumChart.items) { album in
         VStack(alignment: .leading) {
-          if let artwork = album.artwork {
-            ArtworkImage(artwork, width: 80, height: 80)
-              .cornerRadius(8)
+          HStack {
+            if let artwork = album.artwork {
+              ArtworkImage(artwork, width: 100, height: 100)
+                .cornerRadius(8)
+            }
+
+            Spacer()
+
+            Image(systemName: "play.fill")
+              .foregroundColor(.secondary)
+              .onTapGesture {
+                Task {
+                  do {
+                    try await APlayer.shared.play(album: album)
+                  } catch {
+                    print(error)
+                  }
+                }
+              }
           }
 
           Text(album.title)
@@ -28,19 +44,6 @@ struct AlbumChartView: View {
           Text(album.artistName)
             .font(.subheadline)
         }
-        .onLongPressGesture(perform: { playItem(album) })
-      }
-    }
-  }
-}
-
-extension AlbumChartView {
-  private func playItem(_ album: Album) {
-    Task {
-      do {
-        try await APlayer.shared.play(album: album)
-      } catch {
-        print(error)
       }
     }
   }
