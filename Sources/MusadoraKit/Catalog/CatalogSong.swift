@@ -5,27 +5,21 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
-
-
 public extension MCatalog {
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
   ///
   /// In the following example, the method fetches the details of the song **Me, Myself & I** by G-Eazy
-  /// with the ID `1544326470` without any additional properties, nor relationships:
-  ///
-  ///     let id: MusicItemID = "1544326470"
-  ///     let song = try await MCatalog.song(id: id, fetch: [])
-  ///
-  /// To fetch additional relationships like `albums` or properties like `artistURL` in the same request,
-  /// specify them in the `fetch` parameter:
+  /// with the ID `1544326470`.
+  /// It also fetches additional relationships like `albums` or properties like `artistURL` in the
+  /// same request, by specifying them in the `fetch` parameter:
   ///
   ///     let id: MusicItemID = "1544326470"
   ///     let song = try await MCatalog.song(id: id, fetch: [.albums, .artistURL])
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
-  ///   - properties: Additional relationships to fetch with the song.
+  ///   - properties: Additional relationships and properties to fetch with the song.
   /// - Returns: `Song` matching the given identifier.
   static func song(id: MusicItemID, fetch properties: SongProperties) async throws -> Song {
     try await song(id: id, properties: properties)
@@ -57,6 +51,7 @@ public extension MCatalog {
   }
 
   /// Fetch a song from the Apple Music catalog by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   ///   - property: Additional property or relationship to fetch with the song.
@@ -66,6 +61,7 @@ public extension MCatalog {
   }
 
   /// Fetch a song from the Apple Music catalog by using its identifier with no properties.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
@@ -74,6 +70,7 @@ public extension MCatalog {
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
@@ -83,6 +80,7 @@ public extension MCatalog {
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
