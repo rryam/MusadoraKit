@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 22/12/22.
 //
 
-
-
 public typealias MCatalogSearchTypes = [MCatalogSearchType]
 
 public enum MCatalogSearchType {

@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
-
-
 public extension MCatalog {
   /// Fetch an album from the Apple Music catalog by using its identifier.
   ///

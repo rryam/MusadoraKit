@@ -5,7 +5,6 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
-
 import Foundation
 
 public extension MCatalog {
@@ -79,10 +78,10 @@ public extension MCatalog {
   /// - Returns: `Stations` representing the list of stations belonging to the specified genre.
   static func stations(for genre: StationGenre) async throws -> Stations {
     let storefront = try await MusicDataRequest.currentCountryCode
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/station-genres/\(genre.id.rawValue)/stations"
 
-    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/station-genres/\(genre.id.rawValue)/stations")
-
-    guard let url = url else {
+    guard let url = components.url else {
       throw URLError(.badURL)
     }
 
@@ -117,7 +116,6 @@ public extension MCatalog {
 
   static func personalStation() async throws -> Station {
     let storefront = try await MusicDataRequest.currentCountryCode
-
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/stations"
     components.queryItems = [URLQueryItem(name: "filter[identity]", value: "personal")]

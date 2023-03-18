@@ -5,7 +5,6 @@
 //  Created by Rudrank Riyam on 17/08/21.
 //
 
-
 import Foundation
 
 public extension MCatalog {
@@ -78,7 +77,13 @@ public extension MCatalog {
 
       for storefront in storefronts {
         group.addTask {
-          let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/genres")!
+          var components = AppleMusicURLComponents()
+          components.path = "catalog/\(storefront)/genres"
+
+          guard let url = components.url else {
+            throw URLError(.badURL)
+          }
+
           let request = MusicDataRequest(urlRequest: .init(url: url))
           let response = try await request.response()
 
@@ -107,10 +112,10 @@ public extension MCatalog {
   /// - Returns: `StationGenres` representing the list of station genres available in the current country's storefront.
   static func stationGenres() async throws -> StationGenres {
     let storefront = try await MusicDataRequest.currentCountryCode
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/station-genres"
 
-    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront)/station-genres")
-    
-    guard let url = url else {
+    guard let url = components.url else {
       throw URLError(.badURL)
     }
 
@@ -126,9 +131,10 @@ public extension MCatalog {
   ///
   /// - Returns: `StationGenres` representing the list of station genres available in the current country's storefront.
   static func stationGenres(for storefront: StorefrontsData.Storefront) async throws -> StationGenres {
-    let url = URL(string: "https://api.music.apple.com/v1/catalog/\(storefront.id)/station-genres")
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront.id)/station-genres"
 
-    guard let url = url else {
+    guard let url = components.url else {
       throw URLError(.badURL)
     }
 
