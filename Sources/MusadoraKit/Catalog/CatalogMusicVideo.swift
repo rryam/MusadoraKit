@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
-
-
 public extension MCatalog {
   /// Fetch a music video from the Apple Music catalog by using its identifier.
   /// - Parameters:

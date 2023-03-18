@@ -1,28 +1,31 @@
 //
-//  LibraryCatalog.swift
+//  CatalogCleanEquivalent.swift
 //  MusadoraKit
 //
-//  Created by Rudrank Riyam on 10/05/22.
+//  Created by Rudrank Riyam on 18/03/23.
 //
 
 import Foundation
 
-public extension FilterableLibraryItem {
-  var catalog: Self {
+public extension EquivalentRequestable {
+  var clean: Self {
     get async throws {
-      let path: LibraryMusicItemType
+      let path: EquivalentMusicItemType
+      let storefront = try await MusicDataRequest.currentCountryCode
       var components = AppleMusicURLComponents()
 
       switch self {
         case is Song: path = .songs
         case is Album: path = .albums
-        case is Artist: path = .artists
         case is MusicVideo: path = .musicVideos
-        case is Playlist: path = .playlists
-        default: throw NSError(domain: "Wrong library music item type.", code: 0)
+        default: throw NSError(domain: "Wrong equivalent music item type.", code: 0)
       }
 
-      components.path = "me/library/\(path.rawValue)/\(id.rawValue)/catalog"
+      components.path = "catalog/\(storefront)/\(path.rawValue)"
+
+      let filterEquivalentsQuery = URLQueryItem(name: "filter[equivalents]", value: id.rawValue)
+      let restrictExplicitQuery = URLQueryItem(name: "restrict", value: "explicit")
+      components.queryItems = [filterEquivalentsQuery, restrictExplicitQuery]
 
       guard let url = components.url else {
         throw URLError(.badURL)

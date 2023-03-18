@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 20/08/21.
 //
 
-
-
 public extension MCatalog {
   /// Search the Apple Music catalog by using a query term.
   /// - Parameters:

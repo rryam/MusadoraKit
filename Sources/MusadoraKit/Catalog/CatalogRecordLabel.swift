@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 10/04/22.
 //
 
-
-
 public extension MCatalog {
   /// Fetch a record label from the Apple Music catalog by using its identifier.
   /// - Parameters:

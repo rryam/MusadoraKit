@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 10/04/22.
 //
 
-
-
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public extension MCatalog {
 
