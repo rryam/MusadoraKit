@@ -93,6 +93,28 @@ let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
 }
 ```
 
+## Referencing content across different geographical regions
+
+In the example below, the target storefront is "tw" for Taiwan:
+
+```swift
+let album = MCatalog.album(id: "1223618217")
+let equivalentAlbum = try await album.equivalent(for: "tw")
+
+let albums = MCatalog.albums(ids: ["1223618217", "1603171516"])
+let equivalentAlbums = try await albums.equivalents(for: "tw")
+```
+
+## Explicit to clean-equivalent content:
+
+```swift
+let song = MCatalog.song(id: "1603171970")
+let cleanSong = try await song.clean
+
+let songs = MCatalog.songs(ids: ["1603171970", "1531327246"])
+let cleanSongs = try await songs.clean
+```
+
 ## MusicCatalogResourcesRequest: 
 
 To fetch multiple catalog music items by their identifiers in the same request. For example:
