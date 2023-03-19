@@ -12,6 +12,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch an artist from the user's library by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   /// - Returns: `Artist` matching the given identifier.
@@ -46,6 +47,7 @@ public extension MLibrary {
 #endif
 
   /// Fetch all artists from the user's library in alphabetical order.
+  ///
   /// - Parameters:
   ///   - limit: The number of artists returned.
   /// - Returns: `Artists` for the given limit.
@@ -74,6 +76,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch multiple artists from the user's library by using their identifiers.
+  /// 
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.

@@ -90,6 +90,7 @@ public extension MCatalog {
   }
 
   /// Fetch multiple songs from the Apple Music catalog by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   ///   - property: Additional property or relationship to fetch with the songs.
@@ -107,80 +108,94 @@ public extension MCatalog {
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func song(isrc: String, fetch properties: SongProperties) async throws -> Songs {
     try await song(isrc: isrc, properties: properties)
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func song(isrc: String, fetch properties: SongProperty...) async throws -> Songs {
     try await song(isrc: isrc, properties: properties)
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC value.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func song(isrc: String, fetch property: SongProperty) async throws -> Songs {
     try await song(isrc: isrc, properties: [property])
   }
 
   /// Fetch one or more songs from Apple Music catalog by using their ISRC value with no properties.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   /// - Returns: `Songs` matching the given ISRC value.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func song(isrc: String) async throws -> Songs {
     try await song(isrc: isrc, properties: [])
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func songs(isrc: [String], fetch properties: SongProperties) async throws -> Songs {
     try await songs(isrc: isrc, properties: properties)
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - properties: Additional relationships to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
+  ///
   /// - Note: One ISRC value may return more than one song.
   static func songs(isrc: [String], fetch properties: SongProperty...) async throws -> Songs {
     try await songs(isrc: isrc, properties: properties)
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values.
+  ///
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   ///   - property: Additional property or relationship to fetch with the songs.
   /// - Returns: `Songs` matching the given ISRC values.
-  /// - Note: One ISRC value may return more than one song.
+  ///
   static func songs(isrc: [String], fetch property: SongProperty) async throws -> Songs {
     try await songs(isrc: isrc, properties: [property])
   }
 
   /// Fetch multiple songs from Apple Music catalog by using their ISRC values with no properties.
   ///
-  /// Note that one ISRC value may return more than one song.
   /// - Parameters:
   ///   - isrc: The ISRC values for the songs.
   /// - Returns: `Songs` matching the given ISRC values.
+  ///
+  /// - Note: One ISRC value may return more than one song.
   static func songs(isrc: [String]) async throws -> Songs {
     try await songs(isrc: isrc, properties: [])
   }

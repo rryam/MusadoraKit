@@ -62,11 +62,12 @@ public extension MCatalog {
 
   /// Fetch one or more music videos from Apple Music catalog by using their ISRC value.
   ///
-  /// Note that one ISRC value may return more than one music video.
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   ///   - properties: Additional relationships to fetch with the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC value.
+  ///
+  /// - Note: One ISRC value may return more than one music video.
   static func musicVideo(isrc: String, fetch properties: MusicVideoProperties) async throws -> MusicVideos
   {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
@@ -77,10 +78,11 @@ public extension MCatalog {
 
   /// Fetch one or more music videos from Apple Music catalog by using their ISRC value with all properties.
   ///
-  /// Note that one ISRC value may return more than one music video.
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC value.
+  ///
+  /// - Note: One ISRC value may return more than one music video.
   static func musicVideo(isrc: String) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = .all
@@ -90,11 +92,12 @@ public extension MCatalog {
 
   /// Fetch multiple music videos from Apple Music catalog by using their ISRC values.
   ///
-  /// Note that one ISRC value may return more than one music video.
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   ///   - properties: Additional relationships to fetch with the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC values.
+  ///
+  /// - Note: One ISRC value may return more than one music video.
   static func musicVideos(isrc: [String], fetch properties: MusicVideoProperties) async throws -> MusicVideos
   {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
@@ -105,10 +108,11 @@ public extension MCatalog {
 
   /// Fetch multiple music videos from Apple Music catalog by using their ISRC values with all properties.
   ///
-  /// Note that one ISRC value may return more than one music video.
   /// - Parameters:
   ///   - isrc: The ISRC values for the music videos.
   /// - Returns: `MusicVideos` matching the given ISRC values.
+  ///
+  /// - Note: One ISRC value may return more than one music video.
   static func musicVideos(isrc: [String]) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = .all

@@ -114,6 +114,9 @@ public extension MCatalog {
     }
   }
 
+  /// Fetch the user's personalized Apple Music station.
+  ///
+  ///  - Returns: `Station` object representing the user's personalized Apple Music station.
   static func personalStation() async throws -> Station {
     let storefront = try await MusicDataRequest.currentCountryCode
     var components = AppleMusicURLComponents()
@@ -134,5 +137,27 @@ public extension MCatalog {
     }
 
     return personalStation
+  }
+
+  /// Fetch the list of featured Apple Music live radio stations.
+  ///
+  /// - Returns: `Stations` representing the featured Apple Music live radio stations.
+  /// 
+  /// - Note: As of writing this method, there are three stations: **Apple Music 1**,
+  /// **Apple Music Hits** and **Apple Music Country**.
+  static func liveStations() async throws -> Stations {
+    let storefront = try await MusicDataRequest.currentCountryCode
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/stations"
+    components.queryItems = [URLQueryItem(name: "filter[featured]", value: "apple-music-live-radio")]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+    return stations
   }
 }
