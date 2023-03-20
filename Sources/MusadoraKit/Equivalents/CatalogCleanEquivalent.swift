@@ -10,27 +10,10 @@ import Foundation
 public extension EquivalentRequestable {
   var clean: Self {
     get async throws {
-      let path: EquivalentMusicItemType
+      let path = try EquivalentMusicItemType.path(for: Self.self)
       let storefront = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
 
-      switch self {
-        case is Song: path = .songs
-        case is Album: path = .albums
-        case is MusicVideo: path = .musicVideos
-        default: throw NSError(domain: "Wrong equivalent music item type.", code: 0)
-      }
-
-      components.path = "catalog/\(storefront)/\(path.rawValue)"
-
-      let filterEquivalentsQuery = URLQueryItem(name: "filter[equivalents]", value: id.rawValue)
-      let restrictExplicitQuery = URLQueryItem(name: "restrict", value: "explicit")
-      components.queryItems = [filterEquivalentsQuery, restrictExplicitQuery]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
+      let url = try cleanEquivalentURL(storefront: storefront, path: path)
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
       let items = try JSONDecoder().decode(MusicItemCollection<Self>.self, from: response.data)
@@ -40,5 +23,21 @@ public extension EquivalentRequestable {
       }
       return item
     }
+  }
+
+  internal func cleanEquivalentURL(storefront: String, path: EquivalentMusicItemType) throws -> URL {
+    var components = AppleMusicURLComponents()
+
+    components.path = "catalog/\(storefront)/\(path.rawValue)"
+
+    let filterEquivalentsQuery = URLQueryItem(name: "filter[equivalents]", value: id.rawValue)
+    let restrictExplicitQuery = URLQueryItem(name: "restrict", value: "explicit")
+    components.queryItems = [filterEquivalentsQuery, restrictExplicitQuery]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    return url
   }
 }

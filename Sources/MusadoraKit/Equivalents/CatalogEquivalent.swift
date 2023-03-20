@@ -9,23 +9,9 @@ import Foundation
 
 public extension EquivalentRequestable {
   func equivalent(for targetStorefront: String) async throws -> Self {
-    let path: EquivalentMusicItemType
-    var components = AppleMusicURLComponents()
+    let path = try EquivalentMusicItemType.path(for: Self.self)
 
-    switch self {
-      case is Song: path = .songs
-      case is Album: path = .albums
-      case is MusicVideo: path = .musicVideos
-      default: throw NSError(domain: "Wrong equivalent music item type.", code: 0)
-    }
-
-    components.path = "catalog/\(targetStorefront)/\(path.rawValue)"
-    components.queryItems = [URLQueryItem(name: "filter[equivalents]", value: id.rawValue)]
-
-    guard let url = components.url else {
-      throw URLError(.badURL)
-    }
-
+    let url = try equivalentURL(storefront: targetStorefront, path: path)
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
     let items = try JSONDecoder().decode(MusicItemCollection<Self>.self, from: response.data)
@@ -34,5 +20,17 @@ public extension EquivalentRequestable {
       throw MusadoraKitError.notFound(for: id.rawValue)
     }
     return item
+  }
+
+  internal func equivalentURL(storefront: String, path: EquivalentMusicItemType) throws -> URL {
+    var components = AppleMusicURLComponents()
+
+    components.path = "catalog/\(storefront)/\(path.rawValue)"
+    components.queryItems = [URLQueryItem(name: "filter[equivalents]", value: id.rawValue)]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+    return url
   }
 }
