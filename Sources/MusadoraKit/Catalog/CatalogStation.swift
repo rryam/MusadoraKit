@@ -71,6 +71,7 @@ public extension MCatalog {
   }
 }
 
+// MARK: - GENRE STATION
 public extension MCatalog {
   /// Fetch a list of stations in the current country's storefront that belong to a specific station genre in the Apple Music catalog.
   ///
@@ -78,12 +79,7 @@ public extension MCatalog {
   /// - Returns: `Stations` representing the list of stations belonging to the specified genre.
   static func stations(for genre: StationGenre) async throws -> Stations {
     let storefront = try await MusicDataRequest.currentCountryCode
-    var components = AppleMusicURLComponents()
-    components.path = "catalog/\(storefront)/station-genres/\(genre.id.rawValue)/stations"
-
-    guard let url = components.url else {
-      throw URLError(.badURL)
-    }
+    let url = try stationsURL(for: genre.id, storefront: storefront)
 
     let request = MusicDataRequest(urlRequest: URLRequest(url: url))
     let response = try await request.response()
@@ -114,11 +110,40 @@ public extension MCatalog {
     }
   }
 
+  internal static func stationsURL(for id: MusicItemID, storefront: String) throws -> URL {
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/station-genres/\(id.rawValue)/stations"
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    return url
+  }
+}
+
+// MARK: - PERSONAL STATION
+public extension MCatalog {
   /// Fetch the user's personalized Apple Music station.
   ///
   ///  - Returns: `Station` object representing the user's personalized Apple Music station.
   static func personalStation() async throws -> Station {
     let storefront = try await MusicDataRequest.currentCountryCode
+    let url = try personalStationURL(for: storefront)
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+
+    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+
+    guard let personalStation = stations.first else {
+      throw MusadoraKitError.notFound(for: "personal radio station")
+    }
+
+    return personalStation
+  }
+
+  internal static func personalStationURL(for storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/stations"
     components.queryItems = [URLQueryItem(name: "filter[identity]", value: "personal")]
@@ -127,26 +152,29 @@ public extension MCatalog {
       throw URLError(.badURL)
     }
 
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-
-    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
-
-    guard let personalStation = stations.first else {
-      throw MusadoraKitError.notFound(for: "personal")
-    }
-
-    return personalStation
+    return url
   }
+}
 
+// MARK: - LIVE RADIO STATIONS
+public extension MCatalog {
   /// Fetch the list of featured Apple Music live radio stations.
   ///
   /// - Returns: `Stations` representing the featured Apple Music live radio stations.
-  /// 
+  ///
   /// - Note: As of writing this method, there are three stations: **Apple Music 1**,
   /// **Apple Music Hits** and **Apple Music Country**.
   static func liveStations() async throws -> Stations {
     let storefront = try await MusicDataRequest.currentCountryCode
+    let url = try liveStationsURL(for: storefront)
+
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+    let response = try await request.response()
+    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+    return stations
+  }
+
+  internal static func liveStationsURL(for storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/stations"
     components.queryItems = [URLQueryItem(name: "filter[featured]", value: "apple-music-live-radio")]
@@ -155,9 +183,6 @@ public extension MCatalog {
       throw URLError(.badURL)
     }
 
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
-    return stations
+    return url
   }
 }
