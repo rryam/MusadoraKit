@@ -149,23 +149,29 @@ public extension MCatalog {
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
   static func chartPlaylists(storefront: String? = nil) async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
-    var components = AppleMusicURLComponents()
-    components.path = "catalog/\(countryCode)/playlists"
-
-    if let storefront = storefront {
-      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: storefront)]
-    } else {
-      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: countryCode)]
-    }
-
-    guard let url = components.url else {
-      throw URLError(.badURL)
-    }
+    let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: storefront)
 
     let request = MusicDataRequest(urlRequest: URLRequest(url: url))
     let response = try await request.response()
 
     return try JSONDecoder().decode(Playlists.self, from: response.data)
+  }
+
+  static func chartPlaylistsURL(currentStorefront: String, targetStorefront: String? = nil) throws -> URL {
+      var components = AppleMusicURLComponents()
+      components.path = "catalog/\(currentStorefront)/playlists"
+
+      if let targetStorefront {
+          components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: targetStorefront)]
+      } else {
+          components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: currentStorefront)]
+      }
+
+      guard let url = components.url else {
+          throw URLError(.badURL)
+      }
+
+      return url
   }
 
   /// Fetch all the charting playlists from the Apple Music catalog for all the storefronts.
