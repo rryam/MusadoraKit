@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 22/12/22.
 //
 
-
-
 /// Additional property/relationship of an album.
 public typealias AlbumProperty = PartialMusicAsyncProperty<Album>
 

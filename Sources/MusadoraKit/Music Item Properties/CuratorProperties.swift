@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 22/12/22.
 //
 
-
-
 /// Additional property/relationship of an artist.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public typealias CuratorProperty = PartialMusicAsyncProperty<Curator>

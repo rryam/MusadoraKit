@@ -41,24 +41,30 @@ public extension MCatalog {
       let response = try await request.response()
       return response.items
     } else {
-      return try await topGenresAPI()
+      let storefront = try await MusicDataRequest.currentCountryCode
+      return try await topGenres(for: storefront)
     }
 #else
-    return try await topGenresAPI()
+    let storefront = try await MusicDataRequest.currentCountryCode
+    return try await topGenres(for: storefront)
 #endif
+  }
+
+  /// Fetch top genres from the Apple Music catalog for a particular storefront.
+  ///
+  /// - Parameters:
+  ///   - storefront: The identifier of the storefront for which to retrieve the top genres.
+  /// - Returns: Top `Genres` for the particular storefront.
+  static func topGenres(for storefront: String) async throws -> Genres {
+    let url = try topGenresURL(storefront: storefront)
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
+
+    return try JSONDecoder().decode(Genres.self, from: response.data)
   }
 }
 
 extension MCatalog {
-  static private func topGenresAPI() async throws -> Genres {
-    let storefront = try await MusicDataRequest.currentCountryCode
-    let url = try topGenresURL(storefront: storefront)
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-    
-    return try JSONDecoder().decode(Genres.self, from: response.data)
-  }
-
   internal static func topGenresURL(storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/genres"
@@ -82,32 +88,28 @@ public extension MCatalog {
 
       for storefront in storefronts {
         group.addTask {
-          var components = AppleMusicURLComponents()
-          components.path = "catalog/\(storefront)/genres"
-
-          guard let url = components.url else {
-            throw URLError(.badURL)
-          }
-
-          let request = MusicDataRequest(urlRequest: .init(url: url))
-          let response = try await request.response()
-
-          return try JSONDecoder().decode(Genres.self, from: response.data)
+          return try await topGenres(for: storefront)
         }
       }
 
       for try await genres in group {
-        for genre in genres {
-          if allGenres.contains(where: { $0.id == genre.id && $0.name == $0.name }) {
-            // Duplicate. Ignore
-          } else {
-            allGenres.insert(genre)
-          }
-        }
+        allGenres = mergeGenres(allGenres, with: genres)
       }
 
       return MusicItemCollection(allGenres)
     }
+  }
+
+  private static func mergeGenres(_ existingGenres: Set<Genre>, with newGenres: Genres) -> Set<Genre> {
+    var mergedGenres = existingGenres
+
+    for genre in newGenres {
+      if !mergedGenres.contains(where: { $0.id == genre.id && $0.name == $0.name }) {
+        mergedGenres.insert(genre)
+      }
+    }
+
+    return mergedGenres
   }
 }
 

@@ -83,14 +83,12 @@ identifier_name:
 large_tuple: 3
 number_separator:
   minimum_length: 5
+line_length: 300
 file_name:
   excluded:
     - SwiftSyntax+SwiftLint.swift
     - GeneratedTests.swift
     - TestHelpers.swift
-
-function_body_length: 60
-type_body_length: 400
 
 custom_rules:
   rule_id:
