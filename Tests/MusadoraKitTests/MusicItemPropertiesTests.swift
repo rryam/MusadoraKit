@@ -12,30 +12,29 @@ import XCTest
 final class MusicItemPropertiesTests: XCTestCase {
   func testPlaylistPropertiesAll() {
     let allProperties = PlaylistProperties.all
-    let defaultProperties: Set<PlaylistProperty> = [.tracks, .featuredArtists, .moreByCurator]
-
-    XCTAssertTrue(defaultProperties.isSubset(of: allProperties))
+    var expectedProperties: Set<PlaylistProperty> = [.tracks, .featuredArtists, .moreByCurator]
 
 #if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-      let additionalProperties: Set<PlaylistProperty> = [.curator, .radioShow]
-      XCTAssertTrue(additionalProperties.isSubset(of: allProperties))
+      expectedProperties.insert(.curator)
+      expectedProperties.insert(.radioShow)
     }
 #endif
+
+    XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }
 
   func testSongPropertiesAll() {
     let allProperties = SongProperties.all
-    let defaultProperties: Set<SongProperty> = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
-
-    XCTAssertTrue(defaultProperties.isSubset(of: allProperties))
+    var expectedProperties: Set<SongProperty> = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
 
 #if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-      let additionalProperties: Set<SongProperty> = [.audioVariants]
-      XCTAssertTrue(additionalProperties.isSubset(of: allProperties))
+      expectedProperties.insert(.audioVariants)
     }
 #endif
+
+    XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }
 
   func testRecordLabelPropertiesAll() {
@@ -79,15 +78,14 @@ final class MusicItemPropertiesTests: XCTestCase {
 
   func testAlbumPropertiesAll() {
     let allProperties = AlbumProperties.all
-    let expectedProperties: Set<AlbumProperty> = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
-
-    XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
+    var expectedProperties: Set<AlbumProperty> = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
 
 #if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-      let additionalProperties: Set<AlbumProperty> = [.audioVariants]
-      XCTAssertTrue(additionalProperties.isSubset(of: allProperties))
+      expectedProperties.insert(.audioVariants)
     }
 #endif
+
+    XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }
 }

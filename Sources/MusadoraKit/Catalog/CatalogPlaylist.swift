@@ -157,23 +157,6 @@ public extension MCatalog {
     return try JSONDecoder().decode(Playlists.self, from: response.data)
   }
 
-  static func chartPlaylistsURL(currentStorefront: String, targetStorefront: String? = nil) throws -> URL {
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(currentStorefront)/playlists"
-
-      if let targetStorefront {
-          components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: targetStorefront)]
-      } else {
-          components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: currentStorefront)]
-      }
-
-      guard let url = components.url else {
-          throw URLError(.badURL)
-      }
-
-      return url
-  }
-
   /// Fetch all the charting playlists from the Apple Music catalog for all the storefronts.
   ///
   /// In the following example, the method fetches the charting playlists globally:
@@ -189,14 +172,7 @@ public extension MCatalog {
     var globalChartPlaylists: Playlists = []
 
     for countryCodes in chunkedCountryCodes {
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(countryCode)/playlists"
-      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: countryCodes.joined(separator: ","))]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
+      let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: countryCodes.joined(separator: ","))
       let request = MusicDataRequest(urlRequest: URLRequest(url: url))
       let response = try await request.response()
 
@@ -206,5 +182,24 @@ public extension MCatalog {
     }
 
     return globalChartPlaylists
+  }
+}
+
+extension MCatalog {
+  internal static func chartPlaylistsURL(currentStorefront: String, targetStorefront: String? = nil, components: MURLComponents = AppleMusicURLComponents()) throws -> URL {
+    var components = components
+    components.path = "catalog/\(currentStorefront)/playlists"
+
+    if let targetStorefront {
+      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: targetStorefront)]
+    } else {
+      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: currentStorefront)]
+    }
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    return url
   }
 }

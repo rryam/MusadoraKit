@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct AppleMusicURLComponents {
+protocol MURLComponents {
+  var queryItems: [URLQueryItem]? { get set }
+  var path: String { get set }
+  var url: URL? { get }
+}
+
+struct AppleMusicURLComponents: MURLComponents {
   private var components: URLComponents
 
   init() {

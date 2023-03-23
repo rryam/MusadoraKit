@@ -1,5 +1,5 @@
 //
-//  MContinuousTrackRequestEndpointTests.swift
+//  MContinuousTrackRequestTests.swift
 //  MusadoraKitTests
 //
 //  Created by Rudrank Riyam on 08/03/23.
@@ -9,7 +9,7 @@
 import MusicKit
 import XCTest
 
-final class MContinuousTrackRequestEndpointTests: XCTestCase {
+final class MContinuousTrackRequestTests: XCTestCase {
   func testContinuousTracksEndpointURL() throws {
     let song = try Song.mock
     let request = MContinuousTrackRequest(for: song)
@@ -31,6 +31,15 @@ final class MContinuousTrackRequestEndpointTests: XCTestCase {
 
     let json = try data.printJSON()
     XCTAssertEqual(json, continuousTrackPostDataJSON)
+  }
+
+  func testMContinuousTrackDataEncoding() throws {
+    let trackData = MContinuousTrackData(songID: "1640832991", albumID: "1640832989")
+
+    let encodedData = try JSONEncoder().encode(trackData)
+    let encodedString = String(data: encodedData, encoding: .utf8)
+
+    XCTAssertEqual(encodedString?.replacingOccurrences(of: "\\s", with: "", options: .regularExpression), continuousTrackPostDataJSON.replacingOccurrences(of: "\\s", with: "", options: .regularExpression))
   }
 }
 
