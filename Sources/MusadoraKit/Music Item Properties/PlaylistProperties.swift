@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  PlaylistProperties.swift
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 22/12/22.
 //

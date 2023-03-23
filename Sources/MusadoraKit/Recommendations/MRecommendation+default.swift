@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 25/12/22.
 //
 
-
-
 public extension MRecommendation {
 
   /// Retrieve the default recommendations for a user.

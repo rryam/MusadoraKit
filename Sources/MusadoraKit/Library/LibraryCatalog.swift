@@ -8,27 +8,13 @@
 import Foundation
 
 public extension FilterableLibraryItem {
+
+  /// The catalog version of the library item.
   var catalog: Self {
     get async throws {
-      let path: LibraryMusicItemType
-      var components = AppleMusicURLComponents()
-
-      switch self {
-        case is Song: path = .songs
-        case is Album: path = .albums
-        case is Artist: path = .artists
-        case is MusicVideo: path = .musicVideos
-        case is Playlist: path = .playlists
-        default: throw NSError(domain: "Wrong library music item type.", code: 0)
-      }
-
-      components.path = "me/library/\(path.rawValue)/\(id.rawValue)/catalog"
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let path = try LibraryMusicItemType.path(for: Self.self)
+      let url = try catalogURL(path: path)
+      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
       let response = try await request.response()
       let items = try JSONDecoder().decode(MusicItemCollection<Self>.self, from: response.data)
 
@@ -37,5 +23,16 @@ public extension FilterableLibraryItem {
       }
       return item
     }
+  }
+
+  internal func catalogURL(path: LibraryMusicItemType) throws -> URL {
+    var components = AppleMusicURLComponents()
+    components.path = "me/library/\(path.rawValue)/\(id.rawValue)/catalog"
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    return url
   }
 }

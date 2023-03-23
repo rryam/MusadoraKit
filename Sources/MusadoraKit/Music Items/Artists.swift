@@ -5,7 +5,5 @@
 //  Created by Rudrank Riyam on 22/12/22.
 //
 
-
-
 /// A collection of artists.
 public typealias Artists = MusicItemCollection<Artist>
