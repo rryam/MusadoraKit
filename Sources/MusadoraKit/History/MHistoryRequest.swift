@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
 struct MHistoryRequest {
@@ -28,16 +27,19 @@ struct MHistoryRequest {
     self.endpoint = endpoint
 
     switch self.endpoint {
-      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations: maximumLimit = 10
-      case .recentlyAdded: maximumLimit = 25
-      case .recentlyPlayedTracks: maximumLimit = 30
+      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
+        maximumLimit = 10
+      case .recentlyAdded:
+        maximumLimit = 25
+      case .recentlyPlayedTracks:
+        maximumLimit = 30
     }
   }
 
   /// Fetches historical information based on the user’s history for the given request.
   func response() async throws -> MHistoryResponse {
     let url = try historyEndpointURL
-    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
     let response = try await request.response()
     let items = try JSONDecoder().decode(UserMusicItems.self, from: response.data)
     return MHistoryResponse(items: items)

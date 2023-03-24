@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 24/12/22.
 //
 
-
-
 public extension MCatalog {
   /// Adds a rating for a song in the Apple Music catalog.
   ///

@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 /// A protocol for music items that your app can fetch by
 /// using a recently added request.
 public protocol MRecentlyAddedRequestable: MusicItem {
 }
 
 /// A request that your app uses to fetch items the user has recently added.
-public struct MusicRecentlyAddedRequest<MusicItemType> where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
+public struct MRecentlyAddedRequest<MusicItemType> where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
 
     /// Creates a request for items the user has recently added.
     public init() {}

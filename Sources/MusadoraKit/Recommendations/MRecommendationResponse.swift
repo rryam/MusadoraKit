@@ -5,9 +5,6 @@
 //  Created by Rudrank Riyam on 02/04/22.
 //
 
-import Foundation
-
-
 /// An object that contains results for a recommendation request.
 public struct MRecommendationResponse {
   /// A collection of recommendation based on the `MusicRecommendationRequest`.

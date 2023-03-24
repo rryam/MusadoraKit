@@ -7,8 +7,8 @@
 
 import Foundation
 
-
 extension MCatalog {
+
   /// Mark an artist as favorite for the User.
   ///
   /// This function is marked as @discardableResult, which means that the return value can be ignored without causing any consequences.
