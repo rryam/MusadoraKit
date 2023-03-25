@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A collection of chart items.
 public struct ChartItemCollection<MusicItemType> where MusicItemType: MusicItem {
   /// The unique name of the chart to use when fetching a specific chart.

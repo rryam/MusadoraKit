@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 /// A request that your app uses to delete ratings for albums, songs,
 /// playlists, music videos, and stations for content in the Apple Music catalog.
 public struct MCatalogRatingDeleteRequest {
-
+  
   private var type: CatalogRatingMusicItemType
   private var id: MusicItemID
-
+  
   /// Creates a request to delete the rating for the unique identifier of the given catalog item.
   /// - Parameters:
   ///   - id: The unique identifier of the catalog item.
@@ -23,7 +22,7 @@ public struct MCatalogRatingDeleteRequest {
     self.id = id
     self.type = type
   }
-
+  
   /// Deletes the rating of the given catalog item
   /// that matches the unique identifier for the request.
   public func response() async throws -> Bool {
@@ -40,7 +39,7 @@ extension MCatalogRatingDeleteRequest {
     get throws {
       var components = AppleMusicURLComponents()
       components.path = "me/ratings/\(type.rawValue)/\(id.rawValue)"
-
+      
       guard let url = components.url else {
         throw URLError(.badURL)
       }

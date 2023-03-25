@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A request that your app uses to fetch items from the user's library
 /// using a filter.
 struct MLibraryResourceRequest<MusicItemType: MusicItem & Codable> {

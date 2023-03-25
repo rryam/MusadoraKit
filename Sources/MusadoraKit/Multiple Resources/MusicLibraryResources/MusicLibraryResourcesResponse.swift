@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 23/04/22.
 //
 
-
-
 /// An object that contains results for a catalog resources request.
 public struct MusicLibraryResourcesResponse {
   /// A collection of playlists.

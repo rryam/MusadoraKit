@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/// A collection of ratings for content items in the Apple Music Catalog.
 public typealias Ratings = [Rating]
 
 /// A request that your app uses to get ratings for albums, songs,

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct MContinuousTrackRequest {
   var limit: Int = 20
   private let song: Song

@@ -5,11 +5,10 @@
 //  Created by Rudrank Riyam on 23/04/22.
 //
 
-
-
 /// An object that contains results for a catalog resources request.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
 public struct MusicCatalogResourcesResponse {
+  
   /// A collection of stations.
   public var stations: Stations {
     MusicItemCollection(items.compactMap { item in

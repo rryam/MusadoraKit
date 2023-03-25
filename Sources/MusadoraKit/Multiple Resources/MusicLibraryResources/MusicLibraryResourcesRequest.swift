@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A request that your app uses to fetch multiple resources from the user's library
 /// using their identifiers.
 public struct MusicLibraryResourcesRequest {

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public typealias SongResource = (item: LibraryMusicItemType, value: [MusicItemID])
 
 /// A request that your app uses to add one or more catalog resources to a user’s iCloud Music Library.

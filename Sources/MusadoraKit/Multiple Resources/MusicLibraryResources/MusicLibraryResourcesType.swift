@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 23/04/22.
 //
 
-
-
 /// A collection of music catalog resources types.
 typealias MusicLibraryResourcesTypes = MusicItemCollection<MusicLibraryResourcesType>
 

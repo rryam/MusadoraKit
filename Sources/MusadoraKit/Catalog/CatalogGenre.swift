@@ -9,6 +9,7 @@ import Foundation
 
 public extension MCatalog {
   /// Fetch a genre from the Apple Music catalog by using its identifier.
+  /// 
   /// - Parameters:
   ///   - id: The unique identifier for the genre.
   /// - Returns: `Genre` matching the given identifier.
@@ -23,6 +24,7 @@ public extension MCatalog {
   }
   
   /// Fetch multiple genres from the Apple Music catalog by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the genres.
   /// - Returns: `Genres` matching the given identifiers.

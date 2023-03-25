@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A request that your app uses to fetch items from the your library
 /// using a search term.
 struct MLibrarySearchRequest: Equatable, Hashable, Sendable {

@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
-
-
 enum MLibrarySearchType: String, CodingKey {
   case songs = "library-songs"
   case artists = "library-artists"

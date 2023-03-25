@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct LibraryPlaylistCreationRequest: Codable {
   /// A dictionary that includes strings for the name and description of the new playlist.
   var attributes: PlaylistCreationAttributes
