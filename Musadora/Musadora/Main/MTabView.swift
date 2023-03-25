@@ -25,11 +25,6 @@ struct MTabView: View {
           Label("Recommendations", systemImage: "recordingtape")
         }
 
-      HistoryView()
-        .tabItem {
-          Label("History", systemImage: "music.mic")
-        }
-
       ChartsView()
         .tabItem {
           Label("Charts", systemImage: "chart.bar")
