@@ -61,6 +61,13 @@ workflows:
     environment:
       groups:
         - GitHub
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Musadora'
+        excludes: 
+          - '**/*.md'
     scripts:
       - name: Update DocC Documentation
         script: |
