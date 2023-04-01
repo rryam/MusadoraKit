@@ -9,7 +9,7 @@
 import MusicKit
 import XCTest
 
-final class StationGenreTests: XCTestCase {
+final class CatalogStationGenreTests: XCTestCase {
     func testDecoding() throws {
         let jsonData = """
         {

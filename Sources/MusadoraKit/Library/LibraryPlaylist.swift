@@ -38,19 +38,30 @@ public extension MLibrary {
     }
     return playlist
   }
-  #endif
+#endif
 
+#if compiler(>=5.7)
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  static func playlists(limit: Int? = nil) async throws -> Playlists {
+    let request = MusicLibraryRequest<Playlist>()
+    let response = try await request.response()
+    return response.items
+  }
+#else
   static func playlists(limit: Int? = nil) async throws -> Playlists {
     var request = MLibraryResourceRequest<Playlist>()
     request.limit = limit
     let response = try await request.response()
     return response.items
   }
+#endif
 
 #if compiler(>=5.7)
   /// Fetch multiple playlists from the user's library by using their identifiers.
