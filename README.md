@@ -1,6 +1,6 @@
 # MusadoraKit
 
-The ultimate companion to MusicKit.
+MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicKit. Makes is easier to work with MusicKit and Apple Music API, with one liner APIs for effortless implementation.
 
 <p align="center">
   <img src= "https://github.com/rryam/MusadoraKit/blob/main/MusadoraKitIcon.png" alt="MusadoraKit Logo" width="256"/>
