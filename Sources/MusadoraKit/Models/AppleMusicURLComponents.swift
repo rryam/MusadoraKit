@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol for URL components that can be used to construct URLs for API requests.
-protocol MURLComponents {
+public protocol MURLComponents {
 
   /// The query items to include in the URL.
   var queryItems: [URLQueryItem]? { get set }
