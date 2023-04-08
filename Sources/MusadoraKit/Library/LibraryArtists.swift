@@ -1,10 +1,9 @@
 //
 //  LibraryArtists.swift
-//  LibraryArtists
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 17/08/21.
 //
-
 
 import MediaPlayer
 
@@ -12,6 +11,13 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch an artist from the user's library by using its identifier.
+  ///
+  ///     do {
+  ///       let artist = try await MLibrary.artist(id: "12345")
+  ///       print("Artist name: \(artist.name)")
+  ///     } catch {
+  ///       print("Error fetching artist: \(error.localizedDescription)")
+  ///     }
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
@@ -76,10 +82,27 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Fetch multiple artists from the user's library by using their identifiers.
-  /// 
+  ///
+  ///     do {
+  ///       let artistIDs = ["12345", "67890"]
+  ///       let artists = try await MLibrary.artists(ids: artistIDs)
+  ///
+  ///       for artist in artists {
+  ///         print("Artist name: \(artist.name)")
+  ///         print("Artist genres: \(artist.genreNames)")
+  ///       }
+  ///     } catch {
+  ///       print("Error fetching artists: \(error.localizedDescription)")
+  ///     }
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
+  ///
+  /// - Note: This method fetches the artist locally from the device when using iOS 16+
+  ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
+  ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
+  ///  that fetches the data from Apple Music API.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
@@ -98,7 +121,17 @@ public extension MLibrary {
 #endif
 
 #if compiler(>=5.7)
-  /// Access the total number of artists in the user's library.
+  /// Accesses the total number of artists in the user's music library.
+  ///
+  /// Example usage:
+  /// ```
+  /// do {
+  ///     let artistCount = try await MLibrary.artistsCount
+  ///     print("The total number of artists in the user's library is \(artistCount).")
+  /// } catch {
+  ///     print("Error accessing the total number of artists: \(error.localizedDescription)")
+  /// }
+  /// ```
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
