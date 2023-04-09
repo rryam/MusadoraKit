@@ -8,6 +8,14 @@
 import Foundation
 
 public extension EquivalentRequestable {
+  /// Returns a clean version of the music item
+  ///
+  /// Example usage:
+  ///
+  ///     let album = try await Album(id: "123").clean
+  ///     let song = try await Song(id: "456").clean
+  ///     let musicVideo = try await MusicVideo(id: "789").clean
+  ///
   var clean: Self {
     get async throws {
       let path = try EquivalentMusicItemType.path(for: Self.self)
