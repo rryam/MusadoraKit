@@ -7,15 +7,22 @@
 
 import Foundation
 
+/// A request that your app uses to fetch tracks for a specific station.
 struct MStationTrackRequest {
+
+  /// A limit for the number of items to return
+  /// in the station tracks response. Default value is 20.
   var limit: Int = 20
 
   private let station: Station
 
+  /// Creates a request to fetch tracks for a given station.
+  /// - Parameter station: The station for which to fetch tracks.
   init(for station: Station) {
     self.station = station
   }
 
+  /// Fetches tracks for the station associated with this request.
   func response() async throws -> Songs {
     let url = try stationTracksEndpointURL
     let postRequest = MDataPostRequest(url: url)
@@ -23,6 +30,9 @@ struct MStationTrackRequest {
     return try await stationSongs(for: postRequest)
   }
 
+  /// Fetches and processes station songs in parallel tasks.
+  /// - Parameter postRequest: The request to fetch station songs.
+  /// - Returns: An array of unique songs for the station.
   private func stationSongs(for postRequest: MDataPostRequest) async throws -> Songs {
     try await withThrowingTaskGroup(of: Songs.self) { group in
       let iteratorLimit = limit / 10

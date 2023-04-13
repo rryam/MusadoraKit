@@ -5,8 +5,6 @@
 //  Created by Rudrank Riyam on 02/04/22.
 //
 
-
-
 /// An object that contains results for a history request.
 struct MHistoryResponse {
   /// A collection of historical resources based on the `MusicHistoryRequest`.

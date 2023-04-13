@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A  request that your app uses to fetch recommendations from
 /// the user's library, either default ones or based on identifiers.
 struct MRecommendationRequest {
