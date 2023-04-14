@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// An enum representing the types of items that can be related to a music item.
 public enum RelationshipItem: String {
   case albums
   case artists

@@ -8,6 +8,18 @@
 import Foundation
 
 public extension MusicItemCollection where MusicItemType: EquivalentRequestable {
+
+  /// Fetches the equivalent music items for the given storefront.
+  ///
+  /// Example usage:
+  ///
+  ///     let albums: MusicItemCollection<Album> = ...
+  ///     let equivalentAlbums = try await albums.equivalents(for: "us")
+  ///
+  /// - Parameters:
+  ///   - targetStorefront: A string representing the storefront for which the equivalent music items should be fetched.
+  ///
+  /// - Returns: A collection of equivalent music items for the given storefront.
   func equivalents(for targetStorefront: String) async throws -> MusicItemCollection<MusicItemType> {
     let path = try EquivalentMusicItemType.path(for: MusicItemType.self)
 

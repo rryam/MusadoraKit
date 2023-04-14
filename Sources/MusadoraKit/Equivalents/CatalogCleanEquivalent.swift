@@ -8,7 +8,7 @@
 import Foundation
 
 public extension EquivalentRequestable {
-  /// Returns a clean version of the music item
+  /// Returns a clean version of the music item.
   ///
   /// Example usage:
   ///

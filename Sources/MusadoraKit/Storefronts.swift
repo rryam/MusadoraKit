@@ -83,6 +83,10 @@ public extension MCatalog {
   
   /// Fetch a specific storefront of Apple Music by its unique identifier.
   ///
+  /// Example usage:
+  ///
+  ///     let storefront = try await MCatalog.storefront(id: "us")
+  ///
   /// - Parameter id: The unique identifier for the storefront you want to fetch.
   /// - Returns: `Storefront` object containing the details of the requested storefront.
   static func storefront(id: String) async throws -> MStorefront {
@@ -99,9 +103,14 @@ public extension MCatalog {
     return storefront
   }
 
-  /// Fetch all storefronts of Apple Music.
+  /// Fetches all the available storefronts of Apple Music.
   ///
-  /// - Returns: `Storefronts` as array of storefronts.
+  /// Example usage:
+  ///
+  ///       let storefronts = try await MCatalog.storefronts()
+  ///       print(storefronts)
+  ///
+  /// - Returns: An array of `MStorefronts` which contains all the storefronts available for Apple Music.
   static func storefronts() async throws -> MStorefronts {
     let url = try storefrontsURL()
     let request = MusicDataRequest(urlRequest: .init(url: url))
@@ -110,6 +119,9 @@ public extension MCatalog {
     return storefronts.data
   }
 
+  /// Generates the URL to fetch all the available storefronts of Apple Music.
+  ///
+  /// - Returns: The URL to fetch all the available storefronts of Apple Music.
   internal static func storefrontsURL() throws -> URL {
     var urlComponents = AppleMusicURLComponents()
     urlComponents.path = "storefronts"
@@ -121,6 +133,11 @@ public extension MCatalog {
     return url
   }
 
+  /// Returns the URL for fetching the specified storefront.
+  ///
+  /// - Parameter id: The identifier for the storefront.
+  ///
+  /// - Returns: The URL for fetching the specified storefront.
   internal static func storefrontsURL(id: String) throws -> URL {
     var urlComponents = AppleMusicURLComponents()
     urlComponents.path = "storefronts/\(id)"

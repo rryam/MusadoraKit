@@ -8,6 +8,13 @@
 import Foundation
 
 public extension MusicItemCollection where MusicItemType: EquivalentRequestable {
+
+  /// Returns a clean version of the music items.
+  ///
+  /// Example usage:
+  ///
+  ///     let albums: MusicItemCollection<Album> = ...
+  ///     let cleanAlbums = try await albums.clean
   var clean: Self {
     get async throws {
       let path = try EquivalentMusicItemType.path(for: MusicItemType.self)

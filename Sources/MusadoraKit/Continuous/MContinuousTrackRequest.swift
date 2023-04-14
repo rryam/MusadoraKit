@@ -7,14 +7,29 @@
 
 import Foundation
 
+/// Represents a continuous track request for a given `Song`.
 struct MContinuousTrackRequest {
+
+  /// The limit of songs to be returned in the response. Default value is `20`.
   var limit: Int = 20
+
+  /// The song for which the continuous track request is to be made.
   private let song: Song
 
+  /// Initializes a `MContinuousTrackRequest` object with the given `Song`.
+  ///
+  /// - Parameter song: The song for which the continuous track request is to be made.
   init(for song: Song) {
     self.song = song
   }
 
+  /// Creates a `MDataPostRequest` object for the given `Song` and `Album`.
+  ///
+  /// - Parameters:
+  ///   - song: The song for which the `MDataPostRequest` object is to be created.
+  ///   - album: The album to which the song belongs.
+  ///
+  /// - Returns: A `MDataPostRequest` object for the given song and album.
   internal func createPostRequest(for song: Song, album: Album?) throws -> MDataPostRequest {
     guard let album = album else {
       throw NSError(domain: "No album exists for this song.", code: 0)
@@ -28,6 +43,11 @@ struct MContinuousTrackRequest {
     return postRequest
   }
 
+  /// Sends a continuous track request and returns a list of songs.
+  ///
+  /// - Throws: An error if the request fails or no songs are returned.
+  ///
+  /// - Returns: A list of songs returned in the response.
   func response() async throws -> Songs {
     let playParametersData = try JSONEncoder().encode(song.playParameters)
     let playParameters = try JSONDecoder().decode(MusicPlayParameters.self, from: playParametersData)
@@ -49,6 +69,11 @@ struct MContinuousTrackRequest {
     return try await continuousSongs(for: postRequest)
   }
 
+  /// Sends multiple requests to get a list of continuous songs using a `TaskGroup`.
+  ///
+  /// - Parameter postRequest: The `MDataPostRequest` object to be used for sending the request.
+  ///
+  /// - Returns: A list of songs returned in the response.
   private func continuousSongs(for postRequest: MDataPostRequest) async throws -> Songs {
     try await withThrowingTaskGroup(of: Songs.self) { group in
       let iteratorLimit = limit / 10

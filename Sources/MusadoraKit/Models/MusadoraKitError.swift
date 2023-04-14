@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/// An enum representing the possible errors that can occur when fetching ratings for a music item.
 public enum RatingsError: Error, Equatable {
   case typeMissing
   case idMissing
@@ -24,6 +24,7 @@ extension RatingsError: CustomStringConvertible {
   }
 }
 
+/// An enum representing the possible errors that can occur when playing a piece of media.
 public enum MediaPlayError: Error, Equatable {
   case notFound(for: String)
 }
@@ -37,6 +38,7 @@ extension MediaPlayError: CustomStringConvertible {
   }
 }
 
+/// An enum representing the possible errors that can occur when using the MusadoraKit library.
 public enum MusadoraKitError: Error, Equatable {
   case notFound(for: String)
   case typeMissing

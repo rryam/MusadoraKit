@@ -7,7 +7,7 @@
 
 import Foundation
 import MusicKit
-
+/// An enum representing the different types of equivalent music items.
 enum EquivalentMusicItemType: String, Codable {
   case songs
   case albums
@@ -15,6 +15,14 @@ enum EquivalentMusicItemType: String, Codable {
 }
 
 extension EquivalentMusicItemType {
+
+  /// Returns the equivalent music item type for the given type.
+  ///
+  /// - Parameter item: A type that conforms to `EquivalentRequestable`.
+  ///
+  /// - Throws: An error if the item type is not recognized.
+  ///
+  /// - Returns: The equivalent music item type for the given type.
   static func path(for item: EquivalentRequestable.Type) throws -> Self {
     let path: EquivalentMusicItemType
 

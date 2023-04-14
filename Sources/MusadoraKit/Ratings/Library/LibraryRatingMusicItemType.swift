@@ -1,6 +1,6 @@
 //
 //  LibraryRatingMusicItemType.swift
-//  LibraryRatingMusicItemType
+//  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
 //
