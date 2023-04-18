@@ -9,7 +9,6 @@ import MediaPlayer
 
 public extension MLibrary {
 
-#if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier.
   /// 
   /// - Parameters:
@@ -20,30 +19,28 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func song(id: MusicItemID) async throws -> Song {
-    var request = MusicLibraryRequest<Song>()
-    request.filter(matching: \.id, equalTo: id)
-    let response = try await request.response()
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Song>()
+      request.filter(matching: \.id, equalTo: id)
+      let response = try await request.response()
 
-    guard let song = response.items.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return song
-  }
-#else
-  static func song(id: MusicItemID) async throws -> Song {
-    let request = MLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
-    let response = try await request.response()
+      guard let song = response.items.first else {
+        throw MusadoraKitError.notFound(for: id.rawValue)
+      }
+      return song
+    } else {
+      let request = MLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
+      let response = try await request.response()
 
-    guard let song = response.items.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+      guard let song = response.items.first else {
+        throw MusadoraKitError.notFound(for: id.rawValue)
+      }
+      return song
     }
-    return song
   }
-#endif
 
   /// Fetch all songs from the user's library in alphabetical order.
   ///
