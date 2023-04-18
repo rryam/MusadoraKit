@@ -16,6 +16,14 @@ Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing a
 
 You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](http://exploringmusickit.com). 2 books a day, and I can happily continue working on MusadoraKit.
 
+## Sponsors
+
+<p align="leading">
+  <img src= "https://is3-ssl.mzstatic.com/image/thumb/Purple116/v4/cd/40/fe/cd40fe7c-b0f8-30aa-0b41-4a76e7968766/AppIcon-1x_U007emarketing-0-0-0-10-0-0-85-220.png/246x0w.webp" alt="PlaylistAI Logo" width="128"/>
+</p>
+
+[PlaylistAI](https://twitter.com/playlist_ai) by [Brett Bauman](https://twitter.com/brettunhandled)
+
 ## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/)
 
 ## Musadora Sample App
