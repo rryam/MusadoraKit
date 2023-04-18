@@ -19,7 +19,7 @@ You can support my open-source by buying my book, ["Exploring MusicKit and Apple
 ## Sponsors
 
 <p align="leading">
-  <img src= "https://is3-ssl.mzstatic.com/image/thumb/Purple116/v4/cd/40/fe/cd40fe7c-b0f8-30aa-0b41-4a76e7968766/AppIcon-1x_U007emarketing-0-0-0-10-0-0-85-220.png/246x0w.webp" alt="PlaylistAI Logo" width="128"/>
+  <img src= "https://is3-ssl.mzstatic.com/image/thumb/Purple116/v4/cd/40/fe/cd40fe7c-b0f8-30aa-0b41-4a76e7968766/AppIcon-1x_U007emarketing-0-0-0-10-0-0-85-220.png/246x0w.webp" alt="PlaylistAI Logo" width="64"/>
 </p>
 
 [PlaylistAI](https://twitter.com/playlist_ai) by [Brett Bauman](https://twitter.com/brettunhandled)
