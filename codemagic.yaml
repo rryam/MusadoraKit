@@ -58,6 +58,7 @@ workflows:
 
   musadorakit-update-docs:
     name: MusadoraKit Docs Update Workflow
+    instance_type: mac_mini_m1
     environment:
       groups:
         - GitHub
