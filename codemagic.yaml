@@ -16,6 +16,7 @@ workflows:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
     environment:
+      xcode: 15
       vars:
         XCODE_SCHEME: "MusadoraKit"
         APP_ID: "Musadora"
@@ -92,6 +93,7 @@ workflows:
     working_directory: Musadora
     instance_type: mac_mini_m1
     environment:
+      xcode: 15
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.rudrankriyam.musadora
