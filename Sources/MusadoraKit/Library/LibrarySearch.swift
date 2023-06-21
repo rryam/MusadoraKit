@@ -5,6 +5,7 @@
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
+@available(macOS 14.0, *)
 public enum MLibrarySearchableType {
   case songs
   case albums
@@ -13,9 +14,7 @@ public enum MLibrarySearchableType {
   case musicVideos
 
 #if compiler(>=5.7)
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   public var libraryType: MusicLibrarySearchable.Type {
     switch self {
       case .songs:
@@ -48,6 +47,7 @@ public enum MLibrarySearchableType {
   }
 }
 
+@available(macOS 14.0, *)
 public extension MLibrary {
   /// Search the user's library by using a query.
   /// - Parameters:
@@ -70,9 +70,7 @@ public extension MLibrary {
 }
 
 #if compiler(>=5.7)
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-@available(macOS, unavailable)
-@available(macCatalyst, unavailable)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MLibrary {
   static func search(
     for term: String,

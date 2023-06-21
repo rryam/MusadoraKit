@@ -17,7 +17,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func playlist(id: MusicItemID) async throws -> Playlist {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -43,9 +43,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   /// - Returns: `Playlists` for the given limit.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func playlists(limit: Int? = nil) async throws -> Playlists {
     let request = MusicLibraryRequest<Playlist>()
     let response = try await request.response()
@@ -65,10 +63,7 @@ public extension MLibrary {
   ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
-  /// - Returns: `Playlists` matching the given identifiers.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.filter(matching: \.id, memberOf: ids)
@@ -85,62 +80,58 @@ public extension MLibrary {
 #endif
 
 #if compiler(>=5.7)
-  /// Access the total number of playlists in the user's library.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
-  static var playlistsCount: Int {
-    get async throws {
-      let request = MusicLibraryRequest<Playlist>()
-      let response = try await request.response()
-      return response.items.count
-    }
+/// Access the total number of playlists in the user's library.
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+static var playlistsCount: Int {
+  get async throws {
+    let request = MusicLibraryRequest<Playlist>()
+    let response = try await request.response()
+    return response.items.count
   }
+}
 #else
-  /// Access the total number of playlists in the user's library.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
-  @available(tvOS, unavailable)
-  @available(watchOS, unavailable)
-  static var playlistsCount: Int {
-    get async throws {
-      if let items = MPMediaQuery.playlists().items {
-        return items.count
-      } else {
-        throw MediaPlayError.notFound(for: "playlists")
-      }
+/// Access the total number of playlists in the user's library.
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+static var playlistsCount: Int {
+  get async throws {
+    if let items = MPMediaQuery.playlists().items {
+      return items.count
+    } else {
+      throw MediaPlayError.notFound(for: "playlists")
     }
   }
+}
 #endif
 
-  /// Add a playlist to the user's library by using its identifier.
-  ///
-  /// - Parameters:
-  ///   - id: The unique identifier for the playlist.
-  /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .playlists, value: [id])])
-    let response = try await request.response()
-    return response
-  }
+/// Add a playlist to the user's library by using its identifier.
+///
+/// - Parameters:
+///   - id: The unique identifier for the playlist.
+/// - Returns: `Bool` indicating if the insert was successfull or not.
+static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
+  let request = MAddResourcesRequest([(item: .playlists, value: [id])])
+  let response = try await request.response()
+  return response
+}
 
-  /// Add multiple playlists to the user's library by using their identifiers.
-  ///
-  /// - Parameters:
-  ///   - ids: The unique identifiers for the playlists.
-  /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .playlists, value: ids)])
-    let response = try await request.response()
-    return response
-  }
+/// Add multiple playlists to the user's library by using their identifiers.
+///
+/// - Parameters:
+///   - ids: The unique identifiers for the playlists.
+/// - Returns: `Bool` indicating if the insert was successfull or not.
+static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+  let request = MAddResourcesRequest([(item: .playlists, value: ids)])
+  let response = try await request.response()
+  return response
+}
 
 }
 
 #if compiler(>=5.7)
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-@available(macOS, unavailable)
-@available(macCatalyst, unavailable)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MHistory {
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///

@@ -27,9 +27,7 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func artist(id: MusicItemID) async throws -> Artist {
     var request = MusicLibraryRequest<Artist>()
     request.filter(matching: \.id, equalTo: id)
@@ -66,7 +64,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func artists(limit: Int = 50) async throws -> Artists {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *) {
       var request = MusicLibraryRequest<Artist>()
       request.limit = limit
       let response = try await request.response()
@@ -103,9 +101,7 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func artists(ids: [MusicItemID]) async throws -> Artists {
     var request = MusicLibraryRequest<Artist>()
     request.filter(matching: \.id, memberOf: ids)
@@ -132,9 +128,7 @@ public extension MLibrary {
   ///     print("Error accessing the total number of artists: \(error.localizedDescription)")
   /// }
   /// ```
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var artistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Artist>()
