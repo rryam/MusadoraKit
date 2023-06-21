@@ -17,7 +17,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func album(id: MusicItemID) async throws -> Album {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, *) {
       var request = MusicLibraryRequest<Album>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -45,7 +45,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func albums(limit: Int = 50) async throws -> Albums {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
       var request = MusicLibraryRequest<Album>()
       request.limit = limit
       let response = try await request.response()
@@ -64,9 +64,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func albums(ids: [MusicItemID]) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.filter(matching: \.id, memberOf: ids)
@@ -83,9 +81,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Access the total number of albums in the user's library.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var albumsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Album>()
@@ -136,9 +132,7 @@ public extension MLibrary {
 }
 
 #if compiler(>=5.7)
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-@available(macOS, unavailable)
-@available(macCatalyst, unavailable)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MHistory {
   /// Fetch recently added albums from the user's library sorted by the date added.
   ///

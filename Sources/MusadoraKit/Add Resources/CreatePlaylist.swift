@@ -8,6 +8,7 @@
 import Foundation
 
 
+@available(macOS 14.0, *)
 public extension MLibrary {
 
 #if compiler(>=5.7)
@@ -37,8 +38,7 @@ public extension MLibrary {
   /// - Returns: The newly created playlist.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
   @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
-  static func createPlaylist(with name: String, author: String? = nil, description: String? = nil, items: Songs) async throws -> Playlist {
+  @available(macCatalyst, unavailable)  static func createPlaylist(with name: String, author: String? = nil, description: String? = nil, items: Songs) async throws -> Playlist {
     try await MusicLibrary.shared.createPlaylist(name: name, description: description, authorDisplayName: author, items: items)
   }
 #endif

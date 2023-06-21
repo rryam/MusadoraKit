@@ -40,9 +40,7 @@ public extension MHistory {
   ///    /// Handle the error.
   ///  }
   ///  ```
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *, macOS 14.0, macCatalyst 17.0, *)
   static func mostPlayedSongs(limit: Int = 100) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit

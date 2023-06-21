@@ -22,7 +22,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func song(id: MusicItemID) async throws -> Song {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
       var request = MusicLibraryRequest<Song>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -55,7 +55,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func songs(limit: Int = 50) async throws -> Songs {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
       var request = MusicLibraryRequest<Song>()
       request.limit = limit
       let response = try await request.response()
@@ -74,9 +74,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func songs(ids: [MusicItemID]) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, memberOf: ids)
@@ -97,9 +95,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the song.
   /// - Returns: `Song` matching the given identifier.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func song(id: MusicItemID, fetch properties: SongProperties) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, equalTo: id)
@@ -114,9 +110,7 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Access the total number of songs in the user's library.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var songsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Song>()
@@ -169,9 +163,7 @@ public extension MLibrary {
 }
 
 #if compiler(>=5.7)
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-@available(macOS, unavailable)
-@available(macCatalyst, unavailable)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MLibrary {
   /// Fetch recently added songs from the user's library sorted by the date added.
   ///
@@ -206,7 +198,6 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of songs returned.
   /// - Returns: `Songs` for the given limit.
-  @available(macOS 13.0, *)
   static func recentlyPlayedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicRecentlyPlayedRequest<Song>()
     request.limit = limit

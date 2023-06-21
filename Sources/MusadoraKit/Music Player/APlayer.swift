@@ -8,11 +8,11 @@
 import Foundation
 
 /// A shorter alias for the ApplicationMusicPlayer
-@available(macOS, unavailable)
+@available(macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public typealias APlayer = ApplicationMusicPlayer
 
-@available(macOS, unavailable)
+@available(macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public extension APlayer {
 
@@ -45,7 +45,7 @@ public extension APlayer {
   }
 }
 
-@available(macOS, unavailable)
+@available(macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public extension APlayer {
 
@@ -58,7 +58,7 @@ public extension APlayer {
   }
 }
 
-@available(macOS, unavailable)
+@available(macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public extension APlayer {
 
@@ -71,7 +71,7 @@ public extension APlayer {
   }
 }
 
-@available(macOS, unavailable)
+@available(macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public extension APlayer {
 
@@ -84,8 +84,7 @@ public extension APlayer {
   }
 }
 
-@available(iOS 16, *, tvOS 16, *)
-@available(macOS, unavailable)
+@available(iOS 16, *, tvOS 16, *, macOS 14.0, macCatalyst 17.0, *)
 @available(watchOS, unavailable)
 public extension APlayer {
 
