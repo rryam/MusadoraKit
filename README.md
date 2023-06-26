@@ -45,7 +45,7 @@ To easily access the Apple Music Catalog, you can use pre-defined methods from M
 Example of working with fetching a catalog song by its identifier: 
 
 ```swift 
-let song = try await MCatalog.song(id: "1613834314", with: [.albums])
+let song = try await MCatalog.song(id: "1613834314", fetch: [.albums])
 ```
 
 ## Searching the Catalog
