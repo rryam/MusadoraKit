@@ -34,6 +34,7 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 ## Apps Using MusadoraKit
 
 - [Sonar](https://apps.apple.com/ca/app/sonar-music-community/id1626147292): Music & Community. Stream, Share & Discover
+- [Tuneder](https://apps.apple.com/us/app/tuneder-song-discovery/id6450867856?itsct=apps_box_badge&itscg=30200): An [open-source](https://github.com/adityasaravana/Tuneder) iOS app that helps Apple Music users discover new songs with a Tinder-like UI.
 - Musadora: Apple Music client focused on playlists
 - Musadora Labs: A companion app to explore MusicKit
 - Euphonic: Apple Music client focused on recommendations
