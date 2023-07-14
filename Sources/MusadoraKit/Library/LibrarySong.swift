@@ -1,4 +1,8 @@
 //
+//  "I'm gazing into you,
+//  While you're scrolling through our shared memories,
+//  Never considering anybody else."
+//
 //  LibrarySong.swift
 //  MusadoraKit
 //
@@ -10,15 +14,28 @@ import MediaPlayer
 public extension MLibrary {
 
   /// Fetch a song from the user's library by using its identifier.
-  /// 
+  ///
+  /// Use this method to retrieve a song from the user's library by providing its unique identifier.
+  /// The function fetches the song locally from the device when using iOS 16+ and is faster because it uses the latest `MusicLibraryRequest` structure.
+  /// For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest` that fetches the data from the Apple Music API.
+  ///
+  /// Example usage:
+  ///
+  ///     let songID: MusicItemID = "1544326470"
+  ///     let song = try await MLibrary.song(id: songID)
+  ///     print("Title: \(song.title)")
+  ///     print("Artist: \(song.artistName)")
+  ///     // ... access other properties
+  ///
   /// - Parameters:
-  ///   - id: The unique identifier for the song.
-  /// - Returns: `Song` matching the given identifier.
+  ///   - id: The unique identifier for the library song.
+  /// - Returns: A `Song` object matching the given identifier.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if the song is not found.
   ///
   /// - Note: This method fetches the song locally from the device when using iOS 16+
-  ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
-  ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
-  ///  that fetches the data from Apple Music API.
+  ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
+  ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
+  ///   that fetches the data from the Apple Music API.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func song(id: MusicItemID) async throws -> Song {
@@ -44,14 +61,27 @@ public extension MLibrary {
 
   /// Fetch all songs from the user's library in alphabetical order.
   ///
-  /// - Parameters:
-  ///   - limit: The number of songs returned.
-  /// - Returns: `Songs` for the given limit.
+  /// Use this method to retrieve all songs from the user's library in alphabetical order.
+  /// The function accepts a `limit` parameter to specify the maximum number of songs to be returned.
   ///
-  /// - Note: This method fetches the song locally from the device when using iOS 16+
-  ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
-  ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
-  ///  that fetches the data from Apple Music API.
+  /// Example usage:
+  ///
+  ///     let limit = 50
+  ///     let allSongs = try await MLibrary.songs(limit: limit)
+  ///
+  ///     for song in allSongs {
+  ///         print(song.title)
+  ///     }
+  ///
+  /// - Parameters:
+  ///   - limit: The maximum number of library songs to be returned (default is 50).
+  /// - Returns: An array of `Song` objects representing all library songs from the user's library in alphabetical order.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues or invalid parameters.
+  ///
+  /// - Note: This method fetches the songs locally from the device when using iOS 16+
+  ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
+  ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
+  ///   that fetches the data from the Apple Music API.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func songs(limit: Int = 50) async throws -> Songs {
@@ -92,9 +122,23 @@ public extension MLibrary {
 #if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier with all properties from the local database.
   ///
+  /// Use this method to fetch a song from the user's library by providing its unique identifier.
+  /// The function retrieves the song with all available properties from the local database.
+  ///
+  /// Example usage:
+  ///
+  ///     let songID: MusicItemID = "1544326470"
+  ///     let song = try await MLibrary.song(id: songID, fetch: .all)
+  ///
+  ///     print("Title: \(song.title)")
+  ///     print("Artist: \(song.artistName)")
+  ///     // ... access other properties
+  ///
   /// - Parameters:
-  ///   - id: The unique identifier for the song.
-  /// - Returns: `Song` matching the given identifier.
+  ///   - id: The unique identifier for the library song.
+  ///   - properties: Additional properties to fetch with the library song.
+  /// - Returns: A `Song` object matching the given identifier, with all available properties from the local database.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if the song is not found.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func song(id: MusicItemID, fetch properties: SongProperties) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
@@ -110,6 +154,17 @@ public extension MLibrary {
 
 #if compiler(>=5.7)
   /// Access the total number of songs in the user's library.
+  ///
+  /// Use this property to retrieve the total number of songs in the user's library.
+  /// The property returns an integer value representing the count of songs.
+  ///
+  /// Example usage:
+  ///
+  ///     let count = try await MLibrary.songsCount
+  ///     print("Total number of songs in the library: \(count)")
+  ///
+  /// - Returns: An `Int` representing the total number of songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var songsCount: Int {
     get async throws {
@@ -120,6 +175,17 @@ public extension MLibrary {
   }
 #else
   /// Access the total number of songs in the user's library.
+  ///
+  /// Use this property to retrieve the total number of songs in the user's library.
+  /// The property returns an integer value representing the count of songs.
+  ///
+  /// Example usage:
+  ///
+  ///     let count = try await MLibrary.songsCount
+  ///     print("Total number of songs in the library: \(count)")
+  ///
+  /// - Returns: An `Int` representing the total number of songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
@@ -133,15 +199,31 @@ public extension MLibrary {
       }
     }
   }
+
 #endif
 
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibrarySong.swift
   /// Thanks @marcelmendesfilho!
+  ///
   /// Add a song to the user's library by using its identifier.
   ///
+  /// Use this method to add a song to the user's library by providing its unique identifier.
+  /// The function accepts a `MusicItemID` representing the identifier of the song to be added.
+  ///
+  /// Example usage:
+  ///
+  ///     let songID: MusicItemID = "1544326470"
+  ///     let success = try await MLibrary.addSong(id: songID)
+  ///     if success {
+  ///         print("Song was successfully added to the library.")
+  ///     } else {
+  ///         print("Failed to add the song to the library.")
+  ///     }
+  ///
   /// - Parameters:
-  ///   - id: The unique identifier for the song.
-  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  ///   - id: A `MusicItemID` representing the unique identifier of the song to be added.
+  /// - Returns: A `Bool` indicating whether the insert operation was successful or not.
+  /// - Throws: An error if the operation fails, such as network connectivity issues or invalid parameters.
   static func addSong(id: MusicItemID) async throws -> Bool {
     let song: SongResource = (item: .songs, value: [id])
     let request = MAddResourcesRequest([song])
@@ -151,9 +233,23 @@ public extension MLibrary {
 
   /// Add multiple songs to the user's library by using their identifiers.
   ///
+  /// Use this method to add multiple songs to the user's library by providing their unique identifiers.
+  /// The function accepts an array of `MusicItemID` representing the identifiers of the songs to be added.
+  ///
+  /// Example usage:
+  ///
+  ///     let songIDs: [MusicItemID] = ["1544326470", "1450695739", "1625489342"]
+  ///     let success = try await MLibrary.addSongs(ids: songIDs)
+  ///     if success {
+  ///         print("Songs were successfully added to the library.")
+  ///     } else {
+  ///         print("Failed to add songs to the library.")
+  ///     }
+  ///
   /// - Parameters:
-  ///   - ids: The unique identifiers for the songs.
-  /// - Returns: `Bool` indicating if the insert was successfull or not.
+  ///   - ids: An array of `MusicItemID` representing the unique identifiers of the songs to be added.
+  /// - Returns: A `Bool` indicating whether the insert operation was successful or not.
+  /// - Throws: An error if the operation fails, such as network connectivity issues or invalid parameters.
   static func addSongs(ids: [MusicItemID]) async throws -> Bool {
     let songs: SongResource = (item: .songs, value: ids)
     let request = MAddResourcesRequest([songs])
@@ -165,11 +261,29 @@ public extension MLibrary {
 #if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MLibrary {
+
   /// Fetch recently added songs from the user's library sorted by the date added.
   ///
+  /// Use this method to retrieve a list of recently added songs from the user's library,
+  /// sorted by the date they were added. You can specify the number of songs to be returned
+  /// using the `limit` parameter. Additionally, you can specify an `offset` value to paginate
+  /// through the results.
+  ///
+  /// Example usage:
+  ///
+  ///     let limit = 10
+  ///     let offset = 0
+  ///     let recentlyAddedSongs = try await MLibrary.recentlyAddedSongs(limit: limit, offset: offset)
+  ///
+  ///     for song in recentlyAddedSongs {
+  ///         print(song.title)
+  ///     }
+  ///
   /// - Parameters:
-  ///   - limit: The number of songs returned.
-  /// - Returns: `Songs` for the given limit.
+  ///   - limit: The maximum number of songs to be returned (default is 25).
+  ///   - offset: The offset value for pagination (default is 0).
+  /// - Returns: An array of `Song` objects representing the recently added songs from the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues or invalid parameters.
   static func recentlyAddedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
@@ -181,9 +295,26 @@ public extension MLibrary {
 
   /// Fetch recently played songs from the user's library sorted by the date added.
   ///
+  /// Use this method to retrieve a list of recently played songs from the user's library,
+  /// sorted by the date they were added. You can specify the number of songs to be returned
+  /// using the `limit` parameter. Additionally, you can specify an `offset` value to paginate
+  /// through the results.
+  ///
+  /// Example usage:
+  ///
+  ///     let limit = 10
+  ///     let offset = 0
+  ///     let recentlyLibraryPlayedSongs = try await MLibrary.recentlyLibraryPlayedSongs(limit: limit, offset: offset)
+  ///
+  ///     for song in recentlyLibraryPlayedSongs {
+  ///         print(song.title)
+  ///     }
+  ///
   /// - Parameters:
-  ///   - limit: The number of songs returned.
-  /// - Returns: `Songs` for the given limit.
+  ///   - limit: The maximum number of songs to be returned (default is 25).
+  ///   - offset: The offset value for pagination (default is 0).
+  /// - Returns: An array of `Song` objects representing the recently played songs from the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues or invalid parameters.
   static func recentlyLibraryPlayedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.limit = limit
@@ -195,9 +326,25 @@ public extension MLibrary {
 
   /// Fetch recently played songs sorted by the date added.
   ///
+  /// Use this method to retrieve a list of recently played songs, sorted by the date they were added.
+  /// You can specify the number of songs to be returned using the `limit` parameter.
+  /// Additionally, you can specify an `offset` value to paginate through the results.
+  ///
+  /// Example usage:
+  ///
+  ///     let limit = 10
+  ///     let offset = 0
+  ///     let recentlyPlayedSongs = try await MLibrary.recentlyPlayedSongs(limit: limit, offset: offset)
+  ///
+  ///     for song in recentlyPlayedSongs {
+  ///         print(song.title)
+  ///     }
+  ///
   /// - Parameters:
-  ///   - limit: The number of songs returned.
-  /// - Returns: `Songs` for the given limit.
+  ///   - limit: The maximum number of songs to be returned (default is 25).
+  ///   - offset: The offset value for pagination (default is 0).
+  /// - Returns: An array of `Song` objects representing the recently played songs.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues or invalid parameters.
   static func recentlyPlayedSongs(limit: Int = 25, offset: Int) async throws -> Songs {
     var request = MusicRecentlyPlayedRequest<Song>()
     request.limit = limit
