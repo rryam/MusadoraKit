@@ -39,6 +39,59 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 - Musadora Labs: A companion app to explore MusicKit
 - Euphonic: Apple Music client focused on recommendations
 
+## Start Working with MusicKit 
+Follow the steps below to setup MusicKit for your app:
+
+### Step 1: Enable MusicKit for Your Bundle Identifier
+1. Visit the [Apple Developer Portal](https://developer.apple.com/account).
+2. Navigate to `Certificates, Identifiers & Profiles`.
+3. Select `Identifiers` from the left panel.
+4. Find your App's Bundle Identifier from the list and select it.
+5. Under `Services`, ensure `MusicKit` is enabled. If not, enable it.
+
+### Step 2: Add `NSAppleMusicUsageDescription` to `Info.plist`
+To inform the user why your app requires access to their media library, add `NSAppleMusicUsageDescription` to your `Info.plist` file.
+1. Open your project in Xcode.
+2. Select `Info.plist` from the Project Navigator.
+3. Click on the `+` button to add a new key.
+4. Add `NSAppleMusicUsageDescription` as a key.
+5. Set its value to the reason why your app needs access to Apple Music, e.g., `Our app uses Music access to play music and create a pleasant experience.`.
+
+### Step 3: Request Authorization for Apple Music
+Before your app can interact with Apple Music, it needs to request the user's authorization. This can be done using `MusicAuthorization.request()`. 
+
+Here's a Swift code example:
+
+```swift
+import MusicKit
+
+class MusicAuthorizationManager: ObservableObject {
+    @Published var isAuthorizedForMusicKit = false
+    @Published var musicKitError: MusicKitError?
+
+    func requestMusicAuthorization() async {
+        let status = await MusicAuthorization.request()
+
+        switch status {
+        case .authorized:
+            isAuthorizedForMusicKit = true
+        case .restricted:
+            musicKitError = .restricted
+        case .notDetermined:
+            musicKitError = .notDetermined
+        case .denied:
+            musicKitError = .denied
+        @unknown default:
+            musicKitError = .notDetermined
+        }
+    }
+}
+```
+
+This `MusicAuthorizationManager` class checks the authorization status for MusicKit. If the user grants authorization, `isAuthorizedForMusicKit` is set to `true`. If access is denied or restricted, or if the status is not determined, an appropriate `MusicKitError` is set.
+
+Remember to call `requestMusicAuthorization()` at an appropriate time in your application flow to request the user's authorization.
+
 ## Catalog 
 
 To easily access the Apple Music Catalog, you can use pre-defined methods from MusadoraKit. The method are similar across the music items. 
