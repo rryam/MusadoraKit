@@ -94,7 +94,7 @@ Remember to call `requestMusicAuthorization()` at an appropriate time in your ap
 
 ## Catalog 
 
-To easily access the Apple Music Catalog, you can use pre-defined methods from MusadoraKit. The method are similar across the music items. 
+To easily access the Apple Music Catalog, you can use pre-defined methods from MusadoraKit. The methods are similar across the music items. 
 
 Example of working with fetching a catalog song by its identifier: 
 
