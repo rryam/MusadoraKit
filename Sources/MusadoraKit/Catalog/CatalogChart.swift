@@ -245,6 +245,7 @@ public extension MCatalog {
   }
 }
 
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
 extension MCatalog {
   static private func fetchCatalogCharts(genre: Genre?,
                                          kinds: [MusicCatalogChartKind],
