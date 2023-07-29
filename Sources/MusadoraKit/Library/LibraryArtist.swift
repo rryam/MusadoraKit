@@ -1,5 +1,5 @@
 //
-//  LibraryArtists.swift
+//  LibraryArtist.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 17/08/21.
