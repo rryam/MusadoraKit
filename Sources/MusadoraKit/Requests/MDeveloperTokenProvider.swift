@@ -8,7 +8,7 @@
 import Foundation
 
 /// A class that implements the `MusicTokenProvider` protocol for providing **custom** developer tokens in the Apple Music API.
-class MDeveloperTokenProvider: MusicTokenProvider, @unchecked Sendable {
+public class MDeveloperTokenProvider: MusicTokenProvider, @unchecked Sendable {
 
   /// The  **custom** developer token used for API requests.
   private var developerToken: String = ""
@@ -16,7 +16,7 @@ class MDeveloperTokenProvider: MusicTokenProvider, @unchecked Sendable {
   /// Initializes a new `MDeveloperTokenProvider` instance with the given **custom** developer token.
   ///
   /// - Parameter developerToken: The **custom** developer token to use for API requests.
-  convenience init(developerToken: String) {
+  public convenience init(developerToken: String) {
     self.init()
     self.developerToken = developerToken
   }
