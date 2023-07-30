@@ -354,3 +354,34 @@ public extension MLibrary {
   }
 }
 #endif
+
+public extension MLibrary {
+
+  /// Fetch all songs from the user's library for a specific genre.
+  ///
+  /// Use this method to retrieve all songs belonging to a specific genre in the user's music library.
+  /// You can provide the genre, such as "Rock" or "Pop", and it returns all the songs within that genre.
+  ///
+  /// Example usage:
+  ///
+  ///     let genre = ... Rock Genre // replace with your genre
+  ///     let songs = try await MLibrary.songs(for: genre)
+  ///     for song in songs {
+  ///         print("Song: \(song.title)")
+  ///     }
+  ///     // ... access other properties
+  ///
+  /// - Parameter genre: The `Genre` for which to retrieve the songs.
+  /// - Returns: A `Songs` collection containing all the songs in the user's library belonging to the given genre.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if no songs are found for the given genre.
+  ///
+  /// - Note: This method fetches the songs locally from the device,
+  ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  static func songs(for genre: Genre) async throws -> Songs {
+    var request = MusicLibraryRequest<Song>()
+    request.filter(matching: \.genres, contains: genre)
+    let response = try await request.response()
+    return response.items
+  }
+}
