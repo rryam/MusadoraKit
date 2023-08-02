@@ -385,3 +385,134 @@ public extension MLibrary {
     return response.items
   }
 }
+
+public extension MLibrary {
+  
+  /// Fetch all songs from the user's library for all genres.
+  ///
+  /// Use this method to retrieve all songs in the user's music library, grouped by genre.
+  /// This function will return a `SongsForGenres` collection which includes songs from all genres in the user's library.
+  ///
+  /// Example usage:
+  ///
+  ///     do {
+  ///         let songsForGenres = try await MLibrary.songsForGenres()
+  ///
+  ///         for songsForGenre in songsForGenres {
+  ///             print("Genre: \(songsForGenre.name)")
+  ///             for song in songsForGenre.items {
+  ///                 print("Song: \(song.title)")
+  ///             }
+  ///         }
+  ///     } catch {
+  ///         print("Error fetching songs for genres: \(error)")
+  ///     }
+  ///
+  /// - Returns: A `SongsForGenres` collection where each element represents a genre and its corresponding songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if no songs are found for the given genres.
+  ///
+  /// - Note: This method fetches the songs locally from the device,
+  ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  static func songsForGenres() async throws -> SongsForGenres {
+    let request = MusicLibrarySectionedRequest<Genre, Song>()
+    let response = try await request.response()
+    return response.sections
+  }
+  
+  /// Fetch all songs from the user's library for all artists.
+  ///
+  /// Use this method to retrieve all songs in the user's music library, grouped by artist.
+  /// This function will return a `SongsForArtists` collection which includes songs from all artists in the user's library.
+  ///
+  /// Example usage:
+  ///
+  ///     do {
+  ///         let songsForArtists = try await MLibrary.songsForArtists()
+  ///
+  ///         for songsForArtist in songsForArtists {
+  ///             print("Artist: \(songsForArtist.name)")
+  ///             for song in songsForArtist.songs {
+  ///                 print("Song: \(song.title)")
+  ///             }
+  ///         }
+  ///     } catch {
+  ///         print("Error fetching songs for artists: \(error)")
+  ///     }
+  ///
+  /// - Returns: A `SongsForArtists` collection where each element represents an artist and its corresponding songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if no songs are found for the given artists.
+  ///
+  /// - Note: This method fetches the songs locally from the device,
+  ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  static func songsForArtists() async throws -> SongsForArtists {
+    let request = MusicLibrarySectionedRequest<Artist, Song>()
+    let response = try await request.response()
+    return response.sections
+  }
+  
+  /// Fetch all songs from the user's library for all albums.
+  ///
+  /// Use this method to retrieve all songs in the user's music library, grouped by album.
+  /// This function will return a `SongsForAlbums` collection which includes songs from all albums in the user's library.
+  ///
+  /// Example usage:
+  ///
+  ///     do {
+  ///         let songsForAlbums = try await MLibrary.songsForAlbums()
+  ///
+  ///         for songsForAlbum in songsForAlbums {
+  ///             print("Album: \(songsForAlbum.title)")
+  ///             for song in songsForAlbum.songs {
+  ///                 print("Song: \(song.title)")
+  ///             }
+  ///         }
+  ///     } catch {
+  ///         print("Error fetching songs for albums: \(error)")
+  ///     }
+  ///
+  /// - Returns: A `SongsForAlbums` collection where each element represents an album and its corresponding songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if no songs are found for the given albums.
+  ///
+  /// - Note: This method fetches the songs locally from the device,
+  ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  static func songsForAlbums() async throws -> SongsForAlbums {
+    let request = MusicLibrarySectionedRequest<Album, Song>()
+    let response = try await request.response()
+    return response.sections
+  }
+  
+  /// Fetch all songs from the user's library for all playlists.
+  ///
+  /// Use this method to retrieve all songs in the user's music library, grouped by playlist.
+  /// This function will return a `SongsForPlaylists` collection which includes songs from all playlists in the user's library.
+  ///
+  /// Example usage:
+  ///
+  ///     do {
+  ///         let songsForPlaylists = try await MLibrary.songsForPlaylists()
+  ///
+  ///         for songsForPlaylist in songsForPlaylists {
+  ///             print("Playlist: \(songsForPlaylist.name)")
+  ///             for song in songsForPlaylist.songs {
+  ///                 print("Song: \(song.title)")
+  ///             }
+  ///         }
+  ///     } catch {
+  ///         print("Error fetching songs for playlists: \(error)")
+  ///     }
+  ///
+  /// - Returns: A `SongsForPlaylists` collection where each element represents a playlist and its corresponding songs in the user's library.
+  /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if no songs are found for the given playlists.
+  ///
+  /// - Note: This method fetches the songs locally from the device,
+  ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  static func songsForPlaylists() async throws -> SongsForPlaylists {
+    let request = MusicLibrarySectionedRequest<Playlist, Song>()
+    let response = try await request.response()
+    return response.sections
+  }
+}
