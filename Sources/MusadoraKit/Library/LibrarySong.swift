@@ -413,11 +413,17 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   static func songsForGenres() async throws -> SongsForGenres {
-    let request = MusicLibrarySectionedRequest<Genre, Song>()
-    let response = try await request.response()
-    return response.sections
+    if #available(macOS 14.0, *) {
+      let request = MusicLibrarySectionedRequest<Genre, Song>()
+      let response = try await request.response()
+      return response.sections
+    } else {
+      return []
+    }
   }
   
   /// Fetch all songs from the user's library for all artists.

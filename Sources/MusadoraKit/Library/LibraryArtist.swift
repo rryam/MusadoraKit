@@ -9,7 +9,6 @@ import MediaPlayer
 
 public extension MLibrary {
 
-#if compiler(>=5.7)
   /// Fetch an artist from the user's library by using its identifier.
   ///
   ///     do {
@@ -27,28 +26,26 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func artist(id: MusicItemID) async throws -> Artist {
-    var request = MusicLibraryRequest<Artist>()
-    request.filter(matching: \.id, equalTo: id)
-    let response = try await request.response()
-
-    guard let artist = response.items.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, *) {
+      var request = MusicLibraryRequest<Artist>()
+      request.filter(matching: \.id, equalTo: id)
+      let response = try await request.response()
+      
+      guard let artist = response.items.first else {
+        throw MusadoraKitError.notFound(for: id.rawValue)
+      }
+      return artist
+    } else {
+      let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
+      let response = try await request.response()
+      
+      guard let artist = response.items.first else {
+        throw MusadoraKitError.notFound(for: id.rawValue)
+      }
+      return artist
     }
-    return artist
   }
-#else
-  static func artist(id: MusicItemID) async throws -> Artist {
-    let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
-    let response = try await request.response()
-
-    guard let artist = response.items.first else {
-      throw MusadoraKitError.notFound(for: id.rawValue)
-    }
-    return artist
-  }
-#endif
 
   /// Fetch all artists from the user's library in alphabetical order.
   ///
@@ -78,7 +75,6 @@ public extension MLibrary {
   }
 
 
-#if compiler(>=5.7)
   /// Fetch multiple artists from the user's library by using their identifiers.
   ///
   ///     do {
@@ -101,20 +97,18 @@ public extension MLibrary {
   ///  and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func artists(ids: [MusicItemID]) async throws -> Artists {
-    var request = MusicLibraryRequest<Artist>()
-    request.filter(matching: \.id, memberOf: ids)
-    let response = try await request.response()
-    return response.items
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, *) {
+      var request = MusicLibraryRequest<Artist>()
+      request.filter(matching: \.id, memberOf: ids)
+      let response = try await request.response()
+      return response.items
+    } else {
+      let request = MLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
+      let response = try await request.response()
+      return response.items
+    }
   }
-#else
-  static func artists(ids: [MusicItemID]) async throws -> Artists {
-    let request = MLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
-    let response = try await request.response()
-    return response.items
-  }
-#endif
 
 #if compiler(>=5.7)
   /// Accesses the total number of artists in the user's music library.
