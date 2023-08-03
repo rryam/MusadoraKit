@@ -14,7 +14,7 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   public let id: MusicItemID
 
   /// The attributes of the playlist.
-  public let attributes: Attributes
+  public var attributes: Attributes
 
   /// A structure containing the attributes of a playlist.
   public struct Attributes: Codable, Sendable {
@@ -32,7 +32,7 @@ public struct MLibraryPlaylist: Codable, MusicItem {
     public let hasCatalog: Bool
 
     /// The play parameters for the playlist.
-    public let playParams: PlayParameters
+    public var playParams: MPlayParameters
 
     /// The description of the playlist, if available.
     public let description: Description?
@@ -49,7 +49,7 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   }
 
   /// A structure representing the play parameters of a playlist.
-  public struct PlayParameters: Codable, Sendable {
+  public struct MPlayParameters: Codable, Sendable {
 
     /// The identifier of the playlist.
     public let id: MusicItemID
@@ -69,5 +69,20 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   /// The global identifier of the playlist, if available.
   public var globalID: String? {
     attributes.playParams.globalID?.rawValue
+  }
+}
+
+@available(macOS 14.0, *)
+@available(watchOS, unavailable)
+extension MLibraryPlaylist: PlayableMusicItem {
+  public var playParameters: PlayParameters? {
+    get {
+      let parameters = try? JSONEncoder().encode(attributes.playParams)
+
+      guard let parameters else { return nil }
+
+      let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
+      return playParams
+    }
   }
 }

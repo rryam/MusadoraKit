@@ -27,6 +27,7 @@ extension RatingsError: CustomStringConvertible {
 /// An enum representing the possible errors that can occur when playing a piece of media.
 public enum MediaPlayError: Error, Equatable {
   case notFound(for: String)
+  case platformNotSupported
 }
 
 extension MediaPlayError: CustomStringConvertible {
@@ -34,6 +35,8 @@ extension MediaPlayError: CustomStringConvertible {
     switch self {
       case let .notFound(item):
         return "Not able to count the music items for \(item)."
+      case .platformNotSupported:
+        return "This is only available on iOS."
     }
   }
 }
