@@ -16,8 +16,6 @@ public extension MLibrary {
   /// Fetch a song from the user's library by using its identifier.
   ///
   /// Use this method to retrieve a song from the user's library by providing its unique identifier.
-  /// The function fetches the song locally from the device when using iOS 16+ and is faster because it uses the latest `MusicLibraryRequest` structure.
-  /// For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest` that fetches the data from the Apple Music API.
   ///
   /// Example usage:
   ///
