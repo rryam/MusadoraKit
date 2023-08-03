@@ -7,6 +7,7 @@
 
 public extension MCatalog {
   /// Fetch a record label from the Apple Music catalog by using its identifier.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the record label.
   ///   - properties: Additional relationships to fetch with the record label.
@@ -23,8 +24,8 @@ public extension MCatalog {
     return recordLabel
   }
 
-#if compiler(>=5.7)
   /// Fetch a record label from the Apple Music catalog by using its identifier with all properties.
+  ///
   /// - Parameters:
   ///   - id: The unique identifier for the record label.
   /// - Returns: `RecordLabel` matching the given identifier.
@@ -38,9 +39,9 @@ public extension MCatalog {
     }
     return recordLabel
   }
-#endif
 
   /// Fetch multiple record labels from the Apple Music catalog by using their identifiers.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the record labels.
   ///   - properties: Additional relationships to fetch with the record labels.
@@ -53,8 +54,8 @@ public extension MCatalog {
     return response.items
   }
 
-#if compiler(>=5.7)
   /// Fetch multiple record labels from the Apple Music catalog by using their identifiers with all properties.
+  ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the record labels.
   /// - Returns: `RecordLabels` matching the given identifiers.
@@ -64,5 +65,4 @@ public extension MCatalog {
     let response = try await request.response()
     return response.items
   }
-#endif
 }

@@ -110,9 +110,9 @@ public extension MCatalog {
   }
 }
 
-#if compiler(>=5.7)
 public extension MCatalog {
   /// Fetch top results and search suggestions from the Apple Music catalog by using a query term.
+  ///
   /// - Parameters:
   ///   - term: The entered text for the search.
   ///   - types: The types of music items to include in the search.
@@ -120,8 +120,8 @@ public extension MCatalog {
   /// - Returns: `MusicCatalogSearchSuggestionsResponse` that returns different top music items and suggestions.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
   static func searchSuggestions(for term: String,
-                     types: [MCatalogSearchType],
-                     limit: Int? = nil) async throws -> MusicCatalogSearchSuggestionsResponse {
+                                types: [MCatalogSearchType],
+                                limit: Int? = nil) async throws -> MusicCatalogSearchSuggestionsResponse {
     let searchTypes = types.compactMap { $0.type }
     var request = MusicCatalogSearchSuggestionsRequest(term: term, includingTopResultsOfTypes: searchTypes)
     request.limit = limit
@@ -130,6 +130,7 @@ public extension MCatalog {
   }
 
   /// Fetch search suggestions from the Apple Music catalog by using a query term.
+  ///
   /// - Parameters:
   ///   - term: The entered text for the search.
   ///   - types: The types of music items to include in the search.
@@ -144,4 +145,3 @@ public extension MCatalog {
     return response.suggestions
   }
 }
-#endif

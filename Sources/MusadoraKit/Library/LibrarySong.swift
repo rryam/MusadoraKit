@@ -98,28 +98,24 @@ public extension MLibrary {
     }
   }
 
-#if compiler(>=5.7)
   /// Fetch multiple songs from the user's library by using their identifiers.
   ///
   /// - Parameters:
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static func songs(ids: [MusicItemID]) async throws -> Songs {
-    var request = MusicLibraryRequest<Song>()
-    request.filter(matching: \.id, memberOf: ids)
-    let response = try await request.response()
-    return response.items
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+      var request = MusicLibraryRequest<Song>()
+      request.filter(matching: \.id, memberOf: ids)
+      let response = try await request.response()
+      return response.items
+    } else {
+      let request = MLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
+      let response = try await request.response()
+      return response.items
+    }
   }
-#else
-  static func songs(ids: [MusicItemID]) async throws -> Songs {
-    let request = MLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
-    let response = try await request.response()
-    return response.items
-  }
-#endif
 
-#if compiler(>=5.7)
   /// Fetch a song from the user's library by using its identifier with all properties from the local database.
   ///
   /// Use this method to fetch a song from the user's library by providing its unique identifier.
@@ -150,7 +146,6 @@ public extension MLibrary {
     }
     return try await song.with(properties, preferredSource: .library)
   }
-#endif
 
 #if compiler(>=5.7)
   /// Access the total number of songs in the user's library.
@@ -258,7 +253,6 @@ public extension MLibrary {
   }
 }
 
-#if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MLibrary {
 
@@ -353,7 +347,6 @@ public extension MLibrary {
     return response.items
   }
 }
-#endif
 
 public extension MLibrary {
 

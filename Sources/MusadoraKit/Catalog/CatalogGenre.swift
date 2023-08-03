@@ -37,7 +37,6 @@ public extension MCatalog {
   /// Fetch top genres from the Apple Music catalog.
   /// - Returns: Top `Genres`.
   static func topGenres() async throws -> Genres {
-#if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       let request = MusicCatalogResourceRequest<Genre>()
       let response = try await request.response()
@@ -46,10 +45,6 @@ public extension MCatalog {
       let storefront = try await MusicDataRequest.currentCountryCode
       return try await topGenres(for: storefront)
     }
-#else
-    let storefront = try await MusicDataRequest.currentCountryCode
-    return try await topGenres(for: storefront)
-#endif
   }
 
   /// Fetch top genres from the Apple Music catalog for a particular storefront.

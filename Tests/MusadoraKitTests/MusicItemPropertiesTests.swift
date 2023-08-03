@@ -14,12 +14,10 @@ final class MusicItemPropertiesTests: XCTestCase {
     let allProperties = PlaylistProperties.all
     var expectedProperties: Set<PlaylistProperty> = [.tracks, .featuredArtists, .moreByCurator]
 
-#if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       expectedProperties.insert(.curator)
       expectedProperties.insert(.radioShow)
     }
-#endif
 
     XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }
@@ -28,22 +26,18 @@ final class MusicItemPropertiesTests: XCTestCase {
     let allProperties = SongProperties.all
     var expectedProperties: Set<SongProperty> = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
 
-#if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       expectedProperties.insert(.audioVariants)
     }
-#endif
 
     XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }
 
   func testRecordLabelPropertiesAll() {
-#if compiler(>=5.7)
     let allProperties = RecordLabelProperties.all
     let expectedProperties: Set<RecordLabelProperty> = [.latestReleases, .topReleases]
 
     XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
-#endif
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
@@ -80,11 +74,9 @@ final class MusicItemPropertiesTests: XCTestCase {
     let allProperties = AlbumProperties.all
     var expectedProperties: Set<AlbumProperty> = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
 
-#if compiler(>=5.7)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
       expectedProperties.insert(.audioVariants)
     }
-#endif
 
     XCTAssertTrue(expectedProperties.isSubset(of: allProperties))
   }

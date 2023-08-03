@@ -5,7 +5,6 @@
 //  Created by Rudrank Riyam on 22/07/22.
 //
 
-#if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *, macOS 14.0, macCatalyst 17.0, *)
 extension Song {
   public func detail(for type: SongPropertyType) -> String? {
@@ -83,4 +82,3 @@ extension Song {
     }
   }
 }
-#endif

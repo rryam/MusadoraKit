@@ -11,7 +11,6 @@ import Foundation
 @available(macOS 14.0, *)
 public extension MLibrary {
 
-#if compiler(>=5.7)
   /// Creates a playlist in the user’s music library.
   ///
   /// - Parameters:
@@ -41,7 +40,6 @@ public extension MLibrary {
   @available(macCatalyst, unavailable)  static func createPlaylist(with name: String, author: String? = nil, description: String? = nil, items: Songs) async throws -> Playlist {
     try await MusicLibrary.shared.createPlaylist(name: name, description: description, authorDisplayName: author, items: items)
   }
-#endif
 
   /// Creates a playlist in the user’s music library.
   ///

@@ -5,7 +5,6 @@
 //  Created by Rudrank Riyam on 22/06/22.
 //
 
-#if compiler(>=5.7)
 /// Represents types of music catalog charts available in Apple Music.
 ///
 /// These types can be songs, albums, playlists or music videos.
@@ -260,4 +259,3 @@ extension MCatalog {
     return response
   }
 }
-#endif

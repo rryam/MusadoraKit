@@ -7,7 +7,6 @@
 
 import Foundation
 
-#if compiler(>=5.7)
 public extension MHistory {
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
   static func recentlyPlayed(limit: Int? = nil) async throws -> MusicItemCollection<RecentlyPlayedMusicItem> {
@@ -49,7 +48,6 @@ public extension MHistory {
     return response.items
   }
 }
-#endif
 
 public extension MHistory {
   /// Fetch the recently played resources for the user.

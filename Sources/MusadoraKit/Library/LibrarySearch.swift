@@ -13,7 +13,6 @@ public enum MLibrarySearchableType {
   case artists
   case musicVideos
 
-#if compiler(>=5.7)
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   public var libraryType: MusicLibrarySearchable.Type {
     switch self {
@@ -29,7 +28,6 @@ public enum MLibrarySearchableType {
         return MusicVideo.self
     }
   }
-#endif
 
   public var type: MLibrarySearchable.Type {
     switch self {
@@ -69,7 +67,6 @@ public extension MLibrary {
     }
 }
 
-#if compiler(>=5.7)
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
 public extension MLibrary {
   static func search(
@@ -145,4 +142,3 @@ public extension MLibrary {
       return response.artists
     }
 }
-#endif
