@@ -1,4 +1,7 @@
 //
+//  "I am a dreamer, and you are my muse,
+//  With you by my side, there's nothing to lose."
+//
 //  Storefronts.swift
 //  MusadoraKit
 //
@@ -7,14 +10,25 @@
 
 import Foundation
 
-/// An array of Music Storefronts.
+/// `MStorefronts` is a type alias for an array of `MStorefront` instances.
+///
+/// This represents a collection of Apple Music storefronts, which can be used when making requests to the
+/// Apple Music API that require a storefront.
 public typealias MStorefronts = [MStorefront]
 
+/// `StorefrontsData` is a struct that decodes the data from a JSON object into an array of `MStorefront` instances.
+///
+/// This structure corresponds to the response you would receive when fetching a list of Apple Music storefronts.
 struct StorefrontsData: Codable {
+
+  /// An array of `MStorefront` instances, representing the storefronts returned in the API response.
   let data: [MStorefront]
 }
 
-/// A Music Storefront.
+/// Represents a storefront in the Apple Music service.
+///
+/// A storefront corresponds to a geographical region and contains content specific to that region.
+/// It includes several attributes like the storefront name, language settings, and explicit content policy.
 public struct MStorefront: Codable {
 
   /// The identifier of the storefront.
@@ -80,15 +94,28 @@ public struct MStorefront: Codable {
 }
 
 public extension MCatalog {
-  
-  /// Fetch a specific storefront of Apple Music by its unique identifier.
+
+  /// Fetches a specific storefront of Apple Music by its unique identifier.
+  ///
+  /// A storefront represents the Apple Music service in a particular geographic region and
+  /// contains regional-specific content and configuration settings. It is identified by a region code.
   ///
   /// Example usage:
   ///
+  /// ```swift
+  /// do {
   ///     let storefront = try await MCatalog.storefront(id: "us")
+  ///     print(storefront)
+  /// } catch {
+  ///     print("Failed to fetch storefront: \(error)")
+  /// }
+  /// ```
   ///
-  /// - Parameter id: The unique identifier for the storefront you want to fetch.
-  /// - Returns: `Storefront` object containing the details of the requested storefront.
+  /// In the above example, "us" is the identifier for the United States storefront.
+  ///
+  /// - Parameter id: The unique identifier for the storefront you want to fetch. This is usually a country code.
+  /// - Returns: A `MStorefront` object containing the details of the requested storefront.
+  /// - Throws: An error if the storefront cannot be found, or if there was a problem decoding the response.
   static func storefront(id: String) async throws -> MStorefront {
     let url = try storefrontsURL(id: id)
 
@@ -96,7 +123,7 @@ public extension MCatalog {
     let response = try await request.response()
     let storefront = try JSONDecoder().decode(StorefrontsData.self, from: response.data).data.first
 
-    guard let storefront else {
+    guard let storefront = storefront else {
       throw NSError(domain: "Storefront not found for ID \(id).", code: 0)
     }
 
@@ -105,12 +132,22 @@ public extension MCatalog {
 
   /// Fetches all the available storefronts of Apple Music.
   ///
+  /// A storefront represents the Apple Music service in a particular geographic region and
+  /// contains regional-specific content and configuration settings.
+  ///
   /// Example usage:
   ///
-  ///       let storefronts = try await MCatalog.storefronts()
-  ///       print(storefronts)
+  /// ```swift
+  /// do {
+  ///     let storefronts = try await MCatalog.storefronts()
+  ///     print(storefronts)
+  /// } catch {
+  ///     print("Failed to fetch storefronts: \(error)")
+  /// }
+  /// ```
   ///
-  /// - Returns: An array of `MStorefronts` which contains all the storefronts available for Apple Music.
+  /// - Returns: An array of `MStorefront` objects, each representing a different storefront.
+  /// - Throws: An error if there was a problem with the network request, or if the response couldn't be decoded.
   static func storefronts() async throws -> MStorefronts {
     let url = try storefrontsURL()
     let request = MusicDataRequest(urlRequest: .init(url: url))
