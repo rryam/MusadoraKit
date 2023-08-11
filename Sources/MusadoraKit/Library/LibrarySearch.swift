@@ -5,14 +5,41 @@
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
+/// An enumeration representing different types of items that can be searched within the Apple Music library.
+///
+/// `MLibrarySearchableType` provides you with a way to specify the kind of music item you want to search for.
+/// For instance, whether you are interested in songs, albums, artists, etc.
+///
+/// Use this enumeration when performing search operations on the user's music library,
+/// especially when you need to specify the type of items you are searching for.
+///
+/// **Usage Example**:
+///
+///     let searchType = MLibrarySearchableType.songs
+///     let results = myLibrary.search(for: "Imagine", ofType: searchType)
+///
 @available(macOS 14.0, *)
 public enum MLibrarySearchableType {
+
+  /// Represents individual song tracks.
   case songs
+
+  /// Represents music album collections.
   case albums
+
+  /// Represents user-defined or preset playlists.
   case playlists
+
+  /// Represents individual music artists.
   case artists
+
+  /// Represents music videos.
   case musicVideos
 
+  /// Provides the associated `MusicLibrarySearchable` type for the current enumeration case.
+  ///
+  /// This is particularly useful when working with the newer Apple Music SDK, which
+  ///  might expect types conforming to the `MusicLibrarySearchable` protocol.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   public var libraryType: MusicLibrarySearchable.Type {
     switch self {
@@ -29,6 +56,9 @@ public enum MLibrarySearchableType {
     }
   }
 
+  /// Provides the associated `MLibrarySearchable` type for the current enumeration case.
+  ///
+  /// This is useful when working with functionalities that require a type conforming to the `MLibrarySearchable` protocol.
   public var type: MLibrarySearchable.Type {
     switch self {
       case .songs:
