@@ -21,6 +21,3 @@ public struct MusadoraKit {}
 /// 3. `MRecommendation` for accessing the user's recommendations.
 /// 4. `MHistory` for accessing historical data.
 /// 5. `MRating` for working with ratings.
-
-// MusicDataRequest.tokenProvider = CustomMusicTokenProvider.init()
-
