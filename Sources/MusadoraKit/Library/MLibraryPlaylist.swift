@@ -114,3 +114,5 @@ extension MLibraryPlaylist: PlayableMusicItem {
     }
   }
 }
+
+extension MLibraryPlaylist: Identifiable {}
