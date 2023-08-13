@@ -364,3 +364,33 @@ public extension MLibrary {
     return playlist
   }
 }
+
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(macOS, unavailable)
+@available(macCatalyst, unavailable)
+extension MLibrary {
+
+  /// Adds an item (or items) to a specified playlist in the user's music library.
+  ///
+  /// Example usage:
+  ///
+  ///     let songs: Songs = ... // Obtain these from the music library
+  ///     let playlist: Playlist = ... // Obtain this from the music library
+  ///
+  ///     do {
+  ///         let updatedPlaylist = try await MLibrary.add(item: songs, to: playlist)
+  ///         print("Songs successfully added to \(updatedPlaylist.name).")
+  ///     } catch {
+  ///         print("Error adding songs to playlist: \(error)")
+  ///     }
+  ///
+  /// - Parameters:
+  ///   - item: An item conforming to `MusicPlaylistAddable` representing the music content to be added to the playlist.
+  ///   - playlist: A `Playlist` object representing the playlist to which the songs should be added.
+  /// - Returns: An updated `Playlist` object.
+  /// - Throws: An error if the item could not be added to the playlist.
+  @discardableResult
+  static func add(item: some MusicPlaylistAddable, to playlist: Playlist) async throws -> Playlist {
+    try await MusicLibrary.shared.add(item, to: playlist)
+  }
+}
