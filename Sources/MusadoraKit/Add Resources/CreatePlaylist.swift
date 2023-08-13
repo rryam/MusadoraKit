@@ -368,7 +368,7 @@ public extension MLibrary {
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
-extension MLibrary {
+public extension MLibrary {
 
   /// Adds an item (or items) to a specified playlist in the user's music library.
   ///
