@@ -9,7 +9,8 @@ import Foundation
 
 /// Represents a playlist within a user's music library.
 ///
-/// A `MLibraryPlaylist` provides a detailed view of a playlist, including its attributes and associated metadata. This includes details like its editability, public status, artwork, and more.
+/// A `MLibraryPlaylist` provides a detailed view of a playlist, including its attributes and associated metadata.
+/// This includes details like its editability, public status, artwork, and more.
 ///
 /// Example usage:
 ///
