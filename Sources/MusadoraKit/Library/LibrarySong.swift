@@ -157,22 +157,26 @@ public extension MLibrary {
   ///
   /// - Returns: An `Int` representing the total number of songs in the user's library.
   /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var songsCount: Int {
     get async throws {
-      if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *) {
-        let request = MusicLibraryRequest<Song>()
-        let response = try await request.response()
-        return response.items.count
+      let request = MusicLibraryRequest<Playlist>()
+      let response = try await request.response()
+      return response.items.count
+    }
+  }
+
+  /// Access the total number of songs in the user's library.
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
+  @available(tvOS, unavailable)
+  @available(watchOS, unavailable)
+  static var songsItemsCount: Int {
+    get async throws {
+      if let items = MPMediaQuery.songs().items {
+        return items.count
       } else {
-#if os(iOS)
-        if let items = MPMediaQuery.songs().items {
-          return items.count
-        } else {
-          throw MediaPlayError.notFound(for: "songs")
-        }
-#else
-        throw MediaPlayError.platformNotSupported
-#endif
+        throw MediaPlayError.notFound(for: "songs")
       }
     }
   }

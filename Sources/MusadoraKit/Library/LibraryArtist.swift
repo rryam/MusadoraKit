@@ -110,7 +110,6 @@ public extension MLibrary {
     }
   }
 
-#if compiler(>=5.7)
   /// Accesses the total number of artists in the user's music library.
   ///
   /// Example usage:
@@ -130,13 +129,13 @@ public extension MLibrary {
       return response.items.count
     }
   }
-#else
+
   /// Access the total number of artists in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var artistsCount: Int {
+  static var artistsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.artists().items {
         return items.count
@@ -145,5 +144,4 @@ public extension MLibrary {
       }
     }
   }
-#endif
 }

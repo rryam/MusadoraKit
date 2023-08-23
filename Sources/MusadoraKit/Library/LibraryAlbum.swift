@@ -76,7 +76,6 @@ public extension MLibrary {
     }
   }
 
-#if compiler(>=5.7)
   /// Access the total number of albums in the user's library.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
   static var albumsCount: Int {
@@ -86,13 +85,13 @@ public extension MLibrary {
       return response.items.count
     }
   }
-#else
+
   /// Access the total number of albums in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var albumsCount: Int {
+  static var albumsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.albums().items {
         return items.count
@@ -101,7 +100,6 @@ public extension MLibrary {
       }
     }
   }
-#endif
 
   /// Taken from https://github.com/marcelmendesfilho/MusadoraKit/blob/feature/improvements/Sources/MusadoraKit/Library/LibraryAlbum.swift
   /// Thanks @marcelmendesfilho!

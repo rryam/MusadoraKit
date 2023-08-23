@@ -145,7 +145,6 @@ public extension MLibrary {
     }
   }
 
-#if compiler(>=5.7)
   /// Access the total number of playlists in the user's library.
   ///
   /// Use this property to retrieve the total number of playlists in the user's library.
@@ -166,13 +165,13 @@ public extension MLibrary {
       return response.items.count
     }
   }
-#else
+
   /// Access the total number of playlists in the user's library.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var playlistsCount: Int {
+  static var playlistsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.playlists().items {
         return items.count
@@ -181,7 +180,6 @@ public extension MLibrary {
       }
     }
   }
-#endif
 
   /// Add a playlist to the user's library by using its identifier.
   ///
