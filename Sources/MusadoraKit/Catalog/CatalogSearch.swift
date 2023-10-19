@@ -6,7 +6,9 @@
 //
 
 public extension MCatalog {
+
   /// Search the Apple Music catalog by using a query term.
+  ///
   /// - Parameters:
   ///   - term: The entered text for the search.
   ///   - types: The types of music items to include in the search.

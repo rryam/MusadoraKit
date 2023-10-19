@@ -107,8 +107,8 @@ public extension MCatalog {
   }
 }
 
-extension MCatalog {
-  static private func album(with id: MusicItemID, fetch properties: AlbumProperties) async throws -> Album {
+private extension MCatalog {
+  static func album(with id: MusicItemID, fetch properties: AlbumProperties) async throws -> Album {
     var request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -119,14 +119,14 @@ extension MCatalog {
     return album
   }
 
-  static private func albums(with ids: [MusicItemID], fetch properties: AlbumProperties) async throws -> Albums {
+  static func albums(with ids: [MusicItemID], fetch properties: AlbumProperties) async throws -> Albums {
     var request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
     return response.items
   }
 
-  static private func albums(for upc: String, fetch properties: AlbumProperties) async throws -> Album {
+  static func albums(for upc: String, fetch properties: AlbumProperties) async throws -> Album {
     var request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: upc)
     request.properties = properties
     let response = try await request.response()
@@ -137,7 +137,7 @@ extension MCatalog {
     return album
   }
 
-  static private func albums(for upcs: [String], fetch properties: AlbumProperties) async throws -> Albums {
+  static func albums(for upcs: [String], fetch properties: AlbumProperties) async throws -> Albums {
     var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: upcs)
     request.properties = properties
     let response = try await request.response()
