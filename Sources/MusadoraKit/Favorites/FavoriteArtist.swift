@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MCatalog {
+public extension MCatalog {
 
   /// Mark an artist as favorite for the User.
   ///
