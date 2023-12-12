@@ -14,8 +14,6 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Album` matching the given identifier.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func album(id: MusicItemID) async throws -> Album {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, *) {
       var request = MusicLibraryRequest<Album>()
@@ -42,8 +40,6 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func albums(limit: Int = 50) async throws -> Albums {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
       var request = MusicLibraryRequest<Album>()

@@ -58,8 +58,6 @@ public extension MLibrary {
   ///
   ///  For iOS 15, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API that does not fetch all the artists in one request.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func artists(limit: Int = 50) async throws -> Artists {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *) {
       var request = MusicLibraryRequest<Artist>()
