@@ -29,7 +29,7 @@ public extension MCatalog {
 
   /// Adds a rating for an album in the Apple Music catalog.
   ///
-  ///  Example:
+  /// Example:
   ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.addRating(for: album, rating: .like)
@@ -71,7 +71,7 @@ public extension MCatalog {
 
   /// Adds a rating for a music video in the Apple Music catalog.
   ///
-  ///  Example:
+  /// Example:
   ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.addRating(for: musicVideo, rating: .like)
@@ -115,7 +115,8 @@ public extension MCatalog {
   ///
   /// Use this method when you don't have the particular music item, but have access
   /// to the unique identifier of the music item.
-  ///  Example:
+  ///
+  /// Example:
   ///   ```swift
   ///  do  {
   ///    let rating = try await MCatalog.addRating(for: "12345678", item: .playlist, rating: .dislike)

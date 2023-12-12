@@ -74,7 +74,6 @@ public extension MLibrary {
     }
   }
 
-
   /// Fetch multiple artists from the user's library by using their identifiers.
   ///
   ///     do {

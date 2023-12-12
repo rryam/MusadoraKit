@@ -95,6 +95,7 @@ public extension MLibrary {
   ///
   /// Use this method when you don't have the particular music item, but have access
   /// to the unique identifier of the music item.
+  ///
   ///  Example:
   ///   ```swift
   ///  do  {
