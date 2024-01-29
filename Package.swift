@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
   name: "MusadoraKit",
-  platforms: [.iOS(.v15), .macOS(.v12), .watchOS(.v8), .tvOS(.v15)],
+  platforms: [.iOS(.v15), .macOS(.v12), .watchOS(.v8), .tvOS(.v15), .visionOS(.v1)],
   products: [
     .library(name: "MusadoraKit", targets: ["MusadoraKit"]),
     .library(name: "MusadoraLabsKit", targets: ["MusadoraLabsKit"]),
