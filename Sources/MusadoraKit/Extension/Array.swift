@@ -23,7 +23,7 @@ extension Array where Element: Equatable {
   }
 }
 
-extension Array where Element == Locale.Region {
+extension Array where Element == String {
 
   /// Returns an array of arrays, each containing at most the specified number of elements.
   ///

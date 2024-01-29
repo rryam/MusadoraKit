@@ -394,7 +394,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func songsForGenres() async throws -> SongsForGenres {
-    if #available(macOS 14.0, macCatalyst 17.0, *) {
+    if #available(macOS 14.2, macCatalyst 17.2, *) {
       let request = MusicLibrarySectionedRequest<Genre, Song>()
       let response = try await request.response()
       return response.sections
