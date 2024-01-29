@@ -16,7 +16,7 @@ workflows:
     name: MusadoraKit Workflow
     instance_type: mac_mini_m1
     environment:
-      xcode: 15
+      xcode: edge
       vars:
         XCODE_SCHEME: "MusadoraKit"
         APP_ID: "Musadora"
@@ -32,7 +32,7 @@ workflows:
         script: |
           #!/bin/zsh
 
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               xcodebuild clean build \
@@ -44,7 +44,7 @@ workflows:
         script: |
           #!/bin/zsh
           
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS")
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               set -o pipefail
