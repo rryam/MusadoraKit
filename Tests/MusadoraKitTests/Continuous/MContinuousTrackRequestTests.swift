@@ -29,17 +29,21 @@ final class MContinuousTrackRequestTests: XCTestCase {
       throw URLError(.cannotDecodeRawData)
     }
 
-    let json = try data.printJSON()
-    XCTAssertEqual(json, continuousTrackPostDataJSON)
+    let decodedData = try JSONDecoder().decode(MContinuousTrackData.self, from: data)
+    let expectedData = MContinuousTrackData(songID: song.id, albumID: album.id)
+
+    XCTAssertEqual(decodedData, expectedData)
   }
 
   func testMContinuousTrackDataEncoding() throws {
     let trackData = MContinuousTrackData(songID: "1640832991", albumID: "1640832989")
 
     let encodedData = try JSONEncoder().encode(trackData)
-    let encodedString = String(data: encodedData, encoding: .utf8)
+    let decodedData = try JSONDecoder().decode(MContinuousTrackData.self, from: encodedData)
 
-    XCTAssertEqual(encodedString?.replacingOccurrences(of: "\\s", with: "", options: .regularExpression), continuousTrackPostDataJSON.replacingOccurrences(of: "\\s", with: "", options: .regularExpression))
+    let expectedData = MContinuousTrackData(songID: "1640832991", albumID: "1640832989")
+
+    XCTAssertEqual(decodedData, expectedData)
   }
 }
 

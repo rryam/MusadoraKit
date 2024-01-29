@@ -6,7 +6,7 @@
 //
 
 /// Represents data for a continuous track request.
-struct MContinuousTrackData: Encodable {
+struct MContinuousTrackData: Codable {
 
   /// The data for the continuous track request.
   let data: [MContinuousTrackDatum]
@@ -22,13 +22,13 @@ struct MContinuousTrackData: Encodable {
 }
 
 /// Represents a datum for a continuous track request.
-struct MContinuousTrackDatum: Encodable {
+struct MContinuousTrackDatum: Codable {
 
   /// The ID of the song for the continuous track request.
   let id: MusicItemID
 
   /// The type of the item being requested.
-  let type = "songs"
+  var type = "songs"
 
   /// The metadata for the continuous track request.
   let meta: MContinuousTrackMetadata
@@ -42,21 +42,46 @@ struct MContinuousTrackDatum: Encodable {
     id = songID
     meta = MContinuousTrackMetadata(container: MContinuousTrackContainer(id: albumID))
   }
+}
 
-  /// Represents metadata for a continuous track request.
-  struct MContinuousTrackMetadata: Encodable {
+/// Represents metadata for a continuous track request.
+struct MContinuousTrackMetadata: Codable {
 
-    /// The container for the continuous track request.
-    let container: MContinuousTrackContainer
-  }
+  /// The container for the continuous track request.
+  let container: MContinuousTrackContainer
+}
 
-  /// Represents a container for a continuous track request.
-  struct MContinuousTrackContainer: Encodable {
+/// Represents a container for a continuous track request.
+struct MContinuousTrackContainer: Codable {
 
-    /// The ID of the album for the continuous track request.
-    let id: MusicItemID
+  /// The ID of the album for the continuous track request.
+  let id: MusicItemID
 
-    /// The type of the container for the continuous track request.
-    let type = "albums"
+  /// The type of the container for the continuous track request.
+  var type = "albums"
+}
+
+extension MContinuousTrackData: Equatable {
+  static func ==(lhs: MContinuousTrackData, rhs: MContinuousTrackData) -> Bool {
+    return lhs.data == rhs.data
   }
 }
+
+extension MContinuousTrackDatum: Equatable {
+  static func ==(lhs: MContinuousTrackDatum, rhs: MContinuousTrackDatum) -> Bool {
+    return lhs.id == rhs.id && lhs.type == rhs.type && lhs.meta == rhs.meta
+  }
+}
+
+extension MContinuousTrackMetadata: Equatable {
+  static func ==(lhs: MContinuousTrackMetadata, rhs: MContinuousTrackMetadata) -> Bool {
+    return lhs.container == rhs.container
+  }
+}
+
+extension MContinuousTrackContainer: Equatable {
+  static func ==(lhs: MContinuousTrackContainer, rhs: MContinuousTrackContainer) -> Bool {
+    return lhs.id == rhs.id && lhs.type == rhs.type
+  }
+}
+

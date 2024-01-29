@@ -168,11 +168,11 @@ public extension MCatalog {
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
   static func globalChartPlaylists() async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
-    let chunkedCountryCodes = Locale.isoRegionCodes.chunked(into: 10)
+    let chunkedCountryCodes = Locale.Region.isoRegions.chunked(into: 10)
     var globalChartPlaylists: Playlists = []
 
     for countryCodes in chunkedCountryCodes {
-      let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: countryCodes.joined(separator: ","))
+      let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: countryCodes.map { $0.identifier }.joined(separator: ","))
       let request = MusicDataRequest(urlRequest: URLRequest(url: url))
       let response = try await request.response()
 
