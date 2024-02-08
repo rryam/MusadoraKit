@@ -6,7 +6,7 @@
 //
 
 /// The suggestion kinds to include in the results.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 public enum SuggestionKind: Codable {
   case terms(TermSuggestion)
   case topResults(TopResultsSuggestion)

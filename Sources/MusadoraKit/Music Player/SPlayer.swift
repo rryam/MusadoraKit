@@ -91,7 +91,7 @@ public extension SPlayer {
   }
 }
 
-@available(iOS 16, *, tvOS 16, *)
+@available(iOS 16, tvOS 16, visionOS 1.0, *)
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {

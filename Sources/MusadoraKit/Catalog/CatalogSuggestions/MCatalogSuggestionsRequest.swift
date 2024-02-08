@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /// A request that your app uses to fetch search suggestions from the Apple Music catalog
 /// using a search term.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 struct MCatalogSuggestionsRequest {
   /// A limit for the number of items to return
   /// in the catalog suggestions response.
@@ -46,7 +45,7 @@ struct MCatalogSuggestionsRequest {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MCatalogSuggestionsRequest {
   private var searchSuggestionsEndpointURL: URL {
     get async throws {

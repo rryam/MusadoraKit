@@ -40,7 +40,7 @@ public extension MLibrary {
   ///   - description: An optional string describing the playlist.
   /// - Returns: A `Playlist` object representing the newly created playlist.
   /// - Throws: An error if the playlist could not be created.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func createPlaylist(with name: String, author: String? = nil, description: String? = nil) async throws -> Playlist {
@@ -74,7 +74,7 @@ public extension MLibrary {
   ///   - items: A `Songs` object representing the songs to be added to the playlist.
   /// - Returns: A `Playlist` object representing the newly created playlist.
   /// - Throws: An error if the playlist could not be created.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func createPlaylist(with name: String, author: String? = nil, description: String? = nil, items: Songs) async throws -> Playlist {
@@ -365,7 +365,7 @@ public extension MLibrary {
   }
 }
 
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
 public extension MLibrary {

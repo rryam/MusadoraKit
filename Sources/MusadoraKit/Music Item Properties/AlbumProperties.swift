@@ -18,7 +18,7 @@ extension AlbumProperties {
   public static var all: Self {
     var properties: Self = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
     
-    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       properties += [.audioVariants]
       return properties
     } else {

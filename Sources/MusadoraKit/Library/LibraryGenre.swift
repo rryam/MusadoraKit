@@ -29,7 +29,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the genres locally from the device,
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func genres() async throws -> Genres {
     let request = MusicLibraryRequest<Genre>()
     let response = try await request.response()

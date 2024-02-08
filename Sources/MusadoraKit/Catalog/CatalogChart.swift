@@ -8,7 +8,7 @@
 /// Represents types of music catalog charts available in Apple Music.
 ///
 /// These types can be songs, albums, playlists or music videos.
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public enum MusicCatalogChartType {
   case songs
   case albums
@@ -35,7 +35,7 @@ public enum MusicCatalogChartType {
 /// Extension that provides a static var for all cases of `MusicCatalogChartType`.
 ///
 /// - Returns: An array with all cases of `MusicCatalogChartType`.
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension [MusicCatalogChartType] {
   public static var all: Self {
     MusicCatalogChartType.allCases
@@ -45,7 +45,7 @@ extension [MusicCatalogChartType] {
 /// Extension that provides a static var for all cases of `MusicCatalogChartKind`.
 ///
 /// - Returns: An array with all cases of `MusicCatalogChartKind`.
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension [MusicCatalogChartKind] {
   public static var all: Self {
     MusicCatalogChartKind.allCases
@@ -55,10 +55,10 @@ extension [MusicCatalogChartKind] {
 /// An extension to `MusicCatalogChartType` to conform to `CaseIterable`.
 ///
 /// This allows for easy access to all cases of `MusicCatalogChartType`, useful for iteration or creating arrays with all cases.
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogChartType: CaseIterable {}
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public extension MCatalog {
 
   /// Fetches the charts from the Apple Music catalog.
@@ -244,7 +244,7 @@ public extension MCatalog {
   }
 }
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension MCatalog {
   static private func fetchCatalogCharts(genre: Genre?,
                                          kinds: [MusicCatalogChartKind],

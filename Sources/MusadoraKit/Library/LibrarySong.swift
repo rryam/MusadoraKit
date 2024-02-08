@@ -37,7 +37,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func song(id: MusicItemID) async throws -> Song {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Song>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -83,7 +83,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func songs(limit: Int = 50) async throws -> Songs {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Song>()
       request.limit = limit
       let response = try await request.response()
@@ -102,7 +102,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the songs.
   /// - Returns: `Songs` matching the given identifiers.
   static func songs(ids: [MusicItemID]) async throws -> Songs {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Song>()
       request.filter(matching: \.id, memberOf: ids)
       let response = try await request.response()
@@ -133,7 +133,7 @@ public extension MLibrary {
   ///   - properties: Additional properties to fetch with the library song.
   /// - Returns: A `Song` object matching the given identifier, with all available properties from the local database.
   /// - Throws: An error if the retrieval fails, such as network connectivity issues, invalid parameters, or if the song is not found.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   static func song(id: MusicItemID, fetch properties: SongProperties) async throws -> Song {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.id, equalTo: id)
@@ -157,7 +157,7 @@ public extension MLibrary {
   ///
   /// - Returns: An `Int` representing the total number of songs in the user's library.
   /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   static var songsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
@@ -237,7 +237,7 @@ public extension MLibrary {
   }
 }
 
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MLibrary {
 
   /// Fetch recently added songs from the user's library sorted by the date added.
@@ -354,7 +354,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func songs(for genre: Genre) async throws -> Songs {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.genres, contains: genre)
@@ -390,7 +390,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func songsForGenres() async throws -> SongsForGenres {
@@ -428,7 +428,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func songsForArtists() async throws -> SongsForArtists {
     let request = MusicLibrarySectionedRequest<Artist, Song>()
     let response = try await request.response()
@@ -460,7 +460,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func songsForAlbums() async throws -> SongsForAlbums {
     let request = MusicLibrarySectionedRequest<Album, Song>()
     let response = try await request.response()
@@ -492,7 +492,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibrarySectionedRequest` structure.
-  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func songsForPlaylists() async throws -> SongsForPlaylists {
     let request = MusicLibrarySectionedRequest<Playlist, Song>()
     let response = try await request.response()

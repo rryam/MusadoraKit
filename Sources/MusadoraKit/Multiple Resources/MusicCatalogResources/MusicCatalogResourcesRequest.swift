@@ -9,7 +9,7 @@ import Foundation
 
 /// A request that your app uses to fetch multiple resources from the Apple Music catalog
 /// using their identifiers.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 public struct MusicCatalogResourcesRequest {
   private var types: [MusicCatalogResourcesType.Key: [MusicItemID]]
 
@@ -28,7 +28,7 @@ public struct MusicCatalogResourcesRequest {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogResourcesRequest {
   private var multipleCatalogResourcesEndpointURL: URL {
     get async throws {

@@ -40,7 +40,7 @@ public enum MLibrarySearchableType {
   ///
   /// This is particularly useful when working with the newer Apple Music SDK, which
   ///  might expect types conforming to the `MusicLibrarySearchable` protocol.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   public var libraryType: MusicLibrarySearchable.Type {
     switch self {
       case .songs:
@@ -97,7 +97,7 @@ public extension MLibrary {
     }
 }
 
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MLibrary {
   static func search(
     for term: String,

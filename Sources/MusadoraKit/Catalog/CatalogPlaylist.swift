@@ -170,7 +170,7 @@ public extension MCatalog {
     let countryCode = try await MusicDataRequest.currentCountryCode
     var chunkedCountryCodes: [[String]] = [[]]
 
-    if #available(iOS 16, *, macOS 13, *) {
+    if #available(iOS 16, *, macOS 13, visionOS 1.0, *) {
         chunkedCountryCodes = Locale.Region.isoRegions.map { $0.identifier }.chunked(into: 10)
     } else {
       chunkedCountryCodes = Locale.isoRegionCodes.chunked(into: 10)

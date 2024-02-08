@@ -43,7 +43,7 @@ public extension MLibrary {
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
   static func playlist(id: MusicItemID) async throws -> Playlist {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -92,7 +92,7 @@ public extension MLibrary {
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
   static func playlists(limit: Int? = nil) async throws -> Playlists {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       let request = MusicLibraryRequest<Playlist>()
       let response = try await request.response()
       return response.items
@@ -133,7 +133,7 @@ public extension MLibrary {
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
   static func playlists(ids: [MusicItemID]) async throws -> Playlists {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, memberOf: ids)
       let response = try await request.response()
@@ -157,7 +157,7 @@ public extension MLibrary {
   ///
   /// - Returns: An `Int` representing the total number of playlists in the user's library.
   /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   static var playlistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
@@ -204,7 +204,7 @@ public extension MLibrary {
   }
 }
 
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, *)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MHistory {
 
   /// Fetch recently added playlists from the user's library sorted by the date added.
@@ -289,7 +289,6 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the playlists from Apple Music's server using `MusicDataRequest` to perform a network request.
   ///   The response data is then decoded into a `LibraryPlaylists` object.
-  @available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15.0, watchOS 8.0, *)
   static func madeForYouPlaylists() async throws -> LibraryPlaylists {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"

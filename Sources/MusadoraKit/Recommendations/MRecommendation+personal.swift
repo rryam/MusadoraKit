@@ -5,7 +5,7 @@
 //  Created by Rudrank Riyam on 25/12/22.
 //
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public extension MRecommendation {
 
   /// Retrieve the default personal recommendations for a user.
@@ -90,7 +90,7 @@ public extension MRecommendation {
   }
 }
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension MRecommendation {
   private static func personalRecommendations(_ limit: Int? = nil) async throws -> PersonalRecommendations {
     var request = MusicPersonalRecommendationsRequest()

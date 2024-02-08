@@ -68,7 +68,7 @@ public extension MCatalog {
     return response.artists
   }
 
-  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
   static func searchMusicVideos(for term: String,
                                 limit: Int? = nil,
                                 offset: Int? = nil) async throws -> MusicVideos {
@@ -79,7 +79,7 @@ public extension MCatalog {
     return response.musicVideos
   }
 
-  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
   static func searchCurators(for term: String,
                              limit: Int? = nil,
                              offset: Int? = nil) async throws -> Curators {
@@ -90,7 +90,7 @@ public extension MCatalog {
     return response.curators
   }
 
-  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+  @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
   static func searchRadioShows(for term: String,
                                limit: Int? = nil,
                                offset: Int? = nil) async throws -> RadioShows {
@@ -120,7 +120,7 @@ public extension MCatalog {
   ///   - types: The types of music items to include in the search.
   ///   - limit: The number of objects returned.
   /// - Returns: `MusicCatalogSearchSuggestionsResponse` that returns different top music items and suggestions.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func searchSuggestions(for term: String,
                                 types: [MCatalogSearchType],
                                 limit: Int? = nil) async throws -> MusicCatalogSearchSuggestionsResponse {
@@ -138,7 +138,7 @@ public extension MCatalog {
   ///   - types: The types of music items to include in the search.
   ///   - limit: The number of objects returned.
   /// - Returns: `[MusicCatalogSearchSuggestionsResponse.Suggestion]` which is an array of  suggestions.
-  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+  @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func search(for term: String,
                      limit: Int? = nil) async throws -> [MusicCatalogSearchSuggestionsResponse.Suggestion] {
     var request = MusicCatalogSearchSuggestionsRequest(term: term)

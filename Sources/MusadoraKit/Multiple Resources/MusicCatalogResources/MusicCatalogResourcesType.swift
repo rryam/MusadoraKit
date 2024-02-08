@@ -6,11 +6,11 @@
 //
 
 /// A collection of music catalog resources types.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 typealias MusicCatalogResourcesTypes = MusicItemCollection<MusicCatalogResourcesType>
 
 /// A generic music item to represent each of the catalog music items.
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 public enum MusicCatalogResourcesType {
   case station(Station)
   case genre(Genre)
@@ -41,7 +41,7 @@ public enum MusicCatalogResourcesType {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogResourcesType: MusicItem {
   public var id: MusicItemID {
     let id: MusicItemID
@@ -63,7 +63,7 @@ extension MusicCatalogResourcesType: MusicItem {
   }
 }
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
+@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogResourcesType: Decodable {
   enum CodingKeys: CodingKey {
     case type
