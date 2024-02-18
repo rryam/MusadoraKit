@@ -32,27 +32,24 @@ struct MRecommendationRequest {
   /// Fetches recommendations based on the user’s library
   /// and purchase history for the given request.
   func response() async throws -> MRecommendationResponse {
+    let items: MRecommendations
     let url = try recommendationEndpointURL
-    let request = MusicDataRequest(urlRequest: .init(url: url))
-    let response = try await request.response()
-
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
-    let items = try decoder.decode(MRecommendations.self, from: response.data)
 
-    return MRecommendationResponse(items: items)
-  }
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
 
-  /// Fetches recommendations based on the user’s library
-  /// and purchase history for the given request.
-  func response(userToken: String) async throws -> MRecommendationResponse {
-    let url = try recommendationEndpointURL
-    let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
-    let data = try await request.response()
+      let decoder = JSONDecoder()
+      decoder.dateDecodingStrategy = .iso8601
+      items = try decoder.decode(MRecommendations.self, from: data)
+    } else {
+      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let response = try await request.response()
 
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    let items = try decoder.decode(MRecommendations.self, from: data)
+      items = try decoder.decode(MRecommendations.self, from: response.data)
+    }
 
     return MRecommendationResponse(items: items)
   }
