@@ -19,7 +19,7 @@ struct RecommendationsView: View {
     }
     .task {
       do {
-        recommendations = try await MRecommendation.personal()
+        recommendations = try await MRecommendation
       } catch {
         print(error)
       }
