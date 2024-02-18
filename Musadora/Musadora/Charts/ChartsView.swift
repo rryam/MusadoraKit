@@ -38,7 +38,7 @@ struct NavigationListStack<Content>: View where Content: View {
 
   var body: some View {
     NavigationStack {
-      List {
+      ScrollView {
         content()
       }
       .navigationTitle(title)

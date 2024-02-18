@@ -9,17 +9,26 @@ import SwiftUI
 import MusadoraKit
 
 struct RecommendationsView: View {
-  @State private var recommendations: PersonalRecommendations = []
-  
+  @State private var recommendations: MRecommendations = []
+
   var body: some View {
     NavigationListStack("Recommendations") {
       ForEach(recommendations) { recommendation in
-        NavigationLink((recommendation.title ?? ""), destination: RecommendationView(recommendation: recommendation))
+        VStack {
+          Text(recommendation.title ?? "")
+            .font(.title2)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top)
+
+          RecommendationView(recommendation: recommendation)
+        }
       }
+      .padding(.horizontal)
     }
     .task {
       do {
-        recommendations = try await MRecommendation
+        // User recommendations(userToken:) to debug in simulator
+        recommendations = try await MRecommendation.default()
       } catch {
         print(error)
       }

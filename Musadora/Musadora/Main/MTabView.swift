@@ -10,6 +10,11 @@ import SwiftUI
 struct MTabView: View {
   var body: some View {
     TabView {
+      RecommendationsView()
+        .tabItem {
+          Label("Recommendations", systemImage: "recordingtape")
+        }
+
       CatalogView()
         .tabItem {
           Label("Catalog", systemImage: "music.note.list")
@@ -18,11 +23,6 @@ struct MTabView: View {
       LibraryView()
         .tabItem {
           Label("Library", systemImage: "music.quarternote.3")
-        }
-
-      RecommendationsView()
-        .tabItem {
-          Label("Recommendations", systemImage: "recordingtape")
         }
 
       ChartsView()

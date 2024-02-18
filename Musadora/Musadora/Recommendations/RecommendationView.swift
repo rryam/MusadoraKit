@@ -8,50 +8,48 @@
 import SwiftUI
 import MusadoraKit
 
-
 struct RecommendationView: View {
-  var recommendation: MusicPersonalRecommendation
+  var recommendation: MRecommendationItem
 
   var body: some View {
-    List {
-      ForEach(recommendation.items, content: RecommendationRow.init)
+    ScrollView(.horizontal) {
+      LazyHStack {
+        ForEach(recommendation.items, content: RecommendationRow.init)
+      }
     }
-    .navigationTitle(recommendation.title ?? "")
   }
 }
 
 struct RecommendationRow: View {
-  var item: MusicPersonalRecommendation.Item
+  var item: UserMusicItem
 
   var body: some View {
-    VStack(alignment: .leading) {
-      HStack {
+    Button(action: {
+      Task {
+        do {
+          APlayer.shared.queue = [item]
+          try await APlayer.shared.play()
+        } catch {
+          print(error)
+        }
+      }
+    }, label: {
+      VStack(alignment: .leading) {
         if let artwork = item.artwork {
-          ArtworkImage(artwork, width: 100, height: 100)
-            .cornerRadius(8)
+          ArtworkImage(artwork, width: 250, height: 250)
+            .cornerRadius(16)
+        } else {
+          Color.red
         }
 
-        Spacer()
-
-        Image(systemName: "play.fill")
-          .foregroundColor(.secondary)
-          .onTapGesture {
-            Task {
-              do {
-                try await APlayer.shared.play(item: item)
-              } catch {
-                print(error)
-              }
-            }
-          }
+        Text(item.title)
+          .bold()
+          .font(.headline)
       }
-
-      Text(item.title)
-        .bold()
-        .font(.headline)
-
-      Text(item.subtitle ?? "")
-        .font(.subheadline)
-    }
+      .padding(8)
+      .contentShape(RoundedRectangle(cornerRadius: 24))
+      .hoverEffect()
+    })
+    .buttonStyle(.plain)
   }
 }
