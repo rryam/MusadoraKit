@@ -96,4 +96,11 @@ extension MRecommendation {
     let response = try await request.response()
     return response.items
   }
+
+  private static func recommendations(_ limit: Int? = nil, userToken: String) async throws -> MRecommendations {
+    var request = MRecommendationRequest()
+    request.limit = limit
+    let response = try await request.response(userToken: userToken)
+    return response.items
+  }
 }

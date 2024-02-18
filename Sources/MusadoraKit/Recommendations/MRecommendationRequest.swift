@@ -42,6 +42,20 @@ struct MRecommendationRequest {
 
     return MRecommendationResponse(items: items)
   }
+
+  /// Fetches recommendations based on the user’s library
+  /// and purchase history for the given request.
+  func response(userToken: String) async throws -> MRecommendationResponse {
+    let url = try recommendationEndpointURL
+    let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+    let data = try await request.response()
+
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    let items = try decoder.decode(MRecommendations.self, from: data)
+
+    return MRecommendationResponse(items: items)
+  }
 }
 
 extension MRecommendationRequest {
