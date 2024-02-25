@@ -83,9 +83,15 @@ public extension MRecommendation {
   ///  ```
   ///
   /// - Parameter limit: The maximum number of recommended stations to retrieve. If not specified, the default value is used.
-  /// - Returns: A collection of `Station` objects.
+  /// - Returns: A collection of unique `Station` objects.
   static func defaultStations(limit: Int? = nil) async throws -> Stations {
-    try await recommendations(limit).reduce(into: Stations()) { $0 += $1.stations }
+    let uniqueStations = try await recommendations(limit).reduce(into: Set<Station>()) { (result, recommendation) in
+      recommendation.stations.forEach { station in
+        result.insert(station)
+      }
+    }
+
+    return Stations(Array(uniqueStations))
   }
 }
 
