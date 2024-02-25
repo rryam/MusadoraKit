@@ -40,7 +40,7 @@ struct MStationTrackRequest {
           if let userToken = MusadoraKit.userToken {
             var postRequest = URLRequest(url: url)
             postRequest.httpMethod = "POST"
-            let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+            let request = MUserRequest(urlRequest: postRequest, userToken: userToken)
             let data = try await request.response()
             return try JSONDecoder().decode(Songs.self, from: data)
           } else {
