@@ -192,13 +192,20 @@ public extension MCatalog {
   ///
   /// - Returns: `Station` object representing the user's personalized Apple Music station.
   static func personalStation() async throws -> Station {
+    let stations: Stations
     let storefront = try await MusicDataRequest.currentCountryCode
     let url = try personalStationURL(for: storefront)
+    let decoder = JSONDecoder()
 
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-
-    let stations = try JSONDecoder().decode(Stations.self, from: response.data)
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
+      stations = try decoder.decode(Stations.self, from: data)
+    } else {
+      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+      let response = try await request.response()
+      stations = try decoder.decode(Stations.self, from: response.data)
+    }
 
     guard let personalStation = stations.first else {
       throw MusadoraKitError.notFound(for: "personal radio station")
