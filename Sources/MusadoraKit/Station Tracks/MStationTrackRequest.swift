@@ -25,22 +25,29 @@ struct MStationTrackRequest {
   /// Fetches tracks for the station associated with this request.
   func response() async throws -> Songs {
     let url = try stationTracksEndpointURL
-    let postRequest = MDataPostRequest(url: url)
-
-    return try await stationSongs(for: postRequest)
+    return try await stationSongs(for: url)
   }
 
   /// Fetches and processes station songs in parallel tasks.
   /// - Parameter postRequest: The request to fetch station songs.
   /// - Returns: An array of unique songs for the station.
-  private func stationSongs(for postRequest: MDataPostRequest) async throws -> Songs {
+  private func stationSongs(for url: URL) async throws -> Songs {
     try await withThrowingTaskGroup(of: Songs.self) { group in
       let iteratorLimit = limit / 10
 
       for _ in stride(from: 0, to: iteratorLimit, by: 1) {
         group.addTask {
-          let response = try await postRequest.response()
-          return try JSONDecoder().decode(Songs.self, from: response.data)
+          if let userToken = MusadoraKit.userToken {
+            var postRequest = URLRequest(url: url)
+            postRequest.httpMethod = "POST"
+            let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+            let data = try await request.response()
+            return try JSONDecoder().decode(Songs.self, from: data)
+          } else {
+            let postRequest = MDataPostRequest(url: url)
+            let response = try await postRequest.response()
+            return try JSONDecoder().decode(Songs.self, from: response.data)
+          }
         }
       }
 
