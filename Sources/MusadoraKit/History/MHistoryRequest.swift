@@ -38,10 +38,20 @@ struct MHistoryRequest {
 
   /// Fetches historical information based on the user’s history for the given request.
   func response() async throws -> MHistoryResponse {
+    let items: UserMusicItems
     let url = try historyEndpointURL
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-    let items = try JSONDecoder().decode(UserMusicItems.self, from: response.data)
+    let decoder = JSONDecoder()
+
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
+      items = try decoder.decode(UserMusicItems.self, from: data)
+    } else {
+      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+      let response = try await request.response()
+      items = try decoder.decode(UserMusicItems.self, from: response.data)
+    }
+
     return MHistoryResponse(items: items)
   }
 

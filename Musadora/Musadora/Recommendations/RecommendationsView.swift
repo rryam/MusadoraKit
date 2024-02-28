@@ -29,6 +29,9 @@ struct RecommendationsView: View {
       do {
         // User recommendations(userToken:) to debug in simulator
         recommendations = try await MRecommendation.default()
+
+        let playlist = try await MHistory.heavyRotation()
+        print(playlist)
       } catch {
         print(error)
       }

@@ -49,6 +49,13 @@
             ReferencedContainer = "container:Musadora.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "USER_TOKEN"
+            value = "AoiNB61rdxVs3yZeiTJzQ8dDsNlYFFjTioV4tE9izHGbdXKkg+eEtU9vVvGovhFUmaXp0EepNKSI2UTv5n+n+em8tJImmxD35cQrnbFZ528Lf/aIzkhiEmF2d4zPELxm9md72k+3t+P5iTT4CuoclbwMqHYHCNtPwvO+sRA/SBLyKdJUphDT2cIQHY2d83MiKJBQThAh0jowecMeBxpR07p00Dr5FRfkm6MTLoQL1d5DCmnNLA=="
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -24,17 +24,18 @@ struct PlaylistChartView: View {
 
             Spacer()
 
-            Image(systemName: "play.fill")
-              .foregroundColor(.secondary)
-              .onTapGesture {
-                Task {
-                  do {
-                    try await APlayer.shared.play(playlist: playlist)
-                  } catch {
-                    print(error)
-                  }
+            Button(action: {
+              Task {
+                do {
+                  try await APlayer.shared.play(playlist: playlist)
+                } catch {
+                  print(error)
                 }
               }
+            }, label: {
+              Image(systemName: "play.fill")
+            })
+            .buttonStyle(.plain)
           }
 
           Text(playlist.name)
