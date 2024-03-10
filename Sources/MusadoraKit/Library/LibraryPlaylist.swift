@@ -243,6 +243,8 @@ public extension MLibrary {
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   static func playlists(limit: Int) async throws -> LibraryPlaylists {
+    var playlists: LibraryPlaylists = []
+    let decoder = JSONDecoder()
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
 
@@ -250,10 +252,16 @@ public extension MLibrary {
       throw URLError(.badURL)
     }
 
-    let request = MusicDataRequest(urlRequest: .init(url: url))
-    let response = try await request.response()
 
-    var playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
+      playlists = try decoder.decode(LibraryPlaylists.self, from: data)
+    } else {
+      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let response = try await request.response()
+      playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
+    }
 
     repeat {
       if let nextBatchOfPlaylists = try await playlists.nextBatch() {
