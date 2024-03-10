@@ -263,13 +263,17 @@ public extension MLibrary {
       playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
     }
 
-    repeat {
-      if let nextBatchOfPlaylists = try await playlists.nextBatch() {
-        playlists += nextBatchOfPlaylists
-      } else {
-        break
-      }
-    } while playlists.hasNextBatch
+    if let userToken = MusadoraKit.userToken {
+#warning("Need to figure out pagination of playlists.")
+    } else {
+      repeat {
+        if let nextBatchOfPlaylists = try await playlists.nextBatch() {
+          playlists += nextBatchOfPlaylists
+        } else {
+          break
+        }
+      } while playlists.hasNextBatch
+    }
 
     return playlists
   }
