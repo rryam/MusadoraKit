@@ -37,11 +37,13 @@ struct MTabView: View {
         }
     }
     .welcomeSheet()
+#if os(visionOS)
     .toolbar {
       ToolbarItemGroup(placement: .bottomOrnament) {
         PlayerControlView()
       }
     }
+#endif
     .tint(.purple)
   }
 }
