@@ -14,7 +14,7 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     environment:
       xcode: edge
       vars:
@@ -59,7 +59,7 @@ workflows:
 
   musadorakit-update-docs:
     name: MusadoraKit Docs Update Workflow
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     environment:
       groups:
         - GitHub
@@ -91,7 +91,7 @@ workflows:
   musadora: 
     name: Musadora TestFlight Workflow
     working_directory: Musadora
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     environment:
       xcode: 15
       ios_signing:
