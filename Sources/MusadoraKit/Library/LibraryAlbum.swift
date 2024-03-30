@@ -42,10 +42,17 @@ public extension MLibrary {
   /// - Returns: `Albums` for the given limit.
   static func albums(limit: Int = 50) async throws -> Albums {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
-      var request = MusicLibraryRequest<Album>()
-      request.limit = limit
-      let response = try await request.response()
-      return response.items
+      if let _ = MusadoraKit.userToken {
+        var request = MLibraryResourceRequest<Album>()
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+      } else {
+        var request = MusicLibraryRequest<Album>()
+        request.limit = limit
+        let response = try await request.response()
+        return response.items
+      }
     } else {
       var request = MLibraryResourceRequest<Album>()
       request.limit = limit

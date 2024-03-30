@@ -42,12 +42,21 @@ struct MLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
   /// Fetches items from the user's library that match a specific filter.
   func response() async throws -> MLibraryResourceResponse<MusicItemType> {
     let url = try libraryEndpointURL
-    let request = MusicDataRequest(urlRequest: .init(url: url))
-    let response = try await request.response()
-    let items = try JSONDecoder().decode(MusicItemCollection<MusicItemType>.self, from: response.data)
-    return MLibraryResourceResponse(items: items)
+    let decoder = JSONDecoder()
+
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
+      let items = try decoder.decode(MusicItemCollection<MusicItemType>.self, from: data)
+      return MLibraryResourceResponse(items: items)
+    } else {
+      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+      let response = try await request.response()
+      let items = try decoder.decode(MusicItemCollection<MusicItemType>.self, from: response.data)
+      return MLibraryResourceResponse(items: items)
+    }
   }
-  
+
   private var type: LibraryMusicItemType?
   private var ids: [String]?
 }
