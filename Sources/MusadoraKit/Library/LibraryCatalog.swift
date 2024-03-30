@@ -14,14 +14,29 @@ public extension FilterableLibraryItem {
     get async throws {
       let path = try LibraryMusicItemType.path(for: Self.self)
       let url = try catalogURL(path: path)
-      let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-      let response = try await request.response()
-      let items = try JSONDecoder().decode(MusicItemCollection<Self>.self, from: response.data)
+      let decoder = JSONDecoder()
 
-      guard let item = items.first else {
-        throw MusadoraKitError.notFound(for: id.rawValue)
+      if let userToken = MusadoraKit.userToken {
+        let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+        let data = try await request.response()
+        let items = try decoder.decode(MusicItemCollection<Self>.self, from: data)
+
+        guard let item = items.first else {
+          throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+
+        return item
+      } else {
+        let request = MusicDataRequest(urlRequest: URLRequest(url: url))
+        let response = try await request.response()
+        let items = try decoder.decode(MusicItemCollection<Self>.self, from: response.data)
+
+        guard let item = items.first else {
+          throw MusadoraKitError.notFound(for: id.rawValue)
+        }
+
+        return item
       }
-      return item
     }
   }
 
