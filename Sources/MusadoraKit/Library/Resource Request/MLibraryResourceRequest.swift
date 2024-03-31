@@ -89,9 +89,12 @@ extension MLibraryResourceRequest {
         queryItems += [URLQueryItem(name: "limit", value: "\(limit)")]
       }
 
-      queryItems += [URLQueryItem(name: "fields[albums]", value: "artistName,artistUrl,artwork,contentRating,editorialArtwork,name,playParams,releaseDate,url")]
+      queryItems += [URLQueryItem(name: "includeOnly", value: "catalog")]
+
 
       components.queryItems = queryItems
+
+      print("MLibraryResourceRequest components", components)
 
       guard let url = components.url else {
         throw URLError(.badURL)
