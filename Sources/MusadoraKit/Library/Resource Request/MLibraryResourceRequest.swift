@@ -79,6 +79,7 @@ extension MLibraryResourceRequest {
 
       var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
+
       components.path = "me/library/\(type.rawValue)"
 
       if let ids = ids {
@@ -89,8 +90,13 @@ extension MLibraryResourceRequest {
         queryItems += [URLQueryItem(name: "limit", value: "\(limit)")]
       }
 
-      queryItems += [URLQueryItem(name: "includeOnly", value: "catalog")]
-
+      queryItems += [
+        URLQueryItem(name: "fields[albums]", value: "artistName,artistUrl,artwork,contentRating,editorialArtwork,name,playParams,releaseDate,url"),
+        URLQueryItem(name: "fields[artists]", value: "name,url"),
+        URLQueryItem(name: "includeOnly", value: "catalog,artists"),
+        URLQueryItem(name: "include[albums]", value: "artists"),
+        URLQueryItem(name: "include[library-albums]", value: "artists"),
+      ]
 
       components.queryItems = queryItems
 
