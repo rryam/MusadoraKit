@@ -7,16 +7,13 @@ let package = Package(
   name: "MusadoraKit",
   platforms: [.iOS(.v15), .macOS(.v12), .watchOS(.v8), .tvOS(.v15), .visionOS(.v1)],
   products: [
-    .library(name: "MusadoraKit", targets: ["MusadoraKit"]),
-    .library(name: "MusadoraLabsKit", targets: ["MusadoraLabsKit"]),
+    .library(name: "MusadoraKit", targets: ["MusadoraKit"])
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
   ],
   targets: [
     .target(name: "MusadoraKit", dependencies: []),
-    .testTarget(name: "MusadoraKitTests", dependencies: ["MusadoraKit"]),
-    .target(name: "MusadoraLabsKit", dependencies: []),
-    .testTarget(name: "MusadoraLabsKitTests", dependencies: ["MusadoraLabsKit"]),
+    .testTarget(name: "MusadoraKitTests", dependencies: ["MusadoraKit"])
   ]
 )
