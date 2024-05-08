@@ -1,4 +1,9 @@
 //
+//  "She fell in love with the idea of me,
+//  The wizard of her dreams I yearned to be.
+//  The idea of me, a spell too sweet to break,
+//  But her love was for a heart I couldn't fake."
+//
 //  LibraryAlbum.swift
 //  MusadoraKit
 //
@@ -158,4 +163,29 @@ public extension MHistory {
     let response = try await request.response()
     return response.items
   }
+}
+
+extension Album {
+  /// A Boolean value that indicates whether the album is from the user's library.
+  ///
+  /// This property decodes the play parameters of the album to determine its library status.
+  public var isLibrary: Bool? {
+    guard let data = try? JSONEncoder().encode(playParameters) else { return nil }
+    let parameters = try? JSONDecoder().decode(AlbumPlayParameters.self, from: data)
+    return parameters?.isLibrary
+  }
+
+  /// The catalog identifier for the album.
+  ///
+  /// This property decodes the play parameters of the album to retrieve its catalog identifier.
+  public var catalogID: MusicItemID? {
+    guard let data = try? JSONEncoder().encode(playParameters) else { return nil }
+    let parameters = try? JSONDecoder().decode(AlbumPlayParameters.self, from: data)
+    return parameters?.catalogId
+  }
+}
+
+struct AlbumPlayParameters: Codable {
+  let isLibrary: Bool?
+  let catalogId: MusicItemID?
 }
