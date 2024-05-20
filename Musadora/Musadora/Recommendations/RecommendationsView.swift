@@ -12,64 +12,127 @@ struct RecommendationsView: View {
   @State private var recommendations: MRecommendations = []
   @State private var hundredBestAlbums: [HundredBestAlbum] = []
 
+#if os(iOS)
+  private let columns = [GridItem(), GridItem()]
+#else
+  private let columns = [GridItem(.adaptive(minimum: 250))]
+#endif
+
+#if os(iOS)
+  private let size: Int = 250
+#else
+  private let size: CGFloat = 250
+#endif
+
   var body: some View {
-    NavigationListStack("Recommendations") {
-
-      Section("100 Best Albums") {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 20) {
-          ForEach(hundredBestAlbums) { album in
-            Button(action: {
-              Task {
-                let detailedAlbum = try await MCatalog.album(id: album.id, fetch: .tracks)
-                try await APlayer.shared.play(album: detailedAlbum)
-              }
-            }, label: {
-              VStack(alignment: .leading) {
-                ArtworkImage(album.artwork, width: 250, height: 250)
+    NavigationListStack("100 Best Albums") {
+      LazyVGrid(columns: columns) {
+        ForEach(hundredBestAlbums) { album in
+          NavigationLink(destination: { HundredAlbumView(album: album) }, label: {
+            VStack(alignment: .leading, spacing: 0) {
+              AsyncImage(url: album.artwork.url(width: size, height: size), content: { image in
+                image
+                  .resizable()
+                  .scaledToFit()
                   .cornerRadius(16)
+              }, placeholder: {
+                Color(cgColor: album.artwork.backgroundColor ?? .init(gray: 1.0, alpha: 1.0))
+              })
 
-                Text(album.title)
-                  .font(.title2)
-                  .padding(.top)
-                  .lineLimit(1)
+              Text(album.position + ": " + album.title)
+                .font(.headline)
+                .padding(.top)
+                .lineLimit(1)
 
-                Text(album.artistName)
-                  .font(.headline)
-                  .foregroundColor(.secondary)
-                  .lineLimit(1)
-              }
-              .padding(8)
-              .contentShape(RoundedRectangle(cornerRadius: 24))
-              .hoverEffect()
-            })
-            .buttonStyle(.plain)
-          }
-        }
-        .padding(.horizontal)
-      }
-
-      Section("Personal") {
-        ForEach(recommendations) { recommendation in
-          VStack {
-            Text(recommendation.title ?? "")
-              .font(.title2)
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding(.top)
-
-            RecommendationView(recommendation: recommendation)
-          }
+              Text(album.artistName)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+            }
+            .padding(8)
+            .contentShape(RoundedRectangle(cornerRadius: 24))
+            .hoverEffect()
+          })
+          .buttonStyle(.plain)
         }
       }
       .padding(.horizontal)
+      //
+      //      Section("Personal") {
+      //        ForEach(recommendations) { recommendation in
+      //          VStack {
+      //            Text(recommendation.title ?? "")
+      //              .font(.title2)
+      //              .frame(maxWidth: .infinity, alignment: .leading)
+      //              .padding(.top)
+      //
+      //            RecommendationView(recommendation: recommendation)
+      //          }
+      //        }
+      //      }
+      //      .padding(.horizontal)
     }
     .task {
       do {
         // User recommendations(userToken:) to debug in simulator
         hundredBestAlbums = try await MRecommendation.allHundredBestAlbums()
-        recommendations = try await MRecommendation.default()
+        //   recommendations = try await MRecommendation.default()
       } catch {
         print(error)
       }
+    }
+  }
+}
+
+#Preview("RecommendationsView") {
+  RecommendationsView()
+}
+
+struct HundredAlbumView: View {
+  var album: HundredBestAlbum
+
+  @State private var detailedAlbum: Album?
+
+  var body: some View {
+    ScrollView {
+      AsyncImage(url: detailedAlbum?.artwork?.url(width: 1024, height: 1024), content: { image in
+        image
+          .resizable()
+          .scaledToFit()
+          .cornerRadius(16)
+      }, placeholder: {
+        Color(cgColor: detailedAlbum?.artwork?.backgroundColor ?? .init(gray: 1.0, alpha: 1.0))
+      })
+      .padding()
+
+      if let detailedAlbum {
+        Text(detailedAlbum.artistName)
+          .font(.title2)
+          .bold()
+          .padding(.bottom)
+
+        ForEach(detailedAlbum.tracks ?? []) { track in
+          Button(action: {
+            Task {
+              APlayer.shared.queue = .init(for: detailedAlbum.tracks ?? [], startingAt: track)
+              try? await APlayer.shared.play()
+            }
+          }, label: {
+            HStack {
+              Text(track.title)
+
+              Spacer()
+            }
+          })
+          .buttonStyle(.plain)
+          .padding(.vertical, 4)
+          .padding(.horizontal)
+        }
+      }
+    }
+    .navigationTitle(album.title)
+    .task {
+      detailedAlbum = try? await MCatalog.album(id: album.id, fetch: .tracks)
     }
   }
 }
