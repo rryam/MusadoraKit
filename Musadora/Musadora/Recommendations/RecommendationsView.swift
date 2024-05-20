@@ -16,7 +16,7 @@ struct RecommendationsView: View {
     NavigationListStack("Recommendations") {
 
       Section("100 Best Albums") {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 200))], spacing: 20) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 250))], spacing: 20) {
           ForEach(hundredBestAlbums) { album in
             Button(action: {
               Task {
@@ -24,24 +24,25 @@ struct RecommendationsView: View {
                 try await APlayer.shared.play(album: detailedAlbum)
               }
             }, label: {
-              VStack {
-                ArtworkImage(album.artwork, width: 200, height: 200)
+              VStack(alignment: .leading) {
+                ArtworkImage(album.artwork, width: 250, height: 250)
                   .cornerRadius(16)
 
                 Text(album.title)
                   .font(.title2)
-                  .frame(maxWidth: .infinity, alignment: .leading)
                   .padding(.top)
                   .lineLimit(1)
 
                 Text(album.artistName)
                   .font(.headline)
                   .foregroundColor(.secondary)
-                  .frame(maxWidth: .infinity, alignment: .leading)
                   .lineLimit(1)
               }
-              .padding()
+              .padding(8)
+              .contentShape(RoundedRectangle(cornerRadius: 24))
+              .hoverEffect()
             })
+            .buttonStyle(.plain)
           }
         }
         .padding(.horizontal)
