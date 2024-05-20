@@ -12,7 +12,7 @@
 
 import Foundation
 
-public struct HundredBestAlbum: MusicItem {
+public struct HundredBestAlbum: Identifiable, MusicItem {
   public let id: MusicItemID
   public let name: String
   public let position: String

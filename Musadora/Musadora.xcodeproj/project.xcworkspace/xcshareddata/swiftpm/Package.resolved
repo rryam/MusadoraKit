@@ -1,4 +1,5 @@
 {
+  "originHash" : "cd6af0cf2f8ff347cfff7aa71beb2683ef2df0f08d88311dff4cdc7f35af4d20",
   "pins" : [
     {
       "identity" : "musadorakit",
@@ -6,9 +7,9 @@
       "location" : "https://github.com/rryam/MusadoraKit",
       "state" : {
         "branch" : "main",
-        "revision" : "567f13ad4036ce9c2b9552c9795ea1ec2d7b985d"
+        "revision" : "36ee64f6eeace2afdde88c47ac13802cba11d5b5"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
