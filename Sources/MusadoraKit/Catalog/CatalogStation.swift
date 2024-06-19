@@ -1,4 +1,9 @@
 //
+//  "I wish I was irrational like you,
+//  So I could fulfil your wish, too,
+//  If you were the one for me,
+//  Why was it just glimpse of us to see?"
+//
 //  CatalogStation.swift
 //  MusadoraKit
 //
@@ -96,7 +101,7 @@ public extension MCatalog {
   }
 }
 
-// MARK: - GENRE STATION
+// MARK: - Genre Stations.
 public extension MCatalog {
 
   /// Fetch a list of stations in the current country's storefront that belong to a specific station genre in the Apple Music catalog.
@@ -175,7 +180,7 @@ public extension MCatalog {
   }
 }
 
-// MARK: - PERSONAL STATION
+// MARK: - Personal Stations.
 public extension MCatalog {
 
   /// Fetch the user's personalized Apple Music station.
@@ -190,7 +195,7 @@ public extension MCatalog {
   ///       print("Error fetching personal station: \(error.localizedDescription)")
   ///     }
   ///
-  /// - Returns: `Station` object representing the user's personalized Apple Music station.
+  /// - Returns: `Station` object representing the user's personalised Apple Music station.
   static func personalStation() async throws -> Station {
     let stations: Stations
     let storefront = try await MusicDataRequest.currentCountryCode
@@ -214,6 +219,36 @@ public extension MCatalog {
     return personalStation
   }
 
+  static func discoveryStation() async throws -> Station {
+    let stations = try await MRecommendation.defaultStations()
+
+    guard let discoveryStation = stations.first(where: { $0.name == "Discovery Station" }) else {
+      throw MusadoraKitError.notFound(for: "discovery station")
+    }
+
+    return discoveryStation
+  }
+
+  static func heartbreakStation() async throws -> Station {
+    let stations = try await MRecommendation.defaultStations()
+
+    guard let heartbreakStation = stations.first(where: { $0.id.rawValue == "ra.q-MNDEBw" }) else {
+      throw MusadoraKitError.notFound(for: "heartbreak station")
+    }
+
+    return heartbreakStation
+  }
+
+  static func loveStation() async throws -> Station {
+    let stations = try await MRecommendation.defaultStations()
+
+    guard let loveStation = stations.first(where: { $0.id.rawValue == "ra.q-MO3UCQ" }) else {
+      throw MusadoraKitError.notFound(for: "love station")
+    }
+
+    return loveStation
+  }
+
   internal static func personalStationURL(for storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/stations"
@@ -227,7 +262,7 @@ public extension MCatalog {
   }
 }
 
-// MARK: - LIVE RADIO STATIONS
+// MARK: - Live Radio Stations.
 public extension MCatalog {
 
   /// Fetch the list of featured Apple Music live radio stations.

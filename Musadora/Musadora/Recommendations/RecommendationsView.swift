@@ -111,6 +111,8 @@ struct HundredAlbumView: View {
           .bold()
           .padding(.bottom)
 
+        Divider()
+
         ForEach(detailedAlbum.tracks ?? []) { track in
           Button(action: {
             Task {
@@ -118,10 +120,14 @@ struct HundredAlbumView: View {
               try? await APlayer.shared.play()
             }
           }, label: {
-            HStack {
-              Text(track.title)
+            VStack {
+              HStack {
+                Text(track.title)
 
-              Spacer()
+                Spacer()
+              }
+
+              Divider()
             }
           })
           .buttonStyle(.plain)

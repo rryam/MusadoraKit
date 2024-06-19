@@ -45,7 +45,13 @@ public extension MRecommendation {
   /// - Parameter limit: The maximum number of recommended playlists to retrieve. If not specified, the default value is used.
   /// - Returns: A collection of `Playlist` objects.
   static func defaultPlaylists(limit: Int? = nil) async throws -> Playlists {
-    try await recommendations(limit).reduce(into: Playlists()) { $0 += $1.playlists }
+    let uniquePlaylists = try await recommendations(limit).reduce(into: Set<Playlist>()) { result, recommendation in
+      recommendation.playlists.forEach { playlist in
+        result.insert(playlist)
+      }
+    }
+
+    return Playlists(Array(uniquePlaylists))
   }
 
   /// Retrieve the default recommended albums for a user.
@@ -65,7 +71,13 @@ public extension MRecommendation {
   /// - Parameter limit: The maximum number of recommended albums to retrieve. If not specified, the default value is used.
   /// - Returns: A collection of `Album` objects.
   static func defaultAlbums(limit: Int? = nil) async throws -> Albums {
-    try await recommendations(limit).reduce(into: Albums()) { $0 += $1.albums }
+    let uniqueAlbums = try await recommendations(limit).reduce(into: Set<Album>()) { result, recommendation in
+      recommendation.albums.forEach { album in
+        result.insert(album)
+      }
+    }
+
+    return Albums(Array(uniqueAlbums))
   }
 
   /// Retrieve the default recommended stations for a user.
@@ -85,7 +97,7 @@ public extension MRecommendation {
   /// - Parameter limit: The maximum number of recommended stations to retrieve. If not specified, the default value is used.
   /// - Returns: A collection of unique `Station` objects.
   static func defaultStations(limit: Int? = nil) async throws -> Stations {
-    let uniqueStations = try await recommendations(limit).reduce(into: Set<Station>()) { (result, recommendation) in
+    let uniqueStations = try await recommendations(limit).reduce(into: Set<Station>()) { result, recommendation in
       recommendation.stations.forEach { station in
         result.insert(station)
       }
