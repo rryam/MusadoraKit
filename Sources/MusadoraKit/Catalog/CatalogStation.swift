@@ -219,36 +219,6 @@ public extension MCatalog {
     return personalStation
   }
 
-  static func discoveryStation() async throws -> Station {
-    let stations = try await MRecommendation.defaultStations()
-
-    guard let discoveryStation = stations.first(where: { $0.name == "Discovery Station" }) else {
-      throw MusadoraKitError.notFound(for: "discovery station")
-    }
-
-    return discoveryStation
-  }
-
-  static func heartbreakStation() async throws -> Station {
-    let stations = try await MRecommendation.defaultStations()
-
-    guard let heartbreakStation = stations.first(where: { $0.id.rawValue == "ra.q-MNDEBw" }) else {
-      throw MusadoraKitError.notFound(for: "heartbreak station")
-    }
-
-    return heartbreakStation
-  }
-
-  static func loveStation() async throws -> Station {
-    let stations = try await MRecommendation.defaultStations()
-
-    guard let loveStation = stations.first(where: { $0.id.rawValue == "ra.q-MO3UCQ" }) else {
-      throw MusadoraKitError.notFound(for: "love station")
-    }
-
-    return loveStation
-  }
-
   internal static func personalStationURL(for storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/stations"
