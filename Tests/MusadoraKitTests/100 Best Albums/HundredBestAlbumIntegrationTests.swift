@@ -6,7 +6,27 @@
 //
 
 import XCTest
+
+#if canImport(Testing)
+import Testing
+#endif
 @testable import MusadoraKit
+
+#if swift(>=6.0)
+struct HundredBestAlbumSwiftTests {
+  @Test
+  func allHundredBestAlbums() async throws {
+    let albums = try await MRecommendation.allHundredBestAlbums()
+
+    let eightyThirdAlbum = try #require(albums.first(where: { $0.position == "83" }))
+
+    #expect(eightyThirdAlbum.title == "Horses ")
+    #expect(eightyThirdAlbum.artistName == "Patti Smith")
+    #expect(eightyThirdAlbum.position == "83")
+    #expect(eightyThirdAlbum.id == MusicItemID("1038568061"))
+  }
+}
+#endif
 
 final class HundredBestAlbumIntegrationTests: XCTestCase {
   func testHundredBestAlbumAtPosition() async throws {
@@ -43,3 +63,4 @@ final class HundredBestAlbumIntegrationTests: XCTestCase {
     XCTAssertEqual(fortyNinthAlbum.id, MusicItemID("1443155637"))
   }
 }
+

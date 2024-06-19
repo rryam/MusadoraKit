@@ -8,8 +8,23 @@
 @testable import MusadoraKit
 import XCTest
 
+#if canImport(Testing)
+import Testing
+#endif
+
+#if swift(>=6.0)
+struct MusicHistoryRequestEndpointSwiftTests {
+  @Test func heavyRotationEndpointURL() throws {
+    let request = MHistoryRequest(for: .heavyRotation)
+    let url = try request.historyEndpointURL
+
+    #expect(url == URL(string: "https://api.music.apple.com/v1/me/history/heavy-roation")!)
+  }
+}
+#endif
+
 class MusicHistoryRequestEndpointTests: XCTestCase {
-  func testHeavyRoationEndpointURL() throws {
+  func testHeavyRotationEndpointURL() throws {
     let request = MHistoryRequest(for: .heavyRotation)
     let url = try request.historyEndpointURL
 
