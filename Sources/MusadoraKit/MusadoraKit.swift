@@ -23,7 +23,7 @@ public struct MusadoraKit {}
 /// 5. `MRating` for working with ratings.
 
 extension MusadoraKit {
-  static var userToken: String? {
+  public static var userToken: String? {
     ProcessInfo.processInfo.environment["USER_TOKEN"]
   }
 }
