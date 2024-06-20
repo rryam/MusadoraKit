@@ -32,7 +32,7 @@ workflows:
         script: |
           #!/bin/zsh
 
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS")
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 15" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS Simulator,name=Apple Vision Pro")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               xcodebuild clean build \
@@ -44,7 +44,7 @@ workflows:
         script: |
           #!/bin/zsh
           
-          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 14" "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS")
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 15" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=visionOS Simulator,name=Apple Vision Pro")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
               set -o pipefail
