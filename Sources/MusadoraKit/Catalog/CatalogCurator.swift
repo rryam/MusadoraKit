@@ -1,7 +1,4 @@
 //
-// "She is like writing the code that is always correct,
-//  Without her, I am just living life as a losing bet,"
-//
 //  CatalogCurator.swift
 //  MusadoraKit
 //

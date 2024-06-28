@@ -1,8 +1,4 @@
 //
-//  "I'm gazing into you,
-//  While you're scrolling through our shared memories,
-//  Never considering anybody else."
-//
 //  LibrarySong.swift
 //  MusadoraKit
 //

@@ -1,7 +1,4 @@
 //
-//  "That romantic artist soul is a lie,
-//  A mask I wear, with a tear in my eye"
-//
 //  HundredBestAlbumRequest.swift
 //  MusadoraKit
 //

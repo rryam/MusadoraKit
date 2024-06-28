@@ -1,9 +1,4 @@
 //
-//  "She fell in love with the idea of me,
-//  The wizard of her dreams I yearned to be.
-//  The idea of me, a spell too sweet to break,
-//  But her love was for a heart I couldn't fake."
-//
 //  LibraryAlbum.swift
 //  MusadoraKit
 //

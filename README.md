@@ -159,14 +159,14 @@ let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
 
 ## Referencing content across different geographical regions
 
-In the example below, the target storefront is "tw" for Taiwan:
+In the example below, the target storefront is "jp" for Japan:
 
 ```swift
 let album = MCatalog.album(id: "1223618217")
-let equivalentAlbum = try await album.equivalent(for: "tw")
+let equivalentAlbum = try await album.equivalent(for: "jp")
 
 let albums = MCatalog.albums(ids: ["1223618217", "1603171516"])
-let equivalentAlbums = try await albums.equivalents(for: "tw")
+let equivalentAlbums = try await albums.equivalents(for: "jp")
 ```
 
 ## Explicit to clean-equivalent content:

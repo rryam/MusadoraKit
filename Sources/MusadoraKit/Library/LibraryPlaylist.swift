@@ -1,9 +1,4 @@
 //
-//  "Even knowing my destiny, should I wait?
-//  Should I ever hold back?
-//  Or should I just keep chasing happiness?
-//  Even when it feels so far.”
-//
 //  LibraryPlaylist.swift
 //  MusadoraKit
 //

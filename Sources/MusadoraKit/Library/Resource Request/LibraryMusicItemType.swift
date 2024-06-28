@@ -1,8 +1,4 @@
 //
-//  "We share our souls, 'cause we are never alone.
-//  Chasing stars above?
-//  Seeking hearts to heed?"
-//
 //  LibraryMusicItemType.swift
 //  MusadoraKit
 //

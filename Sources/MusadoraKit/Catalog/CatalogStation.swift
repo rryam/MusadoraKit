@@ -1,9 +1,4 @@
 //
-//  "I wish I was irrational like you,
-//  So I could fulfil your wish, too,
-//  If you were the one for me,
-//  Why was it just glimpse of us to see?"
-//
 //  CatalogStation.swift
 //  MusadoraKit
 //
@@ -188,17 +183,31 @@ public extension MCatalog {
   /// Example usage:
   ///
   ///     do {
+  ///       // Fetch personal station for the user's current country
   ///       let personalStation = try await MCatalog.personalStation()
-  ///
   ///       print(personalStation.name) // "Rudrank Riyam's Station"
+  ///
+  ///       // Fetch personal station for a specific country (e.g., United States)
+  ///       let usPersonalStation = try await MCatalog.personalStation(countryCode: "us")
+  ///       print(usPersonalStation.name) // "Rudrank Riyam's Station"
   ///     } catch {
   ///       print("Error fetching personal station: \(error.localizedDescription)")
   ///     }
   ///
-  /// - Returns: `Station` object representing the user's personalised Apple Music station.
-  static func personalStation() async throws -> Station {
+  /// - Parameter countryCode: Optional. A String representing the country code for which to fetch the personal station.
+  ///   If not provided, the user's current country code will be used.
+  ///
+  /// - Returns: `Station` object representing the user's personalized Apple Music station for the specified or current country.
+  static func personalStation(countryCode: String? = nil) async throws -> Station {
     let stations: Stations
-    let storefront = try await MusicDataRequest.currentCountryCode
+    var storefront: String
+
+    if let countryCode {
+      storefront = countryCode
+    } else {
+      storefront = try await MusicDataRequest.currentCountryCode
+    }
+
     let url = try personalStationURL(for: storefront)
     let decoder = JSONDecoder()
 

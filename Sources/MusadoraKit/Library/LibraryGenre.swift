@@ -1,7 +1,4 @@
 //
-//  "Sitting under the Marina lights, so bright,
-//  We talked our hearts out hours into the night,"
-//
 //  LibraryGenre.swift
 //  MusadoraKit
 //

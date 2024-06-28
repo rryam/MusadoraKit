@@ -1,9 +1,4 @@
 //
-//  "So, I heard you whisper my name,
-//  At once, I knew it was always me.
-//  I cling to all the moments that we shared,
-//  Nobody else could ever compare."
-//
 //  CreatePlaylist.swift
 //  MusadoraKit
 //

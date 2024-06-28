@@ -1,7 +1,4 @@
 //
-//  "I am a dreamer, and you are my muse,
-//  With you by my side, there's nothing to lose."
-//
 //  Storefronts.swift
 //  MusadoraKit
 //

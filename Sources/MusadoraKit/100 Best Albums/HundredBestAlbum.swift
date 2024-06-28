@@ -1,9 +1,4 @@
 //
-//  "So here I am, with an artistic soul's cry,
-//  Sinking further into my lover's lingering high,
-//  And will I choose to say the hardest goodbye,
-//  When her eyes are everything beyond the sky?"
-//
 //  HundredBestAlbum.swift
 //  MusadoraKit
 //
