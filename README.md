@@ -38,6 +38,7 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 - Musadora: Apple Music client focused on playlists
 - Musadora Labs: A companion app to explore MusicKit
 - Euphonic: Apple Music client focused on recommendations
+- [bijou.fm](https://apps.apple.com/app/bijou-fm/id6450460066?platform=iphone): Last.fm client with Apple Music integration
 
 ## Start Working with MusicKit 
 Follow the steps below to setup MusicKit for your app:
