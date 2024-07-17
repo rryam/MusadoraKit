@@ -203,4 +203,7 @@ print(response.songs)
 print(response.playlists)
 ```
 
-I hope you love working with MusadoraKit! 
+I hope you love working with MusadoraKit!
+
+> To my future self, and to every developer whose life my code may touch:  
+I just have a lot to write, and will keep writing until the end, hoping to leave something good behind.
