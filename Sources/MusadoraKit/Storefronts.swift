@@ -46,15 +46,28 @@ public struct MStorefront: Codable {
   /// The default language tag for the storefront.
   public let defaultLanguageTag: String
 
+  /// The Apple iTunes storefront ID.
+  ///
+  /// This property represents the unique identifier for the storefront in Apple's iTunes system.
+  /// It is populated during initialisation by mapping the country code (stored in `id`)
+  /// to its corresponding iTunes storefront ID. The property is optional because not all country codes
+  /// may have a matching iTunes storefront ID in the mapping data.
+  ///
+  /// - Note: This ID is particularly useful for making API calls to iTunes or Apple Music services
+  ///         that require a specific storefront identifier.
   public let storefrontId: Int?
 
   enum CodingKeys: String, CodingKey {
-    case id, type, attributes
+    case id
+    case type
+    case attributes
   }
 
   enum AttributesCodingKeys: String, CodingKey {
-    case explicitContentPolicy, name
-    case supportedLanguageTags, defaultLanguageTag
+    case explicitContentPolicy
+    case name
+    case supportedLanguageTags
+    case defaultLanguageTag
   }
 
   public init(from decoder: Decoder) throws {
