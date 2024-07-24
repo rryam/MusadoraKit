@@ -46,6 +46,8 @@ public struct MStorefront: Codable {
   /// The default language tag for the storefront.
   public let defaultLanguageTag: String
 
+  public let storefrontId: Int?
+
   enum CodingKeys: String, CodingKey {
     case id, type, attributes
   }
@@ -65,6 +67,7 @@ public struct MStorefront: Codable {
     name = try attributesContainer.decode(String.self, forKey: .name)
     supportedLanguageTags = try attributesContainer.decode([String].self, forKey: .supportedLanguageTags)
     defaultLanguageTag = try attributesContainer.decode(String.self, forKey: .defaultLanguageTag)
+    storefrontId = MStorefront.mapStorefrontIdFromCountryCode(id)
   }
 
   public enum ExplicitContentPolicy: String, Codable {
@@ -181,5 +184,144 @@ public extension MCatalog {
     }
 
     return url
+  }
+}
+
+extension MStorefront {
+  private static func mapStorefrontIdFromCountryCode(_ countryCode: String) -> Int? {
+    let storefrontData: [[String: Any]] = [
+      ["name": "Algeria", "code": "dz", "storefrontId": 143563],
+      ["name": "Angola", "code": "ao", "storefrontId": 143564],
+      ["name": "Anguilla", "code": "ai", "storefrontId": 143538],
+      ["name": "Antigua & Barbuda", "code": "ag", "storefrontId": 143540],
+      ["name": "Argentina", "code": "ar", "storefrontId": 143505],
+      ["name": "Armenia", "code": "am", "storefrontId": 143524],
+      ["name": "Australia", "code": "au", "storefrontId": 143460],
+      ["name": "Austria", "code": "at", "storefrontId": 143445],
+      ["name": "Azerbaijan", "code": "az", "storefrontId": 143568],
+      ["name": "Bahrain", "code": "bh", "storefrontId": 143559],
+      ["name": "Bangladesh", "code": "bd", "storefrontId": 143490],
+      ["name": "Barbados", "code": "bb", "storefrontId": 143541],
+      ["name": "Belarus", "code": "by", "storefrontId": 143565],
+      ["name": "Belgium", "code": "be", "storefrontId": 143446],
+      ["name": "Belize", "code": "bz", "storefrontId": 143555],
+      ["name": "Bermuda", "code": "bm", "storefrontId": 143542],
+      ["name": "Bolivia", "code": "bo", "storefrontId": 143556],
+      ["name": "Botswana", "code": "bw", "storefrontId": 143525],
+      ["name": "Brazil", "code": "br", "storefrontId": 143503],
+      ["name": "British Virgin Islands", "code": "vg", "storefrontId": 143543],
+      ["name": "Brunei", "code": "bn", "storefrontId": 143560],
+      ["name": "Bulgaria", "code": "bg", "storefrontId": 143526],
+      ["name": "Canada", "code": "ca", "storefrontId": 143455],
+      ["name": "Cayman Islands", "code": "ky", "storefrontId": 143544],
+      ["name": "Chile", "code": "cl", "storefrontId": 143483],
+      ["name": "China", "code": "cn", "storefrontId": 143465],
+      ["name": "Colombia", "code": "co", "storefrontId": 143501],
+      ["name": "Costa Rica", "code": "cr", "storefrontId": 143495],
+      ["name": "Cote D'Ivoire", "code": "ci", "storefrontId": 143527],
+      ["name": "Croatia", "code": "hr", "storefrontId": 143494],
+      ["name": "Cyprus", "code": "cy", "storefrontId": 143557],
+      ["name": "Czech Republic", "code": "cz", "storefrontId": 143489],
+      ["name": "Denmark", "code": "dk", "storefrontId": 143458],
+      ["name": "Dominica", "code": "dm", "storefrontId": 143545],
+      ["name": "Dominican Rep.", "code": "do", "storefrontId": 143508],
+      ["name": "Ecuador", "code": "ec", "storefrontId": 143509],
+      ["name": "Egypt", "code": "eg", "storefrontId": 143516],
+      ["name": "El Salvador", "code": "sv", "storefrontId": 143506],
+      ["name": "Estonia", "code": "ee", "storefrontId": 143518],
+      ["name": "Finland", "code": "fi", "storefrontId": 143447],
+      ["name": "France", "code": "fr", "storefrontId": 143442],
+      ["name": "Germany", "code": "de", "storefrontId": 143443],
+      ["name": "Ghana", "code": "gh", "storefrontId": 143573],
+      ["name": "Greece", "code": "gr", "storefrontId": 143448],
+      ["name": "Grenada", "code": "gd", "storefrontId": 143546],
+      ["name": "Guatemala", "code": "gt", "storefrontId": 143504],
+      ["name": "Guyana", "code": "gy", "storefrontId": 143553],
+      ["name": "Honduras", "code": "hn", "storefrontId": 143510],
+      ["name": "Hong Kong", "code": "hk", "storefrontId": 143463],
+      ["name": "Hungary", "code": "hu", "storefrontId": 143482],
+      ["name": "Iceland", "code": "is", "storefrontId": 143558],
+      ["name": "India", "code": "in", "storefrontId": 143467],
+      ["name": "Indonesia", "code": "id", "storefrontId": 143476],
+      ["name": "Ireland", "code": "ie", "storefrontId": 143449],
+      ["name": "Israel", "code": "il", "storefrontId": 143491],
+      ["name": "Italy", "code": "it", "storefrontId": 143450],
+      ["name": "Jamaica", "code": "jm", "storefrontId": 143511],
+      ["name": "Japan", "code": "jp", "storefrontId": 143462],
+      ["name": "Jordan", "code": "jo", "storefrontId": 143528],
+      ["name": "Kazakstan", "code": "kz", "storefrontId": 143517],
+      ["name": "Kenya", "code": "ke", "storefrontId": 143529],
+      ["name": "Korea, Republic Of", "code": "kr", "storefrontId": 143466],
+      ["name": "Kuwait", "code": "kw", "storefrontId": 143493],
+      ["name": "Latvia", "code": "lv", "storefrontId": 143519],
+      ["name": "Lebanon", "code": "lb", "storefrontId": 143497],
+      ["name": "Liechtenstein", "code": "li", "storefrontId": 143522],
+      ["name": "Lithuania", "code": "lt", "storefrontId": 143520],
+      ["name": "Luxembourg", "code": "lu", "storefrontId": 143451],
+      ["name": "Macau", "code": "mo", "storefrontId": 143515],
+      ["name": "Macedonia", "code": "mk", "storefrontId": 143530],
+      ["name": "Madagascar", "code": "mg", "storefrontId": 143531],
+      ["name": "Malaysia", "code": "my", "storefrontId": 143473],
+      ["name": "Maldives", "code": "mv", "storefrontId": 143488],
+      ["name": "Mali", "code": "ml", "storefrontId": 143532],
+      ["name": "Malta", "code": "mt", "storefrontId": 143521],
+      ["name": "Mauritius", "code": "mu", "storefrontId": 143533],
+      ["name": "Mexico", "code": "mx", "storefrontId": 143468],
+      ["name": "Moldova, Republic Of", "code": "md", "storefrontId": 143523],
+      ["name": "Montserrat", "code": "ms", "storefrontId": 143547],
+      ["name": "Nepal", "code": "np", "storefrontId": 143484],
+      ["name": "Netherlands", "code": "nl", "storefrontId": 143452],
+      ["name": "New Zealand", "code": "nz", "storefrontId": 143461],
+      ["name": "Nicaragua", "code": "ni", "storefrontId": 143512],
+      ["name": "Niger", "code": "ne", "storefrontId": 143534],
+      ["name": "Nigeria", "code": "ng", "storefrontId": 143561],
+      ["name": "Norway", "code": "no", "storefrontId": 143457],
+      ["name": "Oman", "code": "om", "storefrontId": 143562],
+      ["name": "Pakistan", "code": "pk", "storefrontId": 143477],
+      ["name": "Panama", "code": "pa", "storefrontId": 143485],
+      ["name": "Paraguay", "code": "py", "storefrontId": 143513],
+      ["name": "Peru", "code": "pe", "storefrontId": 143507],
+      ["name": "Philippines", "code": "ph", "storefrontId": 143474],
+      ["name": "Poland", "code": "pl", "storefrontId": 143478],
+      ["name": "Portugal", "code": "pt", "storefrontId": 143453],
+      ["name": "Qatar", "code": "qa", "storefrontId": 143498],
+      ["name": "Romania", "code": "ro", "storefrontId": 143487],
+      ["name": "Russia", "code": "ru", "storefrontId": 143469],
+      ["name": "Saudi Arabia", "code": "sa", "storefrontId": 143479],
+      ["name": "Senegal", "code": "sn", "storefrontId": 143535],
+      ["name": "Serbia", "code": "rs", "storefrontId": 143500],
+      ["name": "Singapore", "code": "sg", "storefrontId": 143464],
+      ["name": "Slovakia", "code": "sk", "storefrontId": 143496],
+      ["name": "Slovenia", "code": "si", "storefrontId": 143499],
+      ["name": "South Africa", "code": "za", "storefrontId": 143472],
+      ["name": "Spain", "code": "es", "storefrontId": 143454],
+      ["name": "Sri Lanka", "code": "lk", "storefrontId": 143486],
+      ["name": "St. Kitts & Nevis", "code": "kn", "storefrontId": 143548],
+      ["name": "St. Lucia", "code": "lc", "storefrontId": 143549],
+      ["name": "St. Vincent & The Grenadines", "code": "vc", "storefrontId": 143550],
+      ["name": "Suriname", "code": "sr", "storefrontId": 143554],
+      ["name": "Sweden", "code": "se", "storefrontId": 143456],
+      ["name": "Switzerland", "code": "ch", "storefrontId": 143459],
+      ["name": "Taiwan", "code": "tw", "storefrontId": 143470],
+      ["name": "Tanzania", "code": "tz", "storefrontId": 143572],
+      ["name": "Thailand", "code": "th", "storefrontId": 143475],
+      ["name": "The Bahamas", "code": "bs", "storefrontId": 143539],
+      ["name": "Trinidad & Tobago", "code": "tt", "storefrontId": 143551],
+      ["name": "Tunisia", "code": "tn", "storefrontId": 143536],
+      ["name": "Turkey", "code": "tr", "storefrontId": 143480],
+      ["name": "Turks & Caicos", "code": "tc", "storefrontId": 143552],
+      ["name": "Uganda", "code": "ug", "storefrontId": 143537],
+      ["name": "UK", "code": "gb", "storefrontId": 143444],
+      ["name": "Ukraine", "code": "ua", "storefrontId": 143492],
+      ["name": "United Arab Emirates", "code": "ae", "storefrontId": 143481],
+      ["name": "Uruguay", "code": "uy", "storefrontId": 143514],
+      ["name": "USA", "code": "us", "storefrontId": 143441],
+      ["name": "Uzbekistan", "code": "uz", "storefrontId": 143566],
+      ["name": "Venezuela", "code": "ve", "storefrontId": 143502],
+      ["name": "Vietnam", "code": "vn", "storefrontId": 143471],
+      ["name": "Yemen", "code": "ye", "storefrontId": 143571]
+    ]
+
+    return storefrontData.first { $0["code"] as? String == countryCode }?["storefrontId"] as? Int
   }
 }
