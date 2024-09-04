@@ -14,7 +14,7 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m1
+    instance_type: mac_mini_m2
     environment:
       xcode: edge
       vars:
