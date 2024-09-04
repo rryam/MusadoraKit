@@ -6,6 +6,7 @@
 //
 
 import Foundation
+@preconcurrency import MusicKit
 
 /// A request structure for fetching data from an arbitrary Apple Music API endpoint.
 ///
@@ -37,7 +38,7 @@ public struct MDataRequest {
 
   /// The URL request used to specify details for the API call, such as endpoint, method, and headers.
   public let urlRequest: URLRequest
-  
+
   /// Initializes a new data request using the specified URL request and developer token.
   ///
   /// - Parameters:
@@ -55,9 +56,11 @@ public struct MDataRequest {
   /// - Returns: A `MusicDataResponse` object containing the outcome of the API call.
   /// - Throws: An error if there's a problem initiating or receiving the response.
   public func response() async throws -> MusicDataResponse {
-    MusicDataRequest.tokenProvider = MDeveloperTokenProvider(developerToken: developerToken)
+    let token = self.developerToken
+    MusicDataRequest.tokenProvider = await MDeveloperTokenProvider(developerToken: token)
     let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
   }
 }
+

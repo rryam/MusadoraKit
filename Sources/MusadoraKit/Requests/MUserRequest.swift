@@ -6,6 +6,7 @@
 //
 
 import Foundation
+@preconcurrency import MusicKit
 
 /// A request structure for fetching data from an arbitrary Apple Music API endpoint requiring user authentication.
 ///
