@@ -7,14 +7,16 @@
 
 import Foundation
 
-struct HundredBestAlbumRequest {
+public struct HundredBestAlbumRequest {
   private let position: Int
+  private let storefront: String
 
-  init(position: Int) {
+  public init(position: Int, storefront: String = "en-us") {
     self.position = position
+    self.storefront = storefront
   }
 
-  func response() async throws -> HundredBestAlbum {
+  public func response() async throws -> HundredBestAlbum {
     let url = try albumEndpointURL
     return try await fetchAlbum(from: url)
   }
@@ -31,7 +33,7 @@ extension HundredBestAlbumRequest {
       var components = URLComponents()
       components.scheme = "https"
       components.host = "100best.music.apple.com"
-      components.path = "/content/us/en-us/\(position).json"
+      components.path = "/content/us/\(storefront)/\(position).json"
 
       guard let url = components.url else {
         throw URLError(.badURL)
