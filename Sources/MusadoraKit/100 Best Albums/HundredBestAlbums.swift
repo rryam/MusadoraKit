@@ -24,8 +24,8 @@ public extension MRecommendation {
   /// - Parameter position: The position of the album in the 100 Best Albums list.
   ///
   /// - Returns: The `HundredBestAlbum` object representing the album at the specified position.
-  static func hundredBestAlbum(at position: Int, storefront: String = "en-us") async throws -> HundredBestAlbum {
-    let request = HundredBestAlbumRequest(position: position, storefront: storefront)
+  static func hundredBestAlbum(at position: Int, storefront: String = "us", region: String = "en-us") async throws -> HundredBestAlbum {
+    let request = HundredBestAlbumRequest(position: position, storefront: storefront, region: region)
     return try await request.response()
   }
 
@@ -46,7 +46,7 @@ public extension MRecommendation {
   ///     }
   ///
   /// - Returns: An array of `HundredBestAlbum` objects representing all the 100 Best Albums.
-  static func allHundredBestAlbums(storefront: String = "en-us") async throws -> [HundredBestAlbum] {
+  static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us") async throws -> [HundredBestAlbum] {
     let positions = 1...100
     var albums: [HundredBestAlbum?] = Array(repeating: nil, count: positions.count)
 
@@ -54,7 +54,7 @@ public extension MRecommendation {
       for position in positions {
         group.addTask {
           do {
-            let album = try await self.hundredBestAlbum(at: position, storefront: storefront)
+            let album = try await self.hundredBestAlbum(at: position, storefront: storefront, region: region)
             return (position, album)
           } catch {
             return (position, nil)
