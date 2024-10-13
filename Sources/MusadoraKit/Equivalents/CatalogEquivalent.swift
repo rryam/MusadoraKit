@@ -47,3 +47,55 @@ public extension EquivalentRequestable {
     return url
   }
 }
+
+public extension MCatalog {
+
+  /// Fetches an equivalent music item from a specific storefront by its identifier.
+  ///
+  /// Use this method to retrieve a music item, such as a song or album, from a particular Apple Music storefront
+  /// using its identifier. The method takes a generic type `T` conforming to the `StorefrontRequestable` protocol, allowing you to
+  /// specify the expected type of music item. This ensures type safety and avoids the need for manual casting.
+  ///
+  /// Because a music item might have variations or equivalents in different storefronts, this method
+  /// uses the `filter[equivalents]` query parameter to find the appropriate equivalent in the target storefront.
+  ///
+  /// Example:
+  ///
+  /// ```swift
+  /// let songID: MusicItemID = "1642657180" // Example song ID
+  /// let usStorefront = "us"
+  ///
+  /// do {
+  ///     let usSong: Song = try await MCatalog.equivalent(id: songID, targetStorefront: usStorefront)
+  ///     print("US Equivalent Song: \(usSong.title)")
+  ///
+  ///     let gbStorefront = "gb"
+  ///     let gbSong: Song = try await MCatalog.equivalent(id: songID, targetStorefront: gbStorefront)
+  ///     print("GB Equivalent Song: \(gbSong.title)")
+  ///
+  /// } catch {
+  ///     print("Error fetching equivalent song: \(error)")
+  /// }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - id: The `MusicItemID` of the music item to fetch.
+  ///   - targetStorefront: The ID of the target storefront (e.g., "us" for the United States).
+  /// - Returns: The equivalent music item of type `T` found in the specified storefront.
+  /// - Throws:
+  ///     - An error if the network request fails or the response cannot be decoded.
+  static func equivalent<T: StorefrontRequestable>(id: MusicItemID, targetStorefront: String) async throws -> T {
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(targetStorefront)/\(T.resourcePath)/\(id)"
+    components.queryItems = [URLQueryItem(name: "filter[equivalents]", value: id.rawValue)]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
+    let item = try JSONDecoder().decode(T.self, from: response.data)
+    return item
+  }
+}
