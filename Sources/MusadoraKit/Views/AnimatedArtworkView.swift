@@ -72,7 +72,11 @@ public struct AnimatedArtworkView: View {
     }
     .onChange(of: queue.currentEntry) { _, _ in
       Task {
-        await extractColors()
+        if let artwork = self.artwork {
+          return
+        } else {
+          await extractColors()
+        }
       }
     }
   }
