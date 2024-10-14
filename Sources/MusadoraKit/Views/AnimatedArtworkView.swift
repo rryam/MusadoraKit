@@ -16,17 +16,8 @@ public struct AnimatedArtworkView: View {
   /// The current entry in the music player queue.
   @State private var currentEntry: MusicPlayer.Queue.Entry?
   
-  /// The animation phase used for the gradient animation.
-  @State private var phase: Double = 0
-  
   /// The dominant colors extracted from the artwork.
   @State private var dominantColors: [Color] = []
-  
-  /// Random offset for X-axis to add variation to the gradient.
-  @State private var randomOffsetX: Float = 0
-  
-  /// Random offset for Y-axis to add variation to the gradient.
-  @State private var randomOffsetY: Float = 0
   
   /// The artwork to display, if provided directly.
   var artwork: MusicKit.Artwork?
@@ -76,7 +67,6 @@ public struct AnimatedArtworkView: View {
       MeshGradient(width: 4, height: 4, points: gradientContent(for: timeline.date), colors: dominantColors, smoothsColors: true)
     }
     .ignoresSafeArea()
-    .onAppear(perform: generateRandomOffsets)
     .task {
       await extractColors()
     }
@@ -137,11 +127,5 @@ public struct AnimatedArtworkView: View {
     animatedPositions[10].y = Float(0.67 - 0.15 * cos(phase * 1.5))
     
     return animatedPositions
-  }
-  
-  /// Generates random offsets for the gradient animation.
-  private func generateRandomOffsets() {
-    randomOffsetX = Float.random(in: -0.1...0.1)
-    randomOffsetY = Float.random(in: -0.1...0.1)
   }
 }
