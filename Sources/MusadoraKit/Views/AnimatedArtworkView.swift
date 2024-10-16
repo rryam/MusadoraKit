@@ -29,7 +29,11 @@ public struct AnimatedArtworkView: View {
   private let height: Int
   
   /// The points used to define the mesh gradient.
-  @State private var points: [SIMD2<Float>] = [
+  ///
+  /// This array contains 16 SIMD2<Float> values representing the initial positions
+  /// of the mesh gradient points. These points are used to create a dynamic and
+  /// visually appealing background animation.
+  private let initialPoints: [SIMD2<Float>] = [
     SIMD2<Float>(0.000, 0.000),
     SIMD2<Float>(0.333, 0.000),
     SIMD2<Float>(0.667, 0.000),
@@ -48,20 +52,38 @@ public struct AnimatedArtworkView: View {
     SIMD2<Float>(1.000, 1.000)
   ]
   
+  /// The current points used to define the mesh gradient.
+  ///
+  /// This state property is initialized with the `initialPoints` and can be
+  /// animated or modified during the view's lifecycle to create dynamic effects.
+  @State private var points: [SIMD2<Float>]
+
   /// Initializes a new instance of `AnimatedArtworkView`.
   ///
   /// - Parameters:
-  ///   - queue: The music player queue to observe.
+  ///   - queue: The music player queue to observe for current entry changes.
   ///   - artwork: An optional artwork to display instead of the queue's current entry artwork.
-  ///   - width: The width of the artwork image to fetch. Defaults to 300.
-  ///   - height: The height of the artwork image to fetch. Defaults to 300.
-  public init(queue: MusicPlayer.Queue, artwork: MusicKit.Artwork? = nil, width: Int = 300, height: Int = 300) {
+  ///   - width: The width of the artwork image to fetch. Defaults to 300 points.
+  ///   - height: The height of the artwork image to fetch. Defaults to 300 points.
+  ///   - points: An array of SIMD2<Float> values representing the initial positions of the mesh gradient points.
+  ///             Defaults to `initialPoints` if not provided.
+  ///
+  /// - Note: The `points` parameter allows you to customize the initial layout of the mesh gradient.
+  ///         If not specified, it uses the predefined `initialPoints`.
+  public init(
+    queue: MusicPlayer.Queue,
+    artwork: MusicKit.Artwork? = nil,
+    width: Int = 300,
+    height: Int = 300,
+    points: [SIMD2<Float>]? = nil
+  ) {
     self.queue = queue
     self.artwork = artwork
     self.width = width
     self.height = height
+    self._points = State(initialValue: points ?? initialPoints)
   }
-  
+
   public var body: some View {
     TimelineView(.animation) { timeline in
       MeshGradient(width: 4, height: 4, points: gradientContent(for: timeline.date), colors: dominantColors, smoothsColors: true)
@@ -72,9 +94,7 @@ public struct AnimatedArtworkView: View {
     }
     .onChange(of: queue.currentEntry) { _, _ in
       Task {
-        if let artwork = self.artwork {
-          return
-        } else {
+        if self.artwork == nil {
           await extractColors()
         }
       }
