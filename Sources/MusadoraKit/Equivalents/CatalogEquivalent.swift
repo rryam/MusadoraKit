@@ -84,7 +84,7 @@ public extension MCatalog {
   /// - Returns: The equivalent music item of type `T` found in the specified storefront.
   /// - Throws:
   ///     - An error if the network request fails or the response cannot be decoded.
-  static func equivalent<T: StorefrontRequestable>(id: MusicItemID, targetStorefront: String) async throws -> T {
+  static func equivalent<T: StorefrontRequestable>(id: MusicItemID, targetStorefront: String) async throws -> MusicItemCollection<T> {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(targetStorefront)/\(T.resourcePath)/\(id)"
     components.queryItems = [URLQueryItem(name: "filter[equivalents]", value: id.rawValue)]
@@ -95,7 +95,7 @@ public extension MCatalog {
 
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
-    let item = try JSONDecoder().decode(T.self, from: response.data)
-    return item
+    let items = try JSONDecoder().decode(MusicItemCollection<T>.self, from: response.data)
+    return items
   }
 }
