@@ -247,7 +247,6 @@ public extension MLibrary {
       throw URLError(.badURL)
     }
 
-
     if let userToken = MusadoraKit.userToken {
       let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
@@ -258,17 +257,13 @@ public extension MLibrary {
       playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
     }
 
-    if let userToken = MusadoraKit.userToken {
-#warning("Need to figure out pagination of playlists.")
-    } else {
-      repeat {
-        if let nextBatchOfPlaylists = try await playlists.nextBatch() {
-          playlists += nextBatchOfPlaylists
-        } else {
-          break
-        }
-      } while playlists.hasNextBatch
-    }
+    repeat {
+      if let nextBatchOfPlaylists = try await playlists.nextBatch() {
+        playlists += nextBatchOfPlaylists
+      } else {
+        break
+      }
+    } while playlists.hasNextBatch
 
     return playlists
   }
