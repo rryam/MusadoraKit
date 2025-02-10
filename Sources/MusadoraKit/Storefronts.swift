@@ -47,12 +47,6 @@ public struct MStorefront: Codable {
   /// The display name of the storefront in its default language.
   public let name: String
 
-  /// The list of languages supported by this storefront.
-  public let supportedLanguages: [String]
-
-  /// The default language code for this storefront.
-  public let defaultLanguage: String
-
   /// The type of the storefront.
   public let type: `Type`
 
@@ -70,6 +64,12 @@ public struct MStorefront: Codable {
   ///         that require a specific storefront identifier.
   public let storefrontId: Int?
 
+  /// The language tags supported by the storefront.
+  public let supportedLanguageTags: [String]
+
+  /// The default language tag for the storefront.
+  public let defaultLanguageTag: String
+
   enum CodingKeys: String, CodingKey {
     case id
     case type
@@ -79,8 +79,8 @@ public struct MStorefront: Codable {
   enum AttributesCodingKeys: String, CodingKey {
     case explicitContentPolicy
     case name
-    case supportedLanguages
-    case defaultLanguage
+    case supportedLanguageTags
+    case defaultLanguageTag
   }
 
   public init(from decoder: Decoder) throws {
@@ -93,8 +93,9 @@ public struct MStorefront: Codable {
     explicitContentPolicy = try attributesContainer.decode(
       ExplicitContentPolicy.self, forKey: .explicitContentPolicy)
     name = try attributesContainer.decode(String.self, forKey: .name)
-    supportedLanguages = try attributesContainer.decode([String].self, forKey: .supportedLanguages)
-    defaultLanguage = try attributesContainer.decode(String.self, forKey: .defaultLanguage)
+    supportedLanguageTags = try attributesContainer.decode(
+      [String].self, forKey: .supportedLanguageTags)
+    defaultLanguageTag = try attributesContainer.decode(String.self, forKey: .defaultLanguageTag)
     storefrontId = MStorefront.mapStorefrontIdFromCountryCode(id)
   }
 
@@ -117,8 +118,8 @@ public struct MStorefront: Codable {
       keyedBy: AttributesCodingKeys.self, forKey: .attributes)
     try attributesContainer.encode(explicitContentPolicy, forKey: .explicitContentPolicy)
     try attributesContainer.encode(name, forKey: .name)
-    try attributesContainer.encode(supportedLanguages, forKey: .supportedLanguages)
-    try attributesContainer.encode(defaultLanguage, forKey: .defaultLanguage)
+    try attributesContainer.encode(supportedLanguageTags, forKey: .supportedLanguageTags)
+    try attributesContainer.encode(defaultLanguageTag, forKey: .defaultLanguageTag)
   }
 }
 
