@@ -8,6 +8,25 @@
 import Foundation
 
 /// An object that contains results for a catalog suggestions request.
+///
+/// This structure provides access to search suggestions and top results based on
+/// a user's search term, helping users discover content more efficiently.
+///
+/// Example usage:
+/// ```swift
+/// let request = MCatalogSuggestionsRequest(term: "taylor")
+/// let response = try await request.response()
+///
+/// // Access search term suggestions
+/// for term in response.terms {
+///     print(term.displayTerm)
+/// }
+///
+/// // Access top results
+/// for result in response.topResults {
+///     print(result.title)
+/// }
+/// ```
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 struct MCatalogSuggestionsResponse {
   /// A collection of search and display terms.

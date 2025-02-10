@@ -9,14 +9,28 @@ import Foundation
 
 /// A request to create a playlist in the user's library.
 ///
-/// This structure is used to send a request to create a new playlist in the user's music library.
-/// It includes attributes for the playlist and optional relationships, such as tracks to be included in the new playlist.
+/// This structure encapsulates all the necessary information to create a new playlist,
+/// including its name, description, and initial tracks.
+///
+/// Example usage:
+/// ```swift
+/// let attributes = PlaylistCreationAttributes(
+///     name: "My Playlist",
+///     description: "A collection of my favorite songs"
+/// )
+/// let tracks = PlaylistCreationTracks(data: [
+///     PlaylistCreationData(id: "1234567890", type: .song)
+/// ])
+/// let request = LibraryPlaylistCreationRequest(
+///     attributes: attributes,
+///     relationships: PlaylistCreationRelationships(tracks: tracks)
+/// )
+/// ```
 struct LibraryPlaylistCreationRequest: Codable {
-
-  /// A dictionary that includes strings for the name and description of the new playlist.
+  /// The attributes for the new playlist, including name and description.
   var attributes: PlaylistCreationAttributes
 
-  /// To include tracks for the new playlist.
+  /// Optional relationships for the playlist, such as initial tracks.
   var relationships: PlaylistCreationRelationships?
 }
 
@@ -28,14 +42,13 @@ struct PlaylistCreationAttributes: Codable {
   /// The name of the playlist.
   var name: String
 
-  /// The description of the playlist.
+  /// An optional description of the playlist.
   var description: String?
 }
 
-/// Relationships for creating a playlist.
-///
-/// This structure includes the tracks to be included in the playlist being created.
+/// Relationships for the playlist being created.
 struct PlaylistCreationRelationships: Codable {
+  /// The tracks to be included in the playlist.
   var tracks: PlaylistCreationTracks
 }
 

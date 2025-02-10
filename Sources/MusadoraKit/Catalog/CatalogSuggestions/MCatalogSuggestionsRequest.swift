@@ -7,23 +7,42 @@
 
 import Foundation
 
-/// A request that your app uses to fetch search suggestions from the Apple Music catalog
-/// using a search term.
+/// A request that your app uses to fetch search suggestions from the Apple Music catalog.
+///
+/// This structure enables fetching intelligent search suggestions as users type, helping them
+/// discover content more efficiently.
+///
+/// Example usage:
+/// ```swift
+/// let request = MCatalogSuggestionsRequest(
+///     term: "taylor",
+///     kinds: [.terms, .topResults],
+///     types: [Song.self, Artist.self]
+/// )
+///
+/// do {
+///     let suggestions = try await request.response()
+///     print(suggestions.terms)
+///     print(suggestions.topResults)
+/// } catch {
+///     print("Failed to fetch suggestions: \(error)")
+/// }
+/// ```
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 struct MCatalogSuggestionsRequest {
-  /// A limit for the number of items to return
-  /// in the catalog suggestions response.
+  /// A limit for the number of suggestions to return.
   var limit: Int?
 
-  /// An offet for the request.
+  /// An offset for paginating through suggestions.
   var offset: Int?
 
-  /// The search term for the request.
+  /// The search term to get suggestions for.
   let term: String
 
-  /// The list of requested catalog searchable types.
+  /// The types of catalog items to include in the suggestions.
   var types: [MusicCatalogSearchable.Type]?
 
+  /// The kinds of suggestions to fetch (terms, topResults).
   private var kinds: [SuggestionsKind] = []
 
   /// Creates a catalog suggestions request for a specified search term.

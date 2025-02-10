@@ -5,14 +5,34 @@
 //  Created by Rudrank Riyam on 18/05/22.
 //
 
-
 import Foundation
 
-/// A request that your app uses to get ratings for albums, songs,
-/// playlists, music videos, and stations for content in the Apple Music catalog.
+/// A request that your app uses to get ratings for items in the Apple Music catalog.
+///
+/// This structure allows fetching existing ratings for catalog items such as songs,
+/// albums, playlists, music videos, and stations.
+///
+/// Example usage:
+/// ```swift
+/// // Fetch ratings for multiple songs
+/// let request = MCatalogRatingRequest(
+///     with: ["1234567890", "0987654321"],
+///     item: .song
+/// )
+///
+/// do {
+///     let ratings = try await request.response()
+///     print("Fetched ratings: \(ratings)")
+/// } catch {
+///     print("Failed to fetch ratings: \(error)")
+/// }
+/// ```
 public struct MCatalogRatingRequest {
 
+  /// The type of music item to fetch ratings for.
   private var type: CatalogRatingMusicItemType
+
+  /// The unique identifiers of the items to fetch ratings for.
   private var ids: [MusicItemID]
 
   /// Creates a request to get ratings for the unique identifiers of the given catalog item.

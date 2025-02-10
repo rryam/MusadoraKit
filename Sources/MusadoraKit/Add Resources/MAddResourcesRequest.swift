@@ -7,29 +7,34 @@
 
 import Foundation
 
-/// A typealias for a tuple that associates a library music item type with a set of music item identifiers.
+/// A request structure for adding catalog resources to a user's library.
 ///
-/// - item: The type of music item in the library, defined by `LibraryMusicItemType`.
-/// - value: An array of `MusicItemID` instances representing the identifiers of music items of the specified type.
-public typealias SongResource = (item: LibraryMusicItemType, value: [MusicItemID])
-
-/// `MAddResourcesRequest` is a struct that encapsulates a request to add one or more catalog resources
-/// to a user’s iCloud Music Library.
+/// This structure enables adding multiple types of music items (songs, albums, playlists)
+/// from the Apple Music catalog to the user's personal library in a single request.
 ///
-/// You can add multiple types of resources in the same request. Each resource is a tuple where `item`
-/// represents the type of music item to add, and `value` is an array of `MusicItemID`s identifying the
-/// items to add.
+/// Example usage:
+/// ```swift
+/// // Add multiple songs to the library
+/// let songResources: SongResource = (.songs, ["1234567890", "0987654321"])
+/// let request = MAddResourcesRequest(resources: [songResources])
 ///
-/// - Property `resources`: An array of tuples. Each tuple includes a music item type (`LibraryMusicItemType`)
-/// and an array of music item IDs (`[MusicItemID]`).
+/// do {
+///     let response = try await request.response()
+///     print("Successfully added songs to library")
+/// } catch {
+///     print("Failed to add resources: \(error)")
+/// }
+/// ```
 public struct MAddResourcesRequest {
-  private var resources: [(item: LibraryMusicItemType, value: [MusicItemID])]
+  /// The resources to be added to the library.
+  /// Each resource is a tuple of the music item type and its identifiers.
+  private var resources: [SongResource]
 
   /// Initializes a new `MAddResourcesRequest` to add multiple resources to the user's iCloud Music Library.
   ///
   /// - Parameter resources: An array of tuples where each tuple represents a type of music item
   /// and the music item IDs to add to the user's iCloud Music Library.
-  public init(_ resources: [(item: LibraryMusicItemType, value: [MusicItemID])]) {
+  public init(_ resources: [SongResource]) {
     self.resources = resources
   }
 
@@ -72,3 +77,9 @@ extension MAddResourcesRequest {
     }
   }
 }
+
+/// A tuple type representing a music resource to be added to the library.
+///
+/// - item: The type of music item (songs, albums, playlists)
+/// - value: Array of unique identifiers for the items to be added
+public typealias SongResource = (item: LibraryMusicItemType, value: [MusicItemID])
