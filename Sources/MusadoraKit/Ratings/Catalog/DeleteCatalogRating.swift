@@ -69,7 +69,7 @@ public extension MCatalog {
   ///  ```
   ///
   /// - Parameters:
-  ///   - album: The playlist to delete the rating for.
+  ///   - playlist: The playlist to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for playlist: Playlist) async throws -> Bool {
     try await deleteRating(for: playlist.id, item: .playlist)
@@ -113,7 +113,7 @@ public extension MCatalog {
   ///  ```
   ///
   /// - Parameters:
-  ///   - album: The station to delete the rating for.
+  ///   - station: The station to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for station: Station) async throws -> Bool {
     try await deleteRating(for: station.id, item: .station)

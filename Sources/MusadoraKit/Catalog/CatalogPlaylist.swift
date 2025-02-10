@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension MCatalog {
+extension MCatalog {
 
   /// Fetch a playlist from the Apple Music catalog by using its identifier.
   ///
@@ -23,7 +23,9 @@ public extension MCatalog {
   ///   - id: The unique identifier for the playlist.
   ///   - properties: Additional relationships to fetch with the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  static func playlist(id: MusicItemID, fetch properties: PlaylistProperties) async throws -> Playlist {
+  public static func playlist(id: MusicItemID, fetch properties: PlaylistProperties) async throws
+    -> Playlist
+  {
     try await playlist(id: id, properties: properties)
   }
 
@@ -49,7 +51,9 @@ public extension MCatalog {
   ///
   /// - Note: It is a personal preference to either use the method where the `fetch` parameter takes an array of
   ///  `PlaylistProperty` or as a variadic parameter.
-  static func playlist(id: MusicItemID, fetch properties: PlaylistProperty...) async throws -> Playlist {
+  public static func playlist(id: MusicItemID, fetch properties: PlaylistProperty...) async throws
+    -> Playlist
+  {
     try await playlist(id: id, properties: properties)
   }
 
@@ -64,11 +68,13 @@ public extension MCatalog {
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
-  ///   - properties: Additional relationships to fetch with the playlist.
+  ///   - property: Additional relationships to fetch with the playlist.
   /// - Returns: `Playlist` matching the given identifier.
   ///
   /// - Note: Use this method when you have to fetch only one particular relationship.
-  static func playlist(id: MusicItemID, fetch property: PlaylistProperty) async throws -> Playlist {
+  public static func playlist(id: MusicItemID, fetch property: PlaylistProperty) async throws
+    -> Playlist
+  {
     try await playlist(id: id, properties: [property])
   }
 
@@ -86,7 +92,7 @@ public extension MCatalog {
   ///
   /// - Note: Use this method when you want a faster response with no
   /// additional properties to fetch with the playlist.
-  static func playlist(id: MusicItemID) async throws -> Playlist {
+  public static func playlist(id: MusicItemID) async throws -> Playlist {
     try await playlist(id: id, properties: [])
   }
 
@@ -96,7 +102,9 @@ public extension MCatalog {
   ///   - ids: The unique identifiers for the playlists.
   ///   - properties: Additional relationships to fetch with the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func playlists(ids: [MusicItemID], fetch properties: PlaylistProperties) async throws -> Playlists {
+  public static func playlists(ids: [MusicItemID], fetch properties: PlaylistProperties)
+    async throws -> Playlists
+  {
     try await playlists(ids: ids, properties: properties)
   }
 
@@ -105,13 +113,15 @@ public extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
+  public static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     try await playlists(ids: ids, properties: [])
   }
 }
 
 extension MCatalog {
-  static private func playlist(id: MusicItemID, properties: PlaylistProperties) async throws -> Playlist {
+  static private func playlist(id: MusicItemID, properties: PlaylistProperties) async throws
+    -> Playlist
+  {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -122,7 +132,9 @@ extension MCatalog {
     return playlist
   }
 
-  static private func playlists(ids: [MusicItemID], properties: PlaylistProperties) async throws -> Playlists {
+  static private func playlists(ids: [MusicItemID], properties: PlaylistProperties) async throws
+    -> Playlists
+  {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
@@ -130,7 +142,7 @@ extension MCatalog {
   }
 }
 
-public extension MCatalog {
+extension MCatalog {
 
   /// Fetch the charting playlists from the Apple Music catalog for the particular storefront.
   ///
@@ -147,7 +159,7 @@ public extension MCatalog {
   /// - Returns: `Playlists` containing an array of `Playlist` objects representing the charting playlists.
   ///
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
-  static func chartPlaylists(storefront: String? = nil) async throws -> Playlists {
+  public static func chartPlaylists(storefront: String? = nil) async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
     let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: storefront)
 
@@ -166,12 +178,12 @@ public extension MCatalog {
   /// - Returns: `Playlists` containing an array of `Playlist` objects representing the global charting playlists.
   ///
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
-  static func globalChartPlaylists() async throws -> Playlists {
+  public static func globalChartPlaylists() async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
     var chunkedCountryCodes: [[String]] = [[]]
 
     if #available(iOS 16, tvOS 16, macOS 13, visionOS 1.0, *) {
-        chunkedCountryCodes = Locale.Region.isoRegions.map { $0.identifier }.chunked(into: 10)
+      chunkedCountryCodes = Locale.Region.isoRegions.map { $0.identifier }.chunked(into: 10)
     } else {
       chunkedCountryCodes = Locale.isoRegionCodes.chunked(into: 10)
     }
@@ -179,7 +191,8 @@ public extension MCatalog {
     var globalChartPlaylists: Playlists = []
 
     for countryCodes in chunkedCountryCodes {
-      let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: countryCodes.joined(separator: ","))
+      let url = try chartPlaylistsURL(
+        currentStorefront: countryCode, targetStorefront: countryCodes.joined(separator: ","))
       let request = MusicDataRequest(urlRequest: URLRequest(url: url))
       let response = try await request.response()
 
@@ -193,14 +206,21 @@ public extension MCatalog {
 }
 
 extension MCatalog {
-  internal static func chartPlaylistsURL(currentStorefront: String, targetStorefront: String? = nil, components: MURLComponents = AppleMusicURLComponents()) throws -> URL {
+  internal static func chartPlaylistsURL(
+    currentStorefront: String, targetStorefront: String? = nil,
+    components: MURLComponents = AppleMusicURLComponents()
+  ) throws -> URL {
     var components = components
     components.path = "catalog/\(currentStorefront)/playlists"
 
     if let targetStorefront {
-      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: targetStorefront)]
+      components.queryItems = [
+        URLQueryItem(name: "filter[storefront-chart]", value: targetStorefront)
+      ]
     } else {
-      components.queryItems = [URLQueryItem(name: "filter[storefront-chart]", value: currentStorefront)]
+      components.queryItems = [
+        URLQueryItem(name: "filter[storefront-chart]", value: currentStorefront)
+      ]
     }
 
     guard let url = components.url else {

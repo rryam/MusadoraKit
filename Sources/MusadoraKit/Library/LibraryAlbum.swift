@@ -7,14 +7,14 @@
 
 import MediaPlayer
 
-public extension MLibrary {
+extension MLibrary {
 
   /// Fetch an album from the user's library by using its identifier.
   ///
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Album` matching the given identifier.
-  static func album(id: MusicItemID) async throws -> Album {
+  public static func album(id: MusicItemID) async throws -> Album {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Album>()
       request.filter(matching: \.id, equalTo: id)
@@ -40,9 +40,9 @@ public extension MLibrary {
   /// - Parameters:
   ///   - limit: The number of albums returned.
   /// - Returns: `Albums` for the given limit.
-  static func albums(limit: Int = 50) async throws -> Albums {
+  public static func albums(limit: Int = 50) async throws -> Albums {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
-      if let _ = MusadoraKit.userToken {
+      if MusadoraKit.userToken != nil {
         var request = MLibraryResourceRequest<Album>()
         request.limit = limit
         let response = try await request.response()
@@ -66,7 +66,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
-  static func albums(ids: [MusicItemID]) async throws -> Albums {
+  public static func albums(ids: [MusicItemID]) async throws -> Albums {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Album>()
       request.filter(matching: \.id, memberOf: ids)
@@ -81,7 +81,7 @@ public extension MLibrary {
 
   /// Access the total number of albums in the user's library.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-  static var albumsCount: Int {
+  public static var albumsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Album>()
       let response = try await request.response()
@@ -94,7 +94,7 @@ public extension MLibrary {
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var albumsItemsCount: Int {
+  public static var albumsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.albums().items {
         return items.count
@@ -111,7 +111,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbum(id: MusicItemID) async throws -> Bool {
+  public static func addAlbum(id: MusicItemID) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .albums, value: [id])])
     let response = try await request.response()
     return response
@@ -122,7 +122,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addAlbums(ids: [MusicItemID]) async throws -> Bool {
+  public static func addAlbums(ids: [MusicItemID]) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .albums, value: ids)])
     let response = try await request.response()
     return response
@@ -130,13 +130,14 @@ public extension MLibrary {
 }
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-public extension MHistory {
+extension MHistory {
   /// Fetch recently added albums from the user's library sorted by the date added.
   ///
   /// - Parameters:
   ///   - limit: The number of albums returned.
+  ///   - offset: The offset for pagination.
   /// - Returns: `Albums` for the given limit.
-  static func recentlyAddedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
+  public static func recentlyAddedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     request.offset = offset
@@ -149,8 +150,9 @@ public extension MHistory {
   ///
   /// - Parameters:
   ///   - limit: The number of albums returned.
+  ///   - offset: The offset for pagination.
   /// - Returns: `Albums` for the given limit.
-  static func recentlyPlayedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
+  public static func recentlyPlayedAlbums(limit: Int = 25, offset: Int) async throws -> Albums {
     var request = MusicLibraryRequest<Album>()
     request.limit = limit
     request.offset = offset

@@ -19,7 +19,7 @@ public struct MLibraryRatingRequest {
 
   /// Creates a request to get ratings for the unique identifiers of the given library item.
   /// - Parameters:
-  ///   - id: The unique identifiers of the library item.
+  ///   - ids: The unique identifiers of the library items to get ratings for.
   ///   - type: The type of the library item. Possible values: `song`, `album`, `playlist`, `musicVideo`.
   public init(with ids: [MusicItemID], item type: LibraryRatingMusicItemType) {
     self.ids = ids

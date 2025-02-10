@@ -6,14 +6,15 @@
 //
 
 import Foundation
-public extension MRecommendation {
+
+extension MRecommendation {
   /// Retrieves the 100 Best Album for a given position.
   ///
   /// Example usage:
   ///
   ///     do {
   ///       let album = try await MRecommendation.hundredBestAlbum(at: 100)
-  ///       
+  ///
   ///       print("Album name: \(album.title)")
   ///       print("Artist name: \(album.artistName)")
   ///       // access other album properties as needed
@@ -21,11 +22,16 @@ public extension MRecommendation {
   ///       print("Error retrieving album: \(error.localizedDescription)")
   ///     }
   ///
-  /// - Parameter position: The position of the album in the 100 Best Albums list.
-  ///
+  /// - Parameters:
+  ///   - position: The position of the album in the 100 Best Albums list.
+  ///   - storefront: The storefront to fetch the album from (default: "us").
+  ///   - region: The region/language code for localization (default: "en-us").
   /// - Returns: The `HundredBestAlbum` object representing the album at the specified position.
-  static func hundredBestAlbum(at position: Int, storefront: String = "us", region: String = "en-us") async throws -> HundredBestAlbum {
-    let request = HundredBestAlbumRequest(position: position, storefront: storefront, region: region)
+  public static func hundredBestAlbum(
+    at position: Int, storefront: String = "us", region: String = "en-us"
+  ) async throws -> HundredBestAlbum {
+    let request = HundredBestAlbumRequest(
+      position: position, storefront: storefront, region: region)
     return try await request.response()
   }
 
@@ -46,7 +52,9 @@ public extension MRecommendation {
   ///     }
   ///
   /// - Returns: An array of `HundredBestAlbum` objects representing all the 100 Best Albums.
-  static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us") async throws -> [HundredBestAlbum] {
+  public static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us")
+    async throws -> [HundredBestAlbum]
+  {
     let positions = 1...100
     var albums: [HundredBestAlbum?] = Array(repeating: nil, count: positions.count)
 
@@ -54,7 +62,8 @@ public extension MRecommendation {
       for position in positions {
         group.addTask {
           do {
-            let album = try await self.hundredBestAlbum(at: position, storefront: storefront, region: region)
+            let album = try await self.hundredBestAlbum(
+              at: position, storefront: storefront, region: region)
             return (position, album)
           } catch {
             return (position, nil)

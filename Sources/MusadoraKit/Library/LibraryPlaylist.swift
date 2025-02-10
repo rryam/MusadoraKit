@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-public extension MLibrary {
+extension MLibrary {
 
   /// Fetch a playlist from the user's library by using its identifier.
   ///
@@ -37,7 +37,7 @@ public extension MLibrary {
   ///   that fetches the data from the Apple Music API.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  static func playlist(id: MusicItemID) async throws -> Playlist {
+  public static func playlist(id: MusicItemID) async throws -> Playlist {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, equalTo: id)
@@ -86,7 +86,7 @@ public extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  static func playlists(limit: Int? = nil) async throws -> Playlists {
+  public static func playlists(limit: Int? = nil) async throws -> Playlists {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       let request = MusicLibraryRequest<Playlist>()
       let response = try await request.response()
@@ -127,7 +127,7 @@ public extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
+  public static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, memberOf: ids)
@@ -153,7 +153,7 @@ public extension MLibrary {
   /// - Returns: An `Int` representing the total number of playlists in the user's library.
   /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-  static var playlistsCount: Int {
+  public static var playlistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
       let response = try await request.response()
@@ -166,7 +166,7 @@ public extension MLibrary {
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  static var playlistsItemsCount: Int {
+  public static var playlistsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.playlists().items {
         return items.count
@@ -181,7 +181,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
+  public static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .playlists, value: [id])])
     let response = try await request.response()
     return response
@@ -192,7 +192,7 @@ public extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+  public static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .playlists, value: ids)])
     let response = try await request.response()
     return response
@@ -200,14 +200,16 @@ public extension MLibrary {
 }
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-public extension MHistory {
+extension MHistory {
 
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
+  ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
+  public static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists
+  {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -220,8 +222,10 @@ public extension MHistory {
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
+  ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
+  public static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists
+  {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -232,12 +236,12 @@ public extension MHistory {
 }
 
 // MARK: - `LibraryPlaylist` methods
-public extension MLibrary {
+extension MLibrary {
 
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
-  static func playlists(limit: Int) async throws -> LibraryPlaylists {
+  public static func playlists(limit: Int) async throws -> LibraryPlaylists {
     var playlists: LibraryPlaylists = []
     let decoder = JSONDecoder()
     var components = AppleMusicURLComponents()
@@ -291,7 +295,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the playlists from Apple Music's server using `MusicDataRequest` to perform a network request.
   ///   The response data is then decoded into a `LibraryPlaylists` object.
-  static func madeForYouPlaylists() async throws -> LibraryPlaylists {
+  public static func madeForYouPlaylists() async throws -> LibraryPlaylists {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
     components.queryItems = [URLQueryItem(name: "filter[featured]", value: "made-for-you")]
