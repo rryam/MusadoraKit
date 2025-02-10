@@ -7,8 +7,17 @@
 
 import Foundation
 
-/// A request that your app uses to fetch items from the your library
-/// using a search term.
+/// A request that your app uses to fetch items from the user's library using a search term.
+///
+/// This structure allows you to search through the user's Apple Music library for various types
+/// of content like songs, albums, playlists, etc.
+///
+/// Example usage:
+/// ```swift
+/// let request = MLibrarySearchRequest(term: "coldplay", types: [Song.self])
+/// let response = try await request.response()
+/// print(response.songs)
+/// ```
 struct MLibrarySearchRequest: Equatable, Hashable, Sendable {
   /// The search term for the request.
   let term: String
@@ -16,11 +25,10 @@ struct MLibrarySearchRequest: Equatable, Hashable, Sendable {
   /// The list of requested library searchable types.
   var types: [MLibrarySearchable.Type]
 
-  /// A limit for the number of items to return
-  /// in the library search response.
+  /// A limit for the number of items to return in the library search response.
   var limit: Int?
 
-  /// An offet for the request.
+  /// An offset for paginating through the search results.
   var offset: Int?
 
   /// Creates a library search request for a specified search term

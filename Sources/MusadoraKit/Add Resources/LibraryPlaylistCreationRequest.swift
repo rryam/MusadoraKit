@@ -71,22 +71,42 @@ public protocol PlaylistAddable: MusicItem {
 }
 
 /// An extension of `Song` that makes it able to be added to a playlist.
-extension Song: PlaylistAddable { }
+extension Song: PlaylistAddable {}
 
 /// An extension of `Track` that makes it able to be added to a playlist.
-extension Track: PlaylistAddable { }
+extension Track: PlaylistAddable {}
 
 /// An extension of `MusicVideo` that makes it able to be added to a playlist.
-extension MusicVideo: PlaylistAddable { }
+extension MusicVideo: PlaylistAddable {}
 
-/// The parameters to use to play a music item.
+/// Parameters used to play a music item in Apple Music.
 ///
-/// This structure includes the unique identifier and other information of the music item.
+/// This structure contains the necessary information to identify and play a music item,
+/// whether it's from the Apple Music catalog or the user's library.
+///
+/// Example usage:
+/// ```swift
+/// let parameters = MusicPlayParameters(
+///     id: song.id,
+///     isLibrary: true,
+///     kind: "song",
+///     catalogId: song.catalogId
+/// )
+/// ```
 public struct MusicPlayParameters: Codable {
+  /// The unique identifier of the music item.
   public var id: MusicItemID
+
+  /// Indicates whether the item is from the user's library.
   public var isLibrary: Bool?
+
+  /// The kind of music item (e.g., "song", "album", "playlist").
   public var kind: String
+
+  /// The catalog identifier if the item is from the Apple Music catalog.
   public var catalogId: MusicItemID?
+
+  /// The global identifier used across different Apple Music storefronts.
   public var globalId: MusicItemID?
 }
 
