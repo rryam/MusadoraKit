@@ -6,20 +6,34 @@
 //
 
 /// An object that contains results for a library search request.
+///
+/// This structure provides access to search results from the user's library,
+/// organized by music item type (songs, artists, albums, etc.).
+///
+/// Example usage:
+/// ```swift
+/// let request = MLibrarySearchRequest(term: "coldplay", types: [Song.self, Album.self])
+/// let response = try await request.response()
+///
+/// // Access search results by type
+/// print(response.songs)    // Matching songs
+/// print(response.albums)   // Matching albums
+/// print(response.artists)  // Matching artists
+/// ```
 public struct MLibrarySearchResponse: Equatable, Hashable, Sendable {
-  /// A collection of songs.
+  /// A collection of matching songs from the library.
   public let songs: Songs
 
-  /// A collection of artists.
+  /// A collection of matching artists from the library.
   public let artists: Artists
 
-  /// A collection of albums.
+  /// A collection of matching albums from the library.
   public let albums: Albums
 
-  /// A collection of music videos.
+  /// A collection of matching music videos from the library.
   public let musicVideos: MusicVideos
 
-  /// A collection of playlists.
+  /// A collection of matching playlists from the library.
   public let playlists: Playlists
 
   public func hash(into hasher: inout Hasher) {

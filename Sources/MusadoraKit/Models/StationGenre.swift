@@ -6,6 +6,16 @@
 //
 
 /// A structure representing a station genre in the Apple Music API.
+///
+/// Station genres are used to categorize and organize radio stations in Apple Music.
+/// Each genre has a unique identifier, type, and display name.
+///
+/// Example usage:
+/// ```swift
+/// let genre = try await MCatalog.stationGenre(id: "42")
+/// print(genre.name)  // e.g., "Hip-Hop"
+/// print(genre.id)    // The unique identifier
+/// ```
 public struct StationGenre: Sendable {
 
   /// The unique identifier of the station genre.
@@ -14,7 +24,7 @@ public struct StationGenre: Sendable {
   /// The type of the station genre.
   public let type: String
 
-  /// The name of the station genre.
+  /// The display name of the station genre.
   public let name: String
 }
 
@@ -38,7 +48,8 @@ extension StationGenre: Decodable {
     id = try container.decode(MusicItemID.self, forKey: .id)
     type = try container.decode(String.self, forKey: .type)
 
-    let attributesContainer = try container.nestedContainer(keyedBy: AttributesKey.self, forKey: .attributes)
+    let attributesContainer = try container.nestedContainer(
+      keyedBy: AttributesKey.self, forKey: .attributes)
     name = try attributesContainer.decode(String.self, forKey: .name)
   }
 }

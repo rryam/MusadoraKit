@@ -26,25 +26,38 @@ struct StorefrontsData: Codable {
 ///
 /// A storefront corresponds to a geographical region and contains content specific to that region.
 /// It includes several attributes like the storefront name, language settings, and explicit content policy.
+///
+/// Example usage:
+/// ```swift
+/// // Fetch current storefront
+/// let storefront = try await MStorefront.current()
+/// print("Current storefront: \(storefront.id)")
+///
+/// // Fetch all available storefronts
+/// let allStorefronts = try await MStorefront.all()
+/// for storefront in allStorefronts {
+///     print("\(storefront.name) (\(storefront.id))")
+/// }
+/// ```
 public struct MStorefront: Codable {
 
-  /// The identifier of the storefront.
+  /// The unique identifier for the storefront (e.g., "us", "gb", "jp").
   public let id: String
+
+  /// The display name of the storefront in its default language.
+  public let name: String
+
+  /// The list of languages supported by this storefront.
+  public let supportedLanguages: [String]
+
+  /// The default language code for this storefront.
+  public let defaultLanguage: String
 
   /// The type of the storefront.
   public let type: `Type`
 
   /// The explicit content policy for the storefront.
   public let explicitContentPolicy: ExplicitContentPolicy
-
-  /// The name of the storefront.
-  public let name: String
-
-  /// The language tags supported by the storefront.
-  public let supportedLanguageTags: [String]
-
-  /// The default language tag for the storefront.
-  public let defaultLanguageTag: String
 
   /// The Apple iTunes storefront ID.
   ///
@@ -66,8 +79,8 @@ public struct MStorefront: Codable {
   enum AttributesCodingKeys: String, CodingKey {
     case explicitContentPolicy
     case name
-    case supportedLanguageTags
-    case defaultLanguageTag
+    case supportedLanguages
+    case defaultLanguage
   }
 
   public init(from decoder: Decoder) throws {
@@ -75,11 +88,13 @@ public struct MStorefront: Codable {
     id = try values.decode(String.self, forKey: .id)
     type = try values.decode(`Type`.self, forKey: .type)
 
-    let attributesContainer = try values.nestedContainer(keyedBy: AttributesCodingKeys.self, forKey: .attributes)
-    explicitContentPolicy = try attributesContainer.decode(ExplicitContentPolicy.self, forKey: .explicitContentPolicy)
+    let attributesContainer = try values.nestedContainer(
+      keyedBy: AttributesCodingKeys.self, forKey: .attributes)
+    explicitContentPolicy = try attributesContainer.decode(
+      ExplicitContentPolicy.self, forKey: .explicitContentPolicy)
     name = try attributesContainer.decode(String.self, forKey: .name)
-    supportedLanguageTags = try attributesContainer.decode([String].self, forKey: .supportedLanguageTags)
-    defaultLanguageTag = try attributesContainer.decode(String.self, forKey: .defaultLanguageTag)
+    supportedLanguages = try attributesContainer.decode([String].self, forKey: .supportedLanguages)
+    defaultLanguage = try attributesContainer.decode(String.self, forKey: .defaultLanguage)
     storefrontId = MStorefront.mapStorefrontIdFromCountryCode(id)
   }
 
@@ -98,15 +113,16 @@ public struct MStorefront: Codable {
     try container.encode(id, forKey: .id)
     try container.encode(type, forKey: .type)
 
-    var attributesContainer = container.nestedContainer(keyedBy: AttributesCodingKeys.self, forKey: .attributes)
+    var attributesContainer = container.nestedContainer(
+      keyedBy: AttributesCodingKeys.self, forKey: .attributes)
     try attributesContainer.encode(explicitContentPolicy, forKey: .explicitContentPolicy)
     try attributesContainer.encode(name, forKey: .name)
-    try attributesContainer.encode(supportedLanguageTags, forKey: .supportedLanguageTags)
-    try attributesContainer.encode(defaultLanguageTag, forKey: .defaultLanguageTag)
+    try attributesContainer.encode(supportedLanguages, forKey: .supportedLanguages)
+    try attributesContainer.encode(defaultLanguage, forKey: .defaultLanguage)
   }
 }
 
-public extension MCatalog {
+extension MCatalog {
 
   /// Fetches a specific storefront of Apple Music by its unique identifier.
   ///
@@ -129,7 +145,7 @@ public extension MCatalog {
   /// - Parameter id: The unique identifier for the storefront you want to fetch. This is usually a country code.
   /// - Returns: A `MStorefront` object containing the details of the requested storefront.
   /// - Throws: An error if the storefront cannot be found, or if there was a problem decoding the response.
-  static func storefront(id: String) async throws -> MStorefront {
+  public static func storefront(id: String) async throws -> MStorefront {
     let url = try storefrontsURL(id: id)
 
     let request = MusicDataRequest(urlRequest: .init(url: url))
@@ -161,7 +177,7 @@ public extension MCatalog {
   ///
   /// - Returns: An array of `MStorefront` objects, each representing a different storefront.
   /// - Throws: An error if there was a problem with the network request, or if the response couldn't be decoded.
-  static func storefronts() async throws -> MStorefronts {
+  public static func storefronts() async throws -> MStorefronts {
     let url = try storefrontsURL()
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
@@ -332,7 +348,7 @@ extension MStorefront {
       ["name": "Uzbekistan", "code": "uz", "storefrontId": 143566],
       ["name": "Venezuela", "code": "ve", "storefrontId": 143502],
       ["name": "Vietnam", "code": "vn", "storefrontId": 143471],
-      ["name": "Yemen", "code": "ye", "storefrontId": 143571]
+      ["name": "Yemen", "code": "ye", "storefrontId": 143571],
     ]
 
     return storefrontData.first { $0["code"] as? String == countryCode }?["storefrontId"] as? Int

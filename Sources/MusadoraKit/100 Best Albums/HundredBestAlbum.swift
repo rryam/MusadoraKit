@@ -9,25 +9,22 @@ import Foundation
 
 /// A structure representing an album from Apple Music's 100 Best Albums list.
 ///
-/// The `HundredBestAlbum` struct encapsulates all the information about an album that appears in
-/// Apple Music's curated list of 100 best albums. Each album contains basic metadata like name and artist,
-/// as well as rich content in the form of sections that can include text descriptions, quotes, and images.
+/// This structure provides detailed information about albums featured in Apple Music's
+/// curated list of 100 best albums, including rich content like descriptions and artwork.
 ///
 /// Example usage:
-///
 /// ```swift
-/// let album = try decoder.decode(HundredBestAlbum.self, from: jsonData)
-/// print("Album #\(album.position): \(album.name) by \(album.artistName)")
+/// let album = try await MCatalog.hundredBestAlbum(id: "1234567890")
+/// print("Position: \(album.position)")
+/// print("Name: \(album.name)")
+/// print("Artist: \(album.artistName)")
 ///
-/// // Access sections content
-/// for section in album.sections {
-///     if section.sectionName == "blurb" {
-///         print("Album description: \(section.text ?? "")")
-///     }
-/// }
+/// // Access album artwork
+/// let artwork = album.artwork
+/// print("Artwork URL: \(artwork.url(width: 300, height: 300))")
 /// ```
 public struct HundredBestAlbum: Identifiable, MusicItem {
-  /// The unique identifier for the album, matching its Apple Music catalog ID.
+  /// The unique identifier for the album.
   public let id: MusicItemID
 
   /// The name of the album.
@@ -36,7 +33,7 @@ public struct HundredBestAlbum: Identifiable, MusicItem {
   /// The position of the album in the 100 Best Albums list (1-100).
   public let position: String
 
-  /// The title of the album, which may include additional formatting or context.
+  /// The formatted title of the album.
   public let title: String
 
   /// The artwork associated with the album.
