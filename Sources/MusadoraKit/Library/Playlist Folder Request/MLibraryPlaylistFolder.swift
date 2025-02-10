@@ -46,7 +46,7 @@ extension MLibrary {
   ///
   /// - Returns: An array of `LibraryPlaylistFolder` objects representing the user's playlist folders.
   /// - Throws: An error if the request fails or if the user's authorization status has changed.
-  static func rootPlaylistsFolder() async throws -> LibraryPlaylistFolders {
+ // static func rootPlaylistsFolder() async throws -> LibraryPlaylistFolders {
     // Implementation commented out
-  }
+//  }
 }
