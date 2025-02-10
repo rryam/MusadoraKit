@@ -7,14 +7,35 @@
 
 import Foundation
 
-/// A request that your app uses to add ratings for albums, songs,
-/// playlists, music videos, and stations for content in the Apple Music catalog.
+/// A request that your app uses to add ratings for music items in the Apple Music catalog.
+///
+/// This structure allows users to rate catalog items such as songs, albums, playlists,
+/// music videos, and stations with either a like or dislike.
+///
+/// Example usage:
+/// ```swift
+/// let request = MCatalogRatingAddRequest(
+///     with: "1234567890",
+///     item: .song,
+///     rating: .like
+/// )
+///
+/// do {
+///     let response = try await request.response()
+///     print("Rating added successfully")
+/// } catch {
+///     print("Failed to add rating: \(error)")
+/// }
+/// ```
 struct MCatalogRatingAddRequest {
 
+  /// The type of music item being rated.
   private var type: CatalogRatingMusicItemType
+
+  /// The unique identifier of the item being rated.
   private var id: MusicItemID
 
-  /// The rating of the catalog item.
+  /// The rating (like/dislike) to be applied to the item.
   var rating: RatingType
 
   /// Creates a request to get the rating for the unique identifier of the given library item.
@@ -56,16 +77,17 @@ extension MCatalogRatingAddRequest {
   }
 }
 
-
+/// Possible errors that can occur during rating operations.
 enum MRatingError: Error, Equatable {
+  /// Indicates that the specified item was not found in the catalog.
   case notFound(for: String)
 }
 
 extension MRatingError: CustomStringConvertible {
   var description: String {
     switch self {
-      case let .notFound(id):
-        return "No rating be found for \(id)."
+    case let .notFound(id):
+      return "No rating be found for \(id)."
     }
   }
 }
