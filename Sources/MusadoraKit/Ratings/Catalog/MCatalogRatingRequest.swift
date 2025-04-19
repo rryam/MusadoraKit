@@ -52,33 +52,27 @@ public struct MCatalogRatingRequest {
     self.type = type
     self.ids = [id]
   }
-
-  /// Fetches the given rating(s) of the given catalog item
-  /// that matches the unique identifier(s) for the request.
-  public func response() async throws -> RatingsResponse {
-    let url = try catalogRatingsEndpointURL
-    let request = MusicDataRequest(urlRequest: URLRequest(url: url))
-    let response = try await request.response()
-    return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
-  }
 }
 
-extension MCatalogRatingRequest {
-  internal var catalogRatingsEndpointURL: URL {
-    get throws {
-      var components = AppleMusicURLComponents()
-      var queryItems: [URLQueryItem]?
-      components.path = "me/ratings/\(type.rawValue)"
+extension MCatalogRatingRequest: MusicRequest {
+    typealias ResponseType = RatingsResponse
 
-      let ids = ids.map { $0.rawValue }.joined(separator: ",")
-      queryItems = [URLQueryItem(name: "ids", value: ids)]
-
-      components.queryItems = queryItems
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-      return url
+    var url: URL {
+        get throws {
+            var components = AppleMusicURLComponents()
+            var queryItems: [URLQueryItem]?
+            components.path = "me/ratings/\(type.rawValue)"
+            let idsString = ids.map { $0.rawValue }.joined(separator: ",")
+            queryItems = [URLQueryItem(name: "ids", value: idsString)]
+            components.queryItems = queryItems
+            guard let url = components.url else {
+                throw URLError(.badURL)
+            }
+            return url
+        }
     }
-  }
+
+    func decodeResponse(data: Data) throws -> RatingsResponse {
+        try JSONDecoder().decode(RatingsResponse.self, from: data)
+    }
 }

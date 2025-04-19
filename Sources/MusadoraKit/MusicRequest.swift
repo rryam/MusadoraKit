@@ -25,3 +25,11 @@ protocol MusicRequest {
     /// - Throws: An error if decoding fails.
     func decodeResponse(data: Data) throws -> ResponseType
 }
+
+extension MusicRequest {
+    func perform() async throws -> ResponseType {
+        let request = MusicDataRequest(urlRequest: URLRequest(url: try url))
+        let response = try await request.response()
+        return try decodeResponse(data: response.data)
+    }
+}

@@ -219,7 +219,7 @@ public extension MCatalog {
   /// - Throws: `MCatalogError.notFound`: If the music item with the specified ID is not found in the catalog.
   static func getRating(with id: MusicItemID, item: CatalogRatingMusicItemType) async throws -> Rating {
     let request = MCatalogRatingRequest(with: id, item: item)
-    let response = try await request.response()
+    let response = try await request.perform()
 
     guard let rating = response.data.first else {
       throw MRatingError.notFound(for: id.rawValue)
@@ -247,7 +247,7 @@ public extension MCatalog {
   /// - Throws: `MCatalogError.notFound`: If the music items with the IDs is not found in the catalog.
   static func getRating(with ids: [MusicItemID], item: CatalogRatingMusicItemType) async throws -> Ratings {
     let request = MCatalogRatingRequest(with: ids, item: item)
-    let response = try await request.response()
+    let response = try await request.perform()
     return response.data
   }
 }
