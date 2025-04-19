@@ -63,19 +63,19 @@ extension MusadoraKit {
     public static func testConnectivity() async throws {
         var components = AppleMusicURLComponents()
         components.path = "test"
-
+        
         guard let url = components.url else {
             throw URLError(.badURL)
         }
-
+        
         let urlRequest = URLRequest(url: url)
         let request = MusicDataRequest(urlRequest: urlRequest)
-
+        
         do {
             let response = try await request.response()
-
+            
             let httpResponse = response.urlResponse
-
+            
             switch httpResponse.statusCode {
             case 200:
                 return
