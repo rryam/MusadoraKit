@@ -15,7 +15,9 @@ public final class TokenManager {
     /// - Parameter token: The token to be saved
     /// - Throws: KeychainError if saving fails
     public func saveToken(_ token: String) throws {
-        let data = token.data(using: .utf8)!
+        guard let data = token.data(using: .utf8) else {
+            throw KeychainError.encodingError
+        }
         
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
