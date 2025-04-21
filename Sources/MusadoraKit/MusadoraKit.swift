@@ -23,8 +23,11 @@ public struct MusadoraKit {}
 /// 5. `MRating` for working with ratings.
 
 extension MusadoraKit {
+    /// The user token for authentication.
+    /// - Note: This property is deprecated. Use `TokenManager.shared` instead for secure token management.
+    @available(*, deprecated, message: "Use TokenManager.shared instead for secure token management")
     public static var userToken: String? {
-        ProcessInfo.processInfo.environment["USER_TOKEN"]
+        try? TokenManager.shared.getToken()
     }
     
     /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
@@ -52,10 +55,10 @@ extension MusadoraKit {
     ///         try await MusadoraKit.testConnectivity()
     ///         print("Successfully connected to Apple Music API.")
     ///     } catch {
-    ///         print("Failed to connect to Apple Music API: \\(error.localizedDescription)")
+    ///         print("Failed to connect to Apple Music API: \(error.localizedDescription)")
     ///         // Optionally inspect the userInfo for more details
     ///         if let urlError = error as? URLError, let description = urlError.userInfo["description"] as? String {
-    ///             print("Details: \\(description)")
+    ///             print("Details: \(description)")
     ///         }
     ///     }
     /// }
@@ -84,7 +87,7 @@ extension MusadoraKit {
             case 500:
                 throw URLError(.badServerResponse, userInfo: ["description": "Internal Server Error (500)."])
             default:
-                throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \\(httpResponse.statusCode)"])
+                throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)"])
             }
         } catch let error as URLError where error.code == .userAuthenticationRequired {
             throw URLError(.userAuthenticationRequired, userInfo: ["description": "Unauthorized (401). Check developer token validity and MusicKit setup.", NSUnderlyingErrorKey: error])
