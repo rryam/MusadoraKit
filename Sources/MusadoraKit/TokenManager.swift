@@ -104,11 +104,14 @@ public final class TokenManager {
 /// Errors that can occur during Keychain operations
 public enum KeychainError: LocalizedError {
     case unhandledError(status: OSStatus)
+    case encodingError
     
     public var errorDescription: String? {
         switch self {
         case .unhandledError(let status):
             return "Keychain operation failed with status: \(status)"
+        case .encodingError:
+            return "Failed to encode token data"
         }
     }
 }
