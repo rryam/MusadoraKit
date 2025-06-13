@@ -305,7 +305,7 @@ public extension MLibrary {
 
     let request = MDataPostRequest(url: url, data: data)
     let response = try await request.response()
-    return response.urlResponse.statusCode == 201
+    return [201, 204].contains(response.urlResponse.statusCode)
   }
 
   /// Adds an array of songs to a specified playlist in the user's music library.
