@@ -72,7 +72,7 @@ public struct CatalogEndpointMacro: MemberMacro {
         ))
         
         // Generate UPC methods for applicable types
-        if ["Album", "Song"].contains(resourceType) {
+        if ["Album"].contains(resourceType) {
             members.append(generateUPCMethod(
                 resourceType: resourceType,
                 resourceName: resourceName,

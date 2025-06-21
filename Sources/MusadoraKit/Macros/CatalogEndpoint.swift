@@ -18,7 +18,7 @@
 /// - Single item fetch with all properties (default)
 /// - Multiple items fetch with properties
 /// - Multiple items fetch with all properties (default)
-/// - UPC-based fetch methods (for Album and Song types)
+/// - UPC-based fetch methods (for Album type only)
 /// - ISRC-based fetch methods (for Song type only)
 ///
 /// Example usage:

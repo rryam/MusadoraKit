@@ -28,7 +28,7 @@ The `@CatalogEndpoint` macro dramatically reduces boilerplate code in MusadoraKi
 - Multiple items fetch (2 overloads)
 - Private implementation methods
 
-### For Album & Song Types
+### For Album Type Only
 - UPC-based fetch methods (4 additional methods)
 
 ### For Song Type Only  
