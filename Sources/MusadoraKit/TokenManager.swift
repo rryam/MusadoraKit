@@ -2,7 +2,7 @@ import Foundation
 import Security
 
 /// A class responsible for securely managing user tokens in MusadoraKit.
-public final class TokenManager {
+public final class TokenManager: Sendable {
     /// Shared instance of the TokenManager
     public static let shared = TokenManager()
     
