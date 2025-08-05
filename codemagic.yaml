@@ -14,9 +14,8 @@ definitions:
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
-    instance_type: mac_mini_m2
     environment:
-      xcode: 16.0
+      xcode: 26.0
       vars:
         XCODE_SCHEME: "MusadoraKit"
         APP_ID: "Musadora"
