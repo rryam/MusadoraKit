@@ -23,11 +23,16 @@ public struct MusadoraKit {}
 /// 5. `MRating` for working with ratings.
 
 extension MusadoraKit {
+    private static let userTokenKey = "com.musadorakit.userToken"
+
     /// The user token for authentication.
-    /// - Note: This property is deprecated. Use `TokenManager.shared` instead for secure token management.
-    @available(*, deprecated, message: "Use TokenManager.shared instead for secure token management")
     public static var userToken: String? {
-        try? TokenManager.shared.getToken()
+        get {
+            UserDefaults.standard.string(forKey: userTokenKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: userTokenKey)
+        }
     }
     
     /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
