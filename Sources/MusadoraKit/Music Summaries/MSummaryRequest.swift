@@ -98,6 +98,9 @@ extension MSummaryRequest {
 
       if let extend, !extend.isEmpty {
         queryItems.append(URLQueryItem(name: "extend", value: extend.joined(separator: ",")))
+      } else {
+        // Default to extending all available attributes for richer data
+        queryItems.append(URLQueryItem(name: "extend", value: "artistBio,editorialVideo"))
       }
 
       if let languageTag, !languageTag.isEmpty {
