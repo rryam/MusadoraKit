@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rryam/MusadoraKit",
       "state" : {
-        "branch" : "main",
-        "revision" : "18dc61136bcb5b4aa5717eb46b6ff83035c8b3eb"
+        "branch" : "feature/music-summaries-api",
+        "revision" : "7a6b8f1768a369d105edf6eda2c2f30fa45ad668"
       }
     }
   ],
