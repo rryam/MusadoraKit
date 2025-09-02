@@ -20,6 +20,7 @@ struct LibraryView: View {
       Section("History") {
         NavigationLink("Recently added", destination: RecentlyAddedView())
         NavigationLink("Recently played", destination: RecentlyPlayedView())
+        NavigationLink("Music Summaries", destination: MusicSummariesView())
       }
     }
   }
