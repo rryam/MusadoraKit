@@ -14,9 +14,10 @@ final class MSummaryRequestEndpointTests: XCTestCase {
     let request = MSummaryRequest()
     let url = try request.endpointURL
     // Note: views are sorted alphabetically in implementation
+    // Default include and extend parameters are added automatically
     XCTAssertEqualEndpoint(
       url,
-      "https://api.music.apple.com/v1/me/music-summaries?filter[year]=latest&views=top-albums,top-artists,top-songs"
+      "https://api.music.apple.com/v1/me/music-summaries?filter[year]=latest&views=top-albums,top-artists,top-songs&include=artist,album,song&extend=artistBio,editorialVideo"
     )
   }
 
@@ -24,9 +25,10 @@ final class MSummaryRequestEndpointTests: XCTestCase {
     var request = MSummaryRequest()
     request.views = [.topSongs]
     let url = try request.endpointURL
+    // Default include and extend parameters are added automatically
     XCTAssertEqualEndpoint(
       url,
-      "https://api.music.apple.com/v1/me/music-summaries?filter[year]=latest&views=top-songs"
+      "https://api.music.apple.com/v1/me/music-summaries?filter[year]=latest&views=top-songs&include=artist,album,song&extend=artistBio,editorialVideo"
     )
   }
 
