@@ -58,9 +58,13 @@ extension MSummaryResponse {
 
 extension MSummaryResponse: Equatable, Hashable {}
 
-extension MSummaryResponse: CustomStringConvertible {
+extension MSummaryResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
     "MSummaryResponse(year: \(year.map(String.init) ?? "nil"), artists: \(topArtists.count), albums: \(topAlbums.count), songs: \(topSongs.count))"
+  }
+
+  public var debugDescription: String {
+    "MSummaryResponse(\n\(topArtists.debugDescription),\n\(topAlbums.debugDescription),\n\(topSongs.debugDescription)\n)"
   }
 }
 
