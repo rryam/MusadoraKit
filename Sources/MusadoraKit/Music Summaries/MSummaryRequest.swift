@@ -91,6 +91,9 @@ extension MSummaryRequest {
 
       if let include, !include.isEmpty {
         queryItems.append(URLQueryItem(name: "include", value: include.joined(separator: ",")))
+      } else {
+        // Default to including relationship data to get full objects instead of minimal resources
+        queryItems.append(URLQueryItem(name: "include", value: "top-artists,top-albums,top-songs"))
       }
 
       if let extend, !extend.isEmpty {
