@@ -17,14 +17,16 @@ struct SettingsView: View {
     NavigationStack {
       List {
         Section("About") {
-          Text("Made for [MusadoraKit](https://github.com/rryam/MusadoraKit). Go ⭐️ it!")
-          Text("Made by [Rudrank Riyam](https://twitter.com/rudrankriyam). Go follow him!")
+          Link("MusadoraKit on GitHub", destination: URL(string: "https://github.com/rryam/MusadoraKit")!)
+          Link("Rudrank Riyam on X (Twitter)", destination: URL(string: "https://twitter.com/rudrankriyam")!)
         }
 
         Section("Authorization") {
-          LabeledContent("Music Access") {
+          HStack {
+            Text("Music Access")
+            Spacer()
             Text(label(for: authStatus))
-              .foregroundStyle(authStatus == .authorized ? .secondary : .red)
+              .foregroundColor(authStatus == .authorized ? .secondary : .red)
           }
 
           if authStatus != .authorized {
@@ -36,9 +38,11 @@ struct SettingsView: View {
 
         Section("Subscription") {
           if let canPlayCatalog {
-            LabeledContent("Apple Music") {
+            HStack {
+              Text("Apple Music")
+              Spacer()
               Text(canPlayCatalog ? "Active" : "Inactive")
-                .foregroundStyle(canPlayCatalog ? .secondary : .red)
+                .foregroundColor(canPlayCatalog ? .secondary : .red)
             }
           } else {
             ProgressView().frame(maxWidth: .infinity, alignment: .leading)
