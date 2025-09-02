@@ -59,6 +59,7 @@ public extension MCatalog {
     try await addToFavorites(id: station.id)
   }
 
+
   // MARK: - Internal Implementation
 
   /// Internal method to add a resource to favorites by ID.
@@ -69,5 +70,7 @@ public extension MCatalog {
     let request = MFavoritesRequest(itemID: id)
     return try await request.response()
   }
+
+  
 
 }
