@@ -10,17 +10,21 @@ import MusadoraKit
 
 struct LibraryView: View {
   var body: some View {
-    NavigationListStack("Library") {
-      Section("Library") {
-        NavigationLink("Songs", destination: LibrarySongsView())
-        NavigationLink("Albums", destination: LibraryAlbumsView())
-        NavigationLink("Playlists", destination: LibraryPlaylistsView())
-      }
+    NavigationStack {
+      List {
+        Section("Library") {
+          NavigationLink("Songs") { LibrarySongsView() }
+          NavigationLink("Albums") { LibraryAlbumsView() }
+          NavigationLink("Playlists") { LibraryPlaylistsView() }
+        }
 
-      Section("History") {
-        NavigationLink("Recently added", destination: RecentlyAddedView())
-        NavigationLink("Recently played", destination: RecentlyPlayedView())
+        Section("History") {
+          NavigationLink("Recently Added") { RecentlyAddedView() }
+          NavigationLink("Recently Played") { RecentlyPlayedView() }
+          NavigationLink("Music Summaries") { MusicSummariesView() }
+        }
       }
+      .navigationTitle("Library")
     }
   }
 }

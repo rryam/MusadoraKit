@@ -3,79 +3,37 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A1986A829BE66CD00876C60 /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1986A729BE66CD00876C60 /* RecommendationsView.swift */; };
-		0A30B95029C4E31800FCA66E /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A30B94F29C4E31800FCA66E /* CatalogView.swift */; };
-		0A4C82DD29C1D83300C15B72 /* RecentlyAddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C82DC29C1D83300C15B72 /* RecentlyAddedView.swift */; };
-		0A4C82DF29C1DA6600C15B72 /* RecentlyPlayedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4C82DE29C1DA6600C15B72 /* RecentlyPlayedView.swift */; };
-		0A834F1D29B9257D0063AA6C /* MTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A834F1C29B9257D0063AA6C /* MTabView.swift */; };
-		0A834F1F29B925A30063AA6C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A834F1E29B925A30063AA6C /* WelcomeView.swift */; };
-		0A834F2129B926410063AA6C /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A834F2029B926410063AA6C /* LibraryView.swift */; };
+		0A4C262A2E67578E00570FA7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C26292E67578E00570FA7 /* README.md */; };
 		0A834F2429B926AF0063AA6C /* MusadoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A834F2329B926AF0063AA6C /* MusadoraKit */; };
-		0A8664A229C0FA2900CA6E3F /* StationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664A129C0FA2900CA6E3F /* StationRow.swift */; };
-		0A8664A429C0FBE800CA6E3F /* LibraryAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664A329C0FBE800CA6E3F /* LibraryAlbumsView.swift */; };
-		0A8664A729C0FC1E00CA6E3F /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664A629C0FC1E00CA6E3F /* AlbumsView.swift */; };
-		0A8664A929C0FC4400CA6E3F /* AlbumRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664A829C0FC4400CA6E3F /* AlbumRow.swift */; };
-		0A8664AB29C0FC9600CA6E3F /* LibraryPlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664AA29C0FC9600CA6E3F /* LibraryPlaylistsView.swift */; };
-		0A8664AE29C0FCBD00CA6E3F /* PlaylistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664AD29C0FCBD00CA6E3F /* PlaylistsView.swift */; };
-		0A8664B029C0FCC200CA6E3F /* PlaylistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8664AF29C0FCC200CA6E3F /* PlaylistRow.swift */; };
-		0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */; };
 		0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFE29B9248F0029A91F /* Assets.xcassets */; };
-		0A8FFF0229B9248F0029A91F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */; };
-		0AEDB6EC29C0DFF600B6AB8A /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */; };
-		0AEDB6EE29C0E09F00B6AB8A /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */; };
-		0AEDB6F029C0E0C100B6AB8A /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */; };
-		0AEDB6F229C0E2A800B6AB8A /* SongChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */; };
-		0AEDB6F429C0F0C900B6AB8A /* AlbumChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */; };
-		0AEDB6F629C0F16200B6AB8A /* PlaylistChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */; };
-		0AEDB6F829C0F22400B6AB8A /* MusicVideoChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */; };
-		0AEDB6FB29C0F6AF00B6AB8A /* SongRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FA29C0F6AF00B6AB8A /* SongRow.swift */; };
-		0AEDB6FE29C0F76D00B6AB8A /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */; };
-		0AEDB70029C0F87600B6AB8A /* LibrarySongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEDB6FF29C0F87600B6AB8A /* LibrarySongsView.swift */; };
 		0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF15F8129C4D9FE00FFEF63 /* release_notes.json */; };
-		0AF15F8429C4DA3C00FFEF63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */; };
-		8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811029BE145F00BDC749 /* StationGenresView.swift */; };
-		8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A1986A729BE66CD00876C60 /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
-		0A30B94F29C4E31800FCA66E /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
-		0A4C82DC29C1D83300C15B72 /* RecentlyAddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyAddedView.swift; sourceTree = "<group>"; };
-		0A4C82DE29C1DA6600C15B72 /* RecentlyPlayedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyPlayedView.swift; sourceTree = "<group>"; };
-		0A834F1C29B9257D0063AA6C /* MTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTabView.swift; sourceTree = "<group>"; };
-		0A834F1E29B925A30063AA6C /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		0A834F2029B926410063AA6C /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		0A4C26292E67578E00570FA7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0A834F2529B928510063AA6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		0A8664A129C0FA2900CA6E3F /* StationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationRow.swift; sourceTree = "<group>"; };
-		0A8664A329C0FBE800CA6E3F /* LibraryAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryAlbumsView.swift; sourceTree = "<group>"; };
-		0A8664A629C0FC1E00CA6E3F /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
-		0A8664A829C0FC4400CA6E3F /* AlbumRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRow.swift; sourceTree = "<group>"; };
-		0A8664AA29C0FC9600CA6E3F /* LibraryPlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPlaylistsView.swift; sourceTree = "<group>"; };
-		0A8664AD29C0FCBD00CA6E3F /* PlaylistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsView.swift; sourceTree = "<group>"; };
-		0A8664AF29C0FCC200CA6E3F /* PlaylistRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRow.swift; sourceTree = "<group>"; };
 		0A8FFEF729B9248F0029A91F /* Musadora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musadora.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusadoraApp.swift; sourceTree = "<group>"; };
 		0A8FFEFE29B9248F0029A91F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
-		0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
-		0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationView.swift; sourceTree = "<group>"; };
-		0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongChartView.swift; sourceTree = "<group>"; };
-		0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumChartView.swift; sourceTree = "<group>"; };
-		0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistChartView.swift; sourceTree = "<group>"; };
-		0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVideoChartView.swift; sourceTree = "<group>"; };
-		0AEDB6FA29C0F6AF00B6AB8A /* SongRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongRow.swift; sourceTree = "<group>"; };
-		0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsView.swift; sourceTree = "<group>"; };
-		0AEDB6FF29C0F87600B6AB8A /* LibrarySongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySongsView.swift; sourceTree = "<group>"; };
 		0AF15F8129C4D9FE00FFEF63 /* release_notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = release_notes.json; sourceTree = SOURCE_ROOT; };
-		0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		8F85811029BE145F00BDC749 /* StationGenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenresView.swift; sourceTree = "<group>"; };
-		8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationGenreDetailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		0A4C25A12E67576900570FA7 /* Library */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Library; sourceTree = "<group>"; };
+		0A4C25A92E67576D00570FA7 /* History */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = History; sourceTree = "<group>"; };
+		0A4C25B12E67576D00570FA7 /* Catalog */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Catalog; sourceTree = "<group>"; };
+		0A4C25B62E67577400570FA7 /* Onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Onboarding; sourceTree = "<group>"; };
+		0A4C25BE2E67577400570FA7 /* Charts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Charts; sourceTree = "<group>"; };
+		0A4C25C72E67577400570FA7 /* Main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Main; sourceTree = "<group>"; };
+		0A4C25D52E67577400570FA7 /* Music Items */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Music Items"; sourceTree = "<group>"; };
+		0A4C25DE2E67577800570FA7 /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
+		0A4C25E22E67577A00570FA7 /* Recommendations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Recommendations; sourceTree = "<group>"; };
+		0A4C25E62E67577E00570FA7 /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
+		0A4C29AE2E675F9700570FA7 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0A8FFEF429B9248E0029A91F /* Frameworks */ = {
@@ -89,61 +47,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A1986A429BE66B900876C60 /* History */ = {
-			isa = PBXGroup;
-			children = (
-				0A4C82DC29C1D83300C15B72 /* RecentlyAddedView.swift */,
-				0A4C82DE29C1DA6600C15B72 /* RecentlyPlayedView.swift */,
-			);
-			path = History;
-			sourceTree = "<group>";
-		};
-		0A1986A929BE66D500876C60 /* Recommendations */ = {
-			isa = PBXGroup;
-			children = (
-				0A1986A729BE66CD00876C60 /* RecommendationsView.swift */,
-				0AEDB6EF29C0E0C100B6AB8A /* RecommendationView.swift */,
-			);
-			path = Recommendations;
-			sourceTree = "<group>";
-		};
-		0A834F2629B92C800063AA6C /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				0A834F2029B926410063AA6C /* LibraryView.swift */,
-				0AEDB6FF29C0F87600B6AB8A /* LibrarySongsView.swift */,
-				0A8664AA29C0FC9600CA6E3F /* LibraryPlaylistsView.swift */,
-				0A8664A329C0FBE800CA6E3F /* LibraryAlbumsView.swift */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		0A8664A029C0FA2300CA6E3F /* Station */ = {
-			isa = PBXGroup;
-			children = (
-				0A8664A129C0FA2900CA6E3F /* StationRow.swift */,
-			);
-			path = Station;
-			sourceTree = "<group>";
-		};
-		0A8664A529C0FC1500CA6E3F /* Album */ = {
-			isa = PBXGroup;
-			children = (
-				0A8664A629C0FC1E00CA6E3F /* AlbumsView.swift */,
-				0A8664A829C0FC4400CA6E3F /* AlbumRow.swift */,
-			);
-			path = Album;
-			sourceTree = "<group>";
-		};
-		0A8664AC29C0FCB900CA6E3F /* Playlist */ = {
-			isa = PBXGroup;
-			children = (
-				0A8664AD29C0FCBD00CA6E3F /* PlaylistsView.swift */,
-				0A8664AF29C0FCC200CA6E3F /* PlaylistRow.swift */,
-			);
-			path = Playlist;
-			sourceTree = "<group>";
-		};
 		0A8FFEEE29B9248E0029A91F = {
 			isa = PBXGroup;
 			children = (
@@ -163,105 +66,23 @@
 		0A8FFEF929B9248F0029A91F /* Musadora */ = {
 			isa = PBXGroup;
 			children = (
-				0AF15F8529C4DA4200FFEF63 /* Settings */,
+				0A4C29AE2E675F9700570FA7 /* Shared */,
+				0A4C26292E67578E00570FA7 /* README.md */,
+				0A4C25DE2E67577800570FA7 /* Settings */,
 				0AF15F8129C4D9FE00FFEF63 /* release_notes.json */,
-				0AEDB6E929C0DFDB00B6AB8A /* Main */,
-				0AEDB6F929C0F6A900B6AB8A /* Music Items */,
-				0AEDB6EA29C0DFE500B6AB8A /* Onboarding */,
-				0AEDB6E829C0DFD300B6AB8A /* Charts */,
-				0A1986A929BE66D500876C60 /* Recommendations */,
-				0A1986A429BE66B900876C60 /* History */,
-				8F85810C29BE124100BDC749 /* Catalog */,
-				0A834F2629B92C800063AA6C /* Library */,
+				0A4C25C72E67577400570FA7 /* Main */,
+				0A4C25D52E67577400570FA7 /* Music Items */,
+				0A4C25B62E67577400570FA7 /* Onboarding */,
+				0A4C25BE2E67577400570FA7 /* Charts */,
+				0A4C25E22E67577A00570FA7 /* Recommendations */,
+				0A4C25A92E67576D00570FA7 /* History */,
+				0A4C25B12E67576D00570FA7 /* Catalog */,
+				0A4C25A12E67576900570FA7 /* Library */,
 				0A834F2529B928510063AA6C /* Info.plist */,
 				0A8FFEFE29B9248F0029A91F /* Assets.xcassets */,
-				0A8FFF0029B9248F0029A91F /* Preview Content */,
+				0A4C25E62E67577E00570FA7 /* Preview Content */,
 			);
 			path = Musadora;
-			sourceTree = "<group>";
-		};
-		0A8FFF0029B9248F0029A91F /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				0A8FFF0129B9248F0029A91F /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		0AEDB6E829C0DFD300B6AB8A /* Charts */ = {
-			isa = PBXGroup;
-			children = (
-				0AEDB6EB29C0DFF600B6AB8A /* ChartsView.swift */,
-				0AEDB6ED29C0E09F00B6AB8A /* ChartView.swift */,
-				0AEDB6F729C0F22400B6AB8A /* MusicVideoChartView.swift */,
-				0AEDB6F129C0E2A800B6AB8A /* SongChartView.swift */,
-				0AEDB6F329C0F0C900B6AB8A /* AlbumChartView.swift */,
-				0AEDB6F529C0F16200B6AB8A /* PlaylistChartView.swift */,
-			);
-			path = Charts;
-			sourceTree = "<group>";
-		};
-		0AEDB6E929C0DFDB00B6AB8A /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				0A8FFEFA29B9248F0029A91F /* MusadoraApp.swift */,
-				0A834F1C29B9257D0063AA6C /* MTabView.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
-		0AEDB6EA29C0DFE500B6AB8A /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				0A834F1E29B925A30063AA6C /* WelcomeView.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		0AEDB6F929C0F6A900B6AB8A /* Music Items */ = {
-			isa = PBXGroup;
-			children = (
-				0A8664AC29C0FCB900CA6E3F /* Playlist */,
-				0A8664A529C0FC1500CA6E3F /* Album */,
-				0A8664A029C0FA2300CA6E3F /* Station */,
-				0AEDB6FC29C0F75C00B6AB8A /* Song */,
-			);
-			path = "Music Items";
-			sourceTree = "<group>";
-		};
-		0AEDB6FC29C0F75C00B6AB8A /* Song */ = {
-			isa = PBXGroup;
-			children = (
-				0AEDB6FA29C0F6AF00B6AB8A /* SongRow.swift */,
-				0AEDB6FD29C0F76D00B6AB8A /* SongsView.swift */,
-			);
-			path = Song;
-			sourceTree = "<group>";
-		};
-		0AF15F8529C4DA4200FFEF63 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				0AF15F8329C4DA3C00FFEF63 /* SettingsView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		8F85810C29BE124100BDC749 /* Catalog */ = {
-			isa = PBXGroup;
-			children = (
-				8F85810F29BE145800BDC749 /* Station Genres */,
-				0A30B94F29C4E31800FCA66E /* CatalogView.swift */,
-			);
-			path = Catalog;
-			sourceTree = "<group>";
-		};
-		8F85810F29BE145800BDC749 /* Station Genres */ = {
-			isa = PBXGroup;
-			children = (
-				8F85811029BE145F00BDC749 /* StationGenresView.swift */,
-				8F85811229BE148300BDC749 /* StationGenreDetailedView.swift */,
-			);
-			path = "Station Genres";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +100,19 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				0A4C25A12E67576900570FA7 /* Library */,
+				0A4C25A92E67576D00570FA7 /* History */,
+				0A4C25B12E67576D00570FA7 /* Catalog */,
+				0A4C25B62E67577400570FA7 /* Onboarding */,
+				0A4C25BE2E67577400570FA7 /* Charts */,
+				0A4C25C72E67577400570FA7 /* Main */,
+				0A4C25D52E67577400570FA7 /* Music Items */,
+				0A4C25DE2E67577800570FA7 /* Settings */,
+				0A4C25E22E67577A00570FA7 /* Recommendations */,
+				0A4C25E62E67577E00570FA7 /* Preview Content */,
+				0A4C29AE2E675F9700570FA7 /* Shared */,
+			);
 			name = Musadora;
 			packageProductDependencies = (
 				0A834F2329B926AF0063AA6C /* MusadoraKit */,
@@ -295,7 +129,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					0A8FFEF629B9248E0029A91F = {
 						CreatedOnToolsVersion = 14.2;
@@ -329,7 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */,
-				0A8FFF0229B9248F0029A91F /* Preview Assets.xcassets in Resources */,
+				0A4C262A2E67578E00570FA7 /* README.md in Resources */,
 				0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,34 +175,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A8664A929C0FC4400CA6E3F /* AlbumRow.swift in Sources */,
-				0A8FFEFB29B9248F0029A91F /* MusadoraApp.swift in Sources */,
-				0AEDB6F629C0F16200B6AB8A /* PlaylistChartView.swift in Sources */,
-				0AEDB70029C0F87600B6AB8A /* LibrarySongsView.swift in Sources */,
-				0A834F1D29B9257D0063AA6C /* MTabView.swift in Sources */,
-				0A834F2129B926410063AA6C /* LibraryView.swift in Sources */,
-				8F85811329BE148300BDC749 /* StationGenreDetailedView.swift in Sources */,
-				0A4C82DF29C1DA6600C15B72 /* RecentlyPlayedView.swift in Sources */,
-				0AEDB6F429C0F0C900B6AB8A /* AlbumChartView.swift in Sources */,
-				0AEDB6F829C0F22400B6AB8A /* MusicVideoChartView.swift in Sources */,
-				0AEDB6F029C0E0C100B6AB8A /* RecommendationView.swift in Sources */,
-				8F85811129BE145F00BDC749 /* StationGenresView.swift in Sources */,
-				0A8664A729C0FC1E00CA6E3F /* AlbumsView.swift in Sources */,
-				0A4C82DD29C1D83300C15B72 /* RecentlyAddedView.swift in Sources */,
-				0A8664B029C0FCC200CA6E3F /* PlaylistRow.swift in Sources */,
-				0A834F1F29B925A30063AA6C /* WelcomeView.swift in Sources */,
-				0AF15F8429C4DA3C00FFEF63 /* SettingsView.swift in Sources */,
-				0AEDB6F229C0E2A800B6AB8A /* SongChartView.swift in Sources */,
-				0AEDB6FE29C0F76D00B6AB8A /* SongsView.swift in Sources */,
-				0AEDB6FB29C0F6AF00B6AB8A /* SongRow.swift in Sources */,
-				0A8664AB29C0FC9600CA6E3F /* LibraryPlaylistsView.swift in Sources */,
-				0A30B95029C4E31800FCA66E /* CatalogView.swift in Sources */,
-				0A1986A829BE66CD00876C60 /* RecommendationsView.swift in Sources */,
-				0A8664AE29C0FCBD00CA6E3F /* PlaylistsView.swift in Sources */,
-				0A8664A229C0FA2900CA6E3F /* StationRow.swift in Sources */,
-				0AEDB6EC29C0DFF600B6AB8A /* ChartsView.swift in Sources */,
-				0A8664A429C0FBE800CA6E3F /* LibraryAlbumsView.swift in Sources */,
-				0AEDB6EE29C0E09F00B6AB8A /* ChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +185,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -409,8 +216,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YQZQG7N4WG;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -439,6 +248,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -469,8 +279,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YQZQG7N4WG;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -498,7 +310,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Musadora/Preview Content\"";
-				DEVELOPMENT_TEAM = YQZQG7N4WG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Musadora/Info.plist;
@@ -533,7 +344,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Musadora/Preview Content\"";
-				DEVELOPMENT_TEAM = YQZQG7N4WG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Musadora/Info.plist;
@@ -587,7 +397,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rryam/MusadoraKit";
 			requirement = {
-				branch = main;
+				branch = "feature/music-summaries-api";
 				kind = branch;
 			};
 		};

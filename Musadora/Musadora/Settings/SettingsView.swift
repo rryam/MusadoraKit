@@ -6,15 +6,90 @@
 //
 
 import SwiftUI
+import MusicKit
 
 struct SettingsView: View {
-  var body: some View {
-    NavigationListStack("Settings") {
-      Text("Made for [MusadoraKit](https://github.com/rryam/MusadoraKit). Go ⭐️ it!")
+  @State private var authStatus: MusicAuthorization.Status = MusicAuthorization.currentStatus
+  @State private var canPlayCatalog: Bool? = nil
+  @State private var statusMessage: String? = nil
 
-      Text("Made by [Rudrank Riyam](https://twitter.com/rudrankriyam). Go follow him!")
+  var body: some View {
+    NavigationStack {
+      List {
+        Section("About") {
+          Link("MusadoraKit on GitHub", destination: URL(string: "https://github.com/rryam/MusadoraKit")!)
+          Link("Rudrank Riyam on X (Twitter)", destination: URL(string: "https://twitter.com/rudrankriyam")!)
+        }
+
+        Section("Authorization") {
+          HStack {
+            Text("Music Access")
+            Spacer()
+            Text(label(for: authStatus))
+              .foregroundColor(authStatus == .authorized ? .secondary : .red)
+          }
+
+          if authStatus != .authorized {
+            Button("Request Access") {
+              Task { await requestAuthorization() }
+            }
+          }
+        }
+
+        Section("Subscription") {
+          if let canPlayCatalog {
+            HStack {
+              Text("Apple Music")
+              Spacer()
+              Text(canPlayCatalog ? "Active" : "Inactive")
+                .foregroundColor(canPlayCatalog ? .secondary : .red)
+            }
+          } else {
+            ProgressView().frame(maxWidth: .infinity, alignment: .leading)
+          }
+        }
+
+        if let statusMessage {
+          Section {
+            Text(statusMessage).foregroundStyle(.secondary)
+          }
+        }
+      }
+      .navigationTitle("Settings")
     }
     .tint(.indigo)
+    .task { await refreshStatus() }
+  }
+}
+
+extension SettingsView {
+  private func label(for status: MusicAuthorization.Status) -> String {
+    switch status {
+    case .authorized: return "Authorized"
+    case .denied: return "Denied"
+    case .notDetermined: return "Not Determined"
+    case .restricted: return "Restricted"
+    @unknown default: return "Unknown"
+    }
+  }
+
+  @MainActor
+  private func refreshStatus() async {
+    authStatus = MusicAuthorization.currentStatus
+    let subscription: MusicSubscription? = try? await MusicSubscription.current
+    canPlayCatalog = subscription?.canPlayCatalogContent
+  }
+
+  @MainActor
+  private func requestAuthorization() async {
+    let status = await MusicAuthorization.request()
+    authStatus = status
+    await refreshStatus()
+    if status != .authorized {
+      statusMessage = "Please grant access in Settings to enable Apple Music features."
+    } else {
+      statusMessage = nil
+    }
   }
 }
 
