@@ -10,50 +10,6 @@ import Foundation
 
 public extension MCatalog {
 
-  /// Add a resource to the user's favorites.
-  ///
-  /// This method adds the specified music item to the user's favorites.
-  /// When successful, the item will appear in the user's favorite items collection
-  /// and can be filtered on in their library view.
-  ///
-  /// Example usage:
-  /// ```swift
-  /// let success = try await MCatalog.addToFavorites(id: "1234567890")
-  /// ```
-  ///
-  /// - Parameter id: The identifier of the music item to add to favorites.
-  /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func addToFavorites(id: MusicItemID) async throws -> Bool {
-    let request = MFavoritesRequest(itemID: id)
-    return try await request.response()
-  }
-
-  /// Add a resource to the user's favorites (singular alias).
-  ///
-  /// - Parameter id: The identifier of the music item to add to favorites.
-  /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func addToFavorite(id: MusicItemID) async throws -> Bool {
-    try await addToFavorites(id: id)
-  }
-
-  /// Add multiple resources to the user's favorites.
-  ///
-  /// This method supports bulk additions of heterogeneous types (songs, albums,
-  /// playlists, artists, etc.) to the user's favorites in a single request.
-  ///
-  /// Example usage:
-  /// ```swift
-  /// let itemIDs = ["song123", "album456", "playlist789"]
-  /// let success = try await MCatalog.addToFavorites(ids: itemIDs)
-  /// ```
-  ///
-  /// - Parameter ids: An array of music item identifiers to add to favorites.
-  /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func addToFavorites(ids: [MusicItemID]) async throws -> Bool {
-    let request = MFavoritesRequest(itemIDs: ids)
-    return try await request.response()
-  }
-
   // MARK: - Convenience Methods
 
   /// Add a song to the user's favorites.
@@ -61,7 +17,8 @@ public extension MCatalog {
   /// - Parameter song: The song to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(song: Song) async throws -> Bool {
-    try await addToFavorites(id: song.id)
+    let request = MFavoritesRequest(itemID: song.id)
+    return try await request.response()
   }
 
   /// Add an album to the user's favorites.
@@ -69,7 +26,8 @@ public extension MCatalog {
   /// - Parameter album: The album to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(album: Album) async throws -> Bool {
-    try await addToFavorites(id: album.id)
+    let request = MFavoritesRequest(itemID: album.id)
+    return try await request.response()
   }
 
   /// Add a playlist to the user's favorites.
@@ -77,7 +35,8 @@ public extension MCatalog {
   /// - Parameter playlist: The playlist to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(playlist: Playlist) async throws -> Bool {
-    try await addToFavorites(id: playlist.id)
+    let request = MFavoritesRequest(itemID: playlist.id)
+    return try await request.response()
   }
 
   /// Add an artist to the user's favorites.
@@ -85,7 +44,8 @@ public extension MCatalog {
   /// - Parameter artist: The artist to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(artist: Artist) async throws -> Bool {
-    try await addToFavorites(id: artist.id)
+    let request = MFavoritesRequest(itemID: artist.id)
+    return try await request.response()
   }
 
   /// Add a music video to the user's favorites.
@@ -93,7 +53,8 @@ public extension MCatalog {
   /// - Parameter musicVideo: The music video to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(musicVideo: MusicVideo) async throws -> Bool {
-    try await addToFavorites(id: musicVideo.id)
+    let request = MFavoritesRequest(itemID: musicVideo.id)
+    return try await request.response()
   }
 
   /// Add a station to the user's favorites.
@@ -101,6 +62,8 @@ public extension MCatalog {
   /// - Parameter station: The station to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult static func favorite(station: Station) async throws -> Bool {
-    try await addToFavorites(id: station.id)
+    let request = MFavoritesRequest(itemID: station.id)
+    return try await request.response()
   }
+
 }
