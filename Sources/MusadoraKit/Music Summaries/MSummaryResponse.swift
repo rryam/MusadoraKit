@@ -39,13 +39,13 @@ extension MSummaryResponse {
 
     // Flatten period summaries relationships into plain MusicKit collections.
     let artists: [Artist] = (summaries.views?.topArtists?.data ?? [])
-      .flatMap { summary in summary.relationships?.artist?.data ?? [] }
+      .compactMap { summary in summary.relationships?.artist?.data.first }
 
     let albums: [Album] = (summaries.views?.topAlbums?.data ?? [])
-      .flatMap { summary in summary.relationships?.album?.data ?? [] }
+      .compactMap { summary in summary.relationships?.album?.data.first }
 
     let songs: [Song] = (summaries.views?.topSongs?.data ?? [])
-      .flatMap { summary in summary.relationships?.song?.data ?? [] }
+      .compactMap { summary in summary.relationships?.song?.data.first }
 
     return MSummaryResponse(
       topArtists: MusicItemCollection(artists),
@@ -117,6 +117,56 @@ private struct AlbumPeriodRelationships: Decodable { let album: AlbumRelationshi
 private struct ArtistPeriodRelationships: Decodable { let artist: ArtistRelationship? }
 private struct SongPeriodRelationships: Decodable { let song: SongRelationship? }
 
-private struct AlbumRelationship: Decodable { let data: [Album] }
-private struct ArtistRelationship: Decodable { let data: [Artist] }
-private struct SongRelationship: Decodable { let data: [Song] }
+// Minimal identifier object returned in relationship linkages when attributes are omitted
+private struct MinimalResource: Decodable { let id: MusicItemID }
+
+private struct AlbumRelationship: Decodable {
+  let data: [Album]
+
+  private enum CodingKeys: String, CodingKey { case data }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    if let albums = try? container.decode([Album].self, forKey: .data) {
+      self.data = albums
+    } else if let refs = try? container.decode([MinimalResource].self, forKey: .data) {
+      self.data = refs.map { Album(id: $0.id) }
+    } else {
+      self.data = []
+    }
+  }
+}
+
+private struct ArtistRelationship: Decodable {
+  let data: [Artist]
+
+  private enum CodingKeys: String, CodingKey { case data }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    if let artists = try? container.decode([Artist].self, forKey: .data) {
+      self.data = artists
+    } else if let refs = try? container.decode([MinimalResource].self, forKey: .data) {
+      self.data = refs.map { Artist(id: $0.id) }
+    } else {
+      self.data = []
+    }
+  }
+}
+
+private struct SongRelationship: Decodable {
+  let data: [Song]
+
+  private enum CodingKeys: String, CodingKey { case data }
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    if let songs = try? container.decode([Song].self, forKey: .data) {
+      self.data = songs
+    } else if let refs = try? container.decode([MinimalResource].self, forKey: .data) {
+      self.data = refs.map { Song(id: $0.id) }
+    } else {
+      self.data = []
+    }
+  }
+}
