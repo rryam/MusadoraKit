@@ -39,13 +39,13 @@ extension MSummaryResponse {
 
     // Flatten period summaries relationships into plain MusicKit collections.
     let artists: [Artist] = (summaries.views?.topArtists?.data ?? [])
-      .flatMap { summary in Array(summary.relationships?.artist?.data ?? MusicItemCollection([])) }
+      .flatMap { summary in summary.relationships?.artist?.data ?? [] }
 
     let albums: [Album] = (summaries.views?.topAlbums?.data ?? [])
-      .flatMap { summary in Array(summary.relationships?.album?.data ?? MusicItemCollection([])) }
+      .flatMap { summary in summary.relationships?.album?.data ?? [] }
 
     let songs: [Song] = (summaries.views?.topSongs?.data ?? [])
-      .flatMap { summary in Array(summary.relationships?.song?.data ?? MusicItemCollection([])) }
+      .flatMap { summary in summary.relationships?.song?.data ?? [] }
 
     return MSummaryResponse(
       topArtists: MusicItemCollection(artists),
@@ -117,6 +117,6 @@ private struct AlbumPeriodRelationships: Decodable { let album: AlbumRelationshi
 private struct ArtistPeriodRelationships: Decodable { let artist: ArtistRelationship? }
 private struct SongPeriodRelationships: Decodable { let song: SongRelationship? }
 
-private struct AlbumRelationship: Decodable { let data: Albums }
-private struct ArtistRelationship: Decodable { let data: Artists }
-private struct SongRelationship: Decodable { let data: Songs }
+private struct AlbumRelationship: Decodable { let data: [Album] }
+private struct ArtistRelationship: Decodable { let data: [Artist] }
+private struct SongRelationship: Decodable { let data: [Song] }

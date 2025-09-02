@@ -397,7 +397,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rryam/MusadoraKit";
 			requirement = {
-				branch = "feature/music-summaries-api";
+				branch = main;
 				kind = branch;
 			};
 		};
