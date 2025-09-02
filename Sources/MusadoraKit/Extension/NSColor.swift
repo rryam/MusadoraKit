@@ -2,7 +2,7 @@
 //  NSColor.swift
 //  MusadoraKit
 //
-//  Created by AI Assistant on 03/19/2024.
+//  Created by AI Assistant on 09/02/25.
 //
 
 #if os(macOS)

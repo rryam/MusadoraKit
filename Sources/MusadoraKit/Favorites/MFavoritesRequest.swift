@@ -1,54 +1,51 @@
 //
 //  MFavoritesRequest.swift
-//  MusadoraKit+
+//  MusadoraKit
 //
-//  Created by Rudrank Riyam on 25/01/23.
+//  Created by Rudrank Riyam on 09/02/25.
 //
 
 import Foundation
 
-/// A request that your app uses to manage favorite artists.
+/// A request that your app uses to add resources to favorites.
 struct MFavoritesRequest {
-  private var artistID: MusicItemID
-  private var type: MFavoriteRequestType
+  private var itemIDs: [MusicItemID]
 
-  /// Creates a request to manage a favorite artist.
-  /// 
-  /// - Parameters:
-  ///   - artist: The artist to be managed as a favorite.
-  ///   - type: The type of action to perform on the favorite artist.
-  init(artist: Artist, type: MFavoriteRequestType) {
-    self.artistID = artist.id
-    self.type = type
+  /// Creates a request to add resources to favorites.
+  ///
+  /// - Parameter itemIDs: The IDs of the items to add to favorites.
+  ///   Supports heterogeneous types (songs, albums, playlists, artists, etc.)
+  init(itemIDs: [MusicItemID]) {
+    self.itemIDs = itemIDs
   }
 
-  /// Executes the request based on the specified favorite action and returns
+  /// Creates a request to add a single resource to favorites.
+  ///
+  /// - Parameter itemID: The ID of the item to add to favorites.
+  init(itemID: MusicItemID) {
+    self.itemIDs = [itemID]
+  }
+
+  /// Executes the request to add items to favorites and returns
   /// a boolean value indicating the success of the operation.
   func response() async throws -> Bool {
-    switch type {
-      case .favorite:
-        let url = try favortiesEndpointURL
-        let request = MDataPostRequest(url: url)
-        let response = try await request.response()
-        return response.urlResponse.statusCode == 202
-
-      case .removeFavorite:
-        let url = try favortiesEndpointURL
-        let request = MDataDeleteRequest(url: url)
-        let response = try await request.response()
-        return response.urlResponse.statusCode == 204
-    }
+    let url = try favoritesEndpointURL
+    let request = MDataPostRequest(url: url)
+    let response = try await request.response()
+    return response.urlResponse.statusCode == 202
   }
 }
 
 extension MFavoritesRequest {
-  internal var favortiesEndpointURL: URL {
+  internal var favoritesEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
       components.path = "me/favorites"
 
-      queryItems.append(URLQueryItem(name: "ids[artists]", value: artistID.rawValue))
+      // Join all item IDs with commas as per official API spec
+      let idsString = itemIDs.map { $0.rawValue }.joined(separator: ",")
+      queryItems.append(URLQueryItem(name: "ids", value: idsString))
 
       components.queryItems = queryItems
 
