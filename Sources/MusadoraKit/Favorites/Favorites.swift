@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@_exported import MusicKit
 
 public extension MCatalog {
 
