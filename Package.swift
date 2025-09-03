@@ -10,7 +10,7 @@ let package = Package(
     .library(name: "MusadoraKit", targets: ["MusadoraKit"])
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0")
   ],
   targets: [
     .target(name: "MusadoraKit", dependencies: []),

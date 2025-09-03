@@ -55,3 +55,33 @@ workflows:
         test_report: build/reports/junit.xml
     publishing:
       <<: *email
+  docc-deployment:
+    name: Deploy DocC Documentation
+    max_build_duration: 30
+    environment:
+      xcode: 16.4
+      vars:
+        XCODE_SCHEME: "MusadoraKit"
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+          source: true
+    scripts:
+      - name: Build DocC Documentation
+        script: |
+          echo "Building DocC documentation for MusadoraKit..."
+          swift package generate-documentation --target MusadoraKit \
+            --disable-indexing \
+            --transform-for-static-hosting \
+            --hosting-base-path MusadoraKit \
+            --output-path ./docs
+          
+          echo "Documentation built successfully!"
+          ls -la ./docs
+    publishing:
+      github_pages:
+        source: docs
+      <<: *email
