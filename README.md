@@ -104,9 +104,9 @@ Test your Apple Music API setup and developer token validity with a simple conne
 Task {
     do {
         try await MusadoraKit.testConnectivity()
-        print("✅ Successfully connected to Apple Music API!")
+        print("Successfully connected to Apple Music API!")
     } catch {
-        print("❌ Failed to connect: \(error.localizedDescription)")
+        print("Failed to connect: \(error.localizedDescription)")
 
         // Check for specific error types
         if let urlError = error as? URLError {
@@ -124,10 +124,10 @@ Task {
 ```
 
 This method performs a GET request to Apple's test endpoint and validates:
-- ✅ Developer token is valid
-- ✅ MusicKit capabilities are properly configured
-- ✅ Network connectivity to Apple Music API
-- ✅ Basic API communication works
+- Developer token is valid
+- MusicKit capabilities are properly configured
+- Network connectivity to Apple Music API
+- Basic API communication works
 
 ## Catalog 
 
