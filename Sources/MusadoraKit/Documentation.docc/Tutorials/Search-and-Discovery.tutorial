@@ -1,0 +1,268 @@
+# Search and Music Discovery
+
+@Tutorial(time: 25) {
+    @Intro(title: "Build a Music Search Experience") {
+        Create a powerful search interface that helps users discover new music using Apple Music's catalog.
+    }
+
+    @Section(title: "Complete Search Implementation") {
+        Build a full-featured search view with organized results display.
+
+        Create a complete search interface with reusable components:
+
+        ```swift
+        import SwiftUI
+        import MusadoraKit
+        import MusicKit
+
+        struct MusicSearchView: View {
+            @State private var searchText = ""
+            @State private var searchResults = MCatalogSearchResponse()
+            @State private var isSearching = false
+
+            var body: some View {
+                NavigationView {
+                    VStack {
+                        // Search bar
+                        TextField("Search for music...", text: $searchText)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onChange(of: searchText) { _ in
+                                Task {
+                                    try await Task.sleep(nanoseconds: 500_000_000) // Debounce
+                                    await performSearch()
+                                }
+                            }
+                            .padding()
+
+                        if isSearching {
+                            ProgressView("Searching...")
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else {
+                            SearchResultsView(results: searchResults)
+                        }
+                    }
+                    .navigationTitle("Music Search")
+                }
+            }
+
+            private func performSearch() async {
+                guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                    searchResults = MCatalogSearchResponse()
+                    return
+                }
+                
+                isSearching = true
+                do {
+                    searchResults = try await MCatalog.search(
+                        for: searchText,
+                        types: [.songs, .albums, .artists, .playlists],
+                        limit: 20
+                    )
+                } catch {
+                    print("Search failed: \(error)")
+                }
+                isSearching = false
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Search Results Display") {
+        Create organized views to display different types of search results.
+
+        Build reusable components for displaying search results:
+
+        ```swift
+        struct SearchResultsView: View {
+            let results: MCatalogSearchResponse
+
+            var body: some View {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 20) {
+                        // Songs section
+                        if !results.songs.isEmpty {
+                            SearchResultSection(title: "Songs") {
+                                ForEach(results.songs) { song in
+                                    SongRowView(song: song)
+                                }
+                            }
+                        }
+                        
+                        // Albums section
+                        if !results.albums.isEmpty {
+                            SearchResultSection(title: "Albums") {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    LazyHStack(spacing: 16) {
+                                        ForEach(results.albums) { album in
+                                            AlbumCardView(album: album)
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
+                        }
+
+                        // Artists section
+                        if !results.artists.isEmpty {
+                            SearchResultSection(title: "Artists") {
+                                ForEach(results.artists) { artist in
+                                    ArtistRowView(artist: artist)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        struct SearchResultSection<Content: View>: View {
+            let title: String
+            let content: Content
+            
+            init(title: String, @ViewBuilder content: () -> Content) {
+                self.title = title
+                self.content = content()
+            }
+            
+            var body: some View {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(title)
+                        .font(.title2)
+                        .bold()
+                        .padding(.horizontal)
+                    
+                    content
+                }
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Advanced Search Features") {
+        Add filters, suggestions, and enhanced user experience features.
+
+        Implement search filters and suggestions for better discovery:
+
+        ```swift
+        struct AdvancedSearchView: View {
+            @State private var searchText = ""
+            @State private var searchResults = MCatalogSearchResponse()
+            @State private var searchSuggestions: [String] = []
+            @State private var selectedFilter: SearchFilter = .all
+            @State private var isSearching = false
+
+            enum SearchFilter: String, CaseIterable {
+                case all = "All"
+                case songs = "Songs"
+                case albums = "Albums"
+                case artists = "Artists"
+                case playlists = "Playlists"
+                
+                var searchTypes: [MCatalogSearchType] {
+                    switch self {
+                    case .all: return [.songs, .albums, .artists, .playlists]
+                    case .songs: return [.songs]
+                    case .albums: return [.albums]
+                    case .artists: return [.artists]
+                    case .playlists: return [.playlists]
+                    }
+                }
+            }
+
+            var body: some View {
+                NavigationView {
+                    VStack {
+                        // Search controls
+                        VStack {
+                            TextField("Search for music...", text: $searchText)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: searchText) { _ in
+                                    Task {
+                                        await fetchSearchSuggestions()
+                                        try await Task.sleep(nanoseconds: 500_000_000)
+                                        await performSearch()
+                                    }
+                                }
+                            
+                            // Filter picker
+                            Picker("Filter", selection: $selectedFilter) {
+                                ForEach(SearchFilter.allCases, id: \.self) { filter in
+                                    Text(filter.rawValue)
+                                }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .onChange(of: selectedFilter) { _ in
+                                Task { await performSearch() }
+                            }
+                        }
+                        .padding()
+
+                        // Search suggestions
+                        if !searchSuggestions.isEmpty && searchText.count > 2 {
+                            List(searchSuggestions, id: \.self) { suggestion in
+                                Text(suggestion)
+                                    .onTapGesture {
+                                        searchText = suggestion
+                                        searchSuggestions = []
+                                        Task { await performSearch() }
+                                    }
+                            }
+                            .listStyle(PlainListStyle())
+                            .frame(maxHeight: 200)
+                        }
+
+                        // Results
+                        if isSearching {
+                            ProgressView("Searching...")
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else {
+                            SearchResultsView(results: searchResults)
+                        }
+                    }
+                    .navigationTitle("Advanced Search")
+                }
+            }
+
+            private func performSearch() async {
+                guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                    searchResults = MCatalogSearchResponse()
+                    return
+                }
+                
+                isSearching = true
+                do {
+                    searchResults = try await MCatalog.search(
+                        for: searchText,
+                        types: selectedFilter.searchTypes,
+                        limit: 20
+                    )
+                } catch {
+                    print("Search failed: \(error)")
+                }
+                isSearching = false
+            }
+
+            private func fetchSearchSuggestions() async {
+                guard !searchText.isEmpty else {
+                    searchSuggestions = []
+                    return
+                }
+                
+                do {
+                    let suggestions = try await MCatalog.searchSuggestions(for: searchText)
+                    searchSuggestions = suggestions.suggestions.compactMap { suggestion in
+                        switch suggestion.kind {
+                        case .terms:
+                            return suggestion.searchTerm
+                        default:
+                            return nil
+                        }
+                    }
+                } catch {
+                    print("Failed to fetch suggestions: \(error)")
+                }
+            }
+        }
+        ```
+    }
+}

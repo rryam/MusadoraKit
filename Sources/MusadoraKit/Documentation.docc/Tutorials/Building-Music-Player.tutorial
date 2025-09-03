@@ -1,0 +1,324 @@
+# Building a Music Player
+
+@Tutorial(time: 30) {
+    @Intro(title: "Create a Full-Featured Music Player") {
+        Build a complete music player interface with playback controls, queue management, and now playing information.
+    }
+
+    @Section(title: "Player Manager Setup") {
+        Create the foundation for tracking playback state and controlling music playback.
+
+        Build a complete player manager class with state management:
+
+        ```swift
+        import MusicKit
+        import MusadoraKit
+        import Combine
+
+        @MainActor
+        class MusicPlayerManager: ObservableObject {
+            @Published var isPlaying = false
+            @Published var currentSong: Song?
+            @Published var playbackTime: TimeInterval = 0
+            @Published var duration: TimeInterval = 0
+            @Published var queue: [Song] = []
+            
+            private let player = ApplicationMusicPlayer.shared
+            private var cancellables = Set<AnyCancellable>()
+            
+            init() {
+                setupPlayerObservers()
+            }
+            
+            private func setupPlayerObservers() {
+                // Observe playback state changes
+                player.state.objectWillChange
+                    .sink { [weak self] in
+                        Task { @MainActor in
+                            self?.updatePlayerState()
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+            
+            private func updatePlayerState() {
+                isPlaying = player.state.playbackStatus == .playing
+                currentSong = player.queue.currentEntry?.item as? Song
+                playbackTime = player.playbackTime
+                duration = currentSong?.duration ?? 0
+                queue = player.queue.entries.compactMap { $0.item as? Song }
+            }
+            
+            // Playback controls
+            func play() async {
+                do {
+                    try await player.play()
+                } catch {
+                    print("Failed to play: \(error)")
+                }
+            }
+            
+            func pause() {
+                player.pause()
+            }
+            
+            func skipToNext() async {
+                do {
+                    try await player.skipToNextEntry()
+                } catch {
+                    print("Failed to skip to next: \(error)")
+                }
+            }
+            
+            func skipToPrevious() async {
+                do {
+                    try await player.skipToPreviousEntry()
+                } catch {
+                    print("Failed to skip to previous: \(error)")
+                }
+            }
+            
+            func play(songs: Songs, startingAt index: Int = 0) async {
+                do {
+                    try await player.play(songs: songs, startingAt: index)
+                } catch {
+                    print("Failed to play songs: \(error)")
+                }
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Music Player Interface") {
+        Design and implement the complete music player user interface.
+
+        Create the main player view with artwork, controls, and progress tracking:
+
+        ```swift
+        struct MusicPlayerView: View {
+            @StateObject private var playerManager = MusicPlayerManager()
+            
+            var body: some View {
+                NavigationView {
+                    VStack(spacing: 30) {
+                        // Album artwork
+                        AlbumArtworkView(song: playerManager.currentSong)
+                        
+                        // Song information
+                        if let song = playerManager.currentSong {
+                            VStack(spacing: 8) {
+                                Text(song.title)
+                                    .font(.title2)
+                                    .bold()
+                                    .multilineTextAlignment(.center)
+                                
+                                Text(song.artistName)
+                                    .font(.title3)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        // Progress bar
+                        PlaybackProgressView(
+                            currentTime: playerManager.playbackTime,
+                            duration: playerManager.duration
+                        )
+                        
+                        // Playback controls
+                        PlaybackControlsView(
+                            isPlaying: playerManager.isPlaying,
+                            onPlayPause: {
+                                Task {
+                                    if playerManager.isPlaying {
+                                        playerManager.pause()
+                                    } else {
+                                        await playerManager.play()
+                                    }
+                                }
+                            },
+                            onNext: {
+                                Task { await playerManager.skipToNext() }
+                            },
+                            onPrevious: {
+                                Task { await playerManager.skipToPrevious() }
+                            }
+                        )
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .navigationTitle("Now Playing")
+                    .navigationBarTitleDisplayMode(.inline)
+                }
+            }
+        }
+
+        struct AlbumArtworkView: View {
+            let song: Song?
+            
+            var body: some View {
+                AsyncImage(url: song?.artwork?.url(width: 300, height: 300)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(radius: 10)
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 300, height: 300)
+                }
+                .animation(.easeInOut(duration: 0.3), value: song?.id)
+            }
+        }
+
+        struct PlaybackControlsView: View {
+            let isPlaying: Bool
+            let onPlayPause: () -> Void
+            let onNext: () -> Void
+            let onPrevious: () -> Void
+            
+            var body: some View {
+                HStack(spacing: 40) {
+                    Button(action: onPrevious) {
+                        Image(systemName: "backward.fill")
+                            .font(.title2)
+                    }
+                    
+                    Button(action: onPlayPause) {
+                        Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                            .font(.system(size: 64))
+                    }
+                    
+                    Button(action: onNext) {
+                        Image(systemName: "forward.fill")
+                            .font(.title2)
+                    }
+                }
+                .foregroundColor(.primary)
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Progress and Queue Management") {
+        Add progress tracking and queue management features to complete the player.
+
+        Implement progress bar and queue view for the music player:
+
+        ```swift
+        struct PlaybackProgressView: View {
+            let currentTime: TimeInterval
+            let duration: TimeInterval
+            
+            private var progress: Double {
+                guard duration > 0 else { return 0 }
+                return currentTime / duration
+            }
+            
+            private var currentTimeString: String {
+                formatTime(currentTime)
+            }
+            
+            private var durationString: String {
+                formatTime(duration)
+            }
+            
+            var body: some View {
+                VStack(spacing: 8) {
+                    ProgressView(value: progress)
+                        .progressViewStyle(LinearProgressViewStyle())
+                    
+                    HStack {
+                        Text(currentTimeString)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        Text(durationString)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            
+            private func formatTime(_ time: TimeInterval) -> String {
+                let minutes = Int(time) / 60
+                let seconds = Int(time) % 60
+                return String(format: "%d:%02d", minutes, seconds)
+            }
+        }
+
+        struct QueueView: View {
+            @ObservedObject var playerManager: MusicPlayerManager
+            
+            var body: some View {
+                NavigationView {
+                    List {
+                        Section("Now Playing") {
+                            if let currentSong = playerManager.currentSong {
+                                SongRowView(song: currentSong, isCurrentSong: true)
+                            }
+                        }
+                        
+                        Section("Up Next") {
+                            ForEach(Array(playerManager.queue.enumerated()), id: \.offset) { index, song in
+                                SongRowView(song: song)
+                                    .onTapGesture {
+                                        Task {
+                                            await playerManager.play(songs: Songs(playerManager.queue), startingAt: index)
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                    .navigationTitle("Queue")
+                }
+            }
+        }
+
+        struct SongRowView: View {
+            let song: Song
+            let isCurrentSong: Bool
+            
+            init(song: Song, isCurrentSong: Bool = false) {
+                self.song = song
+                self.isCurrentSong = isCurrentSong
+            }
+            
+            var body: some View {
+                HStack {
+                    AsyncImage(url: song.artwork?.url(width: 50, height: 50)) { image in
+                        image.resizable()
+                    } placeholder: {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.gray.opacity(0.3))
+                    }
+                    .frame(width: 50, height: 50)
+                    
+                    VStack(alignment: .leading) {
+                        Text(song.title)
+                            .font(.body)
+                            .foregroundColor(isCurrentSong ? .accentColor : .primary)
+                        Text(song.artistName)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    if isCurrentSong {
+                        Image(systemName: "speaker.wave.2")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .padding(.vertical, 2)
+            }
+        }
+        ```
+    }
+}

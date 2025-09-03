@@ -4,18 +4,21 @@
     }
 
     @Chapter(name: "Getting Started") {
-        @Intro(title: "Build Your First Music App") {
-            Learn the fundamentals of MusadoraKit and create your first music-powered app.
-        }
-
+        @Image(source: "icon.png", alt: "MusadoraKit Icon")
+        
         @TutorialReference(tutorial: "doc:Getting-Started")
     }
 
-    @Chapter(name: "Advanced Topics") {
-        @Intro(title: "Go Beyond the Basics") {
-            Master advanced MusadoraKit features and patterns.
-        }
+    @Chapter(name: "Core Features") {
+        @Image(source: "icon.png", alt: "MusadoraKit Icon")
+        
+        @TutorialReference(tutorial: "doc:Working-with-Library")
+        @TutorialReference(tutorial: "doc:Search-and-Discovery")
+    }
 
-        // Add more tutorials here as you create them
+    @Chapter(name: "Advanced Topics") {
+        @Image(source: "icon.png", alt: "MusadoraKit Icon")
+        
+        @TutorialReference(tutorial: "doc:Building-Music-Player")
     }
 }

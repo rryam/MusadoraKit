@@ -1,0 +1,145 @@
+# Working with User's Music Library
+
+@Tutorial(time: 20) {
+    @Intro(title: "Access and Display User's Library") {
+        Learn how to fetch and display the user's personal music library using MusadoraKit's simple APIs.
+    }
+
+    @Section(title: "Fetching Library Songs") {
+        Start by fetching songs from the user's personal library.
+
+        First, import MusadoraKit and MusicKit, then create state variables to store library songs, and finally implement the UI to display them.
+
+        ```swift
+        import SwiftUI
+        import MusadoraKit
+        import MusicKit
+
+        struct LibraryView: View {
+            @State private var librarySongs: Songs = []
+            @State private var isLoading = false
+
+            var body: some View {
+                NavigationView {
+                    List(librarySongs) { song in
+                        HStack {
+                            AsyncImage(url: song.artwork?.url(width: 50, height: 50)) { image in
+                                image.resizable()
+                            } placeholder: {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.gray.opacity(0.3))
+                            }
+                            .frame(width: 50, height: 50)
+
+                            VStack(alignment: .leading) {
+                                Text(song.title)
+                                    .font(.headline)
+                                Text(song.artistName)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.vertical, 2)
+                        .onTapGesture {
+                            Task {
+                                await playSong(song)
+                            }
+                        }
+                    }
+                    .task {
+                        await fetchLibrarySongs()
+                    }
+                    .navigationTitle("My Music")
+                }
+            }
+
+            private func fetchLibrarySongs() async {
+                isLoading = true
+                do {
+                    librarySongs = try await MLibrary.songs(limit: 50)
+                } catch {
+                    print("Failed to fetch library songs: \(error)")
+                }
+                isLoading = false
+            }
+
+            private func playSong(_ song: Song) async {
+                do {
+                    try await ApplicationMusicPlayer.shared.play(song: song)
+                } catch {
+                    print("Failed to play song: \(error)")
+                }
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Adding Search and Filters") {
+        Enhance your library view with search and sorting capabilities.
+
+        Add search functionality to help users find specific songs in their library:
+
+        ```swift
+        struct LibraryView: View {
+            @State private var librarySongs: Songs = []
+            @State private var searchText = ""
+            @State private var sortOrder: SongSortOrder = .title
+
+            enum SongSortOrder: String, CaseIterable {
+                case title = "Title"
+                case artist = "Artist" 
+                case dateAdded = "Date Added"
+            }
+
+            var filteredSongs: Songs {
+                let filtered = searchText.isEmpty ? 
+                    librarySongs : 
+                    librarySongs.filter { song in
+                        song.title.localizedCaseInsensitiveContains(searchText) ||
+                        song.artistName.localizedCaseInsensitiveContains(searchText)
+                    }
+                
+                return Songs(filtered.sorted { song1, song2 in
+                    switch sortOrder {
+                    case .title:
+                        return song1.title < song2.title
+                    case .artist:
+                        return song1.artistName < song2.artistName
+                    case .dateAdded:
+                        return song1.libraryAddedDate ?? Date.distantPast > 
+                               song2.libraryAddedDate ?? Date.distantPast
+                    }
+                })
+            }
+
+            var body: some View {
+                NavigationView {
+                    VStack {
+                        // Search bar
+                        HStack {
+                            TextField("Search songs...", text: $searchText)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                            
+                            Picker("Sort", selection: $sortOrder) {
+                                ForEach(SongSortOrder.allCases, id: \.self) { order in
+                                    Text(order.rawValue)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        .padding()
+
+                        // Song list
+                        List(filteredSongs) { song in
+                            // ... song row content
+                        }
+                    }
+                    .navigationTitle("My Music")
+                }
+            }
+        }
+        ```
+    }
+}

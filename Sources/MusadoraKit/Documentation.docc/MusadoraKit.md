@@ -1,10 +1,10 @@
 # MusadoraKit
 
-The ultimate companion to MusicKit - working with Apple's Music APIs has never been easier!
+The ultimate companion to MusicKit. Working with MusicKit and Apple Music API is much easier, with one-liner APIs.
 
-## 🎵 What is MusadoraKit?
+## What is MusadoraKit?
 
-MusadoraKit is a Swift framework that provides simple, powerful APIs for Apple's MusicKit and Apple Music API. It transforms complex async/await patterns into one-liner methods, making music integration effortless.
+MusadoraKit is a Swift framework that uses the latest MusicKit and Apple Music API, making it easy to integrate Apple Music into your app. It uses the new async/await pattern introduced in Swift 5.5.
 
 @Metadata {
     @PageKind(article)
@@ -16,17 +16,15 @@ MusadoraKit is a Swift framework that provides simple, powerful APIs for Apple's
     )
 }
 
-## ✨ Key Features
+## Key Features
 
-| Feature | Description |
-|---------|-------------|
-| 🎯 **One-liner APIs** | Simple async methods for complex operations |
-| 📱 **Cross-platform** | iOS 15+, macOS 12+, watchOS 8+, tvOS 15+, visionOS 1+ |
-| 🔄 **Latest async/await** | Modern Swift concurrency patterns |
-| 📚 **Complete coverage** | All MusicKit APIs + Apple Music API extensions |
-| 🎨 **SwiftUI ready** | Perfect for modern app development |
+- Simple one-liner APIs
+- Available for iOS 15.0+, macOS 12.0+, watchOS 8.0+ and tvOS 15.0+
+- Uses the new async/await pattern introduced in Swift 5.5
+- Supports iOS 17, macOS 14, watchOS 10, tvOS 17 and visionOS 1.0
+- Works well with SwiftUI
 
-## 🚀 Quick Start
+## Quick Start
 
 ```swift
 import MusadoraKit
@@ -44,31 +42,30 @@ let recommendations = try await MRecommendation.default()
 let summary = try await MSummary.latest()
 ```
 
-## 📋 Table of Contents
+## API Overview
 
 ### Core APIs
 
-- **[Catalog](MCatalog)** - Search and browse Apple Music catalog
-- **[Library](MLibrary)** - Access user's personal music library
-- **[Search](Searching-the-Catalog)** - Advanced search capabilities
-- **[Recommendations](MRecommendation)** - Personalized music suggestions
+- **Catalog** - Search and browse Apple Music catalog
+- **Library** - Access user's personal music library
+- **Recommendations** - Personalized music suggestions
+- **History** - Recently played items
 
-### Enhanced Features
+### Music Features
 
-- **[Music Player](Music-Player)** - Convenient playback controls
-- **[Music Summaries](Music-Summaries-Replay)** - Apple Music Replay data
-- **[Ratings](Ratings)** - Rate and manage music content
-- **[100 Best Albums](100-Best-Albums)** - Curated album collections
-- **[Favorites](Favorites)** - Manage favorite items
-- **[Storefronts](Storefronts)** - Regional content management
+- **Music Player** - Easy playback controls
+- **Music Summaries** - Apple Music Replay data
+- **Ratings** - Rate and manage music content
+- **Favorites** - Manage favorite items
+- **Storefronts** - Regional content management
 
-### Advanced Features
+### Other Features
 
-- **[Equivalents](Equivalents)** - Clean/explicit content versions
-- **[Resources](Multiple-Resources)** - Batch API requests
-- **[AnimatedArtworkView](AnimatedArtworkView)** - SwiftUI components
+- **Equivalents** - Clean/explicit content versions
+- **Batch Requests** - Multiple resources in one request
+- **AnimatedArtworkView** - SwiftUI components
 
-## 🎯 Why MusadoraKit?
+## Why MusadoraKit?
 
 **Before MusadoraKit:**
 ```swift
@@ -84,30 +81,33 @@ let songs = response.songs
 let songs = try await MCatalog.search(for: "Taylor Swift", types: [.songs]).songs
 ```
 
-## 📚 Learn More
+## Learn More
 
 - **API Reference** - Complete API documentation (auto-generated)
-- **[Book: Exploring MusicKit](https://rudrank.gumroad.com/l/musickit)** - Comprehensive guide
+- **<doc:table-of-contents>** - Step-by-step tutorials
+- **[Book: Exploring MusicKit](https://academy.rudrank.com/product/musickit)** - Comprehensive guide
 - **[Discord Community](https://discord.gg/6KaKCKds)** - Get help and share ideas
 - **[Sample Apps](https://github.com/rryam/Musadora)** - Real-world examples
 
-## 🏆 Apps Using MusadoraKit
+## Apps Using MusadoraKit
 
-- **Music Mate** - Meet music friends worldwide
-- **Sonar** - Music & community streaming
-- **Tuneder** - Tinder-like music discovery
-- **Musadora** - Feature-rich music client
-- **Euphonic** - Recommendation-focused player
-- **bijou.fm** - Last.fm integration
+- [Music Mate](https://apps.apple.com/app/musicmate-music-map-friends/id1605379758): Meet music friends on the world map.
+- [Sonar](https://apps.apple.com/ca/app/sonar-music-community/id1626147292): Music & Community. Stream, Share & Discover
+- [Tuneder](https://apps.apple.com/us/app/tuneder-song-discovery/id6450867856?itsct=apps_box_badge&itscg=30200): An open-source iOS app that helps Apple Music users discover new songs with a Tinder-like UI.
+- Musadora: Apple Music client focused on playlists
+- Musadora Labs: A companion app to explore MusicKit
+- Euphonic: Apple Music client focused on recommendations
+- [bijou.fm](https://apps.apple.com/app/bijou-fm/id6450460066?platform=iphone): Last.fm client with Apple Music integration
 
-## 🔧 Getting Started
+## Getting Started
 
-1. **Enable MusicKit** in your Apple Developer account
-2. **Add permissions** to your app's Info.plist
-3. **Request authorization** using MusicKit
-4. **Install MusadoraKit** via Swift Package Manager
-5. **Start building** amazing music experiences!
+Follow the steps below to setup MusicKit for your app:
+
+1. Enable MusicKit for your Bundle Identifier in the Apple Developer Portal
+2. Add `NSAppleMusicUsageDescription` to your `Info.plist`
+3. Request authorization using `MusicAuthorization.request()`
+4. Install MusadoraKit via Swift Package Manager
 
 ---
 
-*Made with ❤️ for the Apple Music developer community*
+Made with love for the Apple Music developer community

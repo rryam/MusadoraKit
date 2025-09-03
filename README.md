@@ -24,7 +24,7 @@ You can support my open-source by buying my book, ["Exploring MusicKit and Apple
 
 [PlaylistAI](https://twitter.com/playlist_ai) by [Brett Bauman](https://twitter.com/brettunhandled)
 
-## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/)
+## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/musadorakit/)
 
 ## Musadora Sample App
 I am open-sourcing an app I worked on last year called Musadora. (MusadoraKit started as RRMusicKit for the Musadora app!) 
