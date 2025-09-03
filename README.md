@@ -41,6 +41,33 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 - Euphonic: Apple Music client focused on recommendations
 - [bijou.fm](https://apps.apple.com/app/bijou-fm/id6450460066?platform=iphone): Last.fm client with Apple Music integration
 
+## Table of Contents
+
+- [Start Working with MusicKit](#start-working-with-musickit)
+  - [Step 1: Enable MusicKit for Your Bundle Identifier](#step-1-enable-musickit-for-your-bundle-identifier)
+  - [Step 2: Add NSAppleMusicUsageDescription to Info.plist](#step-2-add-nsapplemusicusagedescription-to-infoplist)
+  - [Step 3: Request Authorization for Apple Music](#step-3-request-authorization-for-apple-music)
+- [Testing Connectivity](#testing-connectivity)
+- [Core APIs](#core-apis)
+  - [Catalog](#catalog)
+  - [Searching the Catalog](#searching-the-catalog)
+  - [Library](#library)
+  - [Recommendations](#recommendations)
+  - [History](#history)
+- [Enhanced Features](#enhanced-features)
+  - [Music Player](#music-player)
+  - [Music Summaries (Replay)](#music-summaries-replay)
+  - [Ratings](#ratings)
+  - [100 Best Albums](#100-best-albums)
+  - [Favorites](#favorites)
+- [Advanced Features](#advanced-features)
+  - [Storefronts](#storefronts)
+  - [Referencing content across different geographical regions](#referencing-content-across-different-geographical-regions)
+  - [Explicit to clean-equivalent content](#explicit-to-clean-equivalent-content)
+  - [MusicCatalogResourcesRequest](#musiccatalogresourcesrequest)
+  - [MusicLibraryResourcesRequest](#musiclibraryresourcesrequest)
+  - [Animated Artwork View](#animated-artwork-view)
+
 ## Start Working with MusicKit 
 Follow the steps below to setup MusicKit for your app:
 
