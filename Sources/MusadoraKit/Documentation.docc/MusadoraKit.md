@@ -86,7 +86,7 @@ let songs = try await MCatalog.search(for: "Taylor Swift", types: [.songs]).song
 
 ## 📚 Learn More
 
-- **[API Reference](musadorakit)** - Complete API documentation
+- **API Reference** - Complete API documentation (auto-generated)
 - **[Book: Exploring MusicKit](https://rudrank.gumroad.com/l/musickit)** - Comprehensive guide
 - **[Discord Community](https://discord.gg/6KaKCKds)** - Get help and share ideas
 - **[Sample Apps](https://github.com/rryam/Musadora)** - Real-world examples
@@ -111,14 +111,3 @@ let songs = try await MCatalog.search(for: "Taylor Swift", types: [.songs]).song
 ---
 
 *Made with ❤️ for the Apple Music developer community*
-
-@Links(visualStyle: compactGrid) {
-    - <doc:musadorakit/mcatalog>
-    - <doc:musadorakit/mlibrary>
-    - <doc:musadorakit/mrecommendation>
-    - <doc:musadorakit/msummary>
-    - <doc:musadorakit/ratings>
-    - <doc:musadorakit/favorites>
-    - <doc:musadorakit/storefronts>
-    - <doc:musadorakit/animatedartworkview>
-}
