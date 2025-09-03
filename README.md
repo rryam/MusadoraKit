@@ -147,15 +147,49 @@ print(recommendation.playlists)
 print(recommendation.stations)
 ```
 
-## History 
+## History
 
-You can also fetch historial data from the user's library. For example, to get the recently played resources: 
+You can also fetch historial data from the user's library. For example, to get the recently played resources:
 
-```swift 
+```swift
 let recentlyPlayedItems = try await MLibrary.recentlyPlayed()
 
 let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
 }
+```
+
+## Music Summaries (Replay)
+
+Access your users' Apple Music Replay data - their yearly music summary for the latest eligible year. Get their top artists, albums, and songs all in one request.
+
+### Fetch complete summary:
+
+```swift
+let summary = try await MSummary.latest()
+
+print(summary.topArtists)
+print(summary.topAlbums)
+print(summary.topSongs)
+```
+
+### Fetch specific categories:
+
+```swift
+// Get only top artists
+let topArtists = try await MSummary.latestTopArtists()
+
+// Get only top albums
+let topAlbums = try await MSummary.latestTopAlbums()
+
+// Get only top songs
+let topSongs = try await MSummary.latestTopSongs()
+```
+
+### Customize with specific views:
+
+```swift
+// Get only top artists and albums (skip songs)
+let summary = try await MSummary.latest(views: [.topArtists, .topAlbums])
 ```
 
 ## Referencing content across different geographical regions
