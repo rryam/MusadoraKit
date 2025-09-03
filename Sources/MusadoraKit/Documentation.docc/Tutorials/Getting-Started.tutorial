@@ -1,0 +1,291 @@
+# Getting Started with MusadoraKit
+
+@Tutorial(time: 15) {
+    @Intro(title: "Build Your First Music App") {
+        Learn how to integrate MusadoraKit into your app and start building amazing music experiences in just 15 minutes.
+    }
+
+    @Section(title: "Prerequisites") {
+        Before you begin, make sure you have:
+
+        - Xcode 15.0 or later
+        - iOS 15.0+ / macOS 12.0+ / watchOS 8.0+ / tvOS 15.0+ / visionOS 1.0+
+        - An Apple Developer account
+        - Basic familiarity with Swift and SwiftUI
+
+        @Steps {
+            @Step {
+                Open Xcode and create a new SwiftUI project
+            }
+            @Step {
+                Ensure you have an active Apple Developer account
+            }
+            @Step {
+                Make sure your development environment meets the requirements
+            }
+        }
+    }
+
+    @Section(title: "Step 1: Set Up Your Project") {
+        Create a new SwiftUI project in Xcode and add MusadoraKit as a dependency.
+
+        @Steps {
+            @Step {
+                In Xcode, go to **File > Add Package Dependencies**
+            }
+            @Step {
+                Enter the URL: `https://github.com/rryam/MusadoraKit`
+            }
+            @Step {
+                Select the latest version and add to your target
+            }
+        }
+
+        @Code(name: "Package.swift", file: Package-Swift-Example.swift) {
+            ```swift
+            // swift-tools-version:5.10
+            import PackageDescription
+
+            let package = Package(
+                name: "MyMusicApp",
+                dependencies: [
+                    .package(url: "https://github.com/rryam/MusadoraKit", from: "7.0.0")
+                ],
+                targets: [
+                    .target(name: "MyMusicApp", dependencies: ["MusadoraKit"])
+                ]
+            )
+            ```
+        }
+    }
+
+    @Section(title: "Step 2: Configure MusicKit") {
+        Enable MusicKit capabilities in your app.
+
+        @Steps {
+            @Step {
+                Go to [Apple Developer Portal](https://developer.apple.com/account)
+            }
+            @Step {
+                Navigate to **Certificates, Identifiers & Profiles**
+            }
+            @Step {
+                Select your app identifier and enable **MusicKit**
+            }
+        }
+
+        ### Add Privacy Permissions
+
+        Add these keys to your `Info.plist`:
+
+        ```xml
+        <key>NSAppleMusicUsageDescription</key>
+        <string>Access your music library to provide personalized recommendations</string>
+        ```
+    }
+
+    @Section(title: "Step 3: Request Authorization") {
+        Request user permission to access Apple Music.
+
+        @Steps {
+            @Step {
+                Create a MusicAuthorizationManager class
+            }
+            @Step {
+                Call `MusicAuthorization.request()` to get permission
+            }
+            @Step {
+                Handle the authorization response appropriately
+            }
+        }
+
+        @Code(name: "MusicAuthorizationManager.swift", file: MusicAuth-Example.swift) {
+            ```swift
+            import MusicKit
+            import MusadoraKit
+
+            @MainActor
+            class MusicAuthorizationManager: ObservableObject {
+                @Published var authorizationStatus: MusicAuthorization.Status = .notDetermined
+
+                func requestAuthorization() async {
+                    let status = await MusicAuthorization.request()
+                    authorizationStatus = status
+
+                    switch status {
+                    case .authorized:
+                        print("✅ Apple Music access granted!")
+                    case .denied:
+                        print("❌ Apple Music access denied")
+                    case .restricted:
+                        print("⚠️ Apple Music access restricted")
+                    case .notDetermined:
+                        print("❓ Authorization not determined")
+                    @unknown default:
+                        break
+                    }
+                }
+            }
+            ```
+        }
+
+        ### Test Your Setup
+
+        Use MusadoraKit's built-in connectivity test:
+
+        ```swift
+        Task {
+            do {
+                try await MusadoraKit.testConnectivity()
+                print("✅ Connected to Apple Music API!")
+            } catch {
+                print("❌ Connection failed: \(error.localizedDescription)")
+            }
+        }
+        ```
+    }
+
+    @Section(title: "Step 4: Fetch Your First Data") {
+        Let's fetch some music data!
+
+        @Steps {
+            @Step {
+                Import MusadoraKit into your SwiftUI view
+            }
+            @Step {
+                Create a state variable to hold the music data
+            }
+            @Step {
+                Use MusadoraKit methods to fetch data in a Task
+            }
+            @Step {
+                Display the data in your UI
+            }
+        }
+
+        @Code(name: "SimpleMusicView.swift", file: SimpleMusic-Example.swift) {
+            ```swift
+            import SwiftUI
+            import MusadoraKit
+
+            struct ContentView: View {
+                @State private var songs: Songs = []
+
+                var body: some View {
+                    List(songs) { song in
+                        VStack(alignment: .leading) {
+                            Text(song.title)
+                            Text(song.artistName)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .task {
+                        await loadSongs()
+                    }
+                }
+
+                private func loadSongs() async {
+                    do {
+                        // Get user's library songs
+                        songs = try await MLibrary.songs(limit: 20)
+
+                        // Or search the catalog
+                        // let results = try await MCatalog.search(for: "pop", types: [.songs])
+                        // songs = results.songs
+                    } catch {
+                        print("Error loading songs: \(error)")
+                    }
+                }
+            }
+            ```
+        }
+    }
+
+    @Section(title: "Step 5: Explore More Features") {
+        Now that you have the basics working, explore these powerful features:
+
+        @Steps {
+            @Step {
+                Try personalized recommendations
+            }
+            @Step {
+                Access music summaries (Replay data)
+            }
+            @Step {
+                Search the Apple Music catalog
+            }
+            @Step {
+                Manage favorites and ratings
+            }
+        }
+
+        ### Personal Recommendations
+        ```swift
+        let recommendations = try await MRecommendation.default()
+        ```
+
+        ### Music Summaries (Replay)
+        ```swift
+        let summary = try await MSummary.latest()
+        print("Your top artist: \(summary.topArtists.first?.name ?? "None")")
+        ```
+
+        ### Search & Discovery
+        ```swift
+        let results = try await MCatalog.search(for: "indie rock", types: [.songs, .albums])
+        ```
+
+        ### Favorites Management
+        ```swift
+        try await MCatalog.favorite(song: myFavoriteSong)
+        ```
+    }
+
+    @Section(title: "Next Steps") {
+        Great! You've built your first MusadoraKit app.
+
+        @Steps {
+            @Step {
+                Check out the [API Reference](musadorakit) for complete documentation
+            }
+            @Step {
+                Explore [Sample Apps](https://github.com/rryam/Musadora) for real-world examples
+            }
+            @Step {
+                Join the [Discord Community](https://discord.gg/6KaKCKds) for help and ideas
+            }
+            @Step {
+                Read the [Book: Exploring MusicKit](https://rudrank.gumroad.com/l/musickit) for deep dives
+            }
+        }
+    }
+
+    @Assessments {
+        @MultipleChoice {
+            What is the first step to use MusadoraKit?
+
+            What is the first step to use MusadoraKit?
+
+            1. Add the package dependency
+            2. Enable MusicKit in Apple Developer Portal **(Correct)**
+            3. Write Swift code
+            4. Test on device
+
+            Enable MusicKit capabilities in your Apple Developer account before adding the package.
+        }
+
+        @MultipleChoice {
+            Which method tests your Apple Music API setup?
+
+            Which method tests your Apple Music API setup?
+
+            1. `MusicAuthorization.request()`
+            2. `MusadoraKit.testConnectivity()` **(Correct)**
+            3. `MCatalog.search()`
+            4. `MLibrary.songs()`
+
+            Use `MusadoraKit.testConnectivity()` to verify your developer token and API setup.
+        }
+    }
+}

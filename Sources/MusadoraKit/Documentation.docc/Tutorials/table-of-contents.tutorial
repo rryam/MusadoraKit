@@ -1,0 +1,21 @@
+@Tutorials(name: "MusadoraKit") {
+    @Intro(title: "Learn MusadoraKit") {
+        Step-by-step guides to help you integrate MusadoraKit into your apps and unlock the full power of Apple Music.
+    }
+
+    @Chapter(name: "Getting Started") {
+        @Intro(title: "Build Your First Music App") {
+            Learn the fundamentals of MusadoraKit and create your first music-powered app.
+        }
+
+        @TutorialReference(tutorial: "doc:Getting-Started")
+    }
+
+    @Chapter(name: "Advanced Topics") {
+        @Intro(title: "Go Beyond the Basics") {
+            Master advanced MusadoraKit features and patterns.
+        }
+
+        // Add more tutorials here as you create them
+    }
+}
