@@ -41,6 +41,33 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 - Euphonic: Apple Music client focused on recommendations
 - [bijou.fm](https://apps.apple.com/app/bijou-fm/id6450460066?platform=iphone): Last.fm client with Apple Music integration
 
+## Table of Contents
+
+- [Start Working with MusicKit](#start-working-with-musickit)
+  - [Step 1: Enable MusicKit for Your Bundle Identifier](#step-1-enable-musickit-for-your-bundle-identifier)
+  - [Step 2: Add NSAppleMusicUsageDescription to Info.plist](#step-2-add-nsapplemusicusagedescription-to-infoplist)
+  - [Step 3: Request Authorization for Apple Music](#step-3-request-authorization-for-apple-music)
+- [Testing Connectivity](#testing-connectivity)
+- [Core APIs](#core-apis)
+  - [Catalog](#catalog)
+  - [Searching the Catalog](#searching-the-catalog)
+  - [Library](#library)
+  - [Recommendations](#recommendations)
+  - [History](#history)
+- [Enhanced Features](#enhanced-features)
+  - [Music Player](#music-player)
+  - [Music Summaries (Replay)](#music-summaries-replay)
+  - [Ratings](#ratings)
+  - [100 Best Albums](#100-best-albums)
+  - [Favorites](#favorites)
+- [Advanced Features](#advanced-features)
+  - [Storefronts](#storefronts)
+  - [Referencing content across different geographical regions](#referencing-content-across-different-geographical-regions)
+  - [Explicit to clean-equivalent content](#explicit-to-clean-equivalent-content)
+  - [MusicCatalogResourcesRequest](#musiccatalogresourcesrequest)
+  - [MusicLibraryResourcesRequest](#musiclibraryresourcesrequest)
+  - [Animated Artwork View](#animated-artwork-view)
+
 ## Start Working with MusicKit 
 Follow the steps below to setup MusicKit for your app:
 
@@ -93,6 +120,41 @@ class MusicAuthorizationManager: ObservableObject {
 This `MusicAuthorizationManager` class checks the authorization status for MusicKit. If the user grants authorization, `isAuthorizedForMusicKit` is set to `true`. If access is denied or restricted, or if the status is not determined, an appropriate `MusicKitError` is set.
 
 Remember to call `requestMusicAuthorization()` at an appropriate time in your application flow to request the user's authorization.
+
+## Testing Connectivity
+
+Test your Apple Music API setup and developer token validity with a simple connectivity check.
+
+### Basic connectivity test:
+
+```swift
+Task {
+    do {
+        try await MusadoraKit.testConnectivity()
+        print("Successfully connected to Apple Music API!")
+    } catch {
+        print("Failed to connect: \(error.localizedDescription)")
+
+        // Check for specific error types
+        if let urlError = error as? URLError {
+            switch urlError.code {
+            case .userAuthenticationRequired:
+                print("Issue with developer token or MusicKit setup")
+            case .badServerResponse:
+                print("Server error - check your configuration")
+            default:
+                print("Network or other error")
+            }
+        }
+    }
+}
+```
+
+This method performs a GET request to Apple's test endpoint and validates:
+- Developer token is valid
+- MusicKit capabilities are properly configured
+- Network connectivity to Apple Music API
+- Basic API communication works
 
 ## Catalog 
 
@@ -158,9 +220,49 @@ let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
 }
 ```
 
+## Music Player
+
+Convenient extensions for Apple's ApplicationMusicPlayer to easily play songs, albums, playlists, and stations with simple one-liner methods.
+
+### Play songs and albums:
+
+```swift
+// Play a single song
+try await player.play(song: song)
+
+// Play multiple songs
+try await player.play(songs: songs)
+
+// Play an album
+try await player.play(album: album)
+
+// Play a playlist
+try await player.play(playlist: playlist)
+```
+
+### Play with position control:
+
+```swift
+// Insert and play a song at a specific position in queue
+try await player.play(song: song, at: .afterCurrentEntry)
+
+// Play a personalized recommendation item
+try await player.play(item: musicPersonalRecommendation)
+```
+
+### Play stations and music videos:
+
+```swift
+// Play a radio station
+try await player.play(station: station)
+
+// Play a music video (available on iOS 16+, tvOS 16+)
+try await player.play(musicVideo: musicVideo)
+```
+
 ## Music Summaries (Replay)
 
-Access your users' Apple Music Replay data - their yearly music summary for the latest eligible year. Get their top artists, albums, and songs all in one request.
+You can also fetch your users' Apple Music Replay data. It is limited to their yearly music summary for the latest year. It will return their top artists, albums, and songs all in one request.
 
 ### Fetch complete summary:
 
@@ -190,6 +292,138 @@ let topSongs = try await MSummary.latestTopSongs()
 ```swift
 // Get only top artists and albums (skip songs)
 let summary = try await MSummary.latest(views: [.topArtists, .topAlbums])
+```
+
+## Ratings
+
+Add, retrieve, and manage ratings for your users' favorite Apple Music content. Support for songs, albums, playlists, music videos, and stations.
+
+### Add ratings:
+
+```swift
+// Rate a song as "liked"
+let rating = try await MCatalog.addRating(for: song, rating: .like)
+
+// Rate an album as "disliked"
+let rating = try await MCatalog.addRating(for: album, rating: .dislike)
+
+// Rate a playlist
+let rating = try await MCatalog.addRating(for: playlist, rating: .love)
+```
+
+### Get current ratings:
+
+```swift
+// Get rating for a song
+let rating = try await MCatalog.rating(for: song)
+
+// Get rating for an album
+let rating = try await MCatalog.rating(for: album)
+```
+
+### Remove ratings:
+
+```swift
+// Remove rating from a song
+try await MCatalog.deleteRating(for: song)
+
+// Remove rating from a playlist
+try await MCatalog.deleteRating(for: playlist)
+```
+
+### Available rating types:
+- `.like` - Like content
+- `.dislike` - Dislike content
+- `.love` - Love content (hearted)
+
+## 100 Best Albums
+
+Access Apple's curated collection of the 100 Best Albums of all time. Get individual albums by position or fetch the entire collection.
+
+### Get a specific album:
+
+```swift
+// Get the #1 album
+let album = try await MRecommendation.hundredBestAlbum(at: 1)
+print("Top album: \(album.title) by \(album.artistName)")
+```
+
+### Get all 100 albums:
+
+```swift
+// Get the complete collection
+let allAlbums = try await MRecommendation.allHundredBestAlbums()
+
+for album in allAlbums {
+    print("\(album.title) - \(album.artistName)")
+}
+```
+
+### With custom storefront:
+
+```swift
+// Get albums for a specific region
+let albums = try await MRecommendation.allHundredBestAlbums(storefront: "gb")
+```
+
+## Favorites
+
+Add songs, albums, playlists, artists, music videos, and stations to your users' Apple Music favorites.
+
+### Add to favorites:
+
+```swift
+// Favorite a song
+let success = try await MCatalog.favorite(song: song)
+
+// Favorite an album
+let success = try await MCatalog.favorite(album: album)
+
+// Favorite a playlist
+let success = try await MCatalog.favorite(playlist: playlist)
+
+// Favorite an artist
+let success = try await MCatalog.favorite(artist: artist)
+```
+
+### Favorite a music video:
+
+```swift
+let success = try await MCatalog.favorite(musicVideo: musicVideo)
+```
+
+### Favorite a station:
+
+```swift
+let success = try await MCatalog.favorite(station: station)
+```
+
+## Storefronts
+
+Access Apple Music storefront information and manage regional content availability.
+
+### Get all available storefronts:
+
+```swift
+let storefronts = try await MCatalog.storefronts()
+
+for storefront in storefronts {
+    print("\(storefront.name) (\(storefront.id))")
+}
+```
+
+### Get a specific storefront:
+
+```swift
+let usStorefront = try await MCatalog.storefront(id: "us")
+print("US Storefront: \(usStorefront.name)")
+```
+
+### Get current storefront:
+
+```swift
+let current = try await MStorefront.current()
+print("Current region: \(current.id)")
 ```
 
 ## Referencing content across different geographical regions
@@ -237,6 +471,54 @@ let response = try await request.response()
 print(response.songs)
 print(response.playlists)
 ```
+
+## Animated Artwork View
+
+Create stunning animated backgrounds from music artwork with dynamic mesh gradients. Available on iOS 18, macOS 15, watchOS 11, tvOS 18, and visionOS 2 or later.
+
+### Basic usage:
+
+```swift
+struct ContentView: View {
+    @ObservedObject private var queue = ApplicationMusicPlayer.shared.queue
+
+    var body: some View {
+        AnimatedArtworkView(queue: queue)
+            .ignoresSafeArea()
+    }
+}
+```
+
+### With custom artwork:
+
+```swift
+AnimatedArtworkView(
+    queue: ApplicationMusicPlayer.shared.queue,
+    artwork: customArtwork,
+    width: 400,
+    height: 400
+)
+```
+
+### Custom gradient points:
+
+```swift
+let customPoints: [SIMD2<Float>] = [
+    SIMD2<Float>(0.0, 0.0), SIMD2<Float>(0.5, 0.0), SIMD2<Float>(1.0, 0.0),
+    SIMD2<Float>(0.0, 0.5), SIMD2<Float>(0.8, 0.2), SIMD2<Float>(0.2, 0.8),
+    SIMD2<Float>(1.0, 0.5), SIMD2<Float>(0.0, 1.0), SIMD2<Float>(0.5, 1.0),
+    SIMD2<Float>(1.0, 1.0), SIMD2<Float>(0.3, 0.7), SIMD2<Float>(0.7, 0.3),
+    SIMD2<Float>(0.1, 0.9), SIMD2<Float>(0.9, 0.1), SIMD2<Float>(0.4, 0.6),
+    SIMD2<Float>(0.6, 0.4)
+]
+
+AnimatedArtworkView(
+    queue: queue,
+    points: customPoints
+)
+```
+
+This view automatically extracts dominant colors from the current playing song's artwork and creates a beautiful animated mesh gradient background that responds to the music.
 
 I hope you love working with MusadoraKit!
 
