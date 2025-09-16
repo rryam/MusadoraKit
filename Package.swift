@@ -13,7 +13,13 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0")
   ],
   targets: [
-    .target(name: "MusadoraKit", dependencies: []),
+    .target(
+      name: "MusadoraKit",
+      dependencies: [],
+      resources: [
+        .copy("PrivacyInfo.xcprivacy")
+      ]
+    ),
     .testTarget(name: "MusadoraKitTests", dependencies: ["MusadoraKit"])
   ]
 )
