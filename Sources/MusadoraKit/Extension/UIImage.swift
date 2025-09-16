@@ -15,11 +15,6 @@ extension UIImage {
   /// - Parameter numberOfColors: The number of prominent colors to extract (default is 4).
   /// - Returns: An array of UIColors representing the prominent colors.
   func extractColors(numberOfColors: Int = 4) throws -> [UIColor] {
-    // Ensure the image has a CGImage
-    guard let cgImage = self.cgImage else {
-      throw ImageProcessingError.invalidImage
-    }
-    
     let size = CGSize(width: 200, height: 200 * self.size.height / self.size.width)
     UIGraphicsBeginImageContext(size)
     self.draw(in: CGRect(origin: .zero, size: size))
@@ -28,7 +23,7 @@ extension UIImage {
       throw ImageProcessingError.resizeFailed
     }
     UIGraphicsEndImageContext()
-    
+
     let colors = try CommonImageProcessing.extractColors(from: resizedImage.cgImage!, numberOfColors: numberOfColors)
     return colors.map { UIColor(cgColor: $0) }
   }
