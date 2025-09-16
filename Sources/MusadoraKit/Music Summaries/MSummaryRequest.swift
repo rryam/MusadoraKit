@@ -32,26 +32,20 @@ struct MSummaryRequest {
     // Build and send request
     let urlRequest = URLRequest(url: url)
 
-    #if DEBUG
     debugPrint("[MSummary] Request URL: \(url.absoluteString)")
     if let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
       debugPrint("[MSummary] Query Items: \(comps.queryItems?.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&") ?? "<none>")")
     }
-    #endif
 
     let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
 
-    #if DEBUG
-    if let http = response.urlResponse as? HTTPURLResponse {
-      debugPrint("[MSummary] Response Status: \(http.statusCode)")
-      debugPrint("[MSummary] Response Headers: \(http.allHeaderFields)")
-    }
-    #endif
+    let http = response.urlResponse
+    debugPrint("[MSummary] Response Status: \(http.statusCode)")
+    debugPrint("[MSummary] Response Headers: \(http.allHeaderFields)")
 
     let data = response.data
 
-    #if DEBUG
     if let pretty = MSummaryDebug.prettyJSONString(from: data) {
       debugPrint("[MSummary] Raw JSON (pretty):\n\(pretty)")
     } else if let raw = String(data: data, encoding: .utf8) {
@@ -59,14 +53,11 @@ struct MSummaryRequest {
     } else {
       debugPrint("[MSummary] Raw Body: <non-utf8 data of \(data.count) bytes>")
     }
-    #endif
 
     do {
       return try MSummaryResponse.parse(from: data, using: decoder)
     } catch {
-      #if DEBUG
       debugPrint("[MSummary] Decoding Error: \(String(describing: error))")
-      #endif
       throw error
     }
   }
@@ -117,7 +108,6 @@ extension MSummaryRequest {
 
 // MARK: - Debug helpers
 
-#if DEBUG
 enum MSummaryDebug {
   static func prettyJSONString(from data: Data) -> String? {
     guard let obj = try? JSONSerialization.jsonObject(with: data, options: []),
@@ -133,7 +123,6 @@ enum MSummaryDebug {
     return pretty.flatMap { String(data: $0, encoding: .utf8) }
   }
 }
-#endif
 
 /// Supported views for music summaries (Replay) API.
 public enum MSummaryView: String, CaseIterable, Hashable {
