@@ -47,7 +47,7 @@ final class CatalogStationGenreTests: XCTestCase {
         XCTAssertNotEqual(stationGenre1.hashValue, stationGenre3.hashValue)
     }
 
-    static var allTests = [
+    static let allTests = [
         ("testDecoding", testDecoding),
         ("testEquatable", testEquatable),
         ("testHashable", testHashable)
