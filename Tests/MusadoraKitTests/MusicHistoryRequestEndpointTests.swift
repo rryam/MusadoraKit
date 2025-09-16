@@ -18,7 +18,7 @@ struct MusicHistoryRequestEndpointSwiftTests {
     let request = MHistoryRequest(for: .heavyRotation)
     let url = try request.historyEndpointURL
 
-    #expect(url == URL(string: "https://api.music.apple.com/v1/me/history/heavy-roation")!)
+    #expect(url == URL(string: "https://api.music.apple.com/v1/me/history/heavy-rotation")!)
   }
 }
 #endif
@@ -31,7 +31,7 @@ class MusicHistoryRequestEndpointTests: XCTestCase {
     XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/history/heavy-rotation")
   }
 
-  func testHeavyRoationEndpointURLWithOverLimit() throws {
+  func testHeavyRotationEndpointURLWithOverLimit() throws {
     let limit = 11
     var request = MHistoryRequest(for: .heavyRotation)
     request.limit = limit

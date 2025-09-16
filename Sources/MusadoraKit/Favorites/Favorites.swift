@@ -70,7 +70,4 @@ public extension MCatalog {
     let request = MFavoritesRequest(itemID: id)
     return try await request.response()
   }
-
-  
-
 }
