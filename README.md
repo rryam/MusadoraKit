@@ -12,10 +12,6 @@ MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicK
 
 MusadoraKit is a Swift framework that uses the latest MusicKit and Apple Music API, making it easy to integrate Apple Music into your app. It uses the new async/await pattern introduced in Swift 5.5. Currently, it is available for iOS 15.0+, macOS 12.0+, watchOS 8.0+ and tvOS 15.0+. There are new methods coming every month to support iOS 16, macOS 13, watchOS 9 and tvOS 16 features. The framework now also supports iOS 17, macOS 14, watchOS 10, tvOS 17 and visionOS 1.0.
 
-It goes well with my book on [*Exploring MusicKit and Apple Music API*](https://academy.rudrank.com/product/musickit), as all the documentation and references are mentioned in the book. Otherwise, the code itself is well documented.
-
-Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing anything about MusadoraKit, the book "Exploring MusicKit", MusicKit or your favorite music!
-
 ## Exploring MusicKit and Apple Music API Book
 
 <p align="center">
