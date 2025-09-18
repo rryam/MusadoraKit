@@ -1,6 +1,6 @@
 # MusadoraKit
 
-MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicKit. Working with MusicKit and Apple Music API is much easier, with one-liner APIs for effortless implementation.
+MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicKit. It makes working with MusicKit and Apple Music API much easier, with one-liner API implementations.
 
 <p align="center">
   <img src= "https://github.com/rryam/MusadoraKit/blob/main/MusadoraKitIcon.png" alt="MusadoraKit Logo" width="256"/>
@@ -10,7 +10,16 @@ MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicK
   <img src="https://img.shields.io/badge/Concurrency_Mode-Strict-orange" alt="Concurrency Mode: Strict">
 </p>
 
-MusadoraKit is a Swift framework that uses the latest MusicKit and Apple Music API, making it easy to integrate Apple Music into your app. It uses the new async/await pattern introduced in Swift 5.5. Currently, it is available for iOS 15.0+, macOS 12.0+, watchOS 8.0+ and tvOS 15.0+. There are new methods coming every month to support iOS 16, macOS 13, watchOS 9 and tvOS 16 features. The framework now also supports iOS 17, macOS 14, watchOS 10, tvOS 17 and visionOS 1.0.
+# Features:
+- Modern async/await pattern (Swift 5.5+)
+- *ALL* Apple Music APIs integration
+
+# Platform Support:
+- iOS 15.0+
+- macOS 12.0+
+- watchOS 8.0+
+- tvOS 15.0+
+- visionOS 1.0+
 
 ## Exploring MusicKit and Apple Music API Book
 
@@ -20,7 +29,9 @@ MusadoraKit is a Swift framework that uses the latest MusicKit and Apple Music A
   </a>
 </p>
 
-You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](https://academy.rudrank.com/product/musickit). 2 books a day, and I can happily continue working on MusadoraKit.
+I have written a book on MusicKit and Apple Music API, ["Exploring MusicKit and Apple Music API"](https://academy.rudrank.com/product/musickit).
+
+It has all the documentation and references you need to get started with MusicKit and Apple Music API.
 
 ## Sponsors
 
@@ -33,7 +44,7 @@ You can support my open-source by buying my book, ["Exploring MusicKit and Apple
 ## [Documentation using DocC](https://rryam.github.io/MusadoraKit/documentation/musadorakit/musadorakit/)
 
 ## Musadora Sample App
-I am open-sourcing an app I worked on last year called Musadora. (MusadoraKit started as RRMusicKit for the Musadora app!) 
+I have open-sourced an app I worked on last year called Musadora. (MusadoraKit started as RRMusicKit for the Musadora app!) 
 
 I am slowly adding all the methods used in MusadoraKit to it, so you can refer to how easy it is to use the Swift package.
 
