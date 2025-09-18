@@ -16,7 +16,13 @@ It goes well with my book on [*Exploring MusicKit and Apple Music API*](https://
 
 Also, join the [Discord Community](https://discord.gg/6KaKCKds) for discussing anything about MusadoraKit, the book "Exploring MusicKit", MusicKit or your favorite music!
 
-## Exploring MusicKit and Apple Music API Book 
+## Exploring MusicKit and Apple Music API Book
+
+<p align="center">
+  <a href="https://academy.rudrank.com/product/musickit" target="_blank">
+    <img src="https://img.shields.io/badge/Book-Exploring%20MusicKit%20%26%20Apple%20Music%20API-blue?style=for-the-badge&logo=book&logoColor=white" alt="Exploring MusicKit and Apple Music API Book">
+  </a>
+</p>
 
 You can support my open-source by buying my book, ["Exploring MusicKit and Apple Music API"](https://academy.rudrank.com/product/musickit). 2 books a day, and I can happily continue working on MusadoraKit.
 
