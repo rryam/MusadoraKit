@@ -57,20 +57,6 @@ struct RecommendationsView: View {
         }
       }
       .padding(.horizontal)
-      //
-      //      Section("Personal") {
-      //        ForEach(recommendations) { recommendation in
-      //          VStack {
-      //            Text(recommendation.title ?? "")
-      //              .font(.title2)
-      //              .frame(maxWidth: .infinity, alignment: .leading)
-      //              .padding(.top)
-      //
-      //            RecommendationView(recommendation: recommendation)
-      //          }
-      //        }
-      //      }
-      //      .padding(.horizontal)
     }
     .task {
       do {
