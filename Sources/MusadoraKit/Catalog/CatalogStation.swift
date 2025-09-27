@@ -246,17 +246,18 @@ public extension MCatalog {
 
   /// Fetch the list of featured Apple Music live radio stations.
   ///
-  /// This method retrieves the current list of featured live radio stations available
+  /// This method gets the current list of featured live radio stations available
   /// on Apple Music.
   ///
-  /// As of writing this method, there are three live stations available:  **Apple Music 1**,
-  /// **Apple Music Hits** and **Apple Music Country**.
+  /// As of writing this method, there are six live stations available: **Apple Music 1**,
+  /// **Apple Music Hits**, **Apple Music Country**, **Apple Música Uno**, **Apple Music Club**,
+  /// and **Apple Music Chill**.
   ///
   /// Example usage:
   ///
   ///     do {
   ///       let stations = try await MCatalog.liveStations()
-  ///       print(stations) // Stations(Apple Music 1, Apple Music Hits, Apple Music Country)
+  ///       print(stations) // Stations(Apple Music 1, Apple Music Hits, Apple Music Country, Apple Música Uno, Apple Music Club, Apple Music Chill)
   ///     } catch {
   ///       print("Error fetching live stations: \(error.localizedDescription)")
   ///     }
