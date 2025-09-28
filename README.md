@@ -8,18 +8,17 @@ MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicK
 
 <p align="center">
   <img src="https://img.shields.io/badge/Concurrency_Mode-Strict-orange" alt="Concurrency Mode: Strict">
+  <br>
+  <img src="https://img.shields.io/badge/Swift-5.5+-fa7343?style=flat&logo=swift&logoColor=white" alt="Swift 5.5+">
+  <img src="https://img.shields.io/badge/async%2Fawait-Modern-blue?style=flat&logo=swift&logoColor=white" alt="Modern async/await">
+  <img src="https://img.shields.io/badge/Apple_Music_API-Complete-red?style=flat&logo=apple&logoColor=white" alt="Complete Apple Music API">
+  <br>
+  <img src="https://img.shields.io/badge/iOS-15.0+-000000?style=flat&logo=apple&logoColor=white" alt="iOS 15.0+">
+  <img src="https://img.shields.io/badge/macOS-12.0+-000000?style=flat&logo=apple&logoColor=white" alt="macOS 12.0+">
+  <img src="https://img.shields.io/badge/watchOS-8.0+-000000?style=flat&logo=apple&logoColor=white" alt="watchOS 8.0+">
+  <img src="https://img.shields.io/badge/tvOS-15.0+-000000?style=flat&logo=apple&logoColor=white" alt="tvOS 15.0+">
+  <img src="https://img.shields.io/badge/visionOS-1.0+-000000?style=flat&logo=apple&logoColor=white" alt="visionOS 1.0+">
 </p>
-
-# Features:
-- Modern async/await pattern (Swift 5.5+)
-- *ALL* Apple Music APIs integration
-
-# Platform Support:
-- iOS 15.0+
-- macOS 12.0+
-- watchOS 8.0+
-- tvOS 15.0+
-- visionOS 1.0+
 
 ## Exploring MusicKit and Apple Music API Book
 
