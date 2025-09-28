@@ -4,10 +4,6 @@ definitions:
       events:
         - push
         - pull_request
-  email: &email
-    email:
-      recipients:
-        - rudrankriyam@gmail.com
       notify:
         success: true
         failure: true
@@ -53,5 +49,3 @@ workflows:
                 -skipPackagePluginValidation | xcpretty --report junit
           done
         test_report: build/reports/junit.xml
-    publishing:
-      <<: *email
