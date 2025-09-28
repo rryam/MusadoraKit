@@ -7,11 +7,7 @@ MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicK
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Concurrency_Mode-Strict-orange" alt="Concurrency Mode: Strict">
-  <br>
   <img src="https://img.shields.io/badge/Swift-5.5+-fa7343?style=flat&logo=swift&logoColor=white" alt="Swift 5.5+">
-  <img src="https://img.shields.io/badge/async%2Fawait-Modern-blue?style=flat&logo=swift&logoColor=white" alt="Modern async/await">
-  <img src="https://img.shields.io/badge/Apple_Music_API-Complete-red?style=flat&logo=apple&logoColor=white" alt="Complete Apple Music API">
   <br>
   <img src="https://img.shields.io/badge/iOS-15.0+-000000?style=flat&logo=apple&logoColor=white" alt="iOS 15.0+">
   <img src="https://img.shields.io/badge/macOS-12.0+-000000?style=flat&logo=apple&logoColor=white" alt="macOS 12.0+">
