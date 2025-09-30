@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MusicKit
+import Observation
 
 // NOTE:- MOST OF THE CODE HERE IS TAKEN FROM THE SAMPLE PROJECT BY APPLE.
 // Using MusicKit to Integrate with Apple Music
@@ -124,29 +125,30 @@ struct WelcomeView: View {
         }
     }
     
-    class PresentationCoordinator: ObservableObject {
+    @Observable
+    class PresentationCoordinator {
         static let shared = PresentationCoordinator()
-        
+
         private init() {
             let authorizationStatus = MusicAuthorization.currentStatus
-            
+
             debugPrint(MusicAuthorization.currentStatus.rawValue)
-            
+
             musicAuthorizationStatus = authorizationStatus
             isWelcomeViewPresented = (authorizationStatus != .authorized)
         }
-        
-        @Published var musicAuthorizationStatus: MusicAuthorization.Status {
+
+        var musicAuthorizationStatus: MusicAuthorization.Status {
             didSet {
                 isWelcomeViewPresented = (musicAuthorizationStatus != .authorized)
             }
         }
-        
-        @Published var isWelcomeViewPresented: Bool
+
+        var isWelcomeViewPresented: Bool
     }
     
     fileprivate struct SheetPresentationModifier: ViewModifier {
-        @StateObject private var presentationCoordinator = PresentationCoordinator.shared
+        @State private var presentationCoordinator = PresentationCoordinator.shared
         
         func body(content: Content) -> some View {
             content

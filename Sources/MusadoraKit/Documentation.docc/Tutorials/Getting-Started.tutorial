@@ -64,10 +64,12 @@
         ```swift
         import MusicKit
         import MusadoraKit
+        import Observation
 
         @MainActor
-        class MusicAuthorizationManager: ObservableObject {
-            @Published var authorizationStatus: MusicAuthorization.Status = .notDetermined
+        @Observable
+        class MusicAuthorizationManager {
+            var authorizationStatus: MusicAuthorization.Status = .notDetermined
 
             func requestAuthorization() async {
                 let status = await MusicAuthorization.request()

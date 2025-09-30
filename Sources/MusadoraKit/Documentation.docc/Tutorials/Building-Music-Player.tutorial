@@ -14,14 +14,16 @@
         import MusicKit
         import MusadoraKit
         import Combine
+        import Observation
 
         @MainActor
-        class MusicPlayerManager: ObservableObject {
-            @Published var isPlaying = false
-            @Published var currentSong: Song?
-            @Published var playbackTime: TimeInterval = 0
-            @Published var duration: TimeInterval = 0
-            @Published var queue: [Song] = []
+        @Observable
+        class MusicPlayerManager {
+            var isPlaying = false
+            var currentSong: Song?
+            var playbackTime: TimeInterval = 0
+            var duration: TimeInterval = 0
+            var queue: [Song] = []
             
             private let player = ApplicationMusicPlayer.shared
             private var cancellables = Set<AnyCancellable>()
@@ -96,7 +98,7 @@
 
         ```swift
         struct MusicPlayerView: View {
-            @StateObject private var playerManager = MusicPlayerManager()
+            @State private var playerManager = MusicPlayerManager()
             
             var body: some View {
                 NavigationView {
@@ -254,7 +256,7 @@
         }
 
         struct QueueView: View {
-            @ObservedObject var playerManager: MusicPlayerManager
+            var playerManager: MusicPlayerManager
             
             var body: some View {
                 NavigationView {

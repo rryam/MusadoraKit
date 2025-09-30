@@ -105,10 +105,12 @@ Here's a Swift code example:
 
 ```swift
 import MusicKit
+import Observation
 
-class MusicAuthorizationManager: ObservableObject {
-    @Published var isAuthorizedForMusicKit = false
-    @Published var musicKitError: MusicKitError?
+@Observable
+class MusicAuthorizationManager {
+    var isAuthorizedForMusicKit = false
+    var musicKitError: MusicKitError?
 
     func requestMusicAuthorization() async {
         let status = await MusicAuthorization.request()
@@ -533,6 +535,3 @@ AnimatedArtworkView(
 This view automatically extracts dominant colors from the current playing song's artwork and creates a beautiful animated mesh gradient background that responds to the music.
 
 I hope you love working with MusadoraKit!
-
-> To my future self, and to every developer whose life my code may touch:  
-I just have a lot to write, and will keep writing until the end, hoping to leave something good behind.
