@@ -19,7 +19,7 @@ public struct MusicLibraryResourcesRequest {
 
   /// Fetches different library music items based on the types for the given request.
   public func response() async throws -> MusicLibraryResourcesResponse {
-    let url = try multipleLibraryResourcesEndpointURL
+    let url = try makeEndpointURL()
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
     let items = try JSONDecoder().decode(MusicLibraryResourcesTypes.self, from: response.data)
@@ -28,23 +28,21 @@ public struct MusicLibraryResourcesRequest {
 }
 
 extension MusicLibraryResourcesRequest {
-  private var multipleLibraryResourcesEndpointURL: URL {
-    get throws {
-      var components = AppleMusicURLComponents()
-      var queryItems: [URLQueryItem] = []
-      components.path = "me/library"
+  internal func makeEndpointURL() throws -> URL {
+    var components = AppleMusicURLComponents()
+    var queryItems: [URLQueryItem] = []
+    components.path = "me/library"
 
-      for (key, value) in types {
-        let values = value.map { $0.rawValue }.joined(separator: ",")
-        queryItems.append(URLQueryItem(name: key.type, value: values))
-      }
-
-      components.queryItems = queryItems
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-      return url
+    for (key, value) in types {
+      let values = value.map { $0.rawValue }.joined(separator: ",")
+      queryItems.append(URLQueryItem(name: key.type, value: values))
     }
+
+    components.queryItems = queryItems
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+    return url
   }
 }

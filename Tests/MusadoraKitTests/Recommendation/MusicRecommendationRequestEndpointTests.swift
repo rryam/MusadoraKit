@@ -5,40 +5,41 @@
 //  Created by Rudrank Riyam on 27/04/22.
 //
 
+import Testing
 @testable import MusadoraKit
-import XCTest
 
-class MusicRecommendationRequestEndpointTests: XCTestCase {
-  func testDefaultRecommendationEndpointURL() throws {
+@Suite struct MusicRecommendationRequestEndpointTests {
+
+  @Test func defaultRecommendationEndpointURL() throws {
     let request = MRecommendationRequest()
     let url = try request.recommendationEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recommendations")
   }
 
-  func testDefaultRecommendationWithLimitEndpointURL() throws {
+  @Test func defaultRecommendationWithLimitEndpointURL() throws {
     var request = MRecommendationRequest()
     request.limit = 5
     let url = try request.recommendationEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations?limit=5")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recommendations?limit=5")
   }
 
-  func testRecommendationByIDEndpointURL() throws {
+  @Test func recommendationByIDEndpointURL() throws {
     let request = MRecommendationRequest(equalTo: "6-27s5hU6azhJY")
     let url = try request.recommendationEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recommendations?ids=6-27s5hU6azhJY")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recommendations?ids=6-27s5hU6azhJY")
   }
 
-  func testDefaultRecommendationEndpointURLWithOverLimit() throws {
+  @Test func defaultRecommendationEndpointURLWithOverLimit() {
     let limit = 31
     var request = MRecommendationRequest()
     request.limit = limit
 
-    XCTAssertThrowsError(try request.recommendationEndpointURL) { recommendationOverLimitError in
-      let error = MusadoraKitError.recommendationOverLimit(for: limit)
-      XCTAssertEqual(recommendationOverLimitError as? MusadoraKitError, error)
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.recommendationEndpointURL
     }
+    #expect(error == MusadoraKitError.recommendationOverLimit(for: limit))
   }
 }

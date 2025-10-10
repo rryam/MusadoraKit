@@ -5,121 +5,100 @@
 //  Created by Rudrank Riyam on 27/04/22.
 //
 
-@testable import MusadoraKit
-import XCTest
-
-#if canImport(Testing)
 import Testing
-#endif
+@testable import MusadoraKit
 
-#if swift(>=6.0)
-struct MusicHistoryRequestEndpointSwiftTests {
+@Suite struct MusicHistoryRequestEndpointTests {
+
   @Test func heavyRotationEndpointURL() throws {
     let request = MHistoryRequest(for: .heavyRotation)
     let url = try request.historyEndpointURL
 
-    #expect(url == URL(string: "https://api.music.apple.com/v1/me/history/heavy-rotation")!)
-  }
-}
-#endif
-
-class MusicHistoryRequestEndpointTests: XCTestCase {
-  func testHeavyRotationEndpointURL() throws {
-    let request = MHistoryRequest(for: .heavyRotation)
-    let url = try request.historyEndpointURL
-
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/history/heavy-rotation")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/history/heavy-rotation")
   }
 
-  func testHeavyRotationEndpointURLWithOverLimit() throws {
+  @Test func heavyRotationEndpointURLWithOverLimit() {
     let limit = 11
     var request = MHistoryRequest(for: .heavyRotation)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
-      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
-    }
+    assertHistoryOverLimit(for: &request, overLimit: limit)
   }
 
-  func testRecentlyAddedEndpointURL() throws {
+  @Test func recentlyAddedEndpointURL() throws {
     let request = MHistoryRequest(for: .recentlyAdded)
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library/recently-added")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/recently-added")
   }
 
-  func testRecentlyAddedEndpointURLWithOverLimit() throws {
+  @Test func recentlyAddedEndpointURLWithOverLimit() {
     let limit = 26
     var request = MHistoryRequest(for: .recentlyAdded)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
-      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
-    }
+    assertHistoryOverLimit(for: &request, overLimit: limit)
   }
 
-  func testRecentlyPlayedEndpointURL() throws {
+  @Test func recentlyPlayedEndpointURL() throws {
     let request = MHistoryRequest(for: .recentlyPlayed)
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played?with=library")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/played?with=library")
   }
 
-  func testRecentlyPlayedEndpointURLWithOffset() throws {
+  @Test func recentlyPlayedEndpointURLWithOffset() throws {
     var request = MHistoryRequest(for: .recentlyPlayed)
     request.offset = 10
 
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played?with=library&offset=10")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/played?with=library&offset=10")
   }
 
-  func testRecentlyPlayedEndpointURLWithOverLimit() throws {
+  @Test func recentlyPlayedEndpointURLWithOverLimit() {
     let limit = 11
     var request = MHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
-      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
-    }
+    assertHistoryOverLimit(for: &request, overLimit: limit)
   }
 
-  func testRecentlyPlayedTracksEndpointURL() throws {
+  @Test func recentlyPlayedTracksEndpointURL() throws {
     let request = MHistoryRequest(for: .recentlyPlayedTracks)
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/played/tracks")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/played/tracks")
   }
 
-  func testRecentlyPlayedTracksEndpointURLWithOverLimit() throws {
+  @Test func recentlyPlayedTracksEndpointURLWithOverLimit() {
     let limit = 31
     var request = MHistoryRequest(for: .recentlyPlayedTracks)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
-      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
-    }
+    assertHistoryOverLimit(for: &request, overLimit: limit)
   }
 
-  func testRecentlyPlayedStationsEndpointURL() throws {
+  @Test func recentlyPlayedStationsEndpointURL() throws {
     let request = MHistoryRequest(for: .recentlyPlayedStations)
     let url = try request.historyEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/recent/radio-stations")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/radio-stations")
   }
 
-  func testRecentlyPlayedStationsEndpointURLWithOverLimit() throws {
+  @Test func recentlyPlayedStationsEndpointURLWithOverLimit() {
     let limit = 11
     var request = MHistoryRequest(for: .recentlyPlayedStations)
     request.limit = limit
 
-    XCTAssertThrowsError(try request.historyEndpointURL) { historyOverLimitError in
-      let error = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: limit)
-      XCTAssertEqual(historyOverLimitError as? MusadoraKitError, error)
+    assertHistoryOverLimit(for: &request, overLimit: limit)
+  }
+
+  private func assertHistoryOverLimit(for request: inout MHistoryRequest, overLimit: Int, sourceLocation: SourceLocation = #_sourceLocation) {
+    let expectedError = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: overLimit)
+    let error = #expect(throws: MusadoraKitError.self, sourceLocation: sourceLocation) {
+      try request.historyEndpointURL
     }
+    #expect(error == expectedError, sourceLocation: sourceLocation)
   }
 }

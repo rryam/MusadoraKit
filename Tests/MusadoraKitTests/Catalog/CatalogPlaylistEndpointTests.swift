@@ -5,9 +5,10 @@
 //  Created by Rudrank Riyam on 20/03/23.
 //
 
-@testable import MusadoraKit
+import Foundation
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
 struct BadURLAppleMusicURLComponents: MURLComponents {
   var path: String = ""
@@ -18,30 +19,33 @@ struct BadURLAppleMusicURLComponents: MURLComponents {
   }
 }
 
-final class CatalogPlaylistEndpointTests: XCTestCase {
-  func testChartPlaylistsURLWithoutStorefront() throws {
+@Suite struct CatalogPlaylistEndpointTests {
+
+  @Test func chartPlaylistsURLWithoutTargetStorefront() throws {
     let currentStorefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/playlists?filter%5Bstorefront-chart%5D=in"
     let endpointURL = try MCatalog.chartPlaylistsURL(currentStorefront: currentStorefront)
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testChartPlaylistsURLWithStorefront() throws {
+  @Test func chartPlaylistsURLWithTargetStorefront() throws {
     let currentStorefront = "in"
     let targetStorefront = "ca"
     let url = "https://api.music.apple.com/v1/catalog/in/playlists?filter%5Bstorefront-chart%5D=ca"
     let endpointURL = try MCatalog.chartPlaylistsURL(currentStorefront: currentStorefront, targetStorefront: targetStorefront)
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testChartPlaylistsURLWithBadURL() throws {
+  @Test func chartPlaylistsURLWithBadComponentsThrows() {
     let currentStorefront = "in"
     let components = BadURLAppleMusicURLComponents()
 
-    XCTAssertThrowsError(try MCatalog.chartPlaylistsURL(currentStorefront: currentStorefront, components: components)) { error in
-      XCTAssertEqual(error as? URLError, URLError(.badURL))
+    let error = #expect(throws: URLError.self) {
+      try MCatalog.chartPlaylistsURL(currentStorefront: currentStorefront, components: components)
     }
+
+    #expect(error == URLError(.badURL))
   }
 }

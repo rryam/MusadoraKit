@@ -5,12 +5,17 @@
 //  Created by Rudrank Riyam on 19/04/22.
 //
 
+import Foundation
+import Testing
 @testable import MusadoraKit
-import XCTest
 
-final class MusadoraKitTests: XCTestCase {}
+@Suite struct MusadoraKitTests {}
 
-public func XCTAssertEqualEndpoint(_ endpoint: URL, _ url: String) {
-  let url = URL(string: url)!
-  XCTAssertEqual(endpoint, url)
+public func expectEndpoint(_ endpoint: URL, equals urlString: String, sourceLocation: SourceLocation = #_sourceLocation) {
+  guard let expected = URL(string: urlString) else {
+    Issue.record("Failed to create URL from string '\(urlString)'", sourceLocation: sourceLocation)
+    return
+  }
+
+  #expect(endpoint == expected, sourceLocation: sourceLocation)
 }

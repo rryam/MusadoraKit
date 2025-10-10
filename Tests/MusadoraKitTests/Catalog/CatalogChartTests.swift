@@ -5,25 +5,26 @@
 //  Created by Rudrank Riyam on 25/03/23.
 //
 
-@testable import MusadoraKit
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-final class CatalogChartTests: XCTestCase {
-  func testChartsWithSongTypeURL() async throws {
+@Suite struct CatalogChartTests {
+
+  @Test func chartsWithSongTypeURL() async throws {
     let request = MChartRequest(types: [Song.self])
     let endpointURL = try request.chartsURL(storefront: "us")
     let url = "https://api.music.apple.com/v1/catalog/us/charts?types=songs"
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testChartsWithSongWithGenreTypeURL() async throws {
+  @Test func chartsWithSongAndGenreTypeURL() async throws {
     var request = MChartRequest(types: [Song.self])
     request.genre = MusicItemID("21")
     let endpointURL = try request.chartsURL(storefront: "us")
     let url = "https://api.music.apple.com/v1/catalog/us/charts?types=songs&genre=21"
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 }
