@@ -5,51 +5,47 @@
 //  Created by Rudrank Riyam on 24/03/23.
 //
 
-@testable import MusadoraKit
+import Foundation
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-final class CatalogStationGenreTests: XCTestCase {
-    func testDecoding() throws {
-        let jsonData = """
-        {
-          "id": "1",
-          "type": "station",
-          "attributes": {
-            "name": "Pop"
-          }
-        }
-        """.data(using: .utf8)!
+@Suite struct CatalogStationGenreTests {
 
-        let decoder = JSONDecoder()
-        let stationGenre = try decoder.decode(StationGenre.self, from: jsonData)
-
-        XCTAssertEqual(stationGenre.id, "1")
-        XCTAssertEqual(stationGenre.type, "station")
-        XCTAssertEqual(stationGenre.name, "Pop")
+  @Test func decoding() throws {
+    let jsonData = """
+    {
+      "id": "1",
+      "type": "station",
+      "attributes": {
+        "name": "Pop"
+      }
     }
+    """.data(using: .utf8)!
 
-    func testEquatable() {
-        let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
-        let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
-        let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")
+    let decoder = JSONDecoder()
+    let stationGenre = try decoder.decode(StationGenre.self, from: jsonData)
 
-        XCTAssertTrue(stationGenre1 == stationGenre2)
-        XCTAssertFalse(stationGenre1 == stationGenre3)
-    }
+    #expect(stationGenre.id == "1")
+    #expect(stationGenre.type == "station")
+    #expect(stationGenre.name == "Pop")
+  }
 
-    func testHashable() {
-        let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
-        let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
-        let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")
+  @Test func equatable() {
+    let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
+    let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
+    let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")
 
-        XCTAssertEqual(stationGenre1.hashValue, stationGenre2.hashValue)
-        XCTAssertNotEqual(stationGenre1.hashValue, stationGenre3.hashValue)
-    }
+    #expect(stationGenre1 == stationGenre2)
+    #expect(stationGenre1 != stationGenre3)
+  }
 
-    static let allTests = [
-        ("testDecoding", testDecoding),
-        ("testEquatable", testEquatable),
-        ("testHashable", testHashable)
-    ]
+  @Test func hashable() {
+    let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
+    let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
+    let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")
+
+    #expect(stationGenre1.hashValue == stationGenre2.hashValue)
+    #expect(stationGenre1.hashValue != stationGenre3.hashValue)
+  }
 }

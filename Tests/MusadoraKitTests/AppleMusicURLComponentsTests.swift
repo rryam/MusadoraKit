@@ -5,40 +5,42 @@
 //  Created by Rudrank Riyam on 22/03/23.
 //
 
-@testable import MusadoraKit
+import Foundation
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-final class AppleMusicURLComponentsTests: XCTestCase {
-  func testInit() {
+@Suite struct AppleMusicURLComponentsTests {
+
+  @Test func initializationSetsBaseURL() {
     let appleMusicURLComponents = AppleMusicURLComponents()
     let expectedURL = URL(string: "https://api.music.apple.com")
 
-    XCTAssertNotNil(appleMusicURLComponents.url)
-    XCTAssertEqual(appleMusicURLComponents.url?.scheme, "https")
-    XCTAssertEqual(appleMusicURLComponents.url?.host, "api.music.apple.com")
-    XCTAssertEqual(appleMusicURLComponents.url, expectedURL)
+    #expect(appleMusicURLComponents.url != nil)
+    #expect(appleMusicURLComponents.url?.scheme == "https")
+    #expect(appleMusicURLComponents.url?.host == "api.music.apple.com")
+    #expect(appleMusicURLComponents.url == expectedURL)
   }
 
-  func testQueryItems() {
+  @Test func queryItemsAssignment() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let chartQuery = URLQueryItem(name: "filter[storefront-chart]", value: "in")
     let identityQuery = URLQueryItem(name: "filter[identity]", value: "personal")
     let queryItems: [URLQueryItem] = [chartQuery, identityQuery]
     appleMusicURLComponents.queryItems = queryItems
 
-    XCTAssertEqual(appleMusicURLComponents.queryItems, queryItems)
+    #expect(appleMusicURLComponents.queryItems == queryItems)
   }
 
-  func testPath() {
+  @Test func pathPrefixesVersion() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let path = "catalog/us/songs"
     appleMusicURLComponents.path = path
 
-    XCTAssertEqual(appleMusicURLComponents.path, "/v1/" + path)
+    #expect(appleMusicURLComponents.path == "/v1/" + path)
   }
 
-  func testURL() {
+  @Test func buildsURLWithPathAndQueryItems() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let path = "catalog/us/songs"
     let idsQuery = URLQueryItem(name: "ids", value: "1234,5678")
@@ -48,6 +50,6 @@ final class AppleMusicURLComponentsTests: XCTestCase {
     appleMusicURLComponents.queryItems = queryItems
 
     let expectedURL = URL(string: "https://api.music.apple.com/v1/catalog/us/songs?ids=1234,5678&extend=artists")
-    XCTAssertEqual(appleMusicURLComponents.url, expectedURL)
+    #expect(appleMusicURLComponents.url == expectedURL)
   }
 }

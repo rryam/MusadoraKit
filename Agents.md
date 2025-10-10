@@ -77,6 +77,8 @@ swift test
 xcodebuild test -scheme MusadoraKit -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
+- The test suite uses the Swift Testing framework (`@Suite`, `@Test`, `#expect`). Ensure you are on Swift 6.2+ when running or updating tests.
+
 ### Multi-platform builds
 ```bash
 # Build for all platforms (from codemagic.yaml)

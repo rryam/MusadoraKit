@@ -223,7 +223,7 @@ extension MCatalog {
 }
 
 extension MStorefront {
-  private struct StorefrontLookupEntry: Decodable {
+  internal struct StorefrontLookupEntry: Decodable {
     let code: String
     let storefrontId: Int
   }
@@ -234,15 +234,32 @@ extension MStorefront {
       return [:]
     }
 
+    let data: Data
     do {
-      let data = try Data(contentsOf: url)
-      let entries = try JSONDecoder().decode([StorefrontLookupEntry].self, from: data)
-      return Dictionary(uniqueKeysWithValues: entries.map { ($0.code.lowercased(), $0.storefrontId) })
+      data = try Data(contentsOf: url)
     } catch {
-      assertionFailure("Failed to load storefront mapping: \(error)")
+      assertionFailure("Failed to load storefront mapping data: \(error)")
       return [:]
     }
+
+    return loadStorefrontLookup(from: data)
   }()
+
+  internal static func decodeStorefrontLookup(from data: Data) throws -> [String: Int] {
+    let entries = try JSONDecoder().decode([StorefrontLookupEntry].self, from: data)
+    return Dictionary(uniqueKeysWithValues: entries.map { ($0.code.lowercased(), $0.storefrontId) })
+  }
+
+  internal static func loadStorefrontLookup(from data: Data) -> [String: Int] {
+    do {
+      return try decodeStorefrontLookup(from: data)
+    } catch {
+      #if DEBUG
+      debugPrint("Failed to decode storefront mapping: \(error)")
+      #endif
+      return [:]
+    }
+  }
 
   internal static func storefrontID(forCountryCode countryCode: String) -> Int? {
     storefrontIDLookup[countryCode.lowercased()]

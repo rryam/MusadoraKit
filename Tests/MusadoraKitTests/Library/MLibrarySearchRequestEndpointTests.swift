@@ -5,61 +5,62 @@
 //  Created by Rudrank Riyam on 01/08/22.
 //
 
-@testable import MusadoraKit
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-final class MLibrarySearchRequestEndpointTests: XCTestCase {
-  func testLibrarySearchWithSingleTermAndTypeAsSong() throws {
+@Suite struct MLibrarySearchRequestEndpointTests {
+
+  @Test func librarySearchWithSingleTermAndTypeAsSong() throws {
     let term = "ed"
     let request = MLibrarySearchRequest(term: term, types: [Song.self])
     let url = try request.librarySearchEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library/search?term=ed&types=library-songs")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=ed&types=library-songs")
   }
 
-  func testLibrarySearchWithSingleTermAndTypeAsMusicVideo() throws {
+  @Test func librarySearchWithSingleTermAndTypeAsMusicVideo() throws {
     let term = "MAX"
     let request = MLibrarySearchRequest(term: term, types: [MusicVideo.self])
     let url = try request.librarySearchEndpointURL
 
-    XCTAssertEqualEndpoint(url, "https://api.music.apple.com/v1/me/library/search?term=max&types=library-music-videos")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=max&types=library-music-videos")
   }
 
-  func testLibrarySearchWithSingleTermAndTypeAsSongAndArtist() throws {
+  @Test func librarySearchWithSingleTermAndTypeAsSongAndArtist() throws {
     let term = "ed"
     let request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     let endpointURL = try request.librarySearchEndpointURL
     let url = "https://api.music.apple.com/v1/me/library/search?term=ed&types=library-songs,library-artists"
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testLibrarySearchWithMultipleTermsAndTypeAsSongAndArtist() throws {
+  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtist() throws {
     let term = "ed sheeran"
     let request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     let endpointURL = try request.librarySearchEndpointURL
     let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sheeran&types=library-songs,library-artists"
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testLibrarySearchWithMultipleTermsAndTypeAsSongAndArtistWithLimit() throws {
+  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithLimit() throws {
     let term = "ed sh"
     var request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     request.limit = 2
     let endpointURL = try request.librarySearchEndpointURL
     let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sh&types=library-songs,library-artists&limit=2"
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testLibrarySearchWithMultipleTermsAndTypeAsSongAndArtistWithOffset() throws {
+  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithOffset() throws {
     let term = "ed sh"
     var request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     request.offset = 2
     let endpointURL = try request.librarySearchEndpointURL
     let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sh&types=library-songs,library-artists&offset=2"
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 }

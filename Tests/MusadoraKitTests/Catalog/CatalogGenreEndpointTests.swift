@@ -6,25 +6,25 @@
 //
 
 import Foundation
-
-@testable import MusadoraKit
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-final class CatalogGenreEndpointTests: XCTestCase {
-  func testTopGenresURL() throws {
+@Suite struct CatalogGenreEndpointTests {
+
+  @Test func topGenresURL() throws {
     let storefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/genres"
     let endpointURL = try MCatalog.topGenresURL(storefront: storefront)
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 
-  func testStationGenresURL() throws {
+  @Test func stationGenresURL() throws {
     let storefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/station-genres"
     let endpointURL = try MCatalog.stationGenresURL(storefront: storefront)
 
-    XCTAssertEqualEndpoint(endpointURL, url)
+    expectEndpoint(endpointURL, equals: url)
   }
 }

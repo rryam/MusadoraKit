@@ -6,24 +6,29 @@
 //
 
 import Foundation
-@testable import MusadoraKit
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
-class CatalogSearchTests: XCTestCase {
-  func testSearchTypesAll() {
+@Suite struct CatalogSearchTests {
+
+  @Test func searchTypesIncludeAllResources() {
+    guard #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) else {
+      Issue.record("Catalog search types require iOS 15.4/macOS 12.3/watchOS 9.0/tvOS 15.4 or newer")
+      return
+    }
+
     let allTypes = MCatalogSearchTypes.all
 
-    XCTAssertTrue(allTypes.contains(.songs))
-    XCTAssertTrue(allTypes.contains(.albums))
-    XCTAssertTrue(allTypes.contains(.playlists))
-    XCTAssertTrue(allTypes.contains(.artists))
-    XCTAssertTrue(allTypes.contains(.stations))
-    XCTAssertTrue(allTypes.contains(.recordLabels))
+    #expect(allTypes.contains(.songs))
+    #expect(allTypes.contains(.albums))
+    #expect(allTypes.contains(.playlists))
+    #expect(allTypes.contains(.artists))
+    #expect(allTypes.contains(.stations))
+    #expect(allTypes.contains(.recordLabels))
 
-    XCTAssertTrue(allTypes.contains(.musicVideos))
-    XCTAssertTrue(allTypes.contains(.curators))
-    XCTAssertTrue(allTypes.contains(.radioShows))
+    #expect(allTypes.contains(.musicVideos))
+    #expect(allTypes.contains(.curators))
+    #expect(allTypes.contains(.radioShows))
   }
 }

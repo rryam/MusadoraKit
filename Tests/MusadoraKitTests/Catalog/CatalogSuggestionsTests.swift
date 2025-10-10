@@ -5,10 +5,8 @@
 //  Created by Rudrank Riyam on 22/03/23.
 //
 
-@testable import MusadoraKit
+import Testing
 import MusicKit
-import XCTest
+@testable import MusadoraKit
 
-@available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
-class CatalogSuggestionsTests: XCTestCase {
-}
+@Suite struct CatalogSuggestionsTests {}

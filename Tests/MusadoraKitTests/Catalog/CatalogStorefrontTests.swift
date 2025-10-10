@@ -5,12 +5,14 @@
 //  Created by Rudrank Riyam on 25/03/23.
 //
 
-import XCTest
-@testable import MusadoraKit
+import Foundation
+import Testing
 import MusicKit
+@testable import MusadoraKit
 
-final class CatalogStorefrontTests: XCTestCase {
-  func testDecodingForUSStorefront() throws {
+@Suite struct CatalogStorefrontTests {
+
+  @Test func decodingUSStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -39,23 +41,19 @@ final class CatalogStorefrontTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-    
-    let decoder = JSONDecoder()
-    let result = try decoder.decode(StorefrontsData.self, from: jsonData)
-    
-    XCTAssertEqual(result.data.count, 1)
-    let storefront = result.data[0]
-    
-    XCTAssertEqual(storefront.id, "us")
-    XCTAssertEqual(storefront.type, .storefronts)
-    XCTAssertEqual(storefront.supportedLanguageTags, ["en-US", "es-MX", "ar", "ru", "zh-Hans-CN", "fr-FR", "ko", "pt-BR", "vi", "zh-Hant-TW"])
-    XCTAssertEqual(storefront.explicitContentPolicy, .allowed)
-    XCTAssertEqual(storefront.name, "United States")
-    XCTAssertEqual(storefront.defaultLanguageTag, "en-US")
-    XCTAssertEqual(storefront.storefrontId, 143441, "US storefront ID should be 143441")
+
+    let storefront = try decodeSingleStorefront(from: jsonData)
+
+    #expect(storefront.id == "us")
+    #expect(storefront.type == .storefronts)
+    #expect(storefront.supportedLanguageTags == ["en-US", "es-MX", "ar", "ru", "zh-Hans-CN", "fr-FR", "ko", "pt-BR", "vi", "zh-Hant-TW"])
+    #expect(storefront.explicitContentPolicy == .allowed)
+    #expect(storefront.name == "United States")
+    #expect(storefront.defaultLanguageTag == "en-US")
+    #expect(storefront.storefrontId == 143441)
   }
-  
-  func testDecodingForINStorefront() throws {
+
+  @Test func decodingINStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -76,22 +74,18 @@ final class CatalogStorefrontTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-    
-    let decoder = JSONDecoder()
-    let result = try decoder.decode(StorefrontsData.self, from: jsonData)
-    
-    XCTAssertEqual(result.data.count, 1)
-    let storefront = result.data[0]
-    XCTAssertEqual(storefront.id, "in")
-    XCTAssertEqual(storefront.type, .storefronts)
-    XCTAssertEqual(storefront.supportedLanguageTags, ["en-GB", "hi"])
-    XCTAssertEqual(storefront.explicitContentPolicy, .optIn)
-    XCTAssertEqual(storefront.name, "India")
-    XCTAssertEqual(storefront.defaultLanguageTag, "en-GB")
-    XCTAssertEqual(storefront.storefrontId, 143467, "India storefront ID should be 143467")
+
+    let storefront = try decodeSingleStorefront(from: jsonData)
+    #expect(storefront.id == "in")
+    #expect(storefront.type == .storefronts)
+    #expect(storefront.supportedLanguageTags == ["en-GB", "hi"])
+    #expect(storefront.explicitContentPolicy == .optIn)
+    #expect(storefront.name == "India")
+    #expect(storefront.defaultLanguageTag == "en-GB")
+    #expect(storefront.storefrontId == 143467)
   }
-  
-  func testDecodingForJPStorefront() throws {
+
+  @Test func decodingJPStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -112,22 +106,18 @@ final class CatalogStorefrontTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-    
-    let decoder = JSONDecoder()
-    let result = try decoder.decode(StorefrontsData.self, from: jsonData)
-    
-    XCTAssertEqual(result.data.count, 1)
-    let storefront = result.data[0]
-    XCTAssertEqual(storefront.id, "jp")
-    XCTAssertEqual(storefront.type, .storefronts)
-    XCTAssertEqual(storefront.supportedLanguageTags, ["ja", "en-US"])
-    XCTAssertEqual(storefront.explicitContentPolicy, .allowed)
-    XCTAssertEqual(storefront.name, "Japan")
-    XCTAssertEqual(storefront.defaultLanguageTag, "ja")
-    XCTAssertEqual(storefront.storefrontId, 143462, "Japan storefront ID should be 143462")
+
+    let storefront = try decodeSingleStorefront(from: jsonData)
+    #expect(storefront.id == "jp")
+    #expect(storefront.type == .storefronts)
+    #expect(storefront.supportedLanguageTags == ["ja", "en-US"])
+    #expect(storefront.explicitContentPolicy == .allowed)
+    #expect(storefront.name == "Japan")
+    #expect(storefront.defaultLanguageTag == "ja")
+    #expect(storefront.storefrontId == 143462)
   }
-  
-  func testDecodingForCNStorefront() throws {
+
+  @Test func decodingCNStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -148,22 +138,18 @@ final class CatalogStorefrontTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-    
-    let decoder = JSONDecoder()
-    let result = try decoder.decode(StorefrontsData.self, from: jsonData)
-    
-    XCTAssertEqual(result.data.count, 1)
-    let storefront = result.data[0]
-    XCTAssertEqual(storefront.id, "cn")
-    XCTAssertEqual(storefront.type, .storefronts)
-    XCTAssertEqual(storefront.supportedLanguageTags, ["zh-Hans-CN", "en-GB"])
-    XCTAssertEqual(storefront.explicitContentPolicy, .prohibited)
-    XCTAssertEqual(storefront.name, "China")
-    XCTAssertEqual(storefront.defaultLanguageTag, "zh-Hans-CN")
-    XCTAssertEqual(storefront.storefrontId, 143465, "China storefront ID should be 143465")
+
+    let storefront = try decodeSingleStorefront(from: jsonData)
+    #expect(storefront.id == "cn")
+    #expect(storefront.type == .storefronts)
+    #expect(storefront.supportedLanguageTags == ["zh-Hans-CN", "en-GB"])
+    #expect(storefront.explicitContentPolicy == .prohibited)
+    #expect(storefront.name == "China")
+    #expect(storefront.defaultLanguageTag == "zh-Hans-CN")
+    #expect(storefront.storefrontId == 143465)
   }
-  
-  func testDecodingForNonExistentStorefront() throws {
+
+  @Test func decodingNonExistentStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -183,14 +169,21 @@ final class CatalogStorefrontTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-    
+
+    let storefront = try decodeSingleStorefront(from: jsonData)
+    #expect(storefront.id == "xx")
+    #expect(storefront.type == .storefronts)
+    #expect(storefront.storefrontId == nil)
+  }
+
+  private func decodeSingleStorefront(from data: Data) throws -> MStorefront {
     let decoder = JSONDecoder()
-    let result = try decoder.decode(StorefrontsData.self, from: jsonData)
-    
-    XCTAssertEqual(result.data.count, 1)
-    let storefront = result.data[0]
-    XCTAssertEqual(storefront.id, "xx")
-    XCTAssertEqual(storefront.type, .storefronts)
-    XCTAssertNil(storefront.storefrontId, "Non-existent storefront should have nil storefrontId")
+    let result = try decoder.decode(StorefrontsData.self, from: data)
+    #expect(result.data.count == 1)
+    guard let storefront = result.data.first else {
+      Issue.record("Expected storefront result", sourceLocation: #_sourceLocation)
+      throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Missing storefront data"))
+    }
+    return storefront
   }
 }
