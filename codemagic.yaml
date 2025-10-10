@@ -4,9 +4,6 @@ definitions:
       events:
         - push
         - pull_request
-      notify:
-        success: true
-        failure: true
 workflows:
   musadorakit:
     name: MusadoraKit Workflow
