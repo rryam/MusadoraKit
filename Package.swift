@@ -17,7 +17,8 @@ let package = Package(
             name: "MusadoraKit",
             dependencies: [],
             resources: [
-                .copy("PrivacyInfo.xcprivacy")
+                .copy("PrivacyInfo.xcprivacy"),
+                .process("Resources")
             ],
             swiftSettings: [
                 .enableUpcomingFeature("StrictConcurrency")
