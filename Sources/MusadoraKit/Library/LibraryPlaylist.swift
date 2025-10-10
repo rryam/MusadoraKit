@@ -93,12 +93,12 @@ extension MLibrary {
         request.limit = limit
       }
       let response = try await request.response()
-      return response.items
+      return try await collectPlaylists(response.items, upTo: limit)
     } else {
       var request = MLibraryResourceRequest<Playlist>()
       request.limit = limit
       let response = try await request.response()
-      return response.items
+      return try await collectPlaylists(response.items, upTo: limit)
     }
   }
 
@@ -334,5 +334,28 @@ extension MLibrary {
     components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
 
     return components.url
+  }
+}
+
+private extension MLibrary {
+  static func collectPlaylists(_ initial: Playlists, upTo desiredCount: Int?) async throws -> Playlists {
+    var playlists = initial
+
+    func shouldContinueFetching() -> Bool {
+      if let desiredCount {
+        return playlists.count < desiredCount && playlists.hasNextBatch
+      }
+      return playlists.hasNextBatch
+    }
+
+    while shouldContinueFetching(), let nextBatch = try await playlists.nextBatch() {
+      playlists += nextBatch
+    }
+
+    if let desiredCount, playlists.count > desiredCount {
+      playlists = Playlists(Array(playlists.prefix(desiredCount)))
+    }
+
+    return playlists
   }
 }
