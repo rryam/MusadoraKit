@@ -7,9 +7,12 @@
 
 import SwiftUI
 import MusadoraKit
+import MusicKit
 
 struct SongsView: View {
   private var songs: Songs
+  @State private var favoritedSongIDs: Set<MusicItemID> = []
+  @State private var favoritingSongIDs: Set<MusicItemID> = []
 
   init(with songs: Songs) {
     self.songs = songs
@@ -45,21 +48,45 @@ struct SongsView: View {
           }
           
           Spacer()
-          
-          // Play button
-          Button(action: {
-            Task {
-              do {
-                try await APlayer.shared.play(song: song)
-              } catch {
-                print(error)
+
+          HStack(spacing: 16) {
+            Button {
+              Task {
+                do {
+                  try await APlayer.shared.play(song: song)
+                } catch {
+                  print(error)
+                }
               }
+            } label: {
+              Image(systemName: "play.fill")
+                .foregroundColor(.primary)
             }
-          }) {
-            Image(systemName: "play.fill")
-              .foregroundColor(.primary)
+            .buttonStyle(.plain)
+
+            Button {
+              guard favoritedSongIDs.contains(song.id) == false,
+                    favoritingSongIDs.contains(song.id) == false else { return }
+
+              Task {
+                await MainActor.run { favoritingSongIDs.insert(song.id) }
+                do {
+                  if try await MCatalog.favorite(song: song) {
+                    await MainActor.run { favoritedSongIDs.insert(song.id) }
+                  }
+                } catch {
+                  print(error)
+                }
+                await MainActor.run { favoritingSongIDs.remove(song.id) }
+              }
+            } label: {
+              let isFavorited = favoritedSongIDs.contains(song.id)
+              Image(systemName: isFavorited ? "heart.fill" : "heart")
+                .foregroundColor(isFavorited ? .red : .secondary)
+            }
+            .buttonStyle(.plain)
+            .disabled(favoritingSongIDs.contains(song.id) || favoritedSongIDs.contains(song.id))
           }
-          .buttonStyle(PlainButtonStyle())
         }
         .contentShape(Rectangle())
         .onTapGesture {

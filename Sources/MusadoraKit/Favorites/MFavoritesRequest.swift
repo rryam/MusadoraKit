@@ -9,21 +9,24 @@ import Foundation
 
 /// A request that your app uses to add resources to favorites.
 struct MFavoritesRequest {
-  private var itemIDs: [MusicItemID]
+  private let itemIDs: [MusicItemID]
+  private let resourceType: FavoritesResourceType
 
   /// Creates a request to add resources to favorites.
   ///
   /// - Parameter itemIDs: The IDs of the items to add to favorites.
   ///   Supports heterogeneous types (songs, albums, playlists, artists, etc.)
-  init(itemIDs: [MusicItemID]) {
+  init(itemIDs: [MusicItemID], resourceType: FavoritesResourceType) {
     self.itemIDs = itemIDs
+    self.resourceType = resourceType
   }
 
   /// Creates a request to add a single resource to favorites.
   ///
   /// - Parameter itemID: The ID of the item to add to favorites.
-  init(itemID: MusicItemID) {
+  init(itemID: MusicItemID, resourceType: FavoritesResourceType) {
     self.itemIDs = [itemID]
+    self.resourceType = resourceType
   }
 
   /// Executes the request to add items to favorites and returns
@@ -36,6 +39,16 @@ struct MFavoritesRequest {
   }
 }
 
+/// Supported resource types for the favorites endpoint.
+enum FavoritesResourceType: String {
+  case songs
+  case albums
+  case playlists
+  case artists
+  case musicVideos = "music-videos"
+  case stations
+}
+
 extension MFavoritesRequest {
   internal var favoritesEndpointURL: URL {
     get throws {
@@ -43,9 +56,9 @@ extension MFavoritesRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/favorites"
 
-      // Join all item IDs with commas as per official API spec
+      // Join all item IDs with commas and include the required resource-typed parameter name.
       let idsString = itemIDs.map { $0.rawValue }.joined(separator: ",")
-      queryItems.append(URLQueryItem(name: "ids", value: idsString))
+      queryItems.append(URLQueryItem(name: "ids[\(resourceType.rawValue)]", value: idsString))
 
       components.queryItems = queryItems
 

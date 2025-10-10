@@ -9,6 +9,8 @@ import SwiftUI
 import MusadoraKit
 
 struct AlbumRow: View {
+  @State private var isFavorited = false
+  @State private var isFavoriting = false
   var album: Album
 
   var body: some View {
@@ -21,17 +23,40 @@ struct AlbumRow: View {
 
         Spacer()
 
-        Image(systemName: "play.fill")
-          .foregroundColor(.secondary)
-          .onTapGesture {
+        HStack(spacing: 16) {
+          Image(systemName: "play.fill")
+            .foregroundColor(.secondary)
+            .onTapGesture {
+              Task {
+                do {
+                  try await APlayer.shared.play(album: album)
+                } catch {
+                  print(error)
+                }
+              }
+            }
+
+          Button {
+            guard !isFavorited, !isFavoriting else { return }
             Task {
+              await MainActor.run { isFavoriting = true }
               do {
-                try await APlayer.shared.play(album: album)
+                let success = try await MCatalog.favorite(album: album)
+                if success {
+                  await MainActor.run { isFavorited = true }
+                }
               } catch {
                 print(error)
               }
+              await MainActor.run { isFavoriting = false }
             }
+          } label: {
+            Image(systemName: isFavorited ? "heart.fill" : "heart")
+              .foregroundColor(isFavorited ? .red : .secondary)
           }
+          .buttonStyle(.plain)
+          .disabled(isFavoriting || isFavorited)
+        }
       }
 
       Text(album.title)
