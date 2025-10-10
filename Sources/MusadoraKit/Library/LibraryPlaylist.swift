@@ -88,7 +88,10 @@ extension MLibrary {
   ///   that fetches the data from the Apple Music API.
   public static func playlists(limit: Int? = nil) async throws -> Playlists {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
-      let request = MusicLibraryRequest<Playlist>()
+      var request = MusicLibraryRequest<Playlist>()
+      if let limit {
+        request.limit = limit
+      }
       let response = try await request.response()
       return response.items
     } else {
@@ -242,10 +245,16 @@ extension MLibrary {
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   public static func playlists(limit: Int) async throws -> LibraryPlaylists {
+    guard limit > 0 else {
+      return LibraryPlaylists([])
+    }
+
     var playlists: LibraryPlaylists = []
     let decoder = JSONDecoder()
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
+
+    components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
 
     guard let url = components.url else {
       throw URLError(.badURL)
@@ -261,13 +270,19 @@ extension MLibrary {
       playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
     }
 
-    repeat {
-      if let nextBatchOfPlaylists = try await playlists.nextBatch() {
-        playlists += nextBatchOfPlaylists
-      } else {
-        break
+    func fetchNextBatchIfNeeded() async throws {
+      while playlists.count < limit,
+            playlists.hasNextBatch,
+            let nextBatch = try await playlists.nextBatch() {
+        playlists += nextBatch
       }
-    } while playlists.hasNextBatch
+    }
+
+    try await fetchNextBatchIfNeeded()
+
+    if playlists.count > limit {
+      playlists = LibraryPlaylists(Array(playlists.prefix(limit)))
+    }
 
     return playlists
   }
