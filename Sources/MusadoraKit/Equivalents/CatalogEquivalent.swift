@@ -85,17 +85,29 @@ public extension MCatalog {
   /// - Throws:
   ///     - An error if the network request fails or the response cannot be decoded.
   static func equivalent<T: StorefrontRequestable>(id: MusicItemID, targetStorefront: String) async throws -> MusicItemCollection<T> {
+    let url = try equivalentEndpointURL(id: id, targetStorefront: targetStorefront, type: T.self)
+
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
+    let items = try JSONDecoder().decode(MusicItemCollection<T>.self, from: response.data)
+    return items
+  }
+}
+
+extension MCatalog {
+  internal static func equivalentEndpointURL<T: StorefrontRequestable>(
+    id: MusicItemID,
+    targetStorefront: String,
+    type: T.Type
+  ) throws -> URL {
     var components = AppleMusicURLComponents()
-    components.path = "catalog/\(targetStorefront)/\(T.resourcePath)/\(id)"
+    components.path = "catalog/\(targetStorefront)/\(T.resourcePath)"
     components.queryItems = [URLQueryItem(name: "filter[equivalents]", value: id.rawValue)]
 
     guard let url = components.url else {
       throw URLError(.badURL)
     }
 
-    let request = MusicDataRequest(urlRequest: .init(url: url))
-    let response = try await request.response()
-    let items = try JSONDecoder().decode(MusicItemCollection<T>.self, from: response.data)
-    return items
+    return url
   }
 }

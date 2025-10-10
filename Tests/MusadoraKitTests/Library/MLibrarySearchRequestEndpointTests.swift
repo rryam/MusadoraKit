@@ -63,4 +63,22 @@ import MusicKit
 
     expectEndpoint(endpointURL, equals: url)
   }
+
+  @Test func librarySearchRequestsAreHashable() throws {
+    var requestA = MLibrarySearchRequest(term: "ed", types: [Song.self, Artist.self])
+    requestA.limit = 5
+    requestA.offset = 1
+
+    var requestB = MLibrarySearchRequest(term: "ed", types: [Song.self, Artist.self])
+    requestB.limit = 5
+    requestB.offset = 1
+
+    let different = MLibrarySearchRequest(term: "ed", types: [Song.self])
+
+    var requests: Set<MLibrarySearchRequest> = []
+    requests.insert(requestA)
+
+    #expect(requests.contains(requestB))
+    #expect(!requests.contains(different))
+  }
 }

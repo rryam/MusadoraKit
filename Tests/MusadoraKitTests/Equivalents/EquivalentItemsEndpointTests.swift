@@ -47,4 +47,13 @@ import MusicKit
 
     expectEndpoint(endpointURL, equals: url)
   }
+
+  @Test func catalogEquivalentEndpointURL() throws {
+    let storefront = "jp"
+    let id = MusicItemID("1640832991")
+    let endpointURL = try MCatalog.equivalentEndpointURL(id: id, targetStorefront: storefront, type: Song.self)
+    let url = "https://api.music.apple.com/v1/catalog/jp/songs?filter%5Bequivalents%5D=1640832991"
+
+    expectEndpoint(endpointURL, equals: url)
+  }
 }

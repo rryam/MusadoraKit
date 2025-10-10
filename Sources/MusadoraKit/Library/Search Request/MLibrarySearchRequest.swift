@@ -48,12 +48,22 @@ struct MLibrarySearchRequest: Equatable, Hashable, Sendable {
     return model.results
   }
 
-  static func == (a: MLibrarySearchRequest, b: MLibrarySearchRequest) -> Bool {
-    a.self.term == b.self.term
+  static func == (lhs: MLibrarySearchRequest, rhs: MLibrarySearchRequest) -> Bool {
+    lhs.term == rhs.term &&
+    lhs.types.elementsEqual(rhs.types, by: {
+      String(reflecting: $0) == String(reflecting: $1)
+    }) &&
+    lhs.limit == rhs.limit &&
+    lhs.offset == rhs.offset
   }
 
   func hash(into hasher: inout Hasher) {
-    hasher.combine(self.hashValue)
+    hasher.combine(term)
+    types
+      .map { String(reflecting: $0) }
+      .forEach { hasher.combine($0) }
+    hasher.combine(limit)
+    hasher.combine(offset)
   }
 }
 
