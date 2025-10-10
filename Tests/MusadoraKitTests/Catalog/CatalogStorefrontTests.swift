@@ -179,11 +179,8 @@ import MusicKit
   private func decodeSingleStorefront(from data: Data) throws -> MStorefront {
     let decoder = JSONDecoder()
     let result = try decoder.decode(StorefrontsData.self, from: data)
-    #expect(result.data.count == 1)
-    guard let storefront = result.data.first else {
-      Issue.record("Expected storefront result", sourceLocation: #_sourceLocation)
-      throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Missing storefront data"))
-    }
+    try #require(result.data.count == 1, "Expected a single storefront in the data array.")
+    let storefront = try #require(result.data.first)
     return storefront
   }
 }

@@ -234,15 +234,13 @@ extension MStorefront {
       return [:]
     }
 
-    let data: Data
     do {
-      data = try Data(contentsOf: url)
+      let data = try Data(contentsOf: url)
+      return loadStorefrontLookup(from: data)
     } catch {
       assertionFailure("Failed to load storefront mapping data: \(error)")
       return [:]
     }
-
-    return loadStorefrontLookup(from: data)
   }()
 
   internal static func decodeStorefrontLookup(from data: Data) throws -> [String: Int] {
