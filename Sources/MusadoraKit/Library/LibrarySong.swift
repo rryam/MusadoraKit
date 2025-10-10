@@ -163,7 +163,7 @@ public extension MLibrary {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   static var songsCount: Int {
     get async throws {
-      let request = MusicLibraryRequest<Playlist>()
+      let request = MusicLibraryRequest<Song>()
       let response = try await request.response()
       return response.items.count
     }

@@ -33,6 +33,18 @@ import MusicKit
     #expect(items["limit"] == "5")
   }
 
+  @Test func libraryPlaylistsLimitEndpointIncludesLimitQuery() throws {
+    let url = try MLibrary.libraryPlaylistsURL(limit: 10)
+    let concreteURL = try #require(url)
+    let items = try queryItems(from: concreteURL)
+    #expect(items["limit"] == "10")
+  }
+
+  @Test func libraryPlaylistsURLRequiresPositiveLimit() throws {
+    let url = try MLibrary.libraryPlaylistsURL(limit: 0)
+    #expect(url == nil)
+  }
+
   private func queryItems(from url: URL) throws -> [String: String] {
     guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
           let queryItems = components.queryItems else {

@@ -245,20 +245,12 @@ extension MLibrary {
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   public static func playlists(limit: Int) async throws -> LibraryPlaylists {
-    guard limit > 0 else {
+    guard let url = try libraryPlaylistsURL(limit: limit) else {
       return LibraryPlaylists([])
     }
 
     var playlists: LibraryPlaylists = []
     let decoder = JSONDecoder()
-    var components = AppleMusicURLComponents()
-    components.path = "me/library/playlists"
-
-    components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
-
-    guard let url = components.url else {
-      throw URLError(.badURL)
-    }
 
     if let userToken = MusadoraKit.userToken {
       let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
@@ -325,5 +317,15 @@ extension MLibrary {
     let playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
 
     return playlists
+  }
+
+  internal static func libraryPlaylistsURL(limit: Int) throws -> URL? {
+    guard limit > 0 else { return nil }
+
+    var components = AppleMusicURLComponents()
+    components.path = "me/library/playlists"
+    components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+
+    return components.url
   }
 }
