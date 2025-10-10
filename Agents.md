@@ -1,6 +1,6 @@
-# CLAUDE.md
+# Agents Guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This guide provides context for automation or coding agents (Claude, GPT, etc.) when working with the MusadoraKit repository.
 
 ## Project Overview
 
@@ -14,21 +14,23 @@ MusadoraKit is a Swift package that simplifies working with Apple's MusicKit and
 
 ## Architecture
 
-The codebase uses a **facade pattern** with five main entry points:
+The codebase exposes a **facade-style API** through stateless structs with static methods:
 
-1. **MCatalog** - Catalog operations (search, fetch songs/albums/playlists/artists)
-2. **MLibrary** - User's library operations (fetch, search, add/remove content)
-3. **MRecommendation** - Recommendations (default recommendations, 100 Best Albums)
-4. **MHistory** - Historical data (recently played, recently added)
-5. **MRating** - Rating management (add, get, delete ratings)
+1. **MCatalog** – Catalog operations (search, charts, storefronts, ratings, favorites, etc.)
+2. **MLibrary** – User's library operations (fetch, search, add/remove content, ratings)
+3. **MRecommendation** – Recommendations (default sets, 100 Best Albums utilities)
+4. **MHistory** – Historical data (recently played, recently added)
 
-All these are **stateless structs with static methods**. The main `MusadoraKit` struct is rarely used directly except for:
+Rating-related functionality now lives in the `Ratings/` module via extensions on `MCatalog` and `MLibrary`; there is no standalone `MRating` facade.
+
+The main `MusadoraKit` struct is rarely used directly except for:
 - `MusadoraKit.testConnectivity()` - API connectivity testing
 - `MusadoraKit.userToken` - User token storage
 
 **Directory structure:**
 ```
 Sources/MusadoraKit/
+├── 100 Best Albums/      - Apple Music “100 Best Albums” helpers
 ├── Catalog/           - Catalog resource access and search
 ├── Library/           - Library resource access, search, and management
 ├── Recommendations/   - Recommendation system integration
@@ -40,11 +42,17 @@ Sources/MusadoraKit/
 ├── Equivalents/       - Cross-storefront and clean equivalents
 ├── Add Resources/     - Library add operations (playlists, tracks)
 ├── Multiple Resources/ - Batch resource requests
+├── Music Item Properties/ - Typed property collections for MusicKit resources
 ├── Requests/          - Custom API request types
 ├── Models/            - Data models and API components
 ├── Extension/         - MusicKit type extensions
 ├── Views/             - SwiftUI views (AnimatedArtworkView)
-└── Music Items/       - MusicKit item type extensions
+├── Music Items/       - MusicKit item type extensions
+├── Documentation.docc/ - DocC catalog
+├── MusadoraKit.swift  - Package entry point
+├── MusicRequest.swift - Shared request utilities
+├── Storefronts.swift  - Storefront helpers and ID mapping
+└── PrivacyInfo.xcprivacy
 ```
 
 **API Request Pattern:**
@@ -126,7 +134,7 @@ swift package --disable-sandbox preview-documentation --target MusadoraKit
 MusicKit uses "views" or "relationships" to load related data. When adding methods that fetch resources, check if they support the `with:` parameter for relationship loading (e.g., `song(id:, with: [.albums, .artists])`).
 
 **Storefront Context:**
-Many API calls are storefront-specific. The `MStorefront.current()` method gets the user's current storefront. Some methods accept explicit storefront parameter.
+Many API calls are storefront-specific. Use `MCatalog.storefront(id:)` to fetch a single storefront or `MCatalog.storefronts()` for the full list. Several catalog APIs accept an explicit storefront identifier when regionalization matters.
 
 **Library vs Catalog:**
 - Catalog = Apple Music's full catalog (public)

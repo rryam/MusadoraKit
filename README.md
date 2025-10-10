@@ -433,11 +433,14 @@ let usStorefront = try await MCatalog.storefront(id: "us")
 print("US Storefront: \(usStorefront.name)")
 ```
 
-### Get current storefront:
+### Determine the active storefront:
+
+MusicKit exposes the active storefront through `MusicKit.Storefront.current`. Once obtained, you can feed its identifier into MusadoraKit helpers, for example:
 
 ```swift
-let current = try await MStorefront.current()
-print("Current region: \(current.id)")
+let storefront = try await Storefront.current
+let storefrontDetails = try await MCatalog.storefront(id: storefront.id)
+print("Current region: \(storefrontDetails.id)")
 ```
 
 ## Referencing content across different geographical regions

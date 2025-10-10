@@ -11,16 +11,14 @@ import Foundation
 /// MusadoraKit: The ultimate companion to MusicKit.
 public struct MusadoraKit {}
 
-/// There are five types of structures that you can use in your app.
-/// You DON'T use the `MusadoraKit` structure anymore to access the
-/// static methods.
-
-/// The five types are:
-/// 1. `MCatalog` for accessing the Apple Music catalog. (including catalog search)
-/// 2. `MLibrary` for accessing the user's library . (including library search)
-/// 3. `MRecommendation` for accessing the user's recommendations.
-/// 4. `MHistory` for accessing historical data.
-/// 5. `MRating` for working with ratings.
+/// There are four facade structures that you typically reach for instead of the `MusadoraKit`
+/// type itself. Each exposes static methods tailored to a specific area:
+/// 1. `MCatalog` for accessing the Apple Music catalog (search, storefronts, charts, ratings, favorites, etc.)
+/// 2. `MLibrary` for interacting with the user's library (fetch, search, add/remove content, ratings)
+/// 3. `MRecommendation` for working with Apple Music recommendations (including 100 Best Albums support)
+/// 4. `MHistory` for accessing historical data (recently played/added)
+///
+/// Rating operations are provided via extensions on `MCatalog` and `MLibrary` in the `Ratings` module.
 
 extension MusadoraKit {
     private static let userTokenKey = "com.musadorakit.userToken"

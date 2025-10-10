@@ -29,12 +29,17 @@ struct StorefrontsData: Codable {
 ///
 /// Example usage:
 /// ```swift
-/// // Fetch current storefront
-/// let storefront = try await MStorefront.current()
-/// print("Current storefront: \(storefront.id)")
+/// // Fetch storefront details by identifier
+/// let usStorefront = try await MCatalog.storefront(id: "us")
+/// print("US storefront: \(usStorefront.name)")
+///
+/// // Determine the active storefront from MusicKit, then fetch details
+/// let storefront = try await Storefront.current
+/// let storefrontDetails = try await MCatalog.storefront(id: storefront.id)
+/// print("Current storefront: \(storefrontDetails.id)")
 ///
 /// // Fetch all available storefronts
-/// let allStorefronts = try await MStorefront.all()
+/// let allStorefronts = try await MCatalog.storefronts()
 /// for storefront in allStorefronts {
 ///     print("\(storefront.name) (\(storefront.id))")
 /// }
