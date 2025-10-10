@@ -79,7 +79,6 @@ extension MusicSummariesView {
     } catch is CancellationError {
       // Task was cancelled by SwiftUI lifecycle; ignore
     } catch {
-      print("DEBUG: Full error details: \(error)")
       errorMessage = "Could not load Replay (\(error.localizedDescription))."
     }
   }
