@@ -27,4 +27,26 @@ import MusicKit
 
     expectEndpoint(endpointURL, equals: url)
   }
+
+  @Test func chartCollectionReportsNextBatchWhenCursorPresent() {
+    let collection = ChartItemCollection<Song>(
+      chart: "top-songs",
+      name: "Top Songs",
+      next: "cursor",
+      items: []
+    )
+
+    #expect(collection.hasNextBatch)
+  }
+
+  @Test func chartCollectionReportsNoNextBatchWhenCursorMissing() {
+    let collection = ChartItemCollection<Song>(
+      chart: "top-songs",
+      name: "Top Songs",
+      next: nil,
+      items: []
+    )
+
+    #expect(!collection.hasNextBatch)
+  }
 }

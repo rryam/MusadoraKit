@@ -32,7 +32,7 @@ public extension ChartItemCollection {
   /// A Boolean value that indicates whether the collection has information
   /// that allows it to fetch a subsequent batch of items.
   var hasNextBatch: Bool {
-    next == nil
+    next != nil
   }
 }
 
