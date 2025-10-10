@@ -164,8 +164,15 @@ public extension MLibrary {
   static var songsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Song>()
-      let response = try await request.response()
-      return response.items.count
+      var page = try await request.response().items
+      var total = page.count
+
+      while page.hasNextBatch, let nextPage = try await page.nextBatch() {
+        total += nextPage.count
+        page = nextPage
+      }
+
+      return total
     }
   }
 
