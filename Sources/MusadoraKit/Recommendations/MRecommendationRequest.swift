@@ -55,11 +55,11 @@ extension MRecommendationRequest {
   var recommendationEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
-      var queryItems: [URLQueryItem]?
+      var queryItems: [URLQueryItem] = []
       components.path = "me/recommendations"
 
       if let ids = ids {
-        queryItems = [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
+        queryItems.append(URLQueryItem(name: "ids", value: ids.joined(separator: ",")))
       }
 
       if let limit = limit {
@@ -67,10 +67,10 @@ extension MRecommendationRequest {
           throw MusadoraKitError.recommendationOverLimit(for: limit)
         }
 
-        queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+        queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
       }
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)
