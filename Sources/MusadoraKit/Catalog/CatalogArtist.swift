@@ -65,7 +65,7 @@ extension MCatalog {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple artists from the Apple Music catalog by using their identifiers.
@@ -81,7 +81,7 @@ extension MCatalog {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = property
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple artists from the Apple Music catalog by using their identifiers with all properties.
@@ -93,7 +93,7 @@ extension MCatalog {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }
 

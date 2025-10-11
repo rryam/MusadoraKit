@@ -138,7 +138,7 @@ extension MCatalog {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }
 

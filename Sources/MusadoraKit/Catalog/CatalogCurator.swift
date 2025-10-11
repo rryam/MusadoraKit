@@ -69,7 +69,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple curators from the Apple Music catalog by using their identifiers, fetching all related properties.
@@ -87,6 +87,6 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<Curator>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }

@@ -46,7 +46,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple music videos from the Apple Music catalog by using their identifiers with all properties.
@@ -57,7 +57,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch one or more music videos from Apple Music catalog by using their ISRC value.
@@ -73,7 +73,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch one or more music videos from Apple Music catalog by using their ISRC value with all properties.
@@ -87,7 +87,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple music videos from Apple Music catalog by using their ISRC values.
@@ -103,7 +103,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple music videos from Apple Music catalog by using their ISRC values with all properties.
@@ -117,6 +117,6 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }

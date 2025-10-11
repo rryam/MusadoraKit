@@ -123,7 +123,7 @@ private extension MCatalog {
     var request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   static func albums(for upc: String, fetch properties: AlbumProperties) async throws -> Album {
@@ -141,6 +141,6 @@ private extension MCatalog {
     var request = MusicCatalogResourceRequest<Album>(matching: \.upc, memberOf: upcs)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }

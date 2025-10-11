@@ -51,7 +51,7 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch multiple record labels from the Apple Music catalog by using their identifiers with all properties.
@@ -63,6 +63,6 @@ public extension MCatalog {
     var request = MusicCatalogResourceRequest<RecordLabel>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }

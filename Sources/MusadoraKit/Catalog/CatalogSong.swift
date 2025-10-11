@@ -217,20 +217,20 @@ extension MCatalog {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   static private func song(isrc: String, properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   static private func songs(isrc: [String], properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }

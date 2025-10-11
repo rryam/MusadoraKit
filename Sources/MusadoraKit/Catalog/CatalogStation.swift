@@ -54,7 +54,7 @@ public extension MCatalog {
   static func stations(ids: [MusicItemID]) async throws -> Stations {
     let request = MusicCatalogResourceRequest<Station>(matching: \.id, memberOf: ids)
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 
   /// Fetch the streaming and editorial stations of Apple Music.

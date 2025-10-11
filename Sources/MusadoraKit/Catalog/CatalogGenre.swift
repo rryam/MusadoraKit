@@ -31,7 +31,7 @@ public extension MCatalog {
   static func genres(ids: [MusicItemID]) async throws -> Genres {
     let request = MusicCatalogResourceRequest<Genre>(matching: \.id, memberOf: ids)
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
   
   /// Fetch top genres from the Apple Music catalog.
@@ -40,7 +40,7 @@ public extension MCatalog {
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       let request = MusicCatalogResourceRequest<Genre>()
       let response = try await request.response()
-      return response.items
+      return try await response.items.collectingAll()
     } else {
       let storefront = try await MusicDataRequest.currentCountryCode
       return try await topGenres(for: storefront)
