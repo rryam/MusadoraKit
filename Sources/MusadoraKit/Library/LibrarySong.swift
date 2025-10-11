@@ -164,15 +164,8 @@ public extension MLibrary {
   static var songsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Song>()
-      var page = try await request.response().items
-      var total = page.count
-
-      while page.hasNextBatch, let nextPage = try await page.nextBatch() {
-        total += nextPage.count
-        page = nextPage
-      }
-
-      return total
+      let collection = try await request.response().items.collectingAll()
+      return collection.count
     }
   }
 
@@ -369,7 +362,7 @@ public extension MLibrary {
     var request = MusicLibraryRequest<Song>()
     request.filter(matching: \.genres, contains: genre)
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll()
   }
 }
 

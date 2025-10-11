@@ -93,12 +93,12 @@ extension MLibrary {
         request.limit = limit
       }
       let response = try await request.response()
-      return try await collectPlaylists(response.items, upTo: limit)
+      return try await response.items.collectingAll(upTo: limit)
     } else {
       var request = MLibraryResourceRequest<Playlist>()
       request.limit = limit
       let response = try await request.response()
-      return try await collectPlaylists(response.items, upTo: limit)
+      return try await response.items.collectingAll(upTo: limit)
     }
   }
 
@@ -159,15 +159,8 @@ extension MLibrary {
   public static var playlistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
-      var page = try await request.response().items
-      var total = page.count
-
-      while page.hasNextBatch, let nextPage = try await page.nextBatch() {
-        total += nextPage.count
-        page = nextPage
-      }
-
-      return total
+      let collection = try await request.response().items.collectingAll()
+      return collection.count
     }
   }
 
@@ -268,22 +261,7 @@ extension MLibrary {
       let response = try await request.response()
       playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
     }
-
-    func fetchNextBatchIfNeeded() async throws {
-      while playlists.count < limit,
-            playlists.hasNextBatch,
-            let nextBatch = try await playlists.nextBatch() {
-        playlists += nextBatch
-      }
-    }
-
-    try await fetchNextBatchIfNeeded()
-
-    if playlists.count > limit {
-      playlists = LibraryPlaylists(Array(playlists.prefix(limit)))
-    }
-
-    return playlists
+    return try await playlists.collectingAll(upTo: limit)
   }
 
   /// Fetch the user's "Made For You" playlists from their library.
@@ -323,7 +301,7 @@ extension MLibrary {
 
     let playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
 
-    return playlists
+    return try await playlists.collectingAll()
   }
 
   internal static func libraryPlaylistsURL(limit: Int) throws -> URL? {
@@ -334,28 +312,5 @@ extension MLibrary {
     components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
 
     return components.url
-  }
-}
-
-private extension MLibrary {
-  static func collectPlaylists(_ initial: Playlists, upTo desiredCount: Int?) async throws -> Playlists {
-    var playlists = initial
-
-    func shouldContinueFetching() -> Bool {
-      if let desiredCount {
-        return playlists.count < desiredCount && playlists.hasNextBatch
-      }
-      return playlists.hasNextBatch
-    }
-
-    while shouldContinueFetching(), let nextBatch = try await playlists.nextBatch() {
-      playlists += nextBatch
-    }
-
-    if let desiredCount, playlists.count > desiredCount {
-      playlists = Playlists(Array(playlists.prefix(desiredCount)))
-    }
-
-    return playlists
   }
 }
