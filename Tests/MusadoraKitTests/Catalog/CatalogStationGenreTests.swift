@@ -10,9 +10,11 @@ import Foundation
 import MusicKit
 import Testing
 
-@Suite struct CatalogStationGenreTests {
-  @Test func decoding() throws {
-    let jsonData = """
+@Suite
+struct CatalogStationGenreTests {
+  @Test
+  func decoding() throws {
+    let jsonString = """
     {
       "id": "1",
       "type": "station",
@@ -20,7 +22,8 @@ import Testing
         "name": "Pop"
       }
     }
-    """.data(using: .utf8)!
+    """
+    let jsonData = Data(jsonString.utf8)
 
     let decoder = JSONDecoder()
     let stationGenre = try decoder.decode(StationGenre.self, from: jsonData)
@@ -30,7 +33,8 @@ import Testing
     #expect(stationGenre.name == "Pop")
   }
 
-  @Test func equatable() {
+  @Test
+  func equatable() {
     let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
     let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
     let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")
@@ -39,7 +43,8 @@ import Testing
     #expect(stationGenre1 != stationGenre3)
   }
 
-  @Test func hashable() {
+  @Test
+  func hashable() {
     let stationGenre1 = StationGenre(id: "1", type: "station", name: "Pop")
     let stationGenre2 = StationGenre(id: "1", type: "station", name: "Pop")
     let stationGenre3 = StationGenre(id: "2", type: "station", name: "Rock")

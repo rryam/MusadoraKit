@@ -9,8 +9,10 @@
 import MusicKit
 import Testing
 
-@Suite struct MusicAddResourcesRequestEndpointTests {
-  @Test func addAlbumsToLibraryEndpointURL() throws {
+@Suite
+struct MusicAddResourcesRequestEndpointTests {
+  @Test
+  func addAlbumsToLibraryEndpointURL() throws {
     let albums: [MusicItemID] = ["1577502911", "1577502912"]
 
     let request = MAddResourcesRequest([(item: .albums, value: albums)])
@@ -19,7 +21,8 @@ import Testing
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library?ids[albums]=1577502911,1577502912")
   }
 
-  @Test func addPlaylistsToLibraryEndpointURL() throws {
+  @Test
+  func addPlaylistsToLibraryEndpointURL() throws {
     let playlists: [MusicItemID] = ["1577502911"]
 
     let request = MAddResourcesRequest([(item: .playlists, value: playlists)])
@@ -28,7 +31,8 @@ import Testing
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library?ids[playlists]=1577502911")
   }
 
-  @Test func addResourcesToLibraryEndpointURL() throws {
+  @Test
+  func addResourcesToLibraryEndpointURL() throws {
     let albums: [MusicItemID] = ["1577502911"]
     let songs: [MusicItemID] = ["1545146511"]
 

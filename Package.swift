@@ -24,6 +24,10 @@ let package = Package(
                 .enableUpcomingFeature("StrictConcurrency")
             ]
         ),
-        .testTarget(name: "MusadoraKitTests", dependencies: ["MusadoraKit"])
+        .testTarget(
+            name: "MusadoraKitTests",
+            dependencies: ["MusadoraKit"],
+            resources: [.process("Fixtures")]
+        )
     ]
 )

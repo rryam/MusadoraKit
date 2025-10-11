@@ -3,8 +3,10 @@ import Foundation
 import MusicKit
 import Testing
 
-@Suite struct MusicLibraryResourcesEndpointTests {
-  @Test func libraryResourcesEndpointBuildsQueryPerType() throws {
+@Suite
+struct MusicLibraryResourcesEndpointTests {
+  @Test
+  func libraryResourcesEndpointBuildsQueryPerType() throws {
     let request = MusicLibraryResourcesRequest(types: [
       .songs: [MusicItemID("1"), MusicItemID("2")],
       .albums: [MusicItemID("3")]

@@ -10,8 +10,10 @@ import Foundation
 import MusicKit
 import Testing
 
-@Suite struct AppleMusicURLComponentsTests {
-  @Test func initializationSetsBaseURL() {
+@Suite
+struct AppleMusicURLComponentsTests {
+  @Test
+  func initializationSetsBaseURL() {
     let appleMusicURLComponents = AppleMusicURLComponents()
     let expectedURL = URL(string: "https://api.music.apple.com")
 
@@ -21,7 +23,8 @@ import Testing
     #expect(appleMusicURLComponents.url == expectedURL)
   }
 
-  @Test func queryItemsAssignment() {
+  @Test
+  func queryItemsAssignment() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let chartQuery = URLQueryItem(name: "filter[storefront-chart]", value: "in")
     let identityQuery = URLQueryItem(name: "filter[identity]", value: "personal")
@@ -31,7 +34,8 @@ import Testing
     #expect(appleMusicURLComponents.queryItems == queryItems)
   }
 
-  @Test func pathPrefixesVersion() {
+  @Test
+  func pathPrefixesVersion() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let path = "catalog/us/songs"
     appleMusicURLComponents.path = path
@@ -39,7 +43,8 @@ import Testing
     #expect(appleMusicURLComponents.path == "/v1/" + path)
   }
 
-  @Test func buildsURLWithPathAndQueryItems() {
+  @Test
+  func buildsURLWithPathAndQueryItems() {
     var appleMusicURLComponents = AppleMusicURLComponents()
     let path = "catalog/us/songs"
     let idsQuery = URLQueryItem(name: "ids", value: "1234,5678")

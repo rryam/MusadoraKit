@@ -11,21 +11,7 @@ import MusadoraKit
 extension Song {
   static var mock: Song {
     get throws {
-      let songData = """
-      {
-        "id":"1640832991",
-        "type":"songs",
-        "attributes":{
-          "name":"Glimpse of Us",
-          "artistName":"Joji"
-        }
-      }
-      """.data(using: .utf8)
-
-      guard let songData else {
-        throw URLError(.cannotDecodeRawData)
-      }
-
+      let songData = try loadFixture(named: "song_mock")
       let song = try JSONDecoder().decode(Song.self, from: songData)
       return song
     }
@@ -33,35 +19,16 @@ extension Song {
 
   static var mocks: Songs {
     get throws {
-      let songsData = """
-{
-  "data":[
-    {
-      "id":"1640832991",
-      "type":"songs",
-      "attributes":{
-        "name":"Glimpse of Us",
-        "artistName":"Joji"
-      }
-    },
-    {
-      "id":"1492318640",
-      "type":"songs",
-      "attributes":{
-        "name":"Guilty Conscience",
-        "artistName":"070 Shake"
-      }
-    }
-  ]
-}
-""".data(using: .utf8)
-
-      guard let songsData else {
-        throw URLError(.cannotDecodeRawData)
-      }
-
+      let songsData = try loadFixture(named: "songs_mock")
       let songs = try JSONDecoder().decode(Songs.self, from: songsData)
       return songs
     }
   }
+}
+
+private func loadFixture(named name: String) throws -> Data {
+  guard let url = Bundle.module.url(forResource: name, withExtension: "json") else {
+    throw URLError(.fileDoesNotExist)
+  }
+  return try Data(contentsOf: url)
 }

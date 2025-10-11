@@ -1,8 +1,10 @@
 @testable import MusadoraKit
 import Testing
 
-@Suite struct HundredBestAlbumTests {
-  @Test func hundredBestAlbumAtPosition() async throws {
+@Suite
+struct HundredBestAlbumTests {
+  @Test
+  func hundredBestAlbumAtPosition() async throws {
     let position = 100
     let album = try await MRecommendation.hundredBestAlbum(at: position)
 
@@ -12,7 +14,8 @@ import Testing
     #expect(album.id == MusicItemID("1440714879"))
   }
 
-  @Test func allHundredBestAlbumsContainExpectedEntries() async throws {
+  @Test
+  func allHundredBestAlbumsContainExpectedEntries() async throws {
     let albums = try await MRecommendation.allHundredBestAlbums()
 
     let eightyThirdAlbum = try #require(albums.first(where: { $0.position == "83" }))

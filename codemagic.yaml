@@ -20,6 +20,11 @@ workflows:
     triggering:
       <<: *events
     scripts:
+      - name: SwiftLint
+        script: |
+          #!/bin/zsh
+          brew install swiftlint
+          swiftlint lint --strict
       - name: Build Framework
         script: |
           #!/bin/zsh

@@ -8,8 +8,10 @@
 @testable import MusadoraKit
 import Testing
 
-@Suite struct HundredBestAlbumRequestTests {
-  @Test func hundredBestAlbumEndpointURL() throws {
+@Suite
+struct HundredBestAlbumRequestTests {
+  @Test
+  func hundredBestAlbumEndpointURL() throws {
     let request = HundredBestAlbumRequest(position: 100)
     let endpointURL = try request.albumEndpointURL
 
@@ -17,7 +19,8 @@ import Testing
     #expect(endpointURL.absoluteString == expectedURL)
   }
 
-  @Test func hundredBestAlbumRequest() async throws {
+  @Test
+  func hundredBestAlbumRequest() async throws {
     let request = HundredBestAlbumRequest(position: 100)
     let album = try await request.response()
 
@@ -27,7 +30,8 @@ import Testing
     #expect(album.id == MusicItemID("1440714879"))
   }
 
-  @Test func decodingHundredBestAlbumData() throws {
+  @Test
+  func decodingHundredBestAlbumData() throws {
     let album = try HundredBestAlbum.mock
 
     #expect(album.title == "Body Talk")

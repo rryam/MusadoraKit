@@ -11,23 +11,16 @@ import MusicKit
 extension Station {
   static var mock: Station {
     get throws {
-      let stationData = """
-{
-  "id": "ra.1440541046",
-  "type": "stations",
-  "attributes": {
-    "name": "Apple Music Presents: Little Mix - Live from London",
-    "isLive": true
-  }
-}
-""".data(using: .utf8)
-
-      guard let stationData else {
-        throw URLError(.cannotDecodeRawData)
-      }
-
+      let stationData = try loadFixture(named: "station_mock")
       let station = try JSONDecoder().decode(Station.self, from: stationData)
       return station
     }
   }
+}
+
+private func loadFixture(named name: String) throws -> Data {
+  guard let url = Bundle.module.url(forResource: name, withExtension: "json") else {
+    throw URLError(.fileDoesNotExist)
+  }
+  return try Data(contentsOf: url)
 }

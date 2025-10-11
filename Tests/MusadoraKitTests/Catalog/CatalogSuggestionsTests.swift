@@ -9,4 +9,5 @@
 import MusicKit
 import Testing
 
-@Suite struct CatalogSuggestionsTests {}
+@Suite
+struct CatalogSuggestionsTests {}

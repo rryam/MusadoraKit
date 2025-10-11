@@ -9,7 +9,8 @@ import Foundation
 @testable import MusadoraKit
 import Testing
 
-@Suite struct MusadoraKitTests {}
+@Suite
+struct MusadoraKitTests {}
 
 public func expectEndpoint(_ endpoint: URL, equals urlString: String, sourceLocation: SourceLocation = #_sourceLocation) {
   guard let expected = URL(string: urlString) else {

@@ -9,8 +9,10 @@
 import MusicKit
 import Testing
 
-@Suite struct CatalogStationEndpointTests {
-  @Test func personalStationEndpointURL() throws {
+@Suite
+struct CatalogStationEndpointTests {
+  @Test
+  func personalStationEndpointURL() throws {
     let storefront = "in"
     let endpointURL = try MCatalog.personalStationURL(for: storefront)
 
@@ -19,7 +21,8 @@ import Testing
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func liveStationsURL() throws {
+  @Test
+  func liveStationsURL() throws {
     let storefront = "in"
     let endpointURL = try MCatalog.liveStationsURL(for: storefront)
     let url = "https://api.music.apple.com/v1/catalog/in/stations?filter%5Bfeatured%5D=apple-music-live-radio"
@@ -27,7 +30,8 @@ import Testing
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func genreStationsURL() throws {
+  @Test
+  func genreStationsURL() throws {
     let storefront = "in"
     let endpointURL = try MCatalog.stationsURL(for: "12345", storefront: storefront)
     let url = "https://api.music.apple.com/v1/catalog/in/station-genres/12345/stations"

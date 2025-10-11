@@ -1,0 +1,20 @@
+{
+  "data":[
+    {
+      "id":"1640832991",
+      "type":"songs",
+      "attributes":{
+        "name":"Glimpse of Us",
+        "artistName":"Joji"
+      }
+    },
+    {
+      "id":"1492318640",
+      "type":"songs",
+      "attributes":{
+        "name":"Guilty Conscience",
+        "artistName":"070 Shake"
+      }
+    }
+  ]
+}

@@ -3,8 +3,10 @@ import Foundation
 import MusicKit
 import Testing
 
-@Suite struct LibraryResourceEndpointTests {
-  @Test func songResourceEndpointIncludesDefaultFields() throws {
+@Suite
+struct LibraryResourceEndpointTests {
+  @Test
+  func songResourceEndpointIncludesDefaultFields() throws {
     let request = MLibraryResourceRequest<Song>()
     let url = try request.libraryEndpointURL
 
@@ -20,7 +22,8 @@ import Testing
     #expect(items["ids"] == nil)
   }
 
-  @Test func albumResourceEndpointIncludesIdsAndLimit() throws {
+  @Test
+  func albumResourceEndpointIncludesIdsAndLimit() throws {
     var request = MLibraryResourceRequest<Album>(matching: \.id, equalTo: MusicItemID("42"))
     request.limit = 5
     let url = try request.libraryEndpointURL
@@ -32,14 +35,16 @@ import Testing
     #expect(items["limit"] == "5")
   }
 
-  @Test func libraryPlaylistsLimitEndpointIncludesLimitQuery() throws {
+  @Test
+  func libraryPlaylistsLimitEndpointIncludesLimitQuery() throws {
     let url = try MLibrary.libraryPlaylistsURL(limit: 10)
     let concreteURL = try #require(url)
     let items = try queryItems(from: concreteURL)
     #expect(items["limit"] == "10")
   }
 
-  @Test func libraryPlaylistsURLRequiresPositiveLimit() throws {
+  @Test
+  func libraryPlaylistsURLRequiresPositiveLimit() throws {
     let url = try MLibrary.libraryPlaylistsURL(limit: 0)
     #expect(url == nil)
   }

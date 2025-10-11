@@ -19,8 +19,10 @@ struct BadURLAppleMusicURLComponents: MURLComponents {
   }
 }
 
-@Suite struct CatalogPlaylistEndpointTests {
-  @Test func chartPlaylistsURLWithoutTargetStorefront() throws {
+@Suite
+struct CatalogPlaylistEndpointTests {
+  @Test
+  func chartPlaylistsURLWithoutTargetStorefront() throws {
     let currentStorefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/playlists?filter%5Bstorefront-chart%5D=in"
     let endpointURL = try MCatalog.chartPlaylistsURL(currentStorefront: currentStorefront)
@@ -28,7 +30,8 @@ struct BadURLAppleMusicURLComponents: MURLComponents {
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func chartPlaylistsURLWithTargetStorefront() throws {
+  @Test
+  func chartPlaylistsURLWithTargetStorefront() throws {
     let currentStorefront = "in"
     let targetStorefront = "ca"
     let url = "https://api.music.apple.com/v1/catalog/in/playlists?filter%5Bstorefront-chart%5D=ca"
@@ -37,7 +40,8 @@ struct BadURLAppleMusicURLComponents: MURLComponents {
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func chartPlaylistsURLWithBadComponentsThrows() {
+  @Test
+  func chartPlaylistsURLWithBadComponentsThrows() {
     let currentStorefront = "in"
     let components = BadURLAppleMusicURLComponents()
 

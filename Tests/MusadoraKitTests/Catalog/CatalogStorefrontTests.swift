@@ -14,7 +14,7 @@ import Testing
 struct CatalogStorefrontTests {
   @Test
   func decodingUSStorefront() throws {
-    let jsonData = """
+    let jsonString = """
         {
             "data": [
                 {
@@ -41,7 +41,8 @@ struct CatalogStorefrontTests {
                 }
             ]
         }
-        """.data(using: .utf8)!
+        """
+    let jsonData = Data(jsonString.utf8)
 
     let storefront = try decodeSingleStorefront(from: jsonData)
 
@@ -56,7 +57,7 @@ struct CatalogStorefrontTests {
 
   @Test
   func decodingINStorefront() throws {
-    let jsonData = """
+    let jsonString = """
         {
             "data": [
                 {
@@ -75,7 +76,8 @@ struct CatalogStorefrontTests {
                 }
             ]
         }
-        """.data(using: .utf8)!
+        """
+    let jsonData = Data(jsonString.utf8)
 
     let storefront = try decodeSingleStorefront(from: jsonData)
     #expect(storefront.id == "in")
@@ -89,7 +91,7 @@ struct CatalogStorefrontTests {
 
   @Test
   func decodingJPStorefront() throws {
-    let jsonData = """
+    let jsonString = """
         {
             "data": [
                 {
@@ -108,7 +110,8 @@ struct CatalogStorefrontTests {
                 }
             ]
         }
-        """.data(using: .utf8)!
+        """
+    let jsonData = Data(jsonString.utf8)
 
     let storefront = try decodeSingleStorefront(from: jsonData)
     #expect(storefront.id == "jp")
@@ -120,8 +123,9 @@ struct CatalogStorefrontTests {
     #expect(storefront.storefrontId == 143_462)
   }
 
-  @Test func decodingCNStorefront() throws {
-    let jsonData = """
+  @Test
+  func decodingCNStorefront() throws {
+    let jsonString = """
         {
             "data": [
                 {
@@ -140,7 +144,8 @@ struct CatalogStorefrontTests {
                 }
             ]
         }
-        """.data(using: .utf8)!
+        """
+    let jsonData = Data(jsonString.utf8)
 
     let storefront = try decodeSingleStorefront(from: jsonData)
     #expect(storefront.id == "cn")
@@ -152,8 +157,9 @@ struct CatalogStorefrontTests {
     #expect(storefront.storefrontId == 143_465)
   }
 
-  @Test func decodingNonExistentStorefront() throws {
-    let jsonData = """
+  @Test
+  func decodingNonExistentStorefront() throws {
+    let jsonString = """
         {
             "data": [
                 {
@@ -171,7 +177,8 @@ struct CatalogStorefrontTests {
                 }
             ]
         }
-        """.data(using: .utf8)!
+        """
+    let jsonData = Data(jsonString.utf8)
 
     let storefront = try decodeSingleStorefront(from: jsonData)
     #expect(storefront.id == "xx")
