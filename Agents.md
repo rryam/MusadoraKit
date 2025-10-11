@@ -93,6 +93,9 @@ xcodebuild build -scheme MusadoraKit -destination 'platform=visionOS Simulator,n
 ```bash
 # Project uses SwiftLint with extensive opt-in rules
 swiftlint lint
+
+# Run SwiftLint with strict mode after every feature implementation
+swiftlint lint --strict
 ```
 
 ### Documentation
