@@ -20,10 +20,19 @@ public struct MusicLibraryResourcesRequest {
   /// Fetches different library music items based on the types for the given request.
   public func response() async throws -> MusicLibraryResourcesResponse {
     let url = try makeEndpointURL()
-    let request = MusicDataRequest(urlRequest: .init(url: url))
-    let response = try await request.response()
-    let items = try JSONDecoder().decode(MusicLibraryResourcesTypes.self, from: response.data)
-    return MusicLibraryResourcesResponse(items: items)
+    let decoder = JSONDecoder()
+
+    if let userToken = MusadoraKit.userToken {
+      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let data = try await request.response()
+      let items = try decoder.decode(MusicLibraryResourcesTypes.self, from: data)
+      return MusicLibraryResourcesResponse(items: items)
+    } else {
+      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let response = try await request.response()
+      let items = try decoder.decode(MusicLibraryResourcesTypes.self, from: response.data)
+      return MusicLibraryResourcesResponse(items: items)
+    }
   }
 }
 

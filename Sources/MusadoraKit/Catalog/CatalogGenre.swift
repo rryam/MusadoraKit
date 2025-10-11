@@ -101,7 +101,7 @@ public extension MCatalog {
     var mergedGenres = existingGenres
 
     for genre in newGenres {
-      if !mergedGenres.contains(where: { $0.id == genre.id && $0.name == $0.name }) {
+      if !mergedGenres.contains(where: { $0.id == genre.id && $0.name == genre.name }) {
         mergedGenres.insert(genre)
       }
     }

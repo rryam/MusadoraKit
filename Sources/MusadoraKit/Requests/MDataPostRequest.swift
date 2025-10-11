@@ -54,6 +54,14 @@ public struct MDataPostRequest: Sendable {
     urlRequest.httpMethod = "POST"
     urlRequest.httpBody = data
 
+    if data != nil && urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
+      urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    }
+
+    if let userToken = MusadoraKit.userToken {
+      urlRequest.setValue(userToken, forHTTPHeaderField: "Music-User-Token")
+    }
+
     let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
