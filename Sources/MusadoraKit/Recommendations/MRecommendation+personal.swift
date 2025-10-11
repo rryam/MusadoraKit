@@ -96,6 +96,6 @@ extension MRecommendation {
     var request = MusicPersonalRecommendationsRequest()
     request.limit = limit
     let response = try await request.response()
-    return response.recommendations
+    return try await response.recommendations.collectingAll(upTo: limit)
   }
 }

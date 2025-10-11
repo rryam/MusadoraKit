@@ -40,11 +40,13 @@ struct MRecommendationRequest {
     if let userToken = MusadoraKit.userToken {
       let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
-      items = try decoder.decode(MRecommendations.self, from: data)
+      let baseItems = try decoder.decode(MRecommendations.self, from: data)
+      items = try await baseItems.collectingAll(upTo: limit)
     } else {
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
-      items = try decoder.decode(MRecommendations.self, from: response.data)
+      let baseItems = try decoder.decode(MRecommendations.self, from: response.data)
+      items = try await baseItems.collectingAll(upTo: limit)
     }
 
     return MRecommendationResponse(items: items)

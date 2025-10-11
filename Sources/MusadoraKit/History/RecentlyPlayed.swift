@@ -15,7 +15,7 @@ extension MHistory {
     var request = MusicRecentlyPlayedContainerRequest()
     request.limit = limit
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll(upTo: limit)
   }
 
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
@@ -23,7 +23,7 @@ extension MHistory {
     var request = MusicRecentlyPlayedRequest<Song>()
     request.limit = limit
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll(upTo: limit)
   }
 
   ///  The @available attribute indicates that the `mostPlayedSongs(limit:)` function is available on iOS 16.0 and later, macOS 13.0 and later, tvOS 16.0 and later, and watchOS 9.0 and later.
@@ -47,7 +47,7 @@ extension MHistory {
     request.limit = limit
     request.sort(by: \.playCount, ascending: false)
     let response = try await request.response()
-    return response.items
+    return try await response.items.collectingAll(upTo: limit)
   }
 }
 
