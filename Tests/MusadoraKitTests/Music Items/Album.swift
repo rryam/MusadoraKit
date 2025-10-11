@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import MusicKit
 import MusadoraKit
+import MusicKit
 
 extension Album {
   static var mock: Album {
@@ -203,4 +203,3 @@ extension HundredBestAlbum {
     }
   }
 }
-

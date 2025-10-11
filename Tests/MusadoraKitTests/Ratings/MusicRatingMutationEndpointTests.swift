@@ -1,9 +1,8 @@
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct MusicRatingMutationEndpointTests {
-
   @Test func catalogRatingAddEndpoint() throws {
     let request = MCatalogRatingAddRequest(with: MusicItemID("123"), item: .song, rating: .like)
     let url = try request.catalogAddRatingsEndpointURL

@@ -5,13 +5,14 @@
 //  Created by Rudrank Riyam on 25/03/23.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct CatalogChartTests {
-
-  @Test func chartsWithSongTypeURL() async throws {
+@Suite
+struct CatalogChartTests {
+  @Test
+  func chartsWithSongTypeURL() async throws {
     let request = MChartRequest(types: [Song.self])
     let endpointURL = try request.chartsURL(storefront: "us")
     let url = "https://api.music.apple.com/v1/catalog/us/charts?types=songs"
@@ -19,7 +20,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func chartsWithSongAndGenreTypeURL() async throws {
+  @Test
+  func chartsWithSongAndGenreTypeURL() async throws {
     var request = MChartRequest(types: [Song.self])
     request.genre = MusicItemID("21")
     let endpointURL = try request.chartsURL(storefront: "us")
@@ -28,7 +30,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func chartCollectionReportsNextBatchWhenCursorPresent() {
+  @Test
+  func chartCollectionReportsNextBatchWhenCursorPresent() {
     let collection = ChartItemCollection<Song>(
       chart: "top-songs",
       name: "Top Songs",
@@ -39,7 +42,8 @@ import MusicKit
     #expect(collection.hasNextBatch)
   }
 
-  @Test func chartCollectionReportsNoNextBatchWhenCursorMissing() {
+  @Test
+  func chartCollectionReportsNoNextBatchWhenCursorMissing() {
     let collection = ChartItemCollection<Song>(
       chart: "top-songs",
       name: "Top Songs",

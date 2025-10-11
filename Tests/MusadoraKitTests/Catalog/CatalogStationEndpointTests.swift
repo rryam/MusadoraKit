@@ -5,12 +5,11 @@
 //  Created by Rudrank Riyam on 20/03/23.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct CatalogStationEndpointTests {
-
   @Test func personalStationEndpointURL() throws {
     let storefront = "in"
     let endpointURL = try MCatalog.personalStationURL(for: storefront)

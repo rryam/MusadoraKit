@@ -5,11 +5,10 @@
 //  Created by Codex on 02/09/25.
 //
 
-import Testing
 @testable import MusadoraKit
+import Testing
 
 @Suite struct MSummaryRequestEndpointTests {
-
   @Test func defaultEndpointURLAllViews() throws {
     let request = MSummaryRequest()
     let url = try request.endpointURL

@@ -1,10 +1,9 @@
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct MusicLibraryResourcesEndpointTests {
-
   @Test func libraryResourcesEndpointBuildsQueryPerType() throws {
     let request = MusicLibraryResourcesRequest(types: [
       .songs: [MusicItemID("1"), MusicItemID("2")],

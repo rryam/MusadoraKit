@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 struct BadURLAppleMusicURLComponents: MURLComponents {
   var path: String = ""
@@ -20,7 +20,6 @@ struct BadURLAppleMusicURLComponents: MURLComponents {
 }
 
 @Suite struct CatalogPlaylistEndpointTests {
-
   @Test func chartPlaylistsURLWithoutTargetStorefront() throws {
     let currentStorefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/playlists?filter%5Bstorefront-chart%5D=in"

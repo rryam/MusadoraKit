@@ -5,13 +5,14 @@
 //  Created by Rudrank Riyam on 01/08/22.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct MLibrarySearchRequestEndpointTests {
-
-  @Test func librarySearchWithSingleTermAndTypeAsSong() throws {
+@Suite
+struct MLibrarySearchRequestEndpointTests {
+  @Test
+  func librarySearchWithSingleTermAndTypeAsSong() throws {
     let term = "ed"
     let request = MLibrarySearchRequest(term: term, types: [Song.self])
     let url = try request.librarySearchEndpointURL
@@ -19,7 +20,8 @@ import MusicKit
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=ed&types=library-songs")
   }
 
-  @Test func librarySearchWithSingleTermAndTypeAsMusicVideo() throws {
+  @Test
+  func librarySearchWithSingleTermAndTypeAsMusicVideo() throws {
     let term = "MAX"
     let request = MLibrarySearchRequest(term: term, types: [MusicVideo.self])
     let url = try request.librarySearchEndpointURL
@@ -27,7 +29,8 @@ import MusicKit
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=max&types=library-music-videos")
   }
 
-  @Test func librarySearchWithSingleTermAndTypeAsSongAndArtist() throws {
+  @Test
+  func librarySearchWithSingleTermAndTypeAsSongAndArtist() throws {
     let term = "ed"
     let request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     let endpointURL = try request.librarySearchEndpointURL
@@ -35,7 +38,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtist() throws {
+  @Test
+  func librarySearchWithMultipleTermsAndTypeAsSongAndArtist() throws {
     let term = "ed sheeran"
     let request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     let endpointURL = try request.librarySearchEndpointURL
@@ -44,7 +48,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithLimit() throws {
+  @Test
+  func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithLimit() throws {
     let term = "ed sh"
     var request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     request.limit = 2
@@ -54,7 +59,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithOffset() throws {
+  @Test
+  func librarySearchWithMultipleTermsAndTypeAsSongAndArtistWithOffset() throws {
     let term = "ed sh"
     var request = MLibrarySearchRequest(term: term, types: [Song.self, Artist.self])
     request.offset = 2
@@ -64,7 +70,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func librarySearchRequestsAreHashable() throws {
+  @Test
+  func librarySearchRequestsAreHashable() throws {
     var requestA = MLibrarySearchRequest(term: "ed", types: [Song.self, Artist.self])
     requestA.limit = 5
     requestA.offset = 1

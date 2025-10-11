@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct CatalogGenreEndpointTests {
-
-  @Test func topGenresURL() throws {
+@Suite
+struct CatalogGenreEndpointTests {
+  @Test
+  func topGenresURL() throws {
     let storefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/genres"
     let endpointURL = try MCatalog.topGenresURL(storefront: storefront)
@@ -20,7 +21,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func stationGenresURL() throws {
+  @Test
+  func stationGenresURL() throws {
     let storefront = "in"
     let url = "https://api.music.apple.com/v1/catalog/in/station-genres"
     let endpointURL = try MCatalog.stationGenresURL(storefront: storefront)

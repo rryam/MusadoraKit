@@ -5,12 +5,11 @@
 //  Created by Rudrank Riyam on 18/05/22.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct MusicAddResourcesRequestEndpointTests {
-
   @Test func addAlbumsToLibraryEndpointURL() throws {
     let albums: [MusicItemID] = ["1577502911", "1577502912"]
 

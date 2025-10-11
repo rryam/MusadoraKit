@@ -1,9 +1,8 @@
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct FavoritesEndpointTests {
-
   @Test func favoriteSingleSongEndpoint() throws {
     let request = MFavoritesRequest(itemID: MusicItemID("123"), resourceType: .songs)
     let url = try request.favoritesEndpointURL

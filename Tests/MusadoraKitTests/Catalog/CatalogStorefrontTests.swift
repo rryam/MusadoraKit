@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct CatalogStorefrontTests {
-
-  @Test func decodingUSStorefront() throws {
+@Suite
+struct CatalogStorefrontTests {
+  @Test
+  func decodingUSStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -50,10 +51,11 @@ import MusicKit
     #expect(storefront.explicitContentPolicy == .allowed)
     #expect(storefront.name == "United States")
     #expect(storefront.defaultLanguageTag == "en-US")
-    #expect(storefront.storefrontId == 143441)
+    #expect(storefront.storefrontId == 143_441)
   }
 
-  @Test func decodingINStorefront() throws {
+  @Test
+  func decodingINStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -82,10 +84,11 @@ import MusicKit
     #expect(storefront.explicitContentPolicy == .optIn)
     #expect(storefront.name == "India")
     #expect(storefront.defaultLanguageTag == "en-GB")
-    #expect(storefront.storefrontId == 143467)
+    #expect(storefront.storefrontId == 143_467)
   }
 
-  @Test func decodingJPStorefront() throws {
+  @Test
+  func decodingJPStorefront() throws {
     let jsonData = """
         {
             "data": [
@@ -114,7 +117,7 @@ import MusicKit
     #expect(storefront.explicitContentPolicy == .allowed)
     #expect(storefront.name == "Japan")
     #expect(storefront.defaultLanguageTag == "ja")
-    #expect(storefront.storefrontId == 143462)
+    #expect(storefront.storefrontId == 143_462)
   }
 
   @Test func decodingCNStorefront() throws {
@@ -146,7 +149,7 @@ import MusicKit
     #expect(storefront.explicitContentPolicy == .prohibited)
     #expect(storefront.name == "China")
     #expect(storefront.defaultLanguageTag == "zh-Hans-CN")
-    #expect(storefront.storefrontId == 143465)
+    #expect(storefront.storefrontId == 143_465)
   }
 
   @Test func decodingNonExistentStorefront() throws {

@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Testing
 @testable import MusadoraKit
+import Testing
 
 @Suite struct MusadoraKitTests {}
 

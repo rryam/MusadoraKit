@@ -1,10 +1,9 @@
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct LibraryResourceEndpointTests {
-
   @Test func songResourceEndpointIncludesDefaultFields() throws {
     let request = MLibraryResourceRequest<Song>()
     let url = try request.libraryEndpointURL

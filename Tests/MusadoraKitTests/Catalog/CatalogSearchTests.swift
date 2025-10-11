@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct CatalogSearchTests {
-
-  @Test func searchTypesIncludeAllResources() {
+@Suite
+struct CatalogSearchTests {
+  @Test
+  func searchTypesIncludeAllResources() {
     guard #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *) else {
       Issue.record("Catalog search types require iOS 15.4/macOS 12.3/watchOS 9.0/tvOS 15.4 or newer")
       return

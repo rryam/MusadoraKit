@@ -6,13 +6,14 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct EquivalentItemsEndpointTests {
-
-  @Test func cleanEquivalentEndpointURL() throws {
+@Suite
+struct EquivalentItemsEndpointTests {
+  @Test
+  func cleanEquivalentEndpointURL() throws {
     let storefront = "in"
     let song = try Song.mock
     let endpointURL = try song.cleanEquivalentURL(storefront: storefront, path: .songs)
@@ -21,7 +22,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func cleanEquivalentsEndpointURL() throws {
+  @Test
+  func cleanEquivalentsEndpointURL() throws {
     let storefront = "in"
     let songs = try Song.mocks
     let endpointURL = try songs.cleanEquivalentsURL(storefront: storefront, path: .songs)
@@ -30,7 +32,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func equivalentEndpointURL() throws {
+  @Test
+  func equivalentEndpointURL() throws {
     let storefront = "tw"
     let song = try Song.mock
     let endpointURL = try song.equivalentURL(storefront: storefront, path: .songs)
@@ -39,7 +42,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func equivalentsEndpointURL() throws {
+  @Test
+  func equivalentsEndpointURL() throws {
     let storefront = "tw"
     let songs = try Song.mocks
     let endpointURL = try songs.equivalentsURL(storefront: storefront, path: .songs)
@@ -48,7 +52,8 @@ import MusicKit
     expectEndpoint(endpointURL, equals: url)
   }
 
-  @Test func catalogEquivalentEndpointURL() throws {
+  @Test
+  func catalogEquivalentEndpointURL() throws {
     let storefront = "jp"
     let id = MusicItemID("1640832991")
     let endpointURL = try MCatalog.equivalentEndpointURL(id: id, targetStorefront: storefront, type: Song.self)

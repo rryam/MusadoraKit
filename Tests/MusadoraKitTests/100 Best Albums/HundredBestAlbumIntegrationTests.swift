@@ -1,8 +1,7 @@
-import Testing
 @testable import MusadoraKit
+import Testing
 
 @Suite struct HundredBestAlbumTests {
-
   @Test func hundredBestAlbumAtPosition() async throws {
     let position = 100
     let album = try await MRecommendation.hundredBestAlbum(at: position)

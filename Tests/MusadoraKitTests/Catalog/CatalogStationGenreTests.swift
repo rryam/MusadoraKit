@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct CatalogStationGenreTests {
-
   @Test func decoding() throws {
     let jsonData = """
     {

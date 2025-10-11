@@ -5,12 +5,11 @@
 //  Created by Rudrank Riyam on 17/11/22.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct MusicLibraryRatingRequestTests {
-
   @Test func addPersonalLibraryAlbumRatingEndpointURL() throws {
     let id: MusicItemID = "1138988512"
     let request = MLibraryRatingRequest(with: [id], item: .album)

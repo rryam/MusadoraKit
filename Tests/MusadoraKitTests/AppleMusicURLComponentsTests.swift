@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
 @Suite struct AppleMusicURLComponentsTests {
-
   @Test func initializationSetsBaseURL() {
     let appleMusicURLComponents = AppleMusicURLComponents()
     let expectedURL = URL(string: "https://api.music.apple.com")

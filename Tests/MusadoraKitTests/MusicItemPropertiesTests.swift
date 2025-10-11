@@ -5,13 +5,14 @@
 //  Created by Rudrank Riyam on 22/03/23.
 //
 
-import Testing
-import MusicKit
 @testable import MusadoraKit
+import MusicKit
+import Testing
 
-@Suite struct MusicItemPropertiesTests {
-
-  @Test func playlistPropertiesAll() {
+@Suite
+struct MusicItemPropertiesTests {
+  @Test
+  func playlistPropertiesAll() {
     let allProperties = PlaylistProperties.all
     var expectedProperties: Set<PlaylistProperty> = [.tracks, .featuredArtists, .moreByCurator]
 
@@ -23,7 +24,8 @@ import MusicKit
     #expect(expectedProperties.isSubset(of: allProperties))
   }
 
-  @Test func songPropertiesAll() {
+  @Test
+  func songPropertiesAll() {
     let allProperties = SongProperties.all
     var expectedProperties: Set<SongProperty> = [.albums, .artists, .composers, .genres, .musicVideos, .artistURL, .station]
 
@@ -34,7 +36,8 @@ import MusicKit
     #expect(expectedProperties.isSubset(of: allProperties))
   }
 
-  @Test func recordLabelPropertiesAll() {
+  @Test
+  func recordLabelPropertiesAll() {
     let allProperties = RecordLabelProperties.all
     let expectedProperties: Set<RecordLabelProperty> = [.latestReleases, .topReleases]
 
@@ -42,14 +45,16 @@ import MusicKit
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
-  @Test func radioShowPropertiesAll() {
+  @Test
+  func radioShowPropertiesAll() {
     let allProperties = RadioShowProperties.all
     let expectedProperties: Set<RadioShowProperty> = [.playlists]
 
     #expect(expectedProperties.isSubset(of: allProperties))
   }
 
-  @Test func musicVideoPropertiesAll() {
+  @Test
+  func musicVideoPropertiesAll() {
     let allProperties = MusicVideoProperties.all
     let expectedProperties: Set<MusicVideoProperty> = [.albums, .genres, .artists, .artistURL, .moreInGenre, .songs, .moreByArtist]
 
@@ -57,21 +62,24 @@ import MusicKit
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, *)
-  @Test func curatorPropertiesAll() {
+  @Test
+  func curatorPropertiesAll() {
     let allProperties = CuratorProperties.all
     let expectedProperties: Set<CuratorProperty> = [.playlists]
 
     #expect(expectedProperties.isSubset(of: allProperties))
   }
 
-  @Test func artistPropertiesAll() {
+  @Test
+  func artistPropertiesAll() {
     let allProperties = ArtistProperties.all
     let expectedProperties: Set<ArtistProperty> = [.genres, .station, .musicVideos, .albums, .playlists, .appearsOnAlbums, .fullAlbums, .featuredAlbums, .liveAlbums, .compilationAlbums, .featuredPlaylists, .latestRelease, .topSongs, .topMusicVideos, .similarArtists, .singles]
 
     #expect(expectedProperties.isSubset(of: allProperties))
   }
 
-  @Test func albumPropertiesAll() {
+  @Test
+  func albumPropertiesAll() {
     let allProperties = AlbumProperties.all
     var expectedProperties: Set<AlbumProperty> = [.artistURL, .genres, .artists, .appearsOn, .otherVersions, .recordLabels, .relatedAlbums, .relatedVideos, .tracks]
 

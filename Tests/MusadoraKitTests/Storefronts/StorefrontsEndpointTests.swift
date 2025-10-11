@@ -1,8 +1,7 @@
-import Testing
 @testable import MusadoraKit
+import Testing
 
 @Suite struct StorefrontsEndpointTests {
-
   @Test func storefrontsCollectionEndpoint() throws {
     let url = try MCatalog.storefrontsURL()
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/storefronts")

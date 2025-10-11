@@ -5,11 +5,10 @@
 //  Created by Rudrank Riyam on 19/05/24.
 //
 
-import Testing
 @testable import MusadoraKit
+import Testing
 
 @Suite struct HundredBestAlbumRequestTests {
-
   @Test func hundredBestAlbumEndpointURL() throws {
     let request = HundredBestAlbumRequest(position: 100)
     let endpointURL = try request.albumEndpointURL

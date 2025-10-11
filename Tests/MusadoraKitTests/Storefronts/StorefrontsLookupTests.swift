@@ -1,22 +1,23 @@
 import Foundation
-import Testing
 @testable import MusadoraKit
+import Testing
 
-@Suite struct StorefrontsLookupTests {
-
-  @Test func storefrontResourceIncludesKnownIdentifiers() {
+@Suite
+struct StorefrontsLookupTests {
+  @Test
+  func storefrontResourceIncludesKnownIdentifiers() {
     let expected: [(String, Int)] = [
-      ("us", 143441),
-      ("JP", 143462),
-      ("ca", 143455),
-      ("gb", 143444),
-      ("de", 143443),
-      ("au", 143460),
-      ("in", 143467),
-      ("sa", 143479),
-      ("za", 143472),
-      ("br", 143503),
-      ("cn", 143465)
+      ("us", 143_441),
+      ("JP", 143_462),
+      ("ca", 143_455),
+      ("gb", 143_444),
+      ("de", 143_443),
+      ("au", 143_460),
+      ("in", 143_467),
+      ("sa", 143_479),
+      ("za", 143_472),
+      ("br", 143_503),
+      ("cn", 143_465)
     ]
 
     for (code, storefrontId) in expected {
@@ -24,26 +25,30 @@ import Testing
     }
   }
 
-  @Test func storefrontLookupMissingCodeReturnsNil() {
+  @Test
+  func storefrontLookupMissingCodeReturnsNil() {
     #expect(MStorefront.storefrontID(forCountryCode: "zz") == nil)
   }
 
-  @Test func invalidStorefrontResourceThrows() {
+  @Test
+  func invalidStorefrontResourceThrows() {
     let invalidJSON = Data(#"{"code": "xx"}"#.utf8)
     #expect(throws: Error.self) {
       _ = try MStorefront.decodeStorefrontLookup(from: invalidJSON)
     }
   }
 
-  @Test func corruptStorefrontResourceYieldsEmptyLookup() {
+  @Test
+  func corruptStorefrontResourceYieldsEmptyLookup() {
     let corruptJSON = Data(#"[{"code": 42, "storefrontId": "invalid"}]"#.utf8)
     let lookup = MStorefront.loadStorefrontLookup(from: corruptJSON)
     #expect(lookup.isEmpty)
   }
 
-  @Test func decodeStorefrontLookupNormalizesCodes() throws {
+  @Test
+  func decodeStorefrontLookupNormalizesCodes() throws {
     let json = Data(#"[{"code":"US","storefrontId":143441}]"#.utf8)
     let lookup = try MStorefront.decodeStorefrontLookup(from: json)
-    #expect(lookup["us"] == 143441)
+    #expect(lookup["us"] == 143_441)
   }
 }
