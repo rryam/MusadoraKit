@@ -228,7 +228,7 @@ print(searchResponse.artists)
 
 ## Library 
 
-While this is natively not available in MusicKit, you can fetch library resources using MusadoraKit that uses Apple Music API under the hood. The method are similar across the music items. 
+While this is natively not available in MusicKit for iOS 15, you can fetch library resources using MusadoraKit that uses Apple Music API under the hood. The methods are similar across the music items.
 
 Example of fetching all library songs in alphabetical order: 
 
@@ -311,7 +311,7 @@ try await player.play(musicVideo: musicVideo)
 
 ## Music Summaries (Replay)
 
-You can also fetch your users' Apple Music Replay data. It is limited to their yearly music summary for the latest year. It will return their top artists, albums, and songs all in one request.
+You can also fetch your users' Apple Music Replay data. It includes the latest yearly summary as well as the most recent monthly summary (previous calendar month). Both return their top artists, albums, and songs in one request.
 
 ### Fetch complete summary:
 
@@ -321,6 +321,16 @@ let summary = try await MSummary.latest()
 print(summary.topArtists)
 print(summary.topAlbums)
 print(summary.topSongs)
+```
+
+### Fetch latest monthly summary:
+
+```swift
+let monthlySummary = try await MSummary.latestMonth()
+
+print(monthlySummary.topArtists)
+print(monthlySummary.topAlbums)
+print(monthlySummary.topSongs)
 ```
 
 ### Fetch specific categories:
@@ -334,6 +344,11 @@ let topAlbums = try await MSummary.latestTopAlbums()
 
 // Get only top songs
 let topSongs = try await MSummary.latestTopSongs()
+
+// Monthly variants
+let monthlyTopArtists = try await MSummary.latestMonthTopArtists()
+let monthlyTopAlbums = try await MSummary.latestMonthTopAlbums()
+let monthlyTopSongs = try await MSummary.latestMonthTopSongs()
 ```
 
 ### Customize with specific views:

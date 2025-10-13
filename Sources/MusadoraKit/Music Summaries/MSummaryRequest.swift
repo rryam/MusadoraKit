@@ -2,7 +2,7 @@
 //  MSummaryRequest.swift
 //  MusadoraKit
 //
-//  Created by Codex on 02/09/25.
+//  Created by Rudrank Riyam on 02/09/25.
 //
 
 import Foundation
@@ -20,6 +20,9 @@ struct MSummaryRequest {
 
   /// Optional attribute extensions to apply.
   var extend: [String]?
+
+  /// Summary period that determines which endpoint to hit.
+  var period: MSummaryPeriod = .latestYear
 
   /// Builds and performs the request, returning a parsed summary response.
   func response() async throws -> MSummaryResponse {
@@ -52,10 +55,11 @@ extension MSummaryRequest {
       var components = AppleMusicURLComponents()
       var queryItems: [URLQueryItem] = []
 
-      components.path = "me/music-summaries"
+      components.path = period.resourcePath
 
-      // Required per docs: filter[year]=latest
-      queryItems.append(URLQueryItem(name: "filter[year]", value: "latest"))
+      if period.requiresLatestYearFilter {
+        queryItems.append(URLQueryItem(name: "filter[year]", value: "latest"))
+      }
 
       if !views.isEmpty {
         let value = views.map { $0.rawValue }.sorted().joined(separator: ",")
@@ -94,3 +98,4 @@ public enum MSummaryView: String, CaseIterable, Hashable {
   case topAlbums = "top-albums"
   case topSongs = "top-songs"
 }
+

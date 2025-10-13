@@ -10,15 +10,32 @@ import MusadoraKit
 import MusicKit
 
 struct MusicSummariesView: View {
+  @State private var selection: SummarySelection = .year
   @State private var topArtists: Artists = []
   @State private var topAlbums: Albums = []
   @State private var topSongs: Songs = []
-  @State private var year: Int?
-  @State private var errorMessage: String?
+  @State private var title: String = ""
+  @State private var subtitle: String?
   @State private var isEligible: Bool = false
+  @State private var isLoading: Bool = false
+  @State private var errorMessage: String?
 
   var body: some View {
     List {
+      Picker("Summary Period", selection: $selection) {
+        ForEach(SummarySelection.allCases) { period in
+          Text(period.title)
+            .tag(period)
+        }
+      }
+      .pickerStyle(.segmented)
+      .padding(.vertical, 4)
+
+      if isLoading {
+        ProgressView("Loading Replay…")
+          .frame(maxWidth: .infinity)
+      }
+
       if let message = errorMessage {
         Section {
           Text(message)
@@ -27,17 +44,29 @@ struct MusicSummariesView: View {
       }
 
       if isEligible {
-        if let year {
-          Text("Year: \(year)")
-            .font(.headline)
+        if !title.isEmpty {
+          VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+              .font(.headline)
+            if let subtitle {
+              Text(subtitle)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            }
+          }
         }
 
         NavigationLink("Top Songs", destination: SongsView(with: topSongs))
         NavigationLink("Top Albums", destination: AlbumsView(with: topAlbums))
 
         Section("Top Artists") {
-          ForEach(topArtists) { artist in
-            Text(artist.name)
+          if topArtists.isEmpty {
+            Text("No artists in this summary.")
+              .foregroundStyle(.secondary)
+          } else {
+            ForEach(topArtists) { artist in
+              Text(artist.name)
+            }
           }
         }
       }
@@ -46,12 +75,31 @@ struct MusicSummariesView: View {
     .task(id: MusicAuthorization.currentStatus) {
       await checkEligibilityAndLoad()
     }
+    .task(id: selection) {
+      await loadSummaries()
+    }
   }
 }
 
-extension MusicSummariesView {
+private extension MusicSummariesView {
+  enum SummarySelection: String, CaseIterable, Identifiable {
+    case year
+    case month
+
+    var id: String { rawValue }
+
+    var title: String {
+      switch self {
+      case .year:
+        "Year"
+      case .month:
+        "Month"
+      }
+    }
+  }
+
   @MainActor
-  private func checkEligibilityAndLoad() async {
+  func checkEligibilityAndLoad() async {
     errorMessage = nil
     isEligible = false
 
@@ -69,17 +117,46 @@ extension MusicSummariesView {
       return
     }
 
+    await loadSummaries()
+  }
+
+  @MainActor
+  func loadSummaries() async {
+    guard errorMessage == nil else { return }
+
+    isLoading = true
+    defer { isLoading = false }
+
     do {
-      let summary = try await MSummary.latest()
-      self.topArtists = summary.topArtists
-      self.topAlbums = summary.topAlbums
-      self.topSongs = summary.topSongs
-      self.year = summary.year
-      self.isEligible = true
+      let summary: MSummaryResponse
+      switch selection {
+      case .year:
+        summary = try await MSummary.latest()
+        if let year = summary.year {
+          title = "Year: \(year)"
+          subtitle = "Apple Music Replay"
+        } else {
+          title = "Latest Replay"
+          subtitle = "Yearly summary"
+        }
+      case .month:
+        summary = try await MSummary.latestMonth()
+        title = "Latest Month"
+        subtitle = "Apple Music Replay (Monthly)"
+      }
+
+      topArtists = summary.topArtists
+      topAlbums = summary.topAlbums
+      topSongs = summary.topSongs
+      isEligible = true
     } catch is CancellationError {
       // Task was cancelled by SwiftUI lifecycle; ignore
     } catch {
       errorMessage = "Could not load Replay (\(error.localizedDescription))."
+      topArtists = []
+      topAlbums = []
+      topSongs = []
+      isEligible = false
     }
   }
 }
