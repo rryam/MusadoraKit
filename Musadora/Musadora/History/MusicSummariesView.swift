@@ -153,6 +153,17 @@ private extension MusicSummariesView {
       isEligible = true
     } catch is CancellationError {
       // Task was cancelled by SwiftUI lifecycle; ignore
+    } catch let error as MusadoraKitError {
+      switch error {
+      case .invalidSummaryPeriod:
+        errorMessage = "Monthly Replay isn't available for the previous month yet. Try again soon."
+      default:
+        errorMessage = "Could not load Replay (\(error.localizedDescription))."
+      }
+      topArtists = []
+      topAlbums = []
+      topSongs = []
+      isEligible = false
     } catch {
       errorMessage = "Could not load Replay (\(error.localizedDescription))."
       topArtists = []
