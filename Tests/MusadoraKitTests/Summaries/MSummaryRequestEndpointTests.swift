@@ -32,7 +32,7 @@ struct MSummaryRequestEndpointTests {
   func endpointURLLanguageIncludeExtend() throws {
     var request = MSummaryRequest()
     request.views = [.topArtists]
-  	request.languageTag = "en-US"
+    request.languageTag = "en-US"
     request.include = ["relationships"]
     request.extend = ["extended-attributes"]
 
@@ -40,5 +40,14 @@ struct MSummaryRequestEndpointTests {
 
     // Order of query items is deterministic in our builder (filter -> views -> include -> extend -> l)
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/music-summaries?filter[year]=latest&views=top-artists&include=relationships&extend=extended-attributes&l=en-US")
+  }
+
+  @Test
+  func endpointURLLatestMonth() throws {
+    var request = MSummaryRequest()
+    request.period = .month(year: 2025, month: 8)
+
+    let url = try request.endpointURL
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/music-summaries/month-2025-8?views=top-albums,top-artists,top-songs&include=artist,album,song&extend=artistBio,editorialVideo")
   }
 }
