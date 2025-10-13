@@ -9,18 +9,18 @@ enum MSummaryPeriod: Equatable {
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
-  ) -> MSummaryPeriod {
+  ) -> MSummaryPeriod? {
     var calendar = calendar
     calendar.timeZone = timeZone
 
     guard let previousMonth = calendar.date(byAdding: .month, value: -1, to: now) else {
-      return .latestYear
+      return nil
     }
 
     let components = calendar.dateComponents([.year, .month], from: previousMonth)
 
     guard let year = components.year, let month = components.month else {
-      return .latestYear
+      return nil
     }
 
     return .month(year: year, month: month)

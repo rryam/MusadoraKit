@@ -47,6 +47,7 @@ public enum MusadoraKitError: Error, Equatable {
   case typeMissing
   case recommendationOverLimit(for: Int)
   case historyOverLimit(limit: Int, overLimit: Int)
+  case invalidSummaryPeriod
 }
 
 extension MusadoraKitError: CustomStringConvertible {
@@ -60,6 +61,8 @@ extension MusadoraKitError: CustomStringConvertible {
         return "Value must be an integer less than or equal to 30, but was: \(limit)."
       case let .historyOverLimit(limit, overLimit):
         return "Value must be an integer less than or equal to \(limit), but was: \(overLimit)."
+      case .invalidSummaryPeriod:
+        return "A monthly summary period could not be determined from the provided date context."
     }
   }
 }
@@ -79,6 +82,9 @@ extension MusadoraKitError: LocalizedError {
       case let .historyOverLimit(limit, overLimit):
         return NSLocalizedString("Value must be an integer less than or equal to \(limit), but was: \(overLimit).",
                                  comment: "Invalid Parameter Value")
+      case .invalidSummaryPeriod:
+        return NSLocalizedString("A monthly summary period could not be determined from the provided date context.",
+                                 comment: "Invalid Summary Period")
     }
   }
 }
