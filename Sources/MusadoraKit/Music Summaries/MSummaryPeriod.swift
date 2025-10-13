@@ -8,7 +8,7 @@ enum MSummaryPeriod: Equatable {
   static func latestMonth(
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) -> MSummaryPeriod? {
     var calendar = calendar
     calendar.timeZone = timeZone

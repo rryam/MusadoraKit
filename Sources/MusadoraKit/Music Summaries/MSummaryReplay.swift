@@ -44,7 +44,7 @@ public extension MSummary {
     extend: [String]? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> MSummaryResponse {
     guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -80,7 +80,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Artists {
     guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -114,7 +114,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Albums {
     guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -148,7 +148,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Songs {
     guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
