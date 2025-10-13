@@ -43,7 +43,7 @@ public extension MSummary {
     extend: [String]? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> MSummaryResponse {
     return try await response(
       for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
@@ -74,7 +74,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Artists {
     return try await response(
       for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
@@ -103,7 +103,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Albums {
     return try await response(
       for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
@@ -132,7 +132,7 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Songs {
     return try await response(
       for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
