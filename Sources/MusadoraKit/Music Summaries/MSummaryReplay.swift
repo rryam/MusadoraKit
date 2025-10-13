@@ -25,12 +25,7 @@ public extension MSummary {
     include: [String]? = nil,
     extend: [String]? = nil
   ) async throws -> MSummaryResponse {
-    var request = MSummaryRequest()
-    request.views = views
-    request.languageTag = languageTag
-    request.include = include
-    request.extend = extend
-    return try await request.response()
+    try await response(for: .latestYear, views: views, languageTag: languageTag, include: include, extend: extend)
   }
 
   /// Fetch the user's latest monthly Replay summary (previous calendar month).
@@ -48,15 +43,15 @@ public extension MSummary {
     extend: [String]? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
   ) async throws -> MSummaryResponse {
-    var request = MSummaryRequest()
-    request.period = .latestMonth(calendar: calendar, now: now, timeZone: timeZone)
-    request.views = views
-    request.languageTag = languageTag
-    request.include = include
-    request.extend = extend
-    return try await request.response()
+    return try await response(
+      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      views: views,
+      languageTag: languageTag,
+      include: include,
+      extend: extend
+    )
   }
 
   /// Fetch the user's latest Replay top artists for the most recent eligible year.
@@ -64,11 +59,7 @@ public extension MSummary {
   /// - Parameter languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   /// - Returns: The ordered list of top artists from the user's latest Replay summary.
   static func latestTopArtists(languageTag: String? = nil) async throws -> Artists {
-    var request = MSummaryRequest()
-    request.views = [.topArtists]
-    request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topArtists
+    try await response(for: .latestYear, views: [.topArtists], languageTag: languageTag).topArtists
   }
 
   /// Fetch the user's latest monthly Replay top artists (previous calendar month).
@@ -83,14 +74,13 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
   ) async throws -> Artists {
-    var request = MSummaryRequest()
-    request.period = .latestMonth(calendar: calendar, now: now, timeZone: timeZone)
-    request.views = [.topArtists]
-    request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topArtists
+    return try await response(
+      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      views: [.topArtists],
+      languageTag: languageTag
+    ).topArtists
   }
 
   /// Fetch the user's latest Replay top albums for the most recent eligible year.
@@ -98,11 +88,7 @@ public extension MSummary {
   /// - Parameter languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   /// - Returns: The ordered list of top albums from the user's latest Replay summary.
   static func latestTopAlbums(languageTag: String? = nil) async throws -> Albums {
-    var request = MSummaryRequest()
-    request.views = [.topAlbums]
-    request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topAlbums
+    try await response(for: .latestYear, views: [.topAlbums], languageTag: languageTag).topAlbums
   }
 
   /// Fetch the user's latest monthly Replay top albums (previous calendar month).
@@ -117,14 +103,13 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
   ) async throws -> Albums {
-    var request = MSummaryRequest()
-    request.period = .latestMonth(calendar: calendar, now: now, timeZone: timeZone)
-    request.views = [.topAlbums]
-    request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topAlbums
+    return try await response(
+      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      views: [.topAlbums],
+      languageTag: languageTag
+    ).topAlbums
   }
 
   /// Fetch the user's latest Replay top songs for the most recent eligible year.
@@ -132,11 +117,7 @@ public extension MSummary {
   /// - Parameter languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   /// - Returns: The ordered list of top songs from the user's latest Replay summary.
   static func latestTopSongs(languageTag: String? = nil) async throws -> Songs {
-    var request = MSummaryRequest()
-    request.views = [.topSongs]
-    request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topSongs
+    try await response(for: .latestYear, views: [.topSongs], languageTag: languageTag).topSongs
   }
 
   /// Fetch the user's latest monthly Replay top songs (previous calendar month).
@@ -151,13 +132,30 @@ public extension MSummary {
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? TimeZone(abbreviation: "GMT") ?? .current
   ) async throws -> Songs {
+    return try await response(
+      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      views: [.topSongs],
+      languageTag: languageTag
+    ).topSongs
+  }
+}
+
+private extension MSummary {
+  static func response(
+    for period: MSummaryPeriod,
+    views: Set<MSummaryView>,
+    languageTag: String?,
+    include: [String]? = nil,
+    extend: [String]? = nil
+  ) async throws -> MSummaryResponse {
     var request = MSummaryRequest()
-    request.period = .latestMonth(calendar: calendar, now: now, timeZone: timeZone)
-    request.views = [.topSongs]
+    request.period = period
+    request.views = views
     request.languageTag = languageTag
-    let response = try await request.response()
-    return response.topSongs
+    request.include = include
+    request.extend = extend
+    return try await request.response()
   }
 }

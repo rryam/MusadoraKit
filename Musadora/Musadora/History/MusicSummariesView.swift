@@ -122,7 +122,7 @@ private extension MusicSummariesView {
 
   @MainActor
   func loadSummaries() async {
-    guard errorMessage == nil else { return }
+    guard errorMessage == nil, !isLoading else { return }
 
     isLoading = true
     defer { isLoading = false }
