@@ -36,6 +36,7 @@ public extension MSummary {
   ///   - include: Optional relationship names to include.
   ///   - extend: Optional attribute extensions to apply.
   /// - Returns: A typed `MSummaryResponse` containing top artists, albums, and songs (when requested) for the latest month.
+  /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonth(
     views: Set<MSummaryView> = [.topArtists, .topAlbums, .topSongs],
     languageTag: String? = nil,
@@ -45,8 +46,12 @@ public extension MSummary {
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> MSummaryResponse {
+    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+      throw MusadoraKitError.invalidSummaryPeriod
+    }
+
     return try await response(
-      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      for: period,
       views: views,
       languageTag: languageTag,
       include: include,
@@ -70,14 +75,19 @@ public extension MSummary {
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
   ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
   /// - Returns: The ordered list of top artists for the user's most recent monthly Replay summary.
+  /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopArtists(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Artists {
+    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+      throw MusadoraKitError.invalidSummaryPeriod
+    }
+
     return try await response(
-      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      for: period,
       views: [.topArtists],
       languageTag: languageTag
     ).topArtists
@@ -99,14 +109,19 @@ public extension MSummary {
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
   ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
   /// - Returns: The ordered list of top albums for the user's most recent monthly Replay summary.
+  /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopAlbums(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Albums {
+    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+      throw MusadoraKitError.invalidSummaryPeriod
+    }
+
     return try await response(
-      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      for: period,
       views: [.topAlbums],
       languageTag: languageTag
     ).topAlbums
@@ -128,14 +143,19 @@ public extension MSummary {
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
   ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
   /// - Returns: The ordered list of top songs for the user's most recent monthly Replay summary.
+  /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopSongs(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!
   ) async throws -> Songs {
+    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+      throw MusadoraKitError.invalidSummaryPeriod
+    }
+
     return try await response(
-      for: .latestMonth(calendar: calendar, now: now, timeZone: timeZone),
+      for: period,
       views: [.topSongs],
       languageTag: languageTag
     ).topSongs
