@@ -28,6 +28,35 @@ I have written a book on MusicKit and Apple Music API, ["Exploring MusicKit and 
 
 It has all the documentation and references you need to get started with MusicKit and Apple Music API.
 
+## Installation
+
+Swift Package Manager handles the distribution of Swift code and comes built into the Swift compiler.
+
+To add MusadoraKit to your project, simply include it in your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/rryam/MusadoraKit.git", .upToNextMajor(from: "7.0.0"))
+]
+```
+
+## Quick Start
+
+Get up and running with MusadoraKit in minutes. Here is an example of searching for music:
+
+```swift
+import MusadoraKit
+
+Task {
+    do {
+        let searchResponse = try await MCatalog.search(for: "The Weeknd", types: [.songs], limit: 5)
+        print("Found \(searchResponse.songs.count) songs!")
+    } catch {
+        print("Search failed: \(error)")
+    }
+}
+```
+
 ## Sponsors
 
 <p align="leading">
@@ -41,7 +70,7 @@ It has all the documentation and references you need to get started with MusicKi
 ## Musadora Sample App
 I have open-sourced an app I worked on last year called Musadora. (MusadoraKit started as RRMusicKit for the Musadora app!) 
 
-I am slowly adding all the methods used in MusadoraKit to it, so you can refer to how easy it is to use the Swift package.
+I am slowly adding all the methods used in MusadoraKit to it, so you can refer to how easy it is to use the pkage.
 
 ## Apps Using MusadoraKit
 
@@ -55,6 +84,9 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 
 ## Table of Contents
 
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
 - [Start Working with MusicKit](#start-working-with-musickit)
   - [Step 1: Enable MusicKit for Your Bundle Identifier](#step-1-enable-musickit-for-your-bundle-identifier)
   - [Step 2: Add NSAppleMusicUsageDescription to Info.plist](#step-2-add-nsapplemusicusagedescription-to-infoplist)
@@ -79,6 +111,9 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
   - [MusicCatalogResourcesRequest](#musiccatalogresourcesrequest)
   - [MusicLibraryResourcesRequest](#musiclibraryresourcesrequest)
   - [Animated Artwork View](#animated-artwork-view)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
 
 ## Start Working with MusicKit 
 Follow the steps below to setup MusicKit for your app:
@@ -536,5 +571,40 @@ AnimatedArtworkView(
 ```
 
 This view automatically extracts dominant colors from the current playing song's artwork and creates a beautiful animated mesh gradient background that responds to the music.
+
+## Contributing
+
+I welcome contributions to MusadoraKit! Here is how you can help:
+
+1. **Fork the repository** and create a feature branch
+2. **Make your changes** following the existing code style
+3. **Add tests** for new functionality
+4. **Update documentation** as needed
+5. **Submit a pull request** with a clear description
+
+### Development Setup
+
+1. Clone the repository
+2. Open `Package.swift` in Xcode or VS Code forks or CLIs
+3. Run tests to ensure everything works
+4. Make your changes and test them
+
+### Code Style
+
+- Follow SwiftLint rules (run `swiftlint lint`)
+- Use Swift 6.2+ features where appropriate
+- Maintain backward compatibility when possible
+- Document public APIs with DocC comments
+
+## License
+
+MusadoraKit is available under the MIT license. See [LICENSE](LICENSE) for more information.
+
+## Support
+
+- [Documentation](https://rryam.github.io/MusadoraKit/)
+- [Issues](https://github.com/rryam/MusadoraKit/issues)
+- [Discussions](https://github.com/rryam/MusadoraKit/discussions)
+- [Twitter](https://x.com/rudrankriyam)
 
 I hope you love working with MusadoraKit!
