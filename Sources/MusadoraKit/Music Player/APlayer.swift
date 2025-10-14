@@ -83,7 +83,12 @@ public extension APlayer {
     try await play()
   }
 
-  @available(iOS 16.0, tvOS 16.0, visionOS 1.0, *)
+}
+
+@available(iOS 16.0, tvOS 16.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
+@available(watchOS, unavailable)
+public extension APlayer {
+
   func play(album: MusicLibrarySection<Album, Song>) async throws {
     queue = ApplicationMusicPlayer.Queue(for: album.items)
     try await play()
