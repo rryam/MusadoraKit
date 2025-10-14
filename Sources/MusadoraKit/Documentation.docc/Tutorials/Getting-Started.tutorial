@@ -32,7 +32,7 @@
         let package = Package(
             name: "MyMusicApp",
             dependencies: [
-                .package(url: "https://github.com/rryam/MusadoraKit", from: "7.0.0")
+                .package(url: "https://github.com/rryam/MusadoraKit", from: "7.5.1")
             ],
             targets: [
                 .target(name: "MyMusicApp", dependencies: ["MusadoraKit"])
