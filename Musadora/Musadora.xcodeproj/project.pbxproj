@@ -146,7 +146,7 @@
 			);
 			mainGroup = 0A8FFEEE29B9248E0029A91F;
 			packageReferences = (
-				0A834F2229B926AF0063AA6C /* XCRemoteSwiftPackageReference "MusadoraKit" */,
+				0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */,
 			);
 			productRefGroup = 0A8FFEF829B9248F0029A91F /* Products */;
 			projectDirPath = "";
@@ -392,21 +392,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		0A834F2229B926AF0063AA6C /* XCRemoteSwiftPackageReference "MusadoraKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rryam/MusadoraKit";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "..";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0A834F2329B926AF0063AA6C /* MusadoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0A834F2229B926AF0063AA6C /* XCRemoteSwiftPackageReference "MusadoraKit" */;
+			package = 0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */;
 			productName = MusadoraKit;
 		};
 /* End XCSwiftPackageProductDependency section */
