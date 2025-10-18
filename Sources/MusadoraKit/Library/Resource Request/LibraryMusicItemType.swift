@@ -46,7 +46,7 @@ public enum LibraryMusicItemType: String, Codable {
 }
 
 /// An extension providing utility methods for `LibraryMusicItemType`.
-extension LibraryMusicItemType {
+public extension LibraryMusicItemType {
   /// Returns the `LibraryMusicItemType` corresponding to a given type conforming to `FilterableLibraryItem`.
   ///
   /// Use this method to map a type to the appropriate library item type for operations involving music library items.
@@ -55,22 +55,22 @@ extension LibraryMusicItemType {
   /// - Returns: The `LibraryMusicItemType` corresponding to the provided type.
   ///
   /// - Throws: An error if the input type does not match any known library item types.
-  public static func path(for item: any FilterableLibraryItem.Type) throws -> Self {
+  static func path(for item: any FilterableLibraryItem.Type) throws -> Self {
     let path: LibraryMusicItemType
 
     switch item {
-      case is Song.Type:
-        path = .songs
-      case is Album.Type:
-        path = .albums
-      case is Artist.Type:
-        path = .artists
-      case is MusicVideo.Type:
-        path = .musicVideos
-      case is Playlist.Type:
-        path = .playlists
-      default:
-        throw NSError(domain: "Wrong library music item type.", code: 0)
+    case is Song.Type:
+      path = .songs
+    case is Album.Type:
+      path = .albums
+    case is Artist.Type:
+      path = .artists
+    case is MusicVideo.Type:
+      path = .musicVideos
+    case is Playlist.Type:
+      path = .playlists
+    default:
+      throw NSError(domain: "Wrong library music item type.", code: 0)
     }
 
     return path

@@ -79,7 +79,7 @@ public extension MLibrary {
   @available(macCatalyst, unavailable)
   static func songs(limit: Int = 50) async throws -> Songs {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
-      if let _ = MusadoraKit.userToken {
+      if MusadoraKit.userToken != nil {
         var request = MLibraryResourceRequest<Song>()
         request.limit = limit
         let response = try await request.response()
