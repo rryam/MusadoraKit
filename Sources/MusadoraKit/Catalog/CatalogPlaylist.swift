@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MCatalog {
+public extension MCatalog {
   /// Fetch a playlist from the Apple Music catalog by using its identifier.
   ///
   /// In the following example, the method fetches the details of the playlist **Bollywood Hits**
@@ -22,7 +22,7 @@ extension MCatalog {
   ///   - id: The unique identifier for the playlist.
   ///   - properties: Additional relationships to fetch with the playlist.
   /// - Returns: `Playlist` matching the given identifier.
-  public static func playlist(id: MusicItemID, fetch properties: PlaylistProperties) async throws
+  static func playlist(id: MusicItemID, fetch properties: PlaylistProperties) async throws
     -> Playlist {
     try await playlist(id: id, properties: properties)
   }
@@ -49,7 +49,7 @@ extension MCatalog {
   ///
   /// - Note: It is a personal preference to either use the method where the `fetch` parameter takes an array of
   ///  `PlaylistProperty` or as a variadic parameter.
-  public static func playlist(id: MusicItemID, fetch properties: PlaylistProperty...) async throws
+  static func playlist(id: MusicItemID, fetch properties: PlaylistProperty...) async throws
     -> Playlist {
     try await playlist(id: id, properties: properties)
   }
@@ -69,7 +69,7 @@ extension MCatalog {
   /// - Returns: `Playlist` matching the given identifier.
   ///
   /// - Note: Use this method when you have to fetch only one particular relationship.
-  public static func playlist(id: MusicItemID, fetch property: PlaylistProperty) async throws
+  static func playlist(id: MusicItemID, fetch property: PlaylistProperty) async throws
     -> Playlist {
     try await playlist(id: id, properties: [property])
   }
@@ -88,7 +88,7 @@ extension MCatalog {
   ///
   /// - Note: Use this method when you want a faster response with no
   /// additional properties to fetch with the playlist.
-  public static func playlist(id: MusicItemID) async throws -> Playlist {
+  static func playlist(id: MusicItemID) async throws -> Playlist {
     try await playlist(id: id, properties: [])
   }
 
@@ -98,7 +98,7 @@ extension MCatalog {
   ///   - ids: The unique identifiers for the playlists.
   ///   - properties: Additional relationships to fetch with the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  public static func playlists(ids: [MusicItemID], fetch properties: PlaylistProperties)
+  static func playlists(ids: [MusicItemID], fetch properties: PlaylistProperties)
     async throws -> Playlists {
     try await playlists(ids: ids, properties: properties)
   }
@@ -108,12 +108,12 @@ extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Playlists` matching the given identifiers.
-  public static func playlists(ids: [MusicItemID]) async throws -> Playlists {
+  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     try await playlists(ids: ids, properties: [])
   }
 }
 
-extension MCatalog {
+public extension MCatalog {
   private static func playlist(id: MusicItemID, properties: PlaylistProperties) async throws
     -> Playlist {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
@@ -151,7 +151,7 @@ extension MCatalog {
   /// - Returns: `Playlists` containing an array of `Playlist` objects representing the charting playlists.
   ///
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
-  public static func chartPlaylists(storefront: String? = nil) async throws -> Playlists {
+  static func chartPlaylists(storefront: String? = nil) async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
     let url = try chartPlaylistsURL(currentStorefront: countryCode, targetStorefront: storefront)
 
@@ -170,7 +170,7 @@ extension MCatalog {
   /// - Returns: `Playlists` containing an array of `Playlist` objects representing the global charting playlists.
   ///
   /// - Note: As of writing this method, the charting playlists are mostly of the type `Top 100` or `Daily 100`.
-  public static func globalChartPlaylists() async throws -> Playlists {
+  static func globalChartPlaylists() async throws -> Playlists {
     let countryCode = try await MusicDataRequest.currentCountryCode
     var chunkedCountryCodes: [[String]] = [[]]
 

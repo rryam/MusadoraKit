@@ -5,7 +5,7 @@
 //  Created by Rudrank Riyam on 25/08/21.
 //
 
-extension MCatalog {
+public extension MCatalog {
   /// Fetch an artist from the Apple Music catalog by using its identifier.
   ///
   /// - Parameters:
@@ -13,7 +13,7 @@ extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artist.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artist` matching the given identifier.
-  public static func artist(id: MusicItemID, fetch properties: ArtistProperties) async throws
+  static func artist(id: MusicItemID, fetch properties: ArtistProperties) async throws
     -> Artist {
     try await artist(with: id, fetch: properties)
   }
@@ -24,7 +24,7 @@ extension MCatalog {
   ///   - id: The unique identifier for the artist.
   ///   - properties: Additional relationships to fetch with the artist.
   /// - Returns: `Artist` matching the given identifier.
-  public static func artist(id: MusicItemID, fetch properties: ArtistProperty...) async throws
+  static func artist(id: MusicItemID, fetch properties: ArtistProperty...) async throws
     -> Artist {
     try await artist(with: id, fetch: properties)
   }
@@ -35,7 +35,7 @@ extension MCatalog {
   ///   - id: The unique identifier for the artist.
   ///   - property: Additional property or relationship to fetch with the artist.
   /// - Returns: `Artist` matching the given identifier.
-  public static func artist(id: MusicItemID, fetch property: ArtistProperty) async throws -> Artist {
+  static func artist(id: MusicItemID, fetch property: ArtistProperty) async throws -> Artist {
     try await artist(with: id, fetch: [property])
   }
 
@@ -44,7 +44,7 @@ extension MCatalog {
   /// - Parameters:
   ///   - id: The unique identifier for the artist.
   /// - Returns: `Artist` matching the given identifier.
-  public static func artist(id: MusicItemID) async throws -> Artist {
+  static func artist(id: MusicItemID) async throws -> Artist {
     try await artist(with: id, fetch: .all)
   }
 
@@ -55,7 +55,7 @@ extension MCatalog {
   ///   - properties: Additional relationships to fetch with the artists.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artists` matching the given identifiers.
-  public static func artists(ids: [MusicItemID], fetch properties: ArtistProperties) async throws
+  static func artists(ids: [MusicItemID], fetch properties: ArtistProperties) async throws
     -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = properties
@@ -70,7 +70,7 @@ extension MCatalog {
   ///   - property: Additional relationships to fetch with the artists.
   ///   Pass an empty array to avoid fetching additional properties.
   /// - Returns: `Artists` matching the given identifiers.
-  public static func artists(ids: [MusicItemID], fetch property: ArtistProperty...) async throws
+  static func artists(ids: [MusicItemID], fetch property: ArtistProperty...) async throws
     -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = property
@@ -83,7 +83,7 @@ extension MCatalog {
   /// - Parameters:
   ///   - ids: The unique identifiers for the artists.
   /// - Returns: `Artists` matching the given identifiers.
-  public static func artists(ids: [MusicItemID]) async throws -> Artists {
+  static func artists(ids: [MusicItemID]) async throws -> Artists {
     var request = MusicCatalogResourceRequest<Artist>(matching: \.id, memberOf: ids)
     request.properties = .all
     let response = try await request.response()

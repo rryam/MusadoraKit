@@ -100,10 +100,8 @@ public extension MCatalog {
   private static func mergeGenres(_ existingGenres: Set<Genre>, with newGenres: Genres) -> Set<Genre> {
     var mergedGenres = existingGenres
 
-    for genre in newGenres {
-      if !mergedGenres.contains(where: { $0.id == genre.id && $0.name == genre.name }) {
-        mergedGenres.insert(genre)
-      }
+    for genre in newGenres where !mergedGenres.contains(where: { $0.id == genre.id && $0.name == genre.name }) {
+      mergedGenres.insert(genre)
     }
 
     return mergedGenres

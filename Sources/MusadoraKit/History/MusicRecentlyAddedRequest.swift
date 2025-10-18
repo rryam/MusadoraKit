@@ -29,7 +29,7 @@ where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
   /// will fetch for each music item in the response.
   public var properties: [PartialMusicAsyncProperty<MusicItemType>] = []
 
-  /// Fetches items the user has recently added.
+  // Fetches items the user has recently added.
   //    public func response() async throws -> MusicRecentlyAddedResponse<MusicItemType> {
   //        return MusicRecentlyAddedResponse(items: .init(arrayLiteral: []))
   //    }

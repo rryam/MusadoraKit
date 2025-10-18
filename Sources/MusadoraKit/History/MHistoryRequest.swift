@@ -26,12 +26,12 @@ struct MHistoryRequest {
     self.endpoint = endpoint
 
     switch self.endpoint {
-      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
-        maximumLimit = 10
-      case .recentlyAdded:
-        maximumLimit = 25
-      case .recentlyPlayedTracks:
-        maximumLimit = 30
+    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
+      maximumLimit = 10
+    case .recentlyAdded:
+      maximumLimit = 25
+    case .recentlyPlayedTracks:
+      maximumLimit = 30
     }
   }
 
