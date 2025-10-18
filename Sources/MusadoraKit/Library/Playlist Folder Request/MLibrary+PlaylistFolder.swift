@@ -26,26 +26,23 @@
 public typealias LibraryPlaylistFolders = [LibraryPlaylistFolder]
 
 extension MLibrary {
-  /// Fetches all playlist folders from the user's library.
-  ///
-  /// This method retrieves the root-level playlist folders from the user's Apple Music library.
-  /// Each folder may contain playlists and subfolders.
-  ///
-  /// Example usage:
-  /// ```swift
-  /// do {
-  ///     let folders = try await MLibrary.rootPlaylistsFolder()
-  ///     for folder in folders {
-  ///         print("Found folder: \(folder.name)")
-  ///     }
-  /// } catch {
-  ///     print("Error fetching playlist folders: \(error)")
-  /// }
-  /// ```
-  ///
-  /// - Returns: An array of `LibraryPlaylistFolder` objects representing the user's playlist folders.
-  /// - Throws: An error if the request fails or if the user's authorization status has changed.
- // static func rootPlaylistsFolder() async throws -> LibraryPlaylistFolders {
-    // Implementation commented out
-//  }
+  // Fetches all playlist folders from the user's library.
+  //
+  // This method would retrieve the root-level playlist folders from the user's Apple Music library.
+  // Each folder may contain playlists and subfolders.
+  // Example usage:
+  // do {
+  //     let folders = try await MLibrary.rootPlaylistsFolder()
+  //     for folder in folders {
+  //         print("Found folder: \(folder.name)")
+  //     }
+  // } catch {
+  //     print("Error fetching playlist folders: \(error)")
+  // }
+  //
+  // - Returns: An array of `LibraryPlaylistFolder` objects representing the user's playlist folders.
+  // - Throws: An error if the request fails or if the user's authorization status has changed.
+  // static func rootPlaylistsFolder() async throws -> LibraryPlaylistFolders {
+  //   // Implementation placeholder
+  // }
 }

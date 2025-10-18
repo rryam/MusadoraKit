@@ -16,10 +16,10 @@ public enum RatingsError: Error, Equatable {
 extension RatingsError: CustomStringConvertible {
   public var description: String {
     switch self {
-      case .idMissing:
-        return "One or more ID must be specified to fetch the ratings for it."
-      case .typeMissing:
-        return "The music item type must be specified to fetch its ratings."
+    case .idMissing:
+      return "One or more ID must be specified to fetch the ratings for it."
+    case .typeMissing:
+      return "The music item type must be specified to fetch its ratings."
     }
   }
 }
@@ -33,10 +33,10 @@ public enum MediaPlayError: Error, Equatable {
 extension MediaPlayError: CustomStringConvertible {
   public var description: String {
     switch self {
-      case let .notFound(item):
-        return "Not able to count the music items for \(item)."
-      case .platformNotSupported:
-        return "This is only available on iOS."
+    case let .notFound(item):
+      return "Not able to count the music items for \(item)."
+    case .platformNotSupported:
+      return "This is only available on iOS."
     }
   }
 }
@@ -71,20 +71,18 @@ extension MusadoraKitError: LocalizedError {
   public var errorDescription: String? {
     switch self {
     case let .notFound(id):
-      return NSLocalizedString("The specified music item could not be found for \(id).",
-                               comment: "Resource Not Found")
+      let fmt = NSLocalizedString("mk_error_not_found", comment: "Resource Not Found")
+      return String(format: fmt, id)
     case .typeMissing:
-      return NSLocalizedString("One or more types must be specified for fetching top results in search suggestions.",
-                               comment: "Missing Parameter")
+      return NSLocalizedString("mk_error_type_missing_suggestions", comment: "Missing Parameter")
     case let .recommendationOverLimit(limit):
-      return NSLocalizedString("Value must be an integer less than or equal to 30, but was: \(limit).",
-                               comment: "Invalid Parameter Value")
+      let fmt = NSLocalizedString("mk_error_recommendation_over_limit", comment: "Invalid Parameter Value")
+      return String(format: fmt, limit)
     case let .historyOverLimit(limit, overLimit):
-      return NSLocalizedString("Value must be an integer less than or equal to \(limit), but was: \(overLimit).",
-                               comment: "Invalid Parameter Value")
+      let fmt = NSLocalizedString("mk_error_history_over_limit", comment: "Invalid Parameter Value")
+      return String(format: fmt, limit, overLimit)
     case .invalidSummaryPeriod:
-      return NSLocalizedString("A monthly summary period could not be determined from the provided date context.",
-                               comment: "Invalid Summary Period")
+      return NSLocalizedString("mk_error_invalid_summary_period", comment: "Invalid Summary Period")
     }
   }
 }
