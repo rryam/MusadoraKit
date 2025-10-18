@@ -1,4 +1,4 @@
-//
+// 
 //  Rating.swift
 //  MusadoraKit
 //

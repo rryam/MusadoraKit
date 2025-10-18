@@ -1,4 +1,4 @@
-//
+// 
 //  MLibrarySearchType.swift
 //  MusadoraKit
 //
@@ -18,12 +18,18 @@ enum MLibrarySearchType: String, CodingKey {
       .removeDuplicates()
       .compactMap {
         switch $0 {
-          case Song.searchIdentifier: return songs.rawValue
-          case Album.searchIdentifier: return albums.rawValue
-          case MusicVideo.searchIdentifier: return musicVideos.rawValue
-          case Playlist.searchIdentifier: return playlists.rawValue
-          case Artist.searchIdentifier: return artists.rawValue
-          default: return nil
+        case Song.searchIdentifier:
+          return songs.rawValue
+        case Album.searchIdentifier:
+          return albums.rawValue
+        case MusicVideo.searchIdentifier:
+          return musicVideos.rawValue
+        case Playlist.searchIdentifier:
+          return playlists.rawValue
+        case Artist.searchIdentifier:
+          return artists.rawValue
+        default:
+          return nil
         }
       }
       .joined(separator: ",")

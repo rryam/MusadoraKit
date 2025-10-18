@@ -1,4 +1,4 @@
-//
+// 
 //  LibraryArtist.swift
 //  MusadoraKit
 //
