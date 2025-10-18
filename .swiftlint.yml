@@ -93,6 +93,8 @@ large_tuple: 3
 number_separator:
   minimum_length: 5
 line_length: 300
+file_length:
+  warning: 500
 file_name:
   excluded:
     - SwiftSyntax+SwiftLint.swift
