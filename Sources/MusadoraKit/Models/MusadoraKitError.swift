@@ -71,18 +71,20 @@ extension MusadoraKitError: LocalizedError {
   public var errorDescription: String? {
     switch self {
     case let .notFound(id):
-      let fmt = NSLocalizedString("mk_error_not_found", comment: "Resource Not Found")
-      return String(format: fmt, id)
+      return NSLocalizedString("The specified music item could not be found for \(id).",
+                               comment: "Resource Not Found")
     case .typeMissing:
-      return NSLocalizedString("mk_error_type_missing_suggestions", comment: "Missing Parameter")
+      return NSLocalizedString("One or more types must be specified for fetching top results in search suggestions.",
+                               comment: "Missing Parameter")
     case let .recommendationOverLimit(limit):
-      let fmt = NSLocalizedString("mk_error_recommendation_over_limit", comment: "Invalid Parameter Value")
-      return String(format: fmt, limit)
+      return NSLocalizedString("Value must be an integer less than or equal to 30, but was: \(limit).",
+                               comment: "Invalid Parameter Value")
     case let .historyOverLimit(limit, overLimit):
-      let fmt = NSLocalizedString("mk_error_history_over_limit", comment: "Invalid Parameter Value")
-      return String(format: fmt, limit, overLimit)
+      return NSLocalizedString("Value must be an integer less than or equal to \(limit), but was: \(overLimit).",
+                               comment: "Invalid Parameter Value")
     case .invalidSummaryPeriod:
-      return NSLocalizedString("mk_error_invalid_summary_period", comment: "Invalid Summary Period")
+      return NSLocalizedString("A monthly summary period could not be determined from the provided date context.",
+                               comment: "Invalid Summary Period")
     }
   }
 }
