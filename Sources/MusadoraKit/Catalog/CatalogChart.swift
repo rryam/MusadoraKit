@@ -37,7 +37,7 @@ public enum MusicCatalogChartType {
 /// - Returns: An array with all cases of `MusicCatalogChartType`.
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public extension [MusicCatalogChartType] {
-  public static var all: Self {
+  static var all: Self {
     MusicCatalogChartType.allCases
   }
 }
@@ -47,7 +47,7 @@ public extension [MusicCatalogChartType] {
 /// - Returns: An array with all cases of `MusicCatalogChartKind`.
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public extension [MusicCatalogChartKind] {
-  public static var all: Self {
+  static var all: Self {
     MusicCatalogChartKind.allCases
   }
 }

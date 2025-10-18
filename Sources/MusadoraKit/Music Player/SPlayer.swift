@@ -65,8 +65,8 @@ public extension SPlayer {
 public extension SPlayer {
   /// Plays the specified playlist in the player's queue.
   ///
-  @available(macOS 14.0, *)
   /// - Parameter playlist: The playlist to play.
+  @available(macOS 14.0, *)
   func play(playlist: Playlist) async throws {
     queue = [playlist]
     try await play()
@@ -77,9 +77,9 @@ public extension SPlayer {
 @available(watchOS, unavailable)
 public extension SPlayer {
   /// Plays the specified album in the player's queue.
-  @available(macOS 14.0, *)
   ///
   /// - Parameter album: The album to play.
+  @available(macOS 14.0, *)
   func play(album: Album) async throws {
     queue = [album]
     try await play()
@@ -90,10 +90,10 @@ public extension SPlayer {
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-  @available(macOS 14.0, *)
   /// Plays the specified personalized music recommendation item in the player's queue.
   ///
   /// - Parameter item: The personalized music recommendation item to play, which can be an album, playlist, or station.
+  @available(macOS 14.0, *)
   func play(item: MusicPersonalRecommendation.Item) async throws {
     switch item {
     case .album(let album):

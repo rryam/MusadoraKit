@@ -12,7 +12,7 @@ public typealias ArtistProperty = PartialMusicAsyncProperty<Artist>
 public typealias ArtistProperties = [ArtistProperty]
 
 public extension ArtistProperties {
-  public static var all: Self {
+  static var all: Self {
     [.genres, .station, .musicVideos, .albums, .playlists, .appearsOnAlbums, .fullAlbums, .featuredAlbums, .liveAlbums, .compilationAlbums, .featuredPlaylists, .latestRelease, .topSongs, .topMusicVideos, .similarArtists, .singles]
   }
 }
