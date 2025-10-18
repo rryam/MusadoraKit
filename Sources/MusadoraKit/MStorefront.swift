@@ -1,4 +1,4 @@
-//
+// 
 //  Storefronts.swift
 //  MusadoraKit
 //

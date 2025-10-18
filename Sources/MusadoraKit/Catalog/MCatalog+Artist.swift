@@ -1,4 +1,4 @@
-//
+// 
 //  CatalogArtist.swift
 //  MusadoraKit
 //

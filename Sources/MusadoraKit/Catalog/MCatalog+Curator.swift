@@ -1,4 +1,4 @@
-//
+// 
 //  CatalogCurator.swift
 //  MusadoraKit
 //

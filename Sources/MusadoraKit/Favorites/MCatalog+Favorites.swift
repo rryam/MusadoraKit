@@ -1,4 +1,4 @@
-//
+// 
 //  Favorites.swift
 //  MusadoraKit
 //

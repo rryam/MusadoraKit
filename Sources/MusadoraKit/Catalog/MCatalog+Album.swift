@@ -1,4 +1,4 @@
-//
+// 
 //  CatalogAlbum.swift
 //  MusadoraKit
 //
