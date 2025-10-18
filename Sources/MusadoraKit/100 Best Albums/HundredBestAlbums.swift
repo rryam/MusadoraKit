@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MRecommendation {
+public extension MRecommendation {
   /// Retrieves the 100 Best Album for a given position.
   ///
   /// Example usage:
@@ -27,7 +27,7 @@ extension MRecommendation {
   ///   - storefront: The storefront to fetch the album from (default: "us").
   ///   - region: The region/language code for localization (default: "en-us").
   /// - Returns: The `HundredBestAlbum` object representing the album at the specified position.
-  public static func hundredBestAlbum(
+  static func hundredBestAlbum(
     at position: Int, storefront: String = "us", region: String = "en-us"
   ) async throws -> HundredBestAlbum {
     let request = HundredBestAlbumRequest(
@@ -52,7 +52,7 @@ extension MRecommendation {
   ///     }
   ///
   /// - Returns: An array of `HundredBestAlbum` objects representing all the 100 Best Albums.
-  public static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us")
+  static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us")
     async throws -> [HundredBestAlbum] {
     let positions = 1...100
     var albums: [HundredBestAlbum?] = Array(repeating: nil, count: positions.count)
