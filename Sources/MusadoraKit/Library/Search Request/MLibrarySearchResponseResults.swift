@@ -1,4 +1,4 @@
-//
+// 
 //  MLibrarySearchResponseResults.swift
 //  MusadoraKit
 //

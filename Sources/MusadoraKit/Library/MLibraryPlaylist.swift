@@ -49,7 +49,7 @@ public struct MLibraryPlaylist: Codable, MusicItem {
     public let hasCatalog: Bool
 
     /// Parameters that determine how the playlist can be played.
-    public var playParams: MPlayParameters
+    public var playParams: MLibraryPlaylistPlayParameters
 
     /// A brief description of the playlist.
     ///
@@ -69,28 +69,10 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   }
 
   /// Defines the parameters required for playback of the playlist.
-  public struct MPlayParameters: Codable, Sendable {
-    /// The unique identifier associated with the playlist.
-    public let id: MusicItemID
-
-    /// Indicates if the playlist is sourced from the user's own library.
-    public let isLibrary: Bool
-
-    /// A global identifier, if present, associated with the playlist.
-    ///
-    /// This might be used for global operations or recognition across different systems.
-    public let globalID: MusicItemID?
-
-    enum CodingKeys: String, CodingKey {
-      case id, isLibrary
-      case globalID = "globalId"
-    }
   }
 
   /// Optionally retrieves the global identifier for the playlist.
-  public var globalID: String? {
-    attributes.playParams.globalID?.rawValue
-  }
+  public var globalID: String? { attributes.playParams.globalID?.rawValue }
 }
 
 @available(macOS 14.0, *)
@@ -100,14 +82,27 @@ extension MLibraryPlaylist: PlayableMusicItem {
   ///
   /// - Returns: A set of play parameters or `nil` if they can't be determined.
   public var playParameters: PlayParameters? {
-    get {
-      let parameters = try? JSONEncoder().encode(attributes.playParams)
+    let parameters = try? JSONEncoder().encode(attributes.playParams)
+    guard let parameters else { return nil }
+    let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
+    return playParams
+  }
+}
 
-      guard let parameters else { return nil }
+/// Defines the parameters required for playback of a library playlist.
+public struct MLibraryPlaylistPlayParameters: Codable, Sendable {
+  /// The unique identifier associated with the playlist.
+  public let id: MusicItemID
 
-      let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
-      return playParams
-    }
+  /// Indicates if the playlist is sourced from the user's own library.
+  public let isLibrary: Bool
+
+  /// A global identifier, if present, associated with the playlist.
+  public let globalID: MusicItemID?
+
+  private enum CodingKeys: String, CodingKey {
+    case id, isLibrary
+    case globalID = "globalId"
   }
 }
 
