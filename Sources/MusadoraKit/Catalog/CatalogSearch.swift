@@ -5,7 +5,7 @@
 //  Created by Rudrank Riyam on 20/08/21.
 //
 
-extension MCatalog {
+public extension MCatalog {
   /// Search the Apple Music catalog by using a query term.
   ///
   /// - Parameters:
@@ -14,7 +14,7 @@ extension MCatalog {
   ///   - limit: The number of objects returned.
   ///   - offset: The next page of group of objects to fetch.
   /// - Returns: `MusicCatalogSearchResponse` that returns different music items.
-  public static func search(
+  static func search(
     for term: String,
     types: [MCatalogSearchType],
     limit: Int? = nil,
@@ -29,7 +29,7 @@ extension MCatalog {
     return response
   }
 
-  public static func searchSongs(
+  static func searchSongs(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -41,7 +41,7 @@ extension MCatalog {
     return response.songs
   }
 
-  public static func searchPlaylists(
+  static func searchPlaylists(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -53,7 +53,7 @@ extension MCatalog {
     return response.playlists
   }
 
-  public static func searchAlbums(
+  static func searchAlbums(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -65,7 +65,7 @@ extension MCatalog {
     return response.albums
   }
 
-  public static func searchArtists(
+  static func searchArtists(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -78,7 +78,7 @@ extension MCatalog {
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-  public static func searchMusicVideos(
+  static func searchMusicVideos(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -91,7 +91,7 @@ extension MCatalog {
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-  public static func searchCurators(
+  static func searchCurators(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -104,7 +104,7 @@ extension MCatalog {
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-  public static func searchRadioShows(
+  static func searchRadioShows(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -116,7 +116,7 @@ extension MCatalog {
     return response.radioShows
   }
 
-  public static func searchStations(
+  static func searchStations(
     for term: String,
     limit: Int? = nil,
     offset: Int? = nil
@@ -129,7 +129,7 @@ extension MCatalog {
   }
 }
 
-extension MCatalog {
+public extension MCatalog {
   /// Fetch top results and search suggestions from the Apple Music catalog by using a query term.
   ///
   /// - Parameters:
@@ -138,7 +138,7 @@ extension MCatalog {
   ///   - limit: The number of objects returned.
   /// - Returns: `MusicCatalogSearchSuggestionsResponse` that returns different top music items and suggestions.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-  public static func searchSuggestions(
+  static func searchSuggestions(
     for term: String,
     types: [MCatalogSearchType],
     limit: Int? = nil
@@ -158,7 +158,7 @@ extension MCatalog {
   ///   - limit: The number of objects returned.
   /// - Returns: `[MusicCatalogSearchSuggestionsResponse.Suggestion]` which is an array of  suggestions.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-  public static func suggestions(for term: String, limit: Int? = nil) async throws
+  static func suggestions(for term: String, limit: Int? = nil) async throws
     -> [MusicCatalogSearchSuggestionsResponse.Suggestion] {
     var request = MusicCatalogSearchSuggestionsRequest(term: term)
     request.limit = limit

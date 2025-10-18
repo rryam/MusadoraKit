@@ -26,10 +26,14 @@ extension EquivalentMusicItemType {
     let path: EquivalentMusicItemType
 
     switch item {
-      case is Song.Type: path = .songs
-      case is Album.Type: path = .albums
-      case is MusicVideo.Type: path = .musicVideos
-      default: throw NSError(domain: "Wrong equivalent music item type.", code: 0)
+    case is Song.Type:
+      path = .songs
+    case is Album.Type:
+      path = .albums
+    case is MusicVideo.Type:
+      path = .musicVideos
+    default:
+      throw NSError(domain: "Wrong equivalent music item type.", code: 0)
     }
     return path
   }
