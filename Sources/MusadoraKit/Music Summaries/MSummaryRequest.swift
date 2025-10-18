@@ -98,4 +98,3 @@ public enum MSummaryView: String, CaseIterable, Hashable {
   case topAlbums = "top-albums"
   case topSongs = "top-songs"
 }
-

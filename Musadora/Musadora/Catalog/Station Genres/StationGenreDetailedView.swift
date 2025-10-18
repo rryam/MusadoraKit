@@ -5,9 +5,8 @@
 //  Created by Rudrank Riyam on 12/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
-
+import SwiftUI
 
 struct StationGenreDetailedView: View {
   var stationGenre: StationGenre

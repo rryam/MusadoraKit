@@ -11,8 +11,8 @@ public typealias RecordLabelProperty = PartialMusicAsyncProperty<RecordLabel>
 /// Additional properties/relationships of a record label.
 public typealias RecordLabelProperties = [RecordLabelProperty]
 
-extension RecordLabelProperties {
-  public static var all: Self {
+public extension RecordLabelProperties {
+  static var all: Self {
     [.latestReleases, .topReleases]
   }
 }

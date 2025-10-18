@@ -25,7 +25,6 @@ import Foundation
 /// }
 /// ```
 public struct HundredBestAlbumRequest {
-
   /// The position of the album in the 100 Best Albums list (1-100).
   private let position: Int
 
@@ -69,7 +68,6 @@ public struct HundredBestAlbumRequest {
 
 /// Extension containing URL-related functionality for the album request.
 extension HundredBestAlbumRequest {
-
   /// The URL used to fetch the album data.
   ///
   /// - Returns: A URL constructed using the storefront, region, and position.

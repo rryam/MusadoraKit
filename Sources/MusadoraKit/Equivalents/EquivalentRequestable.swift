@@ -22,7 +22,6 @@ extension MusicVideo: EquivalentRequestable {
 /// A protocol indicating that a music item can be fetched from a specific storefront using its identifier.
 /// Conforming types should provide the resource path component used in the Apple Music API URL.
 public protocol StorefrontRequestable: MusicItem, Decodable {
-
     /// The resource path component used in the Apple Music API URL.
     /// For example, for songs, this would be "songs".
     static var resourcePath: String { get }

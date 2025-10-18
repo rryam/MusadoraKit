@@ -14,8 +14,8 @@ public typealias RadioShowProperty = PartialMusicAsyncProperty<RadioShow>
 public typealias RadioShowProperties = [RadioShowProperty]
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-extension RadioShowProperties {
-  public static var all: Self {
+public extension RadioShowProperties {
+  static var all: Self {
     [.playlists]
   }
 }

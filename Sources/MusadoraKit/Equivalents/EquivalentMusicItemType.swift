@@ -15,7 +15,6 @@ enum EquivalentMusicItemType: String, Codable {
 }
 
 extension EquivalentMusicItemType {
-
   /// Returns the equivalent music item type for the given type.
   ///
   /// - Parameter item: A type that conforms to `EquivalentRequestable`.
@@ -27,10 +26,14 @@ extension EquivalentMusicItemType {
     let path: EquivalentMusicItemType
 
     switch item {
-      case is Song.Type: path = .songs
-      case is Album.Type: path = .albums
-      case is MusicVideo.Type: path = .musicVideos
-      default: throw NSError(domain: "Wrong equivalent music item type.", code: 0)
+    case is Song.Type:
+      path = .songs
+    case is Album.Type:
+      path = .albums
+    case is MusicVideo.Type:
+      path = .musicVideos
+    default:
+      throw NSError(domain: "Wrong equivalent music item type.", code: 0)
     }
     return path
   }

@@ -11,8 +11,8 @@ public typealias PlaylistProperty = PartialMusicAsyncProperty<Playlist>
 /// Additional properties/relationships of a playlist.
 public typealias PlaylistProperties = [PlaylistProperty]
 
-extension PlaylistProperties {
-  public static var all: Self {
+public extension PlaylistProperties {
+  static var all: Self {
     var properties: Self = [.tracks, .featuredArtists, .moreByCurator]
 
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {

@@ -18,7 +18,6 @@ import Foundation
 ///     print(playlist.attributes.name) // Prints the name of the playlist
 ///
 public struct MLibraryPlaylist: Codable, MusicItem {
-
   /// The unique identifier for the playlist.
   ///
   /// This identifier is unique to each playlist and can be used for fetching, updating, or deleting specific playlists.
@@ -33,7 +32,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   ///
   /// The attributes provide a detailed look into the playlist's metadata and characteristics.
   public struct Attributes: Codable, Sendable {
-
     /// Indicates whether the playlist can be edited or not.
     ///
     /// If `true`, the playlist can be modified by the user.
@@ -51,7 +49,7 @@ public struct MLibraryPlaylist: Codable, MusicItem {
     public let hasCatalog: Bool
 
     /// Parameters that determine how the playlist can be played.
-    public var playParams: MPlayParameters
+    public var playParams: MLibraryPlaylistPlayParameters
 
     /// A brief description of the playlist.
     ///
@@ -64,7 +62,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
 
   /// Contains the textual description of a playlist.
   public struct Description: Codable, Sendable {
-
     /// The standard format of the description.
     ///
     /// This text provides insight or an overview of the playlist's theme or content.
@@ -72,47 +69,40 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   }
 
   /// Defines the parameters required for playback of the playlist.
-  public struct MPlayParameters: Codable, Sendable {
-
-    /// The unique identifier associated with the playlist.
-    public let id: MusicItemID
-
-    /// Indicates if the playlist is sourced from the user's own library.
-    public let isLibrary: Bool
-
-    /// A global identifier, if present, associated with the playlist.
-    ///
-    /// This might be used for global operations or recognition across different systems.
-    public let globalID: MusicItemID?
-
-    enum CodingKeys: String, CodingKey {
-      case id, isLibrary
-      case globalID = "globalId"
-    }
   }
 
   /// Optionally retrieves the global identifier for the playlist.
-  public var globalID: String? {
-    attributes.playParams.globalID?.rawValue
-  }
+  public var globalID: String? { attributes.playParams.globalID?.rawValue }
 }
 
 @available(macOS 14.0, *)
 @available(watchOS, unavailable)
 extension MLibraryPlaylist: PlayableMusicItem {
-
   /// Retrieves the parameters required to play the playlist.
   ///
   /// - Returns: A set of play parameters or `nil` if they can't be determined.
   public var playParameters: PlayParameters? {
-    get {
-      let parameters = try? JSONEncoder().encode(attributes.playParams)
+    let parameters = try? JSONEncoder().encode(attributes.playParams)
+    guard let parameters else { return nil }
+    let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
+    return playParams
+  }
+}
 
-      guard let parameters else { return nil }
+/// Defines the parameters required for playback of a library playlist.
+public struct MLibraryPlaylistPlayParameters: Codable, Sendable {
+  /// The unique identifier associated with the playlist.
+  public let id: MusicItemID
 
-      let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
-      return playParams
-    }
+  /// Indicates if the playlist is sourced from the user's own library.
+  public let isLibrary: Bool
+
+  /// A global identifier, if present, associated with the playlist.
+  public let globalID: MusicItemID?
+
+  private enum CodingKeys: String, CodingKey {
+    case id, isLibrary
+    case globalID = "globalId"
   }
 }
 

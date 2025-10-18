@@ -5,8 +5,8 @@
 //  Created by Rudrank Riyam on 13/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
+import SwiftUI
 
 struct RecommendationsView: View {
   @State private var recommendations: MRecommendations = []

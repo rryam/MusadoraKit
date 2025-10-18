@@ -1,5 +1,5 @@
-import SwiftUI
 import MusicKit
+import SwiftUI
 
 /// A view that displays an animated artwork with a dynamic mesh gradient background.
 ///
@@ -12,22 +12,22 @@ import MusicKit
 public struct AnimatedArtworkView: View {
   /// The music player queue to observe for current entry changes.
   @ObservedObject private var queue: MusicPlayer.Queue
-  
+
   /// The current entry in the music player queue.
   @State private var currentEntry: MusicPlayer.Queue.Entry?
-  
+
   /// The dominant colors extracted from the artwork.
   @State private var dominantColors: [Color] = []
-  
+
   /// The artwork to display, if provided directly.
   var artwork: MusicKit.Artwork?
-  
+
   /// The width of the artwork image to fetch.
   private let width: Int
-  
+
   /// The height of the artwork image to fetch.
   private let height: Int
-  
+
   /// The points used to define the mesh gradient.
   ///
   /// This array contains 16 SIMD2<Float> values representing the initial positions
@@ -51,7 +51,7 @@ public struct AnimatedArtworkView: View {
     SIMD2<Float>(0.667, 1.000),
     SIMD2<Float>(1.000, 1.000)
   ]
-  
+
   /// The current points used to define the mesh gradient.
   ///
   /// This state property is initialized with the `initialPoints` and can be
@@ -100,7 +100,7 @@ public struct AnimatedArtworkView: View {
       }
     }
   }
-  
+
   /// Extracts the dominant colors from the artwork.
   private func extractColors() async {
     do {
@@ -113,7 +113,7 @@ public struct AnimatedArtworkView: View {
       } else {
         colors = []
       }
-      
+
       await MainActor.run {
         self.dominantColors = colors
       }
@@ -121,16 +121,16 @@ public struct AnimatedArtworkView: View {
       print("Error extracting colors: \(error)")
     }
   }
-  
+
   /// Generates the gradient content for a given date.
   ///
   /// - Parameter date: The current date used for animation.
   /// - Returns: An array of SIMD2<Float> points representing the gradient positions.
   private func gradientContent(for date: Date) -> [SIMD2<Float>] {
     let phase = CGFloat(date.timeIntervalSince1970) / 3.0
-    
+
     var animatedPositions = points
-    
+
     // Animate edge points
     animatedPositions[1].x = Float(0.33 + 0.1 * cos(phase * 0.7))  // Top edge
     animatedPositions[2].x = Float(0.67 - 0.1 * cos(phase * 0.8))  // Top edge
@@ -139,7 +139,7 @@ public struct AnimatedArtworkView: View {
     animatedPositions[11].y = Float(0.67 - 0.1 * cos(phase * 1.2)) // Bottom edge
     animatedPositions[13].x = Float(0.33 + 0.1 * cos(phase * 1.3)) // Right edge
     animatedPositions[14].x = Float(0.67 - 0.1 * cos(phase * 1.4)) // Right edge
-    
+
     // Animate inner points
     animatedPositions[5].x = Float(0.33 + 0.15 * cos(phase * 0.8))
     animatedPositions[5].y = Float(0.33 + 0.15 * cos(phase * 0.9))
@@ -149,7 +149,7 @@ public struct AnimatedArtworkView: View {
     animatedPositions[9].y = Float(0.67 - 0.15 * cos(phase * 1.3))
     animatedPositions[10].x = Float(0.67 - 0.15 * cos(phase * 1.4))
     animatedPositions[10].y = Float(0.67 - 0.15 * cos(phase * 1.5))
-    
+
     return animatedPositions
   }
 }

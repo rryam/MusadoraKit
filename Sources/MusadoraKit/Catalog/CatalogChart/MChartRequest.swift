@@ -29,16 +29,16 @@ struct MChartRequest {
   init(types: [MChartItem.Type]) {
     self.types = Set(types.map { $0.objectIdentifier }).compactMap {
       switch $0 {
-        case Song.objectIdentifier:
-          return "songs"
-        case Album.objectIdentifier:
-          return "albums"
-        case MusicVideo.objectIdentifier:
-          return "music-videos"
-        case Playlist.objectIdentifier:
-          return "playlists"
-        default:
-          return nil
+      case Song.objectIdentifier:
+        return "songs"
+      case Album.objectIdentifier:
+        return "albums"
+      case MusicVideo.objectIdentifier:
+        return "music-videos"
+      case Playlist.objectIdentifier:
+        return "playlists"
+      default:
+        return nil
       }
     }.joined(separator: ",")
   }

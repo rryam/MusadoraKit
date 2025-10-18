@@ -18,27 +18,27 @@ enum MHistoryEndpoints {
 
   var path: String {
     switch self {
-      case .heavyRotation:
-        return "history/heavy-rotation"
-      case .recentlyAdded:
-        return "library/recently-added"
-      case .recentlyPlayed:
-        return "recent/played"
-      case .recentlyPlayedTracks:
-        return "recent/played/tracks"
-      case .recentlyPlayedStations:
-        return "recent/radio-stations"
+    case .heavyRotation:
+      return "history/heavy-rotation"
+    case .recentlyAdded:
+      return "library/recently-added"
+    case .recentlyPlayed:
+      return "recent/played"
+    case .recentlyPlayedTracks:
+      return "recent/played/tracks"
+    case .recentlyPlayedStations:
+      return "recent/radio-stations"
     }
   }
 
   var maximumLimit: Int {
     switch self {
-      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
-        return 10
-      case .recentlyAdded:
-        return 25
-      case .recentlyPlayedTracks:
-        return 30
+    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
+      return 10
+    case .recentlyAdded:
+      return 25
+    case .recentlyPlayedTracks:
+      return 30
     }
   }
 }

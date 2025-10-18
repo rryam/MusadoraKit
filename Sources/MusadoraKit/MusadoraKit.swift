@@ -32,7 +32,7 @@ extension MusadoraKit {
             UserDefaults.standard.set(newValue, forKey: userTokenKey)
         }
     }
-    
+
     /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
     ///
     /// This function performs a GET request to the `/v1/test` endpoint of the Apple Music API.
@@ -69,19 +69,19 @@ extension MusadoraKit {
     public static func testConnectivity() async throws {
         var components = AppleMusicURLComponents()
         components.path = "test"
-        
+
         guard let url = components.url else {
             throw URLError(.badURL)
         }
-        
+
         let urlRequest = URLRequest(url: url)
         let request = MusicDataRequest(urlRequest: urlRequest)
-        
+
         do {
             let response = try await request.response()
-            
+
             let httpResponse = response.urlResponse
-            
+
             switch httpResponse.statusCode {
             case 200:
                 return

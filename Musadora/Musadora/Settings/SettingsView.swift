@@ -5,13 +5,13 @@
 //  Created by Rudrank Riyam on 17/03/23.
 //
 
-import SwiftUI
 import MusicKit
+import SwiftUI
 
 struct SettingsView: View {
   @State private var authStatus: MusicAuthorization.Status = MusicAuthorization.currentStatus
-  @State private var canPlayCatalog: Bool? = nil
-  @State private var statusMessage: String? = nil
+  @State private var canPlayCatalog: Bool?
+  @State private var statusMessage: String?
 
   var body: some View {
     NavigationStack {

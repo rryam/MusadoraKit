@@ -28,7 +28,6 @@ import Foundation
 /// }
 /// ```
 struct MCatalogRatingAddRequest {
-
   /// The type of music item being rated.
   private var type: CatalogRatingMusicItemType
 

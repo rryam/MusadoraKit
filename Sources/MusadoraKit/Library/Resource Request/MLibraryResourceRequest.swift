@@ -64,12 +64,18 @@ struct MLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
 extension MLibraryResourceRequest {
   private mutating func setType() {
     switch MusicItemType.self {
-      case is Song.Type: type = .songs
-      case is Album.Type: type = .albums
-      case is Artist.Type: type = .artists
-      case is MusicVideo.Type: type = .musicVideos
-      case is Playlist.Type: type = .playlists
-      default: type = nil
+    case is Song.Type:
+      type = .songs
+    case is Album.Type:
+      type = .albums
+    case is Artist.Type:
+      type = .artists
+    case is MusicVideo.Type:
+      type = .musicVideos
+    case is Playlist.Type:
+      type = .playlists
+    default:
+      type = nil
     }
   }
 
@@ -95,7 +101,7 @@ extension MLibraryResourceRequest {
         URLQueryItem(name: "fields[artists]", value: "name,url"),
         URLQueryItem(name: "includeOnly", value: "catalog,artists"),
         URLQueryItem(name: "include[albums]", value: "artists"),
-        URLQueryItem(name: "include[library-albums]", value: "artists"),
+        URLQueryItem(name: "include[library-albums]", value: "artists")
       ]
 
       components.queryItems = queryItems

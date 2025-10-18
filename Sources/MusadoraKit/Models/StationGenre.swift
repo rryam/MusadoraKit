@@ -17,7 +17,6 @@
 /// print(genre.id)    // The unique identifier
 /// ```
 public struct StationGenre: Sendable {
-
   /// The unique identifier of the station genre.
   public let id: MusicItemID
 
@@ -30,7 +29,6 @@ public struct StationGenre: Sendable {
 
 /// An extension that adds `Decodable` conformance to the `StationGenre` structure.
 extension StationGenre: Decodable {
-
   /// An enumeration of the top-level coding keys.
   enum CodingKeys: String, CodingKey {
     case attributes, id, type
@@ -59,7 +57,6 @@ extension StationGenre: MusicItem {}
 
 /// An extension that adds `Equatable`, `Hashable`, and `Identifiable` conformances to the `StationGenre` structure.
 extension StationGenre: Equatable, Hashable, Identifiable {
-
   /// Determines if two `StationGenre` instances are equal based on their identifiers.
   public static func == (lhs: StationGenre, rhs: StationGenre) -> Bool {
     lhs.id == rhs.id

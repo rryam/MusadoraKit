@@ -10,7 +10,6 @@ import Foundation
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
 struct MHistoryRequest {
-
   /// A limit for the number of items to return
   /// in the history response.
   var limit: Int?
@@ -27,12 +26,12 @@ struct MHistoryRequest {
     self.endpoint = endpoint
 
     switch self.endpoint {
-      case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
-        maximumLimit = 10
-      case .recentlyAdded:
-        maximumLimit = 25
-      case .recentlyPlayedTracks:
-        maximumLimit = 30
+    case .heavyRotation, .recentlyPlayed, .recentlyPlayedStations:
+      maximumLimit = 10
+    case .recentlyAdded:
+      maximumLimit = 25
+    case .recentlyPlayedTracks:
+      maximumLimit = 30
     }
   }
 

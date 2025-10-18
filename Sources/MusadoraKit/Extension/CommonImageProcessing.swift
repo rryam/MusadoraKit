@@ -9,7 +9,6 @@ import CoreGraphics
 
 /// Errors that can occur during image processing.
 enum ImageProcessingError: Error {
-    
   /// The provided image is invalid or cannot be processed.
   case invalidImage
   /// The image resizing operation failed.
@@ -22,7 +21,6 @@ enum ImageProcessingError: Error {
 
 /// Represents the color data of a single pixel.
 struct PixelData {
-
   /// The red component of the pixel color (0-255).
   let red: Double
   /// The green component of the pixel color (0-255).
@@ -33,7 +31,6 @@ struct PixelData {
 
 /// Represents a cluster of pixels in color space.
 struct Cluster {
-
   /// The center point of the cluster in color space.
   var center: PixelData
   /// The pixels belonging to this cluster.
@@ -42,7 +39,6 @@ struct Cluster {
 
 /// A utility struct for common image processing operations.
 struct CommonImageProcessing {
-
   /// Extracts the most prominent colors from a CGImage.
   ///
   /// - Parameters:
@@ -137,7 +133,7 @@ struct CommonImageProcessing {
       for clusterIndex in 0..<clusters.count {
         let cluster = clusters[clusterIndex]
         if cluster.points.isEmpty { continue }
-        let sum = cluster.points.reduce(PixelData(red: 0, green: 0, blue: 0)) { (result, pixel) -> PixelData in
+        let sum = cluster.points.reduce(PixelData(red: 0, green: 0, blue: 0)) { result, pixel -> PixelData in
           return PixelData(red: result.red + pixel.red, green: result.green + pixel.green, blue: result.blue + pixel.blue)
         }
         let count = Double(cluster.points.count)

@@ -28,8 +28,7 @@ import Foundation
 /// ```
 ///
 @MainActor
-final public class MDeveloperTokenProvider: MusicTokenProvider, Sendable {
-
+public final class MDeveloperTokenProvider: MusicTokenProvider {
   /// The **custom** developer token used to authenticate Apple Music API requests.
   private var developerToken: String = ""
 

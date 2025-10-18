@@ -14,8 +14,7 @@ import AppKit
 import Foundation
 import SwiftUI
 
-extension Artwork {
-
+public extension Artwork {
   /// Fetches the artwork image and extracts prominent colors from it.
   ///
   /// This function downloads the artwork image from a specified URL, processes it to extract
@@ -29,7 +28,7 @@ extension Artwork {
   /// - Returns: An array of SwiftUI `Color` objects representing the prominent colors.
   ///
   /// - Throws: An error if the image cannot be fetched or processed.
-  public func fetchColors(width: Int, height: Int, numberOfColors: Int = 9) async throws -> [Color] {
+  func fetchColors(width: Int, height: Int, numberOfColors: Int = 9) async throws -> [Color] {
     guard let imageURL = self.url(width: width, height: height) else {
       throw NSError(domain: "Invalid artwork URL", code: 0, userInfo: nil)
     }

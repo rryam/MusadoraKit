@@ -1,9 +1,9 @@
 included:
-  - Plugins
-  - Source
+  - Sources
   - Tests
 excluded:
   - Tests/SwiftLintFrameworkTests/Resources
+  - Musadora
 analyzer_rules:
   - unused_declaration
   - unused_import
@@ -80,10 +80,21 @@ opt_in_rules:
 identifier_name:
   excluded:
     - id
+    - r
+    - g
+    - b
+    - x
+    - y
+    - k
+    - dr
+    - dg
+    - db
 large_tuple: 3
 number_separator:
   minimum_length: 5
 line_length: 300
+file_length:
+  warning: 500
 file_name:
   excluded:
     - SwiftSyntax+SwiftLint.swift

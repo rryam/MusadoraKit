@@ -25,4 +25,3 @@ struct NavigationListStack<Content>: View where Content: View {
     }
   }
 }
-

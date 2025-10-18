@@ -11,7 +11,6 @@ import Foundation
 ///
 /// Conforming types specify how to construct the request URL and decode the response data.
 protocol MusicRequest {
-
     /// The expected decodable type for the API response.
     associatedtype ResponseType: Decodable
 

@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIImage {
-  
   /// Extracts the most prominent and unique colors from the image.
   ///
   /// - Parameter numberOfColors: The number of prominent colors to extract (default is 4).
