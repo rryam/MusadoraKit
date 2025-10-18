@@ -103,10 +103,14 @@ extension UserMusicItem: Encodable {
 extension UserMusicItem: PlayableMusicItem {
   public var playParameters: PlayParameters? {
     switch self {
-      case .album(let album): return album.playParameters
-      case .playlist(let playlist): return playlist.playParameters
-      case .station(let station): return station.playParameters
-      case .track(let track): return track.playParameters
+    case .album(let album):
+      return album.playParameters
+    case .playlist(let playlist):
+      return playlist.playParameters
+    case .station(let station):
+      return station.playParameters
+    case .track(let track):
+      return track.playParameters
     }
   }
 }
