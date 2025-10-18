@@ -110,6 +110,7 @@ struct PlayerButton: View {
         do {
           try await action()
         } catch {
+          print("Failed to perform player action: \(error)")
         }
       }
     }) {

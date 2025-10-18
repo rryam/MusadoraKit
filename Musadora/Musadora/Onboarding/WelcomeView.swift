@@ -54,7 +54,7 @@ struct WelcomeView: View {
                             .padding(.vertical, 8)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color(red: 14 / 255, green: 14 / 238, blue: 45 / 255))
+                    .tint(Color(red: 14 / 255, green: 14 / 255, blue: 45 / 255))
                     .colorScheme(.dark)
                     .padding(.bottom)
                 }
