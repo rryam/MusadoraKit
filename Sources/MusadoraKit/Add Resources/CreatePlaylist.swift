@@ -238,7 +238,11 @@ public extension MLibrary {
   /// - Returns: A `Playlist` object representing the newly created playlist.
   /// - Throws: An error if the playlist could not be created.
   ///
-  /// - Note: The array of items (`[any PlaylistAddable]`) should contain items conforming to the `PlaylistAddable` protocol. This means they should have a `playParameters` property that includes an `id` and a `kind` ("song" or "musicVideo"). The function will also check whether the item is from the library or not using the `isLibrary` property. Depending on these properties, the function will add the item to the playlist.
+  /// - Note: The array of items (`[any PlaylistAddable]`) should contain items
+  ///   conforming to the `PlaylistAddable` protocol. Items must provide
+  ///   `playParameters` with an `id` and a `kind` ("song" or "musicVideo").
+  ///   The function also checks `isLibrary` to determine whether the item is
+  ///   from the library, and adds the corresponding track type to the playlist.
   static func createPlaylist(with name: String, description: String? = nil, items: [any PlaylistAddable]) async throws -> Playlist {
     let tracksData: [PlaylistCreationData] = try items.compactMap {
       let data = try JSONEncoder().encode($0.playParameters)
