@@ -12,7 +12,7 @@ public typealias RecordLabelProperty = PartialMusicAsyncProperty<RecordLabel>
 public typealias RecordLabelProperties = [RecordLabelProperty]
 
 public extension RecordLabelProperties {
-  public static var all: Self {
+  static var all: Self {
     [.latestReleases, .topReleases]
   }
 }

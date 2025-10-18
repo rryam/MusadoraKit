@@ -97,15 +97,15 @@ public extension APlayer {
   /// - Parameter item: The personalized music recommendation item to play, which can be an album, playlist, or station.
   func play(item: MusicPersonalRecommendation.Item) async throws {
     switch item {
-      case .album(let album):
-        queue = [album]
-      case .playlist(let playlist):
-        queue = [playlist]
-      case .station(let station):
-        queue = [station]
-      @unknown default:
-        assertionFailure("Unsupported recommendation item type encountered; no playback performed.")
-        return
+    case .album(let album):
+      queue = [album]
+    case .playlist(let playlist):
+      queue = [playlist]
+    case .station(let station):
+      queue = [station]
+    @unknown default:
+      assertionFailure("Unsupported recommendation item type encountered; no playback performed.")
+      return
     }
     
     try await play()

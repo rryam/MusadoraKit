@@ -12,7 +12,7 @@ public typealias MusicVideoProperty = PartialMusicAsyncProperty<MusicVideo>
 public typealias MusicVideoProperties = [MusicVideoProperty]
 
 public extension MusicVideoProperties {
-  public static var all: Self {
+  static var all: Self {
     [.albums, .genres, .artists, .artistURL, .moreInGenre, .songs, .moreByArtist]
   }
 }

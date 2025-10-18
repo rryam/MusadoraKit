@@ -99,7 +99,7 @@ public enum MCatalogSearchType {
 }
 
 public extension MCatalogSearchTypes {
-  public static var all: Self {
+  static var all: Self {
     var types: Self = [.songs, .albums, .playlists, .artists, .stations, .recordLabels]
 
     if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *) {
