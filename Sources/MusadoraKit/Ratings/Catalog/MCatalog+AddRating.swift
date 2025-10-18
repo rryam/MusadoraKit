@@ -1,4 +1,4 @@
-//
+// 
 //  AddCatalogRating.swift
 //  MusadoraKit
 //

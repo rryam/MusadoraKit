@@ -1,4 +1,4 @@
-//
+// 
 //  CatalogEquivalent.swift
 //  MusadoraKit
 //

@@ -1,4 +1,4 @@
-//
+// 
 //  DeleteCatalogRating.swift
 //  MusadoraKit
 //

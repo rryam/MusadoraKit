@@ -1,4 +1,4 @@
-//
+// 
 //  GetLibraryRating.swift
 //  MusadoraKit
 //
