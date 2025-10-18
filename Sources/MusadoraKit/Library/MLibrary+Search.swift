@@ -42,16 +42,16 @@ public enum MLibrarySearchableType {
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
   public var libraryType: MusicLibrarySearchable.Type {
     switch self {
-      case .songs:
-        return Song.self
-      case .albums:
-        return Album.self
-      case .playlists:
-        return Playlist.self
-      case .artists:
-        return Artist.self
-      case .musicVideos:
-        return MusicVideo.self
+    case .songs:
+      return Song.self
+    case .albums:
+      return Album.self
+    case .playlists:
+      return Playlist.self
+    case .artists:
+      return Artist.self
+    case .musicVideos:
+      return MusicVideo.self
     }
   }
 
@@ -60,16 +60,16 @@ public enum MLibrarySearchableType {
   /// This is useful when working with functionalities that require a type conforming to the `MLibrarySearchable` protocol.
   public var type: MLibrarySearchable.Type {
     switch self {
-      case .songs:
-        return Song.self
-      case .albums:
-        return Album.self
-      case .playlists:
-        return Playlist.self
-      case .artists:
-        return Artist.self
-      case .musicVideos:
-        return MusicVideo.self
+    case .songs:
+      return Song.self
+    case .albums:
+      return Album.self
+    case .playlists:
+      return Playlist.self
+    case .artists:
+      return Artist.self
+    case .musicVideos:
+      return MusicVideo.self
     }
   }
 }
