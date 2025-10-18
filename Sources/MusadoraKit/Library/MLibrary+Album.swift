@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-extension MLibrary {
+public extension MLibrary {
   /// Fetch an album from the user's library by using its identifier.
   ///
   /// - Parameters:
@@ -129,7 +129,7 @@ extension MLibrary {
 }
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-extension MHistory {
+public extension MHistory {
   /// Fetch recently added albums from the user's library sorted by the date added.
   ///
   /// - Parameters:
@@ -161,7 +161,7 @@ extension MHistory {
   }
 }
 
-extension Album {
+public extension Album {
   /// A Boolean value that indicates whether the album is from the user's library.
   ///
   /// This property decodes the play parameters of the album to determine its library status.
