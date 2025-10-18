@@ -107,7 +107,7 @@ public extension APlayer {
       assertionFailure("Unsupported recommendation item type encountered; no playback performed.")
       return
     }
-    
+
     try await play()
   }
 }
