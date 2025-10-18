@@ -20,14 +20,14 @@ public enum MusicCatalogChartType {
   /// - Returns: The type `MusicCatalogChartRequestable.Type` associated with the `MusicCatalogChartType`.
   public var type: MusicCatalogChartRequestable.Type {
     switch self {
-      case .songs:
-        return Song.self
-      case .albums:
-        return Album.self
-      case .playlists:
-        return Playlist.self
-      case .musicVideos:
-        return MusicVideo.self
+    case .songs:
+      return Song.self
+    case .albums:
+      return Album.self
+    case .playlists:
+      return Playlist.self
+    case .musicVideos:
+      return MusicVideo.self
     }
   }
 }
@@ -36,7 +36,7 @@ public enum MusicCatalogChartType {
 ///
 /// - Returns: An array with all cases of `MusicCatalogChartType`.
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-extension [MusicCatalogChartType] {
+public extension [MusicCatalogChartType] {
   public static var all: Self {
     MusicCatalogChartType.allCases
   }
@@ -46,7 +46,7 @@ extension [MusicCatalogChartType] {
 ///
 /// - Returns: An array with all cases of `MusicCatalogChartKind`.
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-extension [MusicCatalogChartKind] {
+public extension [MusicCatalogChartKind] {
   public static var all: Self {
     MusicCatalogChartKind.allCases
   }
@@ -60,7 +60,6 @@ extension MusicCatalogChartType: CaseIterable {}
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 public extension MCatalog {
-
   /// Fetches the charts from the Apple Music catalog.
   ///
   /// For example, here's how you can fetch the most played rock songs:
@@ -246,7 +245,7 @@ public extension MCatalog {
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension MCatalog {
-  static private func fetchCatalogCharts(genre: Genre?,
+  private static func fetchCatalogCharts(genre: Genre?,
                                          kinds: [MusicCatalogChartKind],
                                          types: [MusicCatalogChartType],
                                          limit: Int?,

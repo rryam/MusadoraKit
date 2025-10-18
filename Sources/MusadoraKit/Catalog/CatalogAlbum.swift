@@ -36,7 +36,7 @@ public extension MCatalog {
   static func album(id: MusicItemID, fetch property: AlbumProperty) async throws -> Album {
     try await album(with: id, fetch: [property])
   }
-  
+
   /// Fetch an album from the Apple Music catalog by using its identifier with all properties.
   ///
   /// - Parameters:
@@ -45,7 +45,7 @@ public extension MCatalog {
   static func album(id: MusicItemID) async throws -> Album {
     try await album(with: id, fetch: .all)
   }
-  
+
   /// Fetch one or more albums from the Apple Music catalog by using their identifiers.
   ///
   /// - Parameters:
@@ -56,7 +56,7 @@ public extension MCatalog {
   static func albums(ids: [MusicItemID], fetch properties: AlbumProperties) async throws -> Albums {
     try await albums(with: ids, fetch: properties)
   }
-  
+
   /// Fetch one or more albums from the Apple Music catalog by using their identifiers with all properties.
   ///
   /// - Parameters:
@@ -65,7 +65,7 @@ public extension MCatalog {
   static func albums(ids: [MusicItemID]) async throws -> Albums {
     try await albums(with: ids, fetch: .all)
   }
-  
+
   /// Fetch an album from Apple Music catalog by using their UPC value.
   ///
   /// - Parameters:
@@ -76,7 +76,7 @@ public extension MCatalog {
   static func albums(upc: String, fetch properties: AlbumProperties) async throws -> Album {
     try await albums(for: upc, fetch: properties)
   }
-  
+
   /// Fetch an album from Apple Music catalog by using their UPC value with all properties.
   ///
   /// - Parameters:
@@ -85,7 +85,7 @@ public extension MCatalog {
   static func albums(upc: String) async throws -> Album {
     try await albums(for: upc, fetch: .all)
   }
-  
+
   /// Fetch multiple albums from Apple Music catalog by using their UPC values.
   ///
   /// - Parameters:
@@ -96,7 +96,7 @@ public extension MCatalog {
   static func albums(upcs: [String], fetch properties: AlbumProperties) async throws -> Albums {
     try await albums(for: upcs, fetch: properties)
   }
-  
+
   /// Fetch multiple albums from Apple Music catalog by using their UPC values with all properties.
   ///
   /// - Parameters:

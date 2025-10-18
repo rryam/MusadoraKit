@@ -6,7 +6,6 @@
 //
 
 public extension MLibrary {
-
   /// Delete a rating for a song in the user's library.
   ///
   ///  Example:

@@ -29,7 +29,6 @@ import Foundation
 /// }
 /// ```
 public struct MUserRequest {
-
   /// The user token used for personalized API requests.
   private let userToken: String
 

@@ -26,7 +26,6 @@
 public typealias LibraryPlaylistFolders = [LibraryPlaylistFolder]
 
 extension MLibrary {
-
   /// Fetches all playlist folders from the user's library.
   ///
   /// This method retrieves the root-level playlist folders from the user's Apple Music library.

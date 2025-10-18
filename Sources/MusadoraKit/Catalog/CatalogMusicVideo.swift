@@ -68,8 +68,7 @@ public extension MCatalog {
   /// - Returns: `MusicVideos` matching the given ISRC value.
   ///
   /// - Note: One ISRC value may return more than one music video.
-  static func musicVideo(isrc: String, fetch properties: MusicVideoProperties) async throws -> MusicVideos
-  {
+  static func musicVideo(isrc: String, fetch properties: MusicVideoProperties) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
@@ -98,8 +97,7 @@ public extension MCatalog {
   /// - Returns: `MusicVideos` matching the given ISRC values.
   ///
   /// - Note: One ISRC value may return more than one music video.
-  static func musicVideos(isrc: [String], fetch properties: MusicVideoProperties) async throws -> MusicVideos
-  {
+  static func musicVideos(isrc: [String], fetch properties: MusicVideoProperties) async throws -> MusicVideos {
     var request = MusicCatalogResourceRequest<MusicVideo>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()

@@ -7,7 +7,6 @@
 
 /// Represents the type of a rating for a content item in the Apple Music Catalog.
 public enum RatingType: Int, Codable {
-
   /// A positive rating.
   case like = 1
 

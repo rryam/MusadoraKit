@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MusicItemCollection where MusicItemType: EquivalentRequestable {
-
   /// Fetches the equivalent music items for the given storefront.
   ///
   /// Example usage:

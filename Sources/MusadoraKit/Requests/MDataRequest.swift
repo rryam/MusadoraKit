@@ -32,7 +32,6 @@ import Foundation
 /// ```
 ///
 public struct MDataRequest {
-
   /// The developer token used for authentication with the Apple Music API.
   private let developerToken: String
 
@@ -63,4 +62,3 @@ public struct MDataRequest {
     return response
   }
 }
-

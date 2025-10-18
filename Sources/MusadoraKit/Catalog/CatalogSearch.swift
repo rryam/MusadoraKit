@@ -6,7 +6,6 @@
 //
 
 extension MCatalog {
-
   /// Search the Apple Music catalog by using a query term.
   ///
   /// - Parameters:
@@ -160,8 +159,7 @@ extension MCatalog {
   /// - Returns: `[MusicCatalogSearchSuggestionsResponse.Suggestion]` which is an array of  suggestions.
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   public static func suggestions(for term: String, limit: Int? = nil) async throws
-    -> [MusicCatalogSearchSuggestionsResponse.Suggestion]
-  {
+    -> [MusicCatalogSearchSuggestionsResponse.Suggestion] {
     var request = MusicCatalogSearchSuggestionsRequest(term: term)
     request.limit = limit
     let response = try await request.response()

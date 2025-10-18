@@ -16,13 +16,13 @@ public extension MCatalog {
   static func genre(id: MusicItemID) async throws -> Genre {
     let request = MusicCatalogResourceRequest<Genre>(matching: \.id, equalTo: id)
     let response = try await request.response()
-    
+
     guard let genre = response.items.first else {
       throw MusadoraKitError.notFound(for: id.rawValue)
     }
     return genre
   }
-  
+
   /// Fetch multiple genres from the Apple Music catalog by using their identifiers.
   ///
   /// - Parameters:
@@ -33,7 +33,7 @@ public extension MCatalog {
     let response = try await request.response()
     return try await response.items.collectingAll()
   }
-  
+
   /// Fetch top genres from the Apple Music catalog.
   /// - Returns: Top `Genres`.
   static func topGenres() async throws -> Genres {

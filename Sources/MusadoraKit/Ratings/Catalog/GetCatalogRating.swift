@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MCatalog {
-
   /// Get the rating for an album in the catalog.
   ///
   ///  Example:

@@ -11,7 +11,7 @@ public typealias PlaylistProperty = PartialMusicAsyncProperty<Playlist>
 /// Additional properties/relationships of a playlist.
 public typealias PlaylistProperties = [PlaylistProperty]
 
-extension PlaylistProperties {
+public extension PlaylistProperties {
   public static var all: Self {
     var properties: Self = [.tracks, .featuredArtists, .moreByCurator]
 

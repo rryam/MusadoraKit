@@ -58,8 +58,7 @@ extension MHistory {
   ///   - offset: The offset for pagination.
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
   public static func recentlyPlayed(limit: Int? = nil, offset: Int? = nil) async throws
-    -> UserMusicItems
-  {
+    -> UserMusicItems {
     var request = MHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
     request.offset = offset
@@ -103,8 +102,7 @@ extension MHistory {
   ///   - offset: The offset for pagination.
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
   public static func recentlyAdded(limit: Int? = nil, offset: Int? = nil) async throws
-    -> UserMusicItems
-  {
+    -> UserMusicItems {
     var request = MHistoryRequest(for: .recentlyAdded)
     request.limit = limit
     request.offset = offset

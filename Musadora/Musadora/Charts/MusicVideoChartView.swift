@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 import MusadoraKit
 
 struct MusicVideoChartView: View {

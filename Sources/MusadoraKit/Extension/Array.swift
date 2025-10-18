@@ -8,7 +8,6 @@
 import Foundation
 
 extension Array where Element: Equatable {
-
   /// Returns a new array with the duplicate elements removed.
   ///
   /// - Returns: A new array with the duplicate elements removed.
@@ -24,7 +23,6 @@ extension Array where Element: Equatable {
 }
 
 extension Array where Element == String {
-
   /// Returns an array of arrays, each containing at most the specified number of elements.
   ///
   /// - Parameter size: The maximum number of elements in each chunk.

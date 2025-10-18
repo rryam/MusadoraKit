@@ -8,7 +8,6 @@
 import MediaPlayer
 
 public extension MLibrary {
-
   /// Fetch a song from the user's library by using its identifier.
   ///
   /// Use this method to retrieve a song from the user's library by providing its unique identifier.
@@ -242,7 +241,6 @@ public extension MLibrary {
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MLibrary {
-
   /// Fetch recently added songs from the user's library sorted by the date added.
   ///
   /// Use this method to retrieve a list of recently added songs from the user's library,
@@ -336,7 +334,6 @@ public extension MLibrary {
 }
 
 public extension MLibrary {
-
   /// Fetch all songs from the user's library for a specific genre.
   ///
   /// Use this method to retrieve all songs belonging to a specific genre in the user's music library.
@@ -367,7 +364,6 @@ public extension MLibrary {
 }
 
 public extension MLibrary {
-  
   /// Fetch all songs from the user's library for all genres.
   ///
   /// Use this method to retrieve all songs in the user's music library, grouped by genre.
@@ -405,7 +401,7 @@ public extension MLibrary {
       return []
     }
   }
-  
+
   /// Fetch all songs from the user's library for all artists.
   ///
   /// Use this method to retrieve all songs in the user's music library, grouped by artist.
@@ -437,7 +433,7 @@ public extension MLibrary {
     let response = try await request.response()
     return response.sections
   }
-  
+
   /// Fetch all songs from the user's library for all albums.
   ///
   /// Use this method to retrieve all songs in the user's music library, grouped by album.
@@ -469,7 +465,7 @@ public extension MLibrary {
     let response = try await request.response()
     return response.sections
   }
-  
+
   /// Fetch all songs from the user's library for all playlists.
   ///
   /// Use this method to retrieve all songs in the user's music library, grouped by playlist.

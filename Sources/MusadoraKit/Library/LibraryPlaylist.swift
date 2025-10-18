@@ -8,7 +8,6 @@
 import MediaPlayer
 
 extension MLibrary {
-
   /// Fetch a playlist from the user's library by using its identifier.
   ///
   /// Use this method to retrieve a playlist from the user's library by providing its unique identifier.
@@ -204,15 +203,13 @@ extension MLibrary {
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 extension MHistory {
-
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  public static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists
-  {
+  public static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -227,8 +224,7 @@ extension MHistory {
   ///   - limit: The number of playlists returned.
   ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  public static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists
-  {
+  public static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -240,7 +236,6 @@ extension MHistory {
 
 // MARK: - `LibraryPlaylist` methods
 extension MLibrary {
-
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.

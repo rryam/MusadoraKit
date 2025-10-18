@@ -15,7 +15,6 @@ public typealias SPlayer = SystemMusicPlayer
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-
   /// Plays the specified song in the player's queue.
   ///
   /// - Parameter song: The song to play.
@@ -48,11 +47,9 @@ public extension SPlayer {
   }
 }
 
-
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-
   /// Plays the specified station in the player's queue.
   ///
   /// - Parameter station: The station to play.
@@ -66,7 +63,6 @@ public extension SPlayer {
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-
   /// Plays the specified playlist in the player's queue.
   ///
   @available(macOS 14.0, *)
@@ -80,7 +76,6 @@ public extension SPlayer {
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-
   /// Plays the specified album in the player's queue.
   @available(macOS 14.0, *)
   ///
@@ -95,7 +90,6 @@ public extension SPlayer {
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 public extension SPlayer {
-
   @available(macOS 14.0, *)
   /// Plays the specified personalized music recommendation item in the player's queue.
   ///
@@ -109,7 +103,8 @@ public extension SPlayer {
       case .station(let station):
         queue = [station]
       @unknown default:
-        fatalError()
+        assertionFailure("Unsupported recommendation item type encountered; no playback performed.")
+        return
     }
 
     try await play()

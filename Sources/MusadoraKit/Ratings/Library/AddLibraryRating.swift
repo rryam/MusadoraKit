@@ -6,7 +6,6 @@
 //
 
 public extension MLibrary {
-
   /// Adds a rating for a song in the user's library.
   ///
   ///  Example:

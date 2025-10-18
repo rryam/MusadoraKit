@@ -15,7 +15,6 @@ import Foundation
 import SwiftUI
 
 extension Artwork {
-
   /// Fetches the artwork image and extracts prominent colors from it.
   ///
   /// This function downloads the artwork image from a specified URL, processes it to extract

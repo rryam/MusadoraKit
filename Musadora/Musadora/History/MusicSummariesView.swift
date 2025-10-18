@@ -5,9 +5,9 @@
 //  Created by Codex on 02/09/25.
 //
 
-import SwiftUI
 import MusadoraKit
 import MusicKit
+import SwiftUI
 
 struct MusicSummariesView: View {
   @State private var selection: SummarySelection = .year

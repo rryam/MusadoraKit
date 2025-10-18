@@ -9,7 +9,6 @@ import Foundation
 
 @available(macCatalyst 17.0, macOS 14.0, *)
 public extension MLibrary {
-
   /// Creates a new playlist in the user’s music library.
   ///
   /// Use this function to create a new playlist with the given name, description, and author's display name.
@@ -127,7 +126,7 @@ public extension MLibrary {
   /// - Returns: A `Playlist` object representing the newly created playlist.
   /// - Throws: An error if the playlist could not be created.
   static func createPlaylist(with name: String, description: String? = nil, items: Songs) async throws -> Playlist {
-    let tracksData: [PlaylistCreationData] = items.map { .init(id: $0.id.rawValue, type: .song)}
+    let tracksData: [PlaylistCreationData] = items.map { .init(id: $0.id.rawValue, type: .song) }
 
     let creationRequest = LibraryPlaylistCreationRequest(attributes: .init(name: name, description: description), relationships: .init(tracks: .init(data: tracksData)))
     return try await createPlaylist(with: creationRequest)
@@ -337,7 +336,7 @@ public extension MLibrary {
     try await add(songIDs: songs.map(\.id), to: playlist.id)
   }
 
-  static private func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
+  private static func createPlaylist(with creationRequest: LibraryPlaylistCreationRequest) async throws -> Playlist {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
 
@@ -364,7 +363,6 @@ public extension MLibrary {
 @available(macOS, unavailable)
 @available(macCatalyst, unavailable)
 public extension MLibrary {
-
   /// Adds an item (or items) to a specified playlist in the user's music library.
   ///
   /// Example usage:

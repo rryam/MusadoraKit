@@ -5,9 +5,8 @@
 //  Created by Rudrank Riyam on 14/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
-
+import SwiftUI
 
 struct ChartView: View {
   var genre: Genre

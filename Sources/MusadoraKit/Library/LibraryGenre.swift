@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MLibrary {
-
   /// Fetch all genres from the user's library.
   ///
   /// Use this method to retrieve all the genres present in the user's music library. Example of the genres are Alternative, Rock, etc.

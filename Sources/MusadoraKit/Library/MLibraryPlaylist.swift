@@ -18,7 +18,6 @@ import Foundation
 ///     print(playlist.attributes.name) // Prints the name of the playlist
 ///
 public struct MLibraryPlaylist: Codable, MusicItem {
-
   /// The unique identifier for the playlist.
   ///
   /// This identifier is unique to each playlist and can be used for fetching, updating, or deleting specific playlists.
@@ -33,7 +32,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
   ///
   /// The attributes provide a detailed look into the playlist's metadata and characteristics.
   public struct Attributes: Codable, Sendable {
-
     /// Indicates whether the playlist can be edited or not.
     ///
     /// If `true`, the playlist can be modified by the user.
@@ -64,7 +62,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
 
   /// Contains the textual description of a playlist.
   public struct Description: Codable, Sendable {
-
     /// The standard format of the description.
     ///
     /// This text provides insight or an overview of the playlist's theme or content.
@@ -73,7 +70,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
 
   /// Defines the parameters required for playback of the playlist.
   public struct MPlayParameters: Codable, Sendable {
-
     /// The unique identifier associated with the playlist.
     public let id: MusicItemID
 
@@ -100,7 +96,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
 @available(macOS 14.0, *)
 @available(watchOS, unavailable)
 extension MLibraryPlaylist: PlayableMusicItem {
-
   /// Retrieves the parameters required to play the playlist.
   ///
   /// - Returns: A set of play parameters or `nil` if they can't be determined.

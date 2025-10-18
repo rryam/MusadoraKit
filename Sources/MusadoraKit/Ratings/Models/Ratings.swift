@@ -7,7 +7,6 @@
 
 /// Represents a rating for a content item in the Apple Music Catalog.
 public struct Rating {
-
   /// The value of the rating.
   public let value: RatingType
 

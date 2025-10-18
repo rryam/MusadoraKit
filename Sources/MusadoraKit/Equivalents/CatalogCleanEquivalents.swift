@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MusicItemCollection where MusicItemType: EquivalentRequestable {
-
   /// Returns a clean version of the music items.
   ///
   /// Example usage:

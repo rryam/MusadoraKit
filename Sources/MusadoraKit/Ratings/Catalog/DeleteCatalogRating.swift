@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MCatalog {
-
   /// Delete a rating for a song in the catalog.
   ///
   ///  Example:

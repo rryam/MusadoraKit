@@ -95,7 +95,7 @@ extension MLibraryResourceRequest {
         URLQueryItem(name: "fields[artists]", value: "name,url"),
         URLQueryItem(name: "includeOnly", value: "catalog,artists"),
         URLQueryItem(name: "include[albums]", value: "artists"),
-        URLQueryItem(name: "include[library-albums]", value: "artists"),
+        URLQueryItem(name: "include[library-albums]", value: "artists")
       ]
 
       components.queryItems = queryItems

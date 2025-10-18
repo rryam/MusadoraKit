@@ -9,7 +9,6 @@ import Foundation
 
 /// An object that represents recommended resources for a user calculated using their selected preferences.
 public struct MRecommendationItem: Codable, MusicItem, Identifiable {
-
   /// The unique identifier for the recommendation.
   public let id: MusicItemID
 

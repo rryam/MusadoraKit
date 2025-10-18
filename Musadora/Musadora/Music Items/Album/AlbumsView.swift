@@ -5,9 +5,9 @@
 //  Created by Rudrank Riyam on 15/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
 import MusicKit
+import SwiftUI
 
 struct AlbumsView: View {
   private var albums: Albums
@@ -28,7 +28,7 @@ struct AlbumsView: View {
               .font(.title2)
               .fontWeight(.bold)
               .padding(.horizontal)
-            
+
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 16) {
               ForEach(albums.prefix(4), id: \.id) { album in
                 AlbumGridCard(
@@ -42,7 +42,7 @@ struct AlbumsView: View {
             }
             .padding(.horizontal)
           }
-          
+
           // Show remaining albums in list
           if albums.count > 4 {
             VStack(alignment: .leading, spacing: 12) {
@@ -51,7 +51,7 @@ struct AlbumsView: View {
                 .fontWeight(.semibold)
                 .padding(.horizontal)
                 .padding(.top)
-              
+
               LazyVStack(spacing: 8) {
                 ForEach(albums, content: AlbumRow.init)
               }
@@ -86,7 +86,7 @@ struct AlbumGridCard: View {
   let isFavoriting: Bool
   let onPlay: () -> Void
   let onFavorite: () -> Void
-  
+
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       if let artwork = album.artwork {
@@ -103,18 +103,17 @@ struct AlbumGridCard: View {
             .padding(8)
           }
       }
-      
+
       VStack(alignment: .leading, spacing: 4) {
         Text(album.title)
           .font(.headline)
           .lineLimit(2)
-        
+
         Text(album.artistName)
           .font(.subheadline)
           .foregroundColor(.secondary)
           .lineLimit(1)
       }
-
     }
     .onTapGesture {
       onPlay()

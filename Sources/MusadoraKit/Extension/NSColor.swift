@@ -9,7 +9,6 @@
 import AppKit
 
 extension NSColor {
-    
   /// Converts the NSColor to its hexadecimal string representation.
   ///
   /// This property provides a convenient way to obtain the hexadecimal string
@@ -25,11 +24,11 @@ extension NSColor {
     guard let rgbColor = usingColorSpace(.sRGB) else {
       return "#000000"
     }
-    
+
     let r = Int(round(rgbColor.redComponent * 255))
     let g = Int(round(rgbColor.greenComponent * 255))
     let b = Int(round(rgbColor.blueComponent * 255))
-    
+
     return String(format: "#%02X%02X%02X", r, g, b)
   }
 }

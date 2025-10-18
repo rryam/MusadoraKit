@@ -6,7 +6,6 @@
 //
 
 public extension MRecommendation {
-
   /// Retrieve the default recommendations for a user.
   ///
   /// The recommendations are determined based

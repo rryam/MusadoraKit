@@ -10,7 +10,6 @@ import Foundation
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
 struct MHistoryRequest {
-
   /// A limit for the number of items to return
   /// in the history response.
   var limit: Int?

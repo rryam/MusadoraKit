@@ -28,7 +28,6 @@ import Foundation
 /// ```
 /// 
 public struct MDataPutRequest {
-
     /// The URL associated with the data request.
     private var url: URL
 

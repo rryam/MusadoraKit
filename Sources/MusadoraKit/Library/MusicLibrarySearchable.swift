@@ -19,7 +19,6 @@
 public protocol MLibrarySearchable: MusicItem {}
 
 extension MLibrarySearchable {
-
   /// A unique identifier associated with the type that conforms to `MLibrarySearchable`.
   ///
   /// This identifier can be useful for distinguishing different types of music items during search operations or other tasks.

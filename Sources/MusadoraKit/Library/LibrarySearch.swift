@@ -20,7 +20,6 @@
 ///
 @available(macOS 14.0, *)
 public enum MLibrarySearchableType {
-
   /// Represents individual song tracks.
   case songs
 

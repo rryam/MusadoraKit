@@ -53,8 +53,7 @@ extension MRecommendation {
   ///
   /// - Returns: An array of `HundredBestAlbum` objects representing all the 100 Best Albums.
   public static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us")
-    async throws -> [HundredBestAlbum]
-  {
+    async throws -> [HundredBestAlbum] {
     let positions = 1...100
     var albums: [HundredBestAlbum?] = Array(repeating: nil, count: positions.count)
 

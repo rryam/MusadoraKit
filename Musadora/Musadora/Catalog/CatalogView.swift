@@ -5,8 +5,8 @@
 //  Created by Rudrank Riyam on 17/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
+import SwiftUI
 
 struct CatalogView: View {
   var body: some View {

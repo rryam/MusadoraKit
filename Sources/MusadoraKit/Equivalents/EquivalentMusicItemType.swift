@@ -15,7 +15,6 @@ enum EquivalentMusicItemType: String, Codable {
 }
 
 extension EquivalentMusicItemType {
-
   /// Returns the equivalent music item type for the given type.
   ///
   /// - Parameter item: A type that conforms to `EquivalentRequestable`.

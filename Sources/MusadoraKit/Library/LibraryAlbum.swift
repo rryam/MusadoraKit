@@ -8,7 +8,6 @@
 import MediaPlayer
 
 extension MLibrary {
-
   /// Fetch an album from the user's library by using its identifier.
   ///
   /// - Parameters:

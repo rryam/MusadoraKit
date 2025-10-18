@@ -5,8 +5,8 @@
 //  Created by Rudrank Riyam on 15/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
+import SwiftUI
 
 struct RecentlyAddedView: View {
   @State private var recentlyAddedPlaylists: Playlists = []

@@ -8,7 +8,6 @@
 import Foundation
 
 public extension MCatalog {
-
   /// Fetch a station from the Apple Music catalog by using its identifier.
   ///
   /// Example usage:
@@ -98,7 +97,6 @@ public extension MCatalog {
 
 // MARK: - Genre Stations.
 public extension MCatalog {
-
   /// Fetch a list of stations in the current country's storefront that belong to a specific station genre in the Apple Music catalog.
   ///
   /// Example usage:
@@ -177,7 +175,6 @@ public extension MCatalog {
 
 // MARK: - Personal Stations.
 public extension MCatalog {
-
   /// Fetch the user's personalized Apple Music station.
   ///
   /// Example usage:
@@ -243,7 +240,6 @@ public extension MCatalog {
 
 // MARK: - Live Radio Stations.
 public extension MCatalog {
-
   /// Fetch the list of featured Apple Music live radio stations.
   ///
   /// This method gets the current list of featured live radio stations available

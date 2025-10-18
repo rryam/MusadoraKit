@@ -7,7 +7,6 @@
 
 /// A request to create or update a rating for a content item in the Apple Music Catalog.
 struct RatingRequest: Encodable {
-
   /// The type of the request.
   private let type: String = "ratings"
 

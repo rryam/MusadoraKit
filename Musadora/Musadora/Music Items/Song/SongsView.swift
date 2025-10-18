@@ -5,9 +5,9 @@
 //  Created by Rudrank Riyam on 15/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
 import MusicKit
+import SwiftUI
 
 struct SongsView: View {
   private var songs: Songs
@@ -28,25 +28,25 @@ struct SongsView: View {
             .fontWeight(.bold)
             .foregroundColor(.primary)
             .frame(minWidth: 24)
-          
+
           // Song artwork
           if let artwork = song.artwork {
             ArtworkImage(artwork, width: 50, height: 50)
               .cornerRadius(8)
           }
-          
+
           // Song details
           VStack(alignment: .leading, spacing: 2) {
             Text(song.title)
               .font(.headline)
               .lineLimit(1)
-            
+
             Text(song.artistName)
               .font(.subheadline)
               .foregroundColor(.secondary)
               .lineLimit(1)
           }
-          
+
           Spacer()
 
           HStack(spacing: 16) {

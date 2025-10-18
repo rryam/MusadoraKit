@@ -22,7 +22,6 @@ import Foundation
 /// }
 /// ```
 public enum LibraryMusicItemType: String, Codable {
-
   /// Represents songs in the music library.
   case songs
 

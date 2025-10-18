@@ -8,7 +8,6 @@
 import MediaPlayer
 
 public extension MLibrary {
-
   /// Fetch an artist from the user's library by using its identifier.
   ///
   ///     do {
@@ -31,7 +30,7 @@ public extension MLibrary {
       var request = MusicLibraryRequest<Artist>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
-      
+
       guard let artist = response.items.first else {
         throw MusadoraKitError.notFound(for: id.rawValue)
       }
@@ -39,7 +38,7 @@ public extension MLibrary {
     } else {
       let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
       let response = try await request.response()
-      
+
       guard let artist = response.items.first else {
         throw MusadoraKitError.notFound(for: id.rawValue)
       }

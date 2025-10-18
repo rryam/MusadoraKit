@@ -6,7 +6,6 @@
 //
 
 public extension MLibrary {
-
   /// Get the rating for an album in the user's library.
   ///
   ///  Example:

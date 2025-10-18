@@ -38,7 +38,6 @@ struct LibraryPlaylistCreationRequest: Codable {
 ///
 /// This structure includes the name and an optional description for the playlist being created.
 struct PlaylistCreationAttributes: Codable {
-
   /// The name of the playlist.
   var name: String
 
@@ -56,7 +55,6 @@ struct PlaylistCreationRelationships: Codable {
 ///
 /// This structure includes data for the tracks to be included in the playlist being created.
 struct PlaylistCreationTracks: Codable {
-
   /// Data of the tracks to add to the created library playlist.
   var data: [PlaylistCreationData]
 }
@@ -65,7 +63,6 @@ struct PlaylistCreationTracks: Codable {
 ///
 /// This structure includes the unique identifier and type of the track.
 struct PlaylistCreationData: Codable {
-
   /// The unique identifier for the track.
   /// This ID can be a catalog identifier or a library identifier, depending on the track type.
   var id: String
@@ -78,7 +75,6 @@ struct PlaylistCreationData: Codable {
 ///
 /// This protocol includes a property for the play parameters of the music item.
 public protocol PlaylistAddable: MusicItem {
-
   /// The parameters to use to play the item.
   var playParameters: PlayParameters? { get }
 }

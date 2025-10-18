@@ -10,9 +10,8 @@ import Foundation
 // MARK: - Replay (Music Summaries)
 
 public extension MSummary {
-
   /// Fetch the user's latest Replay summary for the specified views.
-  
+
   /// - Parameters:
   ///   - views: Set of views to activate in the response. Defaults to all (`topArtists`, `topAlbums`, `topSongs`).
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.

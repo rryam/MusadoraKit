@@ -8,14 +8,14 @@
 import Foundation
 
 public extension MCatalog {
-
   // MARK: - Public API
 
   /// Add a song to the user's favorites.
   ///
   /// - Parameter song: The song to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(song: Song) async throws -> Bool {
+  @discardableResult
+  static func favorite(song: Song) async throws -> Bool {
     try await addToFavorites(id: song.id, type: .songs)
   }
 
@@ -23,7 +23,8 @@ public extension MCatalog {
   ///
   /// - Parameter album: The album to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(album: Album) async throws -> Bool {
+  @discardableResult
+  static func favorite(album: Album) async throws -> Bool {
     try await addToFavorites(id: album.id, type: .albums)
   }
 
@@ -31,7 +32,8 @@ public extension MCatalog {
   ///
   /// - Parameter playlist: The playlist to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(playlist: Playlist) async throws -> Bool {
+  @discardableResult
+  static func favorite(playlist: Playlist) async throws -> Bool {
     try await addToFavorites(id: playlist.id, type: .playlists)
   }
 
@@ -39,7 +41,8 @@ public extension MCatalog {
   ///
   /// - Parameter artist: The artist to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(artist: Artist) async throws -> Bool {
+  @discardableResult
+  static func favorite(artist: Artist) async throws -> Bool {
     try await addToFavorites(id: artist.id, type: .artists)
   }
 
@@ -47,7 +50,8 @@ public extension MCatalog {
   ///
   /// - Parameter musicVideo: The music video to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(musicVideo: MusicVideo) async throws -> Bool {
+  @discardableResult
+  static func favorite(musicVideo: MusicVideo) async throws -> Bool {
     try await addToFavorites(id: musicVideo.id, type: .musicVideos)
   }
 
@@ -55,10 +59,10 @@ public extension MCatalog {
   ///
   /// - Parameter station: The station to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult static func favorite(station: Station) async throws -> Bool {
+  @discardableResult
+  static func favorite(station: Station) async throws -> Bool {
     try await addToFavorites(id: station.id, type: .stations)
   }
-
 
   // MARK: - Internal Implementation
 
@@ -66,7 +70,8 @@ public extension MCatalog {
   ///
   /// - Parameter id: The identifier of the music item to add to favorites.
   /// - Returns: A boolean value indicating whether the operation was successful.
-  @discardableResult internal static func addToFavorites(id: MusicItemID, type: FavoritesResourceType) async throws -> Bool {
+  @discardableResult
+  internal static func addToFavorites(id: MusicItemID, type: FavoritesResourceType) async throws -> Bool {
     let request = MFavoritesRequest(itemID: id, resourceType: type)
     return try await request.response()
   }

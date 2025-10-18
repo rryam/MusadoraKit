@@ -5,8 +5,8 @@
 //  Created by Rudrank Riyam on 09/03/23.
 //
 
-import SwiftUI
 import MusadoraKit
+import SwiftUI
 
 struct MTabView: View {
   var body: some View {
@@ -47,7 +47,6 @@ struct MTabView: View {
     .tint(.purple)
   }
 }
-
 
 struct PlayerControlView: View {
   @ObservedObject private var state = APlayer.shared.state
@@ -95,7 +94,6 @@ struct AudioPlayerView: View {
           .foregroundStyle(.tertiary)
       }
       .frame(width: 240, alignment: .leading)
-
     }
     .padding(.vertical, 7)
     .padding(.horizontal, 8)
@@ -104,7 +102,7 @@ struct AudioPlayerView: View {
 
 struct PlayerButton: View {
   let image: String
-  let action: () async throws -> ()
+  let action: () async throws -> Void
 
   var body: some View {
     Button(action: {
@@ -112,10 +110,9 @@ struct PlayerButton: View {
         do {
           try await action()
         } catch {
-
         }
       }
-    } ) {
+    }) {
       Image(systemName: image)
     }
   }

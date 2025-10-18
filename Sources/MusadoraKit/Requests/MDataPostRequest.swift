@@ -28,7 +28,6 @@ import Foundation
 /// ```
 ///
 public struct MDataPostRequest: Sendable {
-
   /// The URL associated with the data request.
   var url: URL
 

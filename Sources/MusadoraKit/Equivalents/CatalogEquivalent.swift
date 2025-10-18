@@ -8,7 +8,6 @@
 import Foundation
 
 public extension EquivalentRequestable {
-
   /// Fetches the equivalent music item for the given storefront.
   ///
   /// Example usage:
@@ -49,7 +48,6 @@ public extension EquivalentRequestable {
 }
 
 public extension MCatalog {
-
   /// Fetches an equivalent music item from a specific storefront by its identifier.
   ///
   /// Use this method to retrieve a music item, such as a song or album, from a particular Apple Music storefront

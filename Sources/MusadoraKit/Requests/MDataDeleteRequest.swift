@@ -27,7 +27,6 @@ import Foundation
 /// ```
 ///
 public struct MDataDeleteRequest {
-
   /// The URL associated with the data request.
   private var url: URL
 

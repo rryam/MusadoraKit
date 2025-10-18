@@ -17,7 +17,6 @@ public typealias MStorefronts = [MStorefront]
 ///
 /// This structure corresponds to the response you would receive when fetching a list of Apple Music storefronts.
 struct StorefrontsData: Codable {
-
   /// An array of `MStorefront` instances, representing the storefronts returned in the API response.
   let data: [MStorefront]
 }
@@ -45,7 +44,6 @@ struct StorefrontsData: Codable {
 /// }
 /// ```
 public struct MStorefront: Codable {
-
   /// The unique identifier for the storefront (e.g., "us", "gb", "jp").
   public let id: String
 
@@ -129,7 +127,6 @@ public struct MStorefront: Codable {
 }
 
 extension MCatalog {
-
   /// Fetches a specific storefront of Apple Music by its unique identifier.
   ///
   /// A storefront represents the Apple Music service in a particular geographic region and

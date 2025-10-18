@@ -6,7 +6,6 @@
 //
 
 public extension MCatalog {
-
   /// Fetch a song from the Apple Music catalog by using its identifier.
   ///
   /// In the following example, the method fetches the details of the song **Me, Myself & I** by G-Eazy
@@ -202,7 +201,7 @@ public extension MCatalog {
 }
 
 extension MCatalog {
-  static private func song(id: MusicItemID, properties: SongProperties) async throws -> Song {
+  private static func song(id: MusicItemID, properties: SongProperties) async throws -> Song {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
     request.properties = properties
     let response = try await request.response()
@@ -213,21 +212,21 @@ extension MCatalog {
     return song
   }
 
-  static private func songs(ids: [MusicItemID], properties: SongProperties) async throws -> Songs {
+  private static func songs(ids: [MusicItemID], properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: ids)
     request.properties = properties
     let response = try await request.response()
     return try await response.items.collectingAll()
   }
 
-  static private func song(isrc: String, properties: SongProperties) async throws -> Songs {
+  private static func song(isrc: String, properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
     request.properties = properties
     let response = try await request.response()
     return try await response.items.collectingAll()
   }
 
-  static private func songs(isrc: [String], properties: SongProperties) async throws -> Songs {
+  private static func songs(isrc: [String], properties: SongProperties) async throws -> Songs {
     var request = MusicCatalogResourceRequest<Song>(matching: \.isrc, memberOf: isrc)
     request.properties = properties
     let response = try await request.response()

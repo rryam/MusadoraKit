@@ -98,7 +98,7 @@ public enum MCatalogSearchType {
   }
 }
 
-extension MCatalogSearchTypes {
+public extension MCatalogSearchTypes {
   public static var all: Self {
     var types: Self = [.songs, .albums, .playlists, .artists, .stations, .recordLabels]
 

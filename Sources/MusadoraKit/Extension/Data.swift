@@ -8,7 +8,6 @@
 import Foundation
 
 extension Data {
-  
     /// Returns a formatted JSON string representation of the data.
     ///
     /// - Throws: An error if the data cannot be decoded.

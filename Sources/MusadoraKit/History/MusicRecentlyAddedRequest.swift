@@ -15,7 +15,6 @@ public protocol MRecentlyAddedRequestable: MusicItem {
 /// A request that your app uses to fetch items the user has recently added.
 public struct MRecentlyAddedRequest<MusicItemType>
 where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
-
   /// Creates a request for items the user has recently added.
   public init() {}
 
@@ -56,7 +55,6 @@ where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
 /// }
 /// ```
 public struct MRecentlyAddedResponse<MusicItemType> where MusicItemType: MRecentlyAddedRequestable {
-
   /// A collection of items the user has recently added.
   ///
   /// This property contains the music items that were recently added to the user's library,
