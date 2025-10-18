@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-extension MLibrary {
+public extension MLibrary {
   /// Fetch a playlist from the user's library by using its identifier.
   ///
   /// Use this method to retrieve a playlist from the user's library by providing its unique identifier.
@@ -36,7 +36,7 @@ extension MLibrary {
   ///   that fetches the data from the Apple Music API.
   @available(macOS, unavailable)
   @available(macCatalyst, unavailable)
-  public static func playlist(id: MusicItemID) async throws -> Playlist {
+  static func playlist(id: MusicItemID) async throws -> Playlist {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, equalTo: id)
@@ -85,7 +85,7 @@ extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  public static func playlists(limit: Int? = nil) async throws -> Playlists {
+  static func playlists(limit: Int? = nil) async throws -> Playlists {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       if let limit {
@@ -129,7 +129,7 @@ extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  public static func playlists(ids: [MusicItemID]) async throws -> Playlists {
+  static func playlists(ids: [MusicItemID]) async throws -> Playlists {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()
       request.filter(matching: \.id, memberOf: ids)
@@ -155,7 +155,7 @@ extension MLibrary {
   /// - Returns: An `Int` representing the total number of playlists in the user's library.
   /// - Throws: An error if the retrieval fails, such as access restrictions or unavailable platform.
   @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-  public static var playlistsCount: Int {
+  static var playlistsCount: Int {
     get async throws {
       let request = MusicLibraryRequest<Playlist>()
       let collection = try await request.response().items.collectingAll()
@@ -168,7 +168,7 @@ extension MLibrary {
   @available(macCatalyst, unavailable)
   @available(tvOS, unavailable)
   @available(watchOS, unavailable)
-  public static var playlistsItemsCount: Int {
+  static var playlistsItemsCount: Int {
     get async throws {
       if let items = MPMediaQuery.playlists().items {
         return items.count
@@ -183,7 +183,7 @@ extension MLibrary {
   /// - Parameters:
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  public static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
+  static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .playlists, value: [id])])
     let response = try await request.response()
     return response
@@ -194,7 +194,7 @@ extension MLibrary {
   /// - Parameters:
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
-  public static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
+  static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
     let request = MAddResourcesRequest([(item: .playlists, value: ids)])
     let response = try await request.response()
     return response
@@ -202,14 +202,14 @@ extension MLibrary {
 }
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
-extension MHistory {
+public extension MHistory {
   /// Fetch recently added playlists from the user's library sorted by the date added.
   ///
   /// - Parameters:
   ///   - limit: The number of playlists returned.
   ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  public static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
+  static func recentlyAddedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -224,7 +224,7 @@ extension MHistory {
   ///   - limit: The number of playlists returned.
   ///   - offset: The offset for pagination.
   /// - Returns: `Playlists` for the given limit.
-  public static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
+  static func recentlyPlayedPlaylists(limit: Int = 25, offset: Int) async throws -> Playlists {
     var request = MusicLibraryRequest<Playlist>()
     request.limit = limit
     request.offset = offset
@@ -235,7 +235,7 @@ extension MHistory {
 }
 
 // MARK: - `LibraryPlaylist` methods
-extension MLibrary {
+public extension MLibrary {
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
