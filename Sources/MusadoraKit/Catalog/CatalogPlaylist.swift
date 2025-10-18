@@ -113,8 +113,8 @@ public extension MCatalog {
   }
 }
 
-public extension MCatalog {
-  private static func playlist(id: MusicItemID, properties: PlaylistProperties) async throws
+private extension MCatalog {
+  static func playlist(id: MusicItemID, properties: PlaylistProperties) async throws
     -> Playlist {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
     request.properties = properties
@@ -126,7 +126,7 @@ public extension MCatalog {
     return playlist
   }
 
-  private static func playlists(ids: [MusicItemID], properties: PlaylistProperties) async throws
+  static func playlists(ids: [MusicItemID], properties: PlaylistProperties) async throws
     -> Playlists {
     var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, memberOf: ids)
     request.properties = properties
