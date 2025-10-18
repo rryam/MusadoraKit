@@ -36,7 +36,7 @@ public enum MusicCatalogResourcesType {
     case musicVideos = "music-videos"
 
     public var type: String {
-      "ids[\(rawValue)]".removingPercentEncoding!
+      "ids[\(rawValue)]".removingPercentEncoding ?? "ids[\(rawValue)]"
     }
   }
 }

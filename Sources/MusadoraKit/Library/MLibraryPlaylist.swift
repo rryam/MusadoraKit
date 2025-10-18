@@ -68,9 +68,6 @@ public struct MLibraryPlaylist: Codable, MusicItem {
     public let standard: String
   }
 
-  /// Defines the parameters required for playback of the playlist.
-  }
-
   /// Optionally retrieves the global identifier for the playlist.
   public var globalID: String? { attributes.playParams.globalID?.rawValue }
 }

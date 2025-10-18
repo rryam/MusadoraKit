@@ -239,7 +239,7 @@ public extension MLibrary {
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
-  public static func playlists(limit: Int) async throws -> LibraryPlaylists {
+  static func playlists(limit: Int) async throws -> LibraryPlaylists {
     guard let url = try libraryPlaylistsURL(limit: limit) else {
       return LibraryPlaylists([])
     }
@@ -282,7 +282,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the playlists from Apple Music's server using `MusicDataRequest` to perform a network request.
   ///   The response data is then decoded into a `LibraryPlaylists` object.
-  public static func madeForYouPlaylists() async throws -> LibraryPlaylists {
+  static func madeForYouPlaylists() async throws -> LibraryPlaylists {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
     components.queryItems = [URLQueryItem(name: "filter[featured]", value: "made-for-you")]

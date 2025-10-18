@@ -22,7 +22,7 @@ extension NSImage {
     }
 
     let colors = try CommonImageProcessing.extractColors(from: resizedCGImage, numberOfColors: numberOfColors)
-    return colors.map { NSColor(cgColor: $0)! }
+    return colors.compactMap { NSColor(cgColor: $0) }
   }
 }
 #endif
