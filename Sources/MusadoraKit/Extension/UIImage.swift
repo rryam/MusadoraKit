@@ -23,7 +23,10 @@ extension UIImage {
     }
     UIGraphicsEndImageContext()
 
-    let colors = try CommonImageProcessing.extractColors(from: resizedImage.cgImage!, numberOfColors: numberOfColors)
+    guard let cgImage = resizedImage.cgImage else {
+      throw ImageProcessingError.invalidImage
+    }
+    let colors = try CommonImageProcessing.extractColors(from: cgImage, numberOfColors: numberOfColors)
     return colors.map { UIColor(cgColor: $0) }
   }
 }

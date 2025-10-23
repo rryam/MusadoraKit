@@ -41,7 +41,7 @@ public enum LibraryMusicItemType: String, Codable {
   ///
   /// The type string is used in requests to identify the specific item type.
   public var type: String {
-    "ids[\(rawValue)]".removingPercentEncoding!
+    "ids[\(rawValue)]".removingPercentEncoding ?? "ids[\(rawValue)]"
   }
 }
 
