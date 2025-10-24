@@ -34,8 +34,6 @@ public extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func playlist(id: MusicItemID) async throws -> Playlist {
     if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Playlist>()

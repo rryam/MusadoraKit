@@ -8,7 +8,5 @@
 /// A type alias representing a collection of songs for multiple genres.
 ///
 /// This alias is used to manage and manipulate a collection of `SongsForGenre` items.
-@available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-@available(macOS, unavailable)
-@available(macCatalyst, unavailable)
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.2, visionOS 1.0, *)
 public typealias SongsForGenres = [MusicLibrarySection<Genre, Song>]

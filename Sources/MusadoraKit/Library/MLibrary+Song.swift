@@ -29,8 +29,6 @@ public extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func song(id: MusicItemID) async throws -> Song {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       var request = MusicLibraryRequest<Song>()
@@ -75,8 +73,6 @@ public extension MLibrary {
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
   static func songs(limit: Int = 50) async throws -> Songs {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       if MusadoraKit.userToken != nil {
@@ -389,9 +385,7 @@ public extension MLibrary {
   ///
   /// - Note: This method fetches the songs locally from the device,
   ///   and is faster because it uses the latest `MusicLibraryRequest` structure.
-  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
-  @available(macOS, unavailable)
-  @available(macCatalyst, unavailable)
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.2, visionOS 1.0, *)
   static func songsForGenres() async throws -> SongsForGenres {
     if #available(macOS 14.2, macCatalyst 17.2, *) {
       let request = MusicLibrarySectionedRequest<Genre, Song>()

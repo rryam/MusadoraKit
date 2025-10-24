@@ -386,7 +386,8 @@ public extension MLibrary {
   ///   - playlist: A `Playlist` object representing the playlist to which the songs should be added.
   /// - Returns: An updated `Playlist` object.
   /// - Throws: An error if the item could not be added to the playlist.
-  @available(macCatalyst 17.0, macOS 14.0, *)
+  @available(macOS, unavailable)
+  @available(macCatalyst, unavailable)
   @discardableResult
   static func add(item: some MusicPlaylistAddable, to playlist: Playlist) async throws -> Playlist {
     try await MusicLibrary.shared.add(item, to: playlist)
