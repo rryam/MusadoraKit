@@ -37,10 +37,6 @@ struct MTabView: View {
         }
     }
     .welcomeSheet()
-    .onAppear {
-      let token = MusicDataRequest.developerToken(options: .ignoreCache)
-      print("Developer Token: \(token)")
-    }
 #if os(visionOS)
     .toolbar {
       ToolbarItemGroup(placement: .bottomOrnament) {
