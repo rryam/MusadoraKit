@@ -30,7 +30,7 @@ struct RecommendationsView: View {
         ForEach(hundredBestAlbums) { album in
           NavigationLink(destination: { HundredAlbumView(album: album) }, label: {
             VStack(alignment: .leading, spacing: 0) {
-              AsyncImage(url: album.artwork.url(width: size, height: size), content: { image in
+              AsyncImage(url: album.artwork.url(width: Int(size), height: Int(size)), content: { image in
                 image
                   .resizable()
                   .scaledToFit()
@@ -51,7 +51,9 @@ struct RecommendationsView: View {
             }
             .padding(8)
             .contentShape(RoundedRectangle(cornerRadius: 24))
+            #if os(visionOS)
             .hoverEffect()
+            #endif
           })
           .buttonStyle(.plain)
         }

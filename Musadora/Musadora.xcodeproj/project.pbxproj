@@ -129,7 +129,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					0A8FFEF629B9248E0029A91F = {
 						CreatedOnToolsVersion = 14.2;
@@ -146,7 +146,7 @@
 			);
 			mainGroup = 0A8FFEEE29B9248E0029A91F;
 			packageReferences = (
-				0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */,
+				0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */,
 			);
 			productRefGroup = 0A8FFEF829B9248F0029A91F /* Products */;
 			projectDirPath = "";
@@ -239,6 +239,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -295,6 +296,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -310,6 +312,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Musadora/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Musadora/Info.plist;
@@ -326,8 +331,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -344,6 +351,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Musadora/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Musadora/Info.plist;
@@ -360,8 +370,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -393,16 +405,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */ = {
+		0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "..";
+			relativePath = ..;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		0A834F2329B926AF0063AA6C /* MusadoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference "MusadoraKit" */;
+			package = 0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */;
 			productName = MusadoraKit;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -48,7 +48,9 @@ struct RecommendationRow: View {
       }
       .padding(8)
       .contentShape(RoundedRectangle(cornerRadius: 24))
+      #if os(visionOS)
       .hoverEffect()
+      #endif
     })
     .buttonStyle(.plain)
   }

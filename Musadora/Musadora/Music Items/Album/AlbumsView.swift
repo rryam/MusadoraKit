@@ -76,7 +76,9 @@ struct AlbumsView: View {
       }
     }
     .navigationTitle("Top Albums")
+    #if os(iOS)
     .navigationBarTitleDisplayMode(.large)
+    #endif
   }
 }
 

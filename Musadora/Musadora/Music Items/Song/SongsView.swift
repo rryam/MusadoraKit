@@ -101,6 +101,8 @@ struct SongsView: View {
       }
     }
     .navigationTitle("Top Songs")
+    #if os(iOS)
     .navigationBarTitleDisplayMode(.large)
+    #endif
   }
 }
