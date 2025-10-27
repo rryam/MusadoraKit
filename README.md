@@ -36,7 +36,7 @@ To add MusadoraKit to your project, simply include it in your `Package.swift` fi
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/rryam/MusadoraKit.git", .upToNextMajor(from: "7.5.1"))
+    .package(url: "https://github.com/rryam/MusadoraKit.git", .upToNextMajor(from: "7.6.1"))
 ]
 ```
 
