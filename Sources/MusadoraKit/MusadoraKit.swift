@@ -35,12 +35,7 @@ extension MusadoraKit {
 
     /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
     ///
-    /// This function performs a GET request to the `/v1/test` endpoint of the Apple Music API.
-    /// If the request completes without throwing an error (specifically, receiving an HTTP 200 OK response),
-    /// it signifies a successful connection.
     /// It helps verify that the application has a valid developer token and can reach the API.
-    ///
-    /// - Important: Ensure your app is properly configured with a valid developer token and necessary MusicKit capabilities before calling this.
     ///
     /// - Throws: An error if the connectivity test fails. Common errors include:
     ///   - `URLError.userAuthenticationRequired`: Thrown for an HTTP 401 Unauthorized response. This usually indicates an issue with the developer token or MusicKit setup. The `userInfo` dictionary contains a descriptive message.
@@ -55,18 +50,14 @@ extension MusadoraKit {
     /// ```swift
     /// Task {
     ///     do {
-    ///         try await MusadoraKit.testConnectivity()
+    ///         try await MusadoraKit.test()
     ///         print("Successfully connected to Apple Music API.")
     ///     } catch {
     ///         print("Failed to connect to Apple Music API: \(error.localizedDescription)")
-    ///         // Optionally inspect the userInfo for more details
-    ///         if let urlError = error as? URLError, let description = urlError.userInfo["description"] as? String {
-    ///             print("Details: \(description)")
-    ///         }
     ///     }
     /// }
     /// ```
-    public static func testConnectivity() async throws {
+    public static func test() async throws {
         var components = AppleMusicURLComponents()
         components.path = "test"
 
@@ -97,5 +88,13 @@ extension MusadoraKit {
         } catch {
             throw error
         }
+    }
+
+    /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
+    ///
+    /// - Deprecated: Use ``test()`` instead. This method will be removed in a future version.
+    @available(*, deprecated, renamed: "test()", message: "Use 'test()' instead. This method will be removed in a future version.")
+    public static func testConnectivity() async throws {
+        try await test()
     }
 }
