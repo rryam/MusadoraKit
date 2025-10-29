@@ -76,3 +76,4 @@ extension MCatalogRatingAddRequest {
   }
 }
 
+
