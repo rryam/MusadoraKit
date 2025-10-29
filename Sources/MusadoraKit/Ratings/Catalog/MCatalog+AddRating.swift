@@ -22,7 +22,7 @@ public extension MCatalog {
   ///   - rating: The rating to add for the song.
   /// - Returns: The added rating for the song as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the song is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the song is not found in the Apple Music catalog.
   static func addRating(for song: Song, rating: RatingType) async throws -> Rating {
     try await addRating(for: song.id, item: .song, rating: rating)
   }
@@ -43,7 +43,7 @@ public extension MCatalog {
   ///   - rating: The rating to add for the album.
   /// - Returns: The added rating for the album as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the album is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the album is not found in the Apple Music catalog.
   static func addRating(for album: Album, rating: RatingType) async throws -> Rating {
     try await addRating(for: album.id, item: .album, rating: rating)
   }
@@ -64,7 +64,7 @@ public extension MCatalog {
   ///   - rating: The rating to add for the playlist.
   /// - Returns: The added rating for the playlist as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the playlist is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the playlist is not found in the Apple Music catalog.
   static func addRating(for playlist: Playlist, rating: RatingType) async throws -> Rating {
     try await addRating(for: playlist.id, item: .playlist, rating: rating)
   }
@@ -85,7 +85,7 @@ public extension MCatalog {
   ///   - rating: The rating to add for the music video.
   /// - Returns: The added rating for the music video as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the music video is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the music video is not found in the Apple Music catalog.
   static func addRating(for musicVideo: MusicVideo, rating: RatingType) async throws -> Rating {
     try await addRating(for: musicVideo.id, item: .musicVideo, rating: rating)
   }
@@ -106,7 +106,7 @@ public extension MCatalog {
   ///   - rating: The rating to add for the station.
   /// - Returns: The added rating for the station as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the station is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the station is not found in the Apple Music catalog.
   static func addRating(for station: Station, rating: RatingType) async throws -> Rating {
     try await addRating(for: station.id, item: .station, rating: rating)
   }
@@ -131,13 +131,13 @@ public extension MCatalog {
   ///   - rating: The rating to add for the music item.
   /// - Returns: The added rating for the music item as `Rating` object.
   ///
-  /// - Throws: `MRatingError.notFound`: If the music item with the specified ID is not found in the Apple Music catalog.
+  /// - Throws: `MusadoraKitError.ratingNotFound`: If the music item with the specified ID is not found in the Apple Music catalog.
   static func addRating(for id: MusicItemID, item: CatalogRatingMusicItemType, rating: RatingType) async throws -> Rating {
     let request = MCatalogRatingAddRequest(with: id, item: item, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
+      throw MusadoraKitError.ratingNotFound(for: id.rawValue)
     }
     return rating
   }

@@ -221,7 +221,7 @@ public extension MCatalog {
     let response = try await request.perform()
 
     guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
+      throw MusadoraKitError.ratingNotFound(for: id.rawValue)
     }
     return rating
   }

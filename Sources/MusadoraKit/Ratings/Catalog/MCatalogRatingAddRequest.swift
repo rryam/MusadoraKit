@@ -76,17 +76,3 @@ extension MCatalogRatingAddRequest {
   }
 }
 
-/// Possible errors that can occur during rating operations.
-enum MRatingError: Error, Equatable {
-  /// Indicates that the specified item was not found in the catalog.
-  case notFound(for: String)
-}
-
-extension MRatingError: CustomStringConvertible {
-  var description: String {
-    switch self {
-    case let .notFound(id):
-      return "No rating be found for \(id)."
-    }
-  }
-}

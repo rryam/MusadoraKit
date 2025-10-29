@@ -95,6 +95,7 @@ I am slowly adding all the methods used in MusadoraKit to it, so you can refer t
 - [Core APIs](#core-apis)
   - [Catalog](#catalog)
   - [Searching the Catalog](#searching-the-catalog)
+  - [Charts](#charts)
   - [Library](#library)
   - [Recommendations](#recommendations)
   - [History](#history)
@@ -179,7 +180,7 @@ Test your Apple Music API setup and developer token validity with a simple conne
 ```swift
 Task {
     do {
-        try await MusadoraKit.testConnectivity()
+        try await MusadoraKit.test()
         print("Successfully connected to Apple Music API!")
     } catch {
         print("Failed to connect: \(error.localizedDescription)")
@@ -198,6 +199,8 @@ Task {
     }
 }
 ```
+
+> **Note:** `MusadoraKit.testConnectivity()` is deprecated in favor of `MusadoraKit.test()`. Use `test()` for new code.
 
 This method performs a GET request to Apple's test endpoint and validates:
 - Developer token is valid
@@ -226,6 +229,45 @@ print(searchResponse.songs)
 print(searchResponse.artists)
 ```
 
+### Search Suggestions
+
+Get search suggestions and top results for a search term. Available on iOS 16.0+, macOS 13.0+, tvOS 16.0+, watchOS 9.0+, and visionOS 1.0+.
+
+```swift
+// Get suggestions and top results
+let suggestionsResponse = try await MCatalog.searchSuggestions(for: "the weeknd", types: [.songs, .albums])
+
+print(suggestionsResponse.suggestions)
+print(suggestionsResponse.topResults)
+
+// Get only suggestions
+let suggestions = try await MCatalog.suggestions(for: "the weeknd")
+```
+
+## Charts
+
+Access Apple Music charts including global top charts, most played charts, and genre-specific charts. Available on iOS 16.0+, macOS 13.0+, tvOS 16.0+, watchOS 9.0+, and visionOS 1.0+.
+
+### Fetch charts:
+
+```swift
+// Get daily global top songs
+let charts = try await MCatalog.charts(kinds: .dailyGlobalTop, types: .songs)
+
+// Get most played albums in a specific genre
+let rockGenre = try await MCatalog.genre(id: MusicItemID("21")) // Rock genre
+let rockCharts = try await MCatalog.charts(genre: rockGenre, kinds: [.mostPlayed], types: [.albums])
+
+// Get charting playlists for current storefront
+let chartPlaylists = try await MCatalog.chartPlaylists()
+
+// Get charting playlists for a specific storefront
+let chartPlaylists = try await MCatalog.chartPlaylists(storefront: "IN")
+
+// Get global charting playlists
+let globalChartPlaylists = try await MCatalog.globalChartPlaylists()
+```
+
 ## Library 
 
 While this is natively not available in MusicKit for iOS 15, you can fetch library resources using MusadoraKit that uses Apple Music API under the hood. The methods are similar across the music items.
@@ -244,6 +286,31 @@ let searchResponse = try await MLibrary.search(for: "hello", types: [Song.self])
 print(searchResponse.songs)
 ```
 
+### Creating Playlists
+
+Create playlists in the user's library with songs, tracks, or other playlist-addable items.
+
+```swift
+// Create an empty playlist
+let playlist = try await MLibrary.createPlaylist(with: "My Playlist", description: "A great playlist")
+
+// Create a playlist with songs
+let songs: Songs = [...]
+let playlist = try await MLibrary.createPlaylist(with: "My Playlist", description: "My favorite songs", items: songs)
+
+// Create a playlist with song IDs
+let songIDs: [MusicItemID] = [...]
+let playlist = try await MLibrary.createPlaylist(with: "My Playlist", songIds: songIDs)
+
+// Add songs to an existing playlist
+try await MLibrary.add(songs: songs, to: playlist)
+
+// Add songs by IDs to an existing playlist
+try await MLibrary.add(songIDs: songIDs, to: playlistID)
+```
+
+> **Note:** On iOS 16.0+, tvOS 16.0+, watchOS 9.0+, and visionOS 1.0+, you can also create playlists with author names and use `MusicPlaylistAddable` items.
+
 ## Recommendations 
 
 You can take advantage of Apple's Music recommendation system and use it in your app. For example, to fetch the default recommendations: 
@@ -260,13 +327,49 @@ print(recommendation.stations)
 
 ## History
 
-You can also fetch historial data from the user's library. For example, to get the recently played resources:
+You can fetch historical data from the user's library using `MHistory`. This includes recently played items, recently added content, heavy rotation, and more.
+
+### Recently played:
 
 ```swift
-let recentlyPlayedItems = try await MLibrary.recentlyPlayed()
+// Get recently played items (albums, playlists, stations)
+let recentlyPlayedItems = try await MHistory.recentlyPlayed()
 
-let recentlyPlayedAlbums = try await MLibrary.recentlyPlayedAlbums()
-}
+// Get recently played albums
+let recentlyPlayedAlbums = try await MHistory.recentlyPlayedAlbums()
+
+// Get recently played playlists
+let recentlyPlayedPlaylists = try await MHistory.recentlyPlayedPlaylists()
+
+// Get recently played stations
+let recentlyPlayedStations = try await MHistory.recentlyPlayedStations()
+
+// Get recently played tracks (iOS 16.0+, macOS 13.0+, tvOS 16.0+, watchOS 9.0+)
+let recentlyPlayedTracks = try await MHistory.recentlyPlayedTracks()
+
+// Get recently played songs (iOS 16.0+, macOS 13.0+, tvOS 16.0+, watchOS 9.0+)
+let recentlyPlayedSongs = try await MHistory.recentlyPlayedSongs()
+```
+
+### Recently added:
+
+```swift
+// Get recently added items
+let recentlyAddedItems = try await MHistory.recentlyAdded()
+```
+
+### Heavy rotation:
+
+```swift
+// Get items in heavy rotation
+let heavyRotationItems = try await MHistory.heavyRotation()
+```
+
+### Most played songs:
+
+```swift
+// Get most played songs (iOS 16.0+, macOS 14.0+, tvOS 16.0+, watchOS 9.0+)
+let mostPlayedSongs = try await MHistory.mostPlayedSongs(limit: 100)
 ```
 
 ## Music Player
@@ -607,7 +710,7 @@ I welcome contributions to MusadoraKit! Here is how you can help:
 ### Code Style
 
 - Follow SwiftLint rules (run `swiftlint lint`)
-- Use Swift 6.2+ features where appropriate
+- Use Swift 6.0+ features where appropriate
 - Maintain backward compatibility when possible
 - Document public APIs with DocC comments
 

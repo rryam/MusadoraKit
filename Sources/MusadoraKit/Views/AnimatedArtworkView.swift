@@ -118,7 +118,7 @@ public struct AnimatedArtworkView: View {
         self.dominantColors = colors
       }
     } catch {
-      print("Error extracting colors: \(error)")
+      // Silently fail - colors will remain empty or previous values
     }
   }
 
