@@ -292,7 +292,7 @@ Create playlists in the user's library with songs, tracks, or other playlist-add
 
 ```swift
 // Create an empty playlist
-let playlist = try await MLibrary.createPlaylist(with: "My Playlist", description: "A great playlist")
+let emptyPlaylist = try await MLibrary.createPlaylist(with: "My Playlist", description: "A great playlist")
 
 // Create a playlist with songs
 let songs: Songs = [...]
@@ -300,13 +300,13 @@ let playlist = try await MLibrary.createPlaylist(with: "My Playlist", descriptio
 
 // Create a playlist with song IDs
 let songIDs: [MusicItemID] = [...]
-let playlist = try await MLibrary.createPlaylist(with: "My Playlist", songIds: songIDs)
+let playlistWithIDs = try await MLibrary.createPlaylist(with: "My Playlist", songIds: songIDs)
 
 // Add songs to an existing playlist
 try await MLibrary.add(songs: songs, to: playlist)
 
 // Add songs by IDs to an existing playlist
-try await MLibrary.add(songIDs: songIDs, to: playlist.id)
+try await MLibrary.add(songIDs: songIDs, to: playlistWithIDs.id)
 ```
 
 > **Note:** On iOS 16.0+, tvOS 16.0+, watchOS 9.0+, and visionOS 1.0+, you can also create playlists with author names and use `MusicPlaylistAddable` items.
@@ -469,23 +469,23 @@ Add, retrieve, and manage ratings for your users' favorite Apple Music content. 
 
 ```swift
 // Rate a song as "liked"
-let rating = try await MCatalog.addRating(for: song, rating: .like)
+let songRating = try await MCatalog.addRating(for: song, rating: .like)
 
 // Rate an album as "disliked"
-let rating = try await MCatalog.addRating(for: album, rating: .dislike)
+let albumRating = try await MCatalog.addRating(for: album, rating: .dislike)
 
 // Rate a playlist
-let rating = try await MCatalog.addRating(for: playlist, rating: .love)
+let playlistRating = try await MCatalog.addRating(for: playlist, rating: .love)
 ```
 
 ### Get current ratings:
 
 ```swift
 // Get rating for a song
-let rating = try await MCatalog.rating(for: song)
+let songRating = try await MCatalog.rating(for: song)
 
 // Get rating for an album
-let rating = try await MCatalog.rating(for: album)
+let albumRating = try await MCatalog.rating(for: album)
 ```
 
 ### Remove ratings:
@@ -541,28 +541,28 @@ Add songs, albums, playlists, artists, music videos, and stations to your users'
 
 ```swift
 // Favorite a song
-let success = try await MCatalog.favorite(song: song)
+let songFavoriteSuccess = try await MCatalog.favorite(song: song)
 
 // Favorite an album
-let success = try await MCatalog.favorite(album: album)
+let albumFavoriteSuccess = try await MCatalog.favorite(album: album)
 
 // Favorite a playlist
-let success = try await MCatalog.favorite(playlist: playlist)
+let playlistFavoriteSuccess = try await MCatalog.favorite(playlist: playlist)
 
 // Favorite an artist
-let success = try await MCatalog.favorite(artist: artist)
+let artistFavoriteSuccess = try await MCatalog.favorite(artist: artist)
 ```
 
 ### Favorite a music video:
 
 ```swift
-let success = try await MCatalog.favorite(musicVideo: musicVideo)
+let musicVideoFavoriteSuccess = try await MCatalog.favorite(musicVideo: musicVideo)
 ```
 
 ### Favorite a station:
 
 ```swift
-let success = try await MCatalog.favorite(station: station)
+let stationFavoriteSuccess = try await MCatalog.favorite(station: station)
 ```
 
 ## Storefronts
