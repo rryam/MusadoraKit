@@ -262,7 +262,7 @@ let rockCharts = try await MCatalog.charts(genre: rockGenre, kinds: [.mostPlayed
 let chartPlaylists = try await MCatalog.chartPlaylists()
 
 // Get charting playlists for a specific storefront
-let chartPlaylists = try await MCatalog.chartPlaylists(storefront: "IN")
+let chartPlaylistsForStorefront = try await MCatalog.chartPlaylists(storefront: "IN")
 
 // Get global charting playlists
 let globalChartPlaylists = try await MCatalog.globalChartPlaylists()
@@ -306,7 +306,7 @@ let playlist = try await MLibrary.createPlaylist(with: "My Playlist", songIds: s
 try await MLibrary.add(songs: songs, to: playlist)
 
 // Add songs by IDs to an existing playlist
-try await MLibrary.add(songIDs: songIDs, to: playlistID)
+try await MLibrary.add(songIDs: songIDs, to: playlist.id)
 ```
 
 > **Note:** On iOS 16.0+, tvOS 16.0+, watchOS 9.0+, and visionOS 1.0+, you can also create playlists with author names and use `MusicPlaylistAddable` items.
