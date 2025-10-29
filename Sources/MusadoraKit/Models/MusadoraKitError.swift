@@ -11,28 +11,28 @@ import Foundation
 public enum MusadoraKitError: Error, Equatable {
   /// The specified music item could not be found.
   case notFound(for: String)
-  
+
   /// One or more types must be specified for the operation.
   case typeMissing
-  
+
   /// The recommendation limit was exceeded.
   case recommendationOverLimit(for: Int)
-  
+
   /// The history limit was exceeded.
   case historyOverLimit(limit: Int, overLimit: Int)
-  
+
   /// A monthly summary period could not be determined.
   case invalidSummaryPeriod
-  
+
   /// One or more IDs must be specified for the operation.
   case idMissing
-  
+
   /// The platform does not support this operation.
   case platformNotSupported
-  
+
   /// The rating for the specified item could not be found.
   case ratingNotFound(for: String)
-  
+
   /// Unable to count music items for the specified type.
   case unableToCountItems(for: String)
 }
