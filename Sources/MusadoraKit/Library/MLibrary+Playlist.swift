@@ -171,7 +171,7 @@ public extension MLibrary {
       if let items = MPMediaQuery.playlists().items {
         return items.count
       } else {
-        throw MediaPlayError.notFound(for: "playlists")
+        throw MusadoraKitError.unableToCountItems(for: "playlists")
       }
     }
   }

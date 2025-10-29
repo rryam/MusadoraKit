@@ -136,7 +136,7 @@ public extension MLibrary {
       if let items = MPMediaQuery.artists().items {
         return items.count
       } else {
-        throw MediaPlayError.notFound(for: "artists")
+        throw MusadoraKitError.unableToCountItems(for: "artists")
       }
     }
   }

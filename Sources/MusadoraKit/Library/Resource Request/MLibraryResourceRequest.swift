@@ -106,8 +106,6 @@ extension MLibraryResourceRequest {
 
       components.queryItems = queryItems
 
-      print("MLibraryResourceRequest components", components)
-
       guard let url = components.url else {
         throw URLError(.badURL)
       }

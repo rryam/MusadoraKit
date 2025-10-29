@@ -181,7 +181,7 @@ public extension MLibrary {
     let response = try await request.response()
 
     guard let rating = response.data.first else {
-      throw MRatingError.notFound(for: id.rawValue)
+      throw MusadoraKitError.ratingNotFound(for: id.rawValue)
     }
     return rating
   }
