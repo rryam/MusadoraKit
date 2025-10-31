@@ -90,11 +90,4 @@ extension MusadoraKit {
         }
     }
 
-    /// Tests connectivity to the Apple Music API by sending a request to a dedicated test endpoint.
-    ///
-    /// - Deprecated: Use ``test()`` instead. This method will be removed in a future version.
-    @available(*, deprecated, renamed: "test()", message: "Use 'test()' instead. This method will be removed in a future version.")
-    public static func testConnectivity() async throws {
-        try await test()
-    }
 }

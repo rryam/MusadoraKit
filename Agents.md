@@ -24,7 +24,7 @@ The codebase exposes a **facade-style API** through stateless structs with stati
 Rating-related functionality now lives in the `Ratings/` module via extensions on `MCatalog` and `MLibrary`; there is no standalone `MRating` facade.
 
 The main `MusadoraKit` struct is rarely used directly except for:
-- `MusadoraKit.testConnectivity()` - API connectivity testing
+- `MusadoraKit.test()` - API connectivity testing
 - `MusadoraKit.userToken` - User token storage
 
 **Directory structure:**
@@ -152,7 +152,7 @@ Many API calls are storefront-specific. Use `MCatalog.storefront(id:)` to fetch 
 - User token optionally stored via `MusadoraKit.userToken` for API calls requiring user context
 
 **Testing Connectivity:**
-Always use `MusadoraKit.testConnectivity()` before making API calls to verify setup.
+Always use `MusadoraKit.test()` before making API calls to verify setup.
 
 ## Musadora Sample App
 

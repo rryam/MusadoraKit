@@ -200,8 +200,6 @@ Task {
 }
 ```
 
-> **Note:** `MusadoraKit.testConnectivity()` is deprecated in favor of `MusadoraKit.test()`. Use `test()` for new code.
-
 This method performs a GET request to Apple's test endpoint and validates:
 - Developer token is valid
 - MusicKit capabilities are properly configured

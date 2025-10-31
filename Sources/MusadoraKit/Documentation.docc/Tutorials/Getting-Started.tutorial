@@ -96,7 +96,7 @@
         ```swift
         Task {
             do {
-                try await MusadoraKit.testConnectivity()
+                try await MusadoraKit.test()
                 print("Connected to Apple Music API!")
             } catch {
                 print("Connection failed: \(error.localizedDescription)")
@@ -210,11 +210,11 @@
             Which method tests your Apple Music API setup?
 
             1. `MusicAuthorization.request()`
-            2. `MusadoraKit.testConnectivity()` **(Correct)**
+            2. `MusadoraKit.test()` **(Correct)**
             3. `MCatalog.search()`
             4. `MLibrary.songs()`
 
-            Use `MusadoraKit.testConnectivity()` to verify your developer token and API setup.
+            Use `MusadoraKit.test()` to verify your developer token and API setup.
         }
     }
 }
