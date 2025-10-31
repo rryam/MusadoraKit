@@ -89,5 +89,4 @@ extension MusadoraKit {
             throw error
         }
     }
-
 }

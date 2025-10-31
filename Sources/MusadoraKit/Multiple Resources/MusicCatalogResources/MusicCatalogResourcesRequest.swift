@@ -11,10 +11,10 @@ import Foundation
 /// using their identifiers.
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 public struct MusicCatalogResourcesRequest {
-  private var types: [MusicCatalogResourcesType.Key: [MusicItemID]]
+  private var types: CatalogResourceIdentifiers
 
   /// Creates a request to fetch multiple resources from the Apple Music catalog using their identifiers.
-  public init(types: [MusicCatalogResourcesType.Key: [MusicItemID]]) {
+  public init(types: CatalogResourceIdentifiers) {
     self.types = types
   }
 
