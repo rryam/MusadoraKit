@@ -45,7 +45,7 @@ struct MLibraryResourceRequest<MusicItemType: MusicItem & Codable> {
     let decoder = JSONDecoder()
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       let items = try decoder.decode(MusicItemCollection<MusicItemType>.self, from: data)
       return MLibraryResourceResponse(items: items)

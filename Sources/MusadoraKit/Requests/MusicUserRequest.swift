@@ -1,5 +1,5 @@
 //
-//  MUserRequest.swift
+//  MusicUserRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/02/24.
@@ -10,7 +10,7 @@ import Foundation
 
 /// A request structure for fetching data from an arbitrary Apple Music API endpoint requiring user authentication.
 ///
-/// The `MUserRequest` struct facilitates sending authenticated requests to the Apple Music API, incorporating user tokens for personalized actions.
+/// The `MusicUserRequest` struct enables sending authenticated requests to the Apple Music API, incorporating user tokens for personalized actions.
 /// The developer token is dynamically fetched using the token provider to ensure up-to-date authentication.
 ///
 /// ### Usage Example:
@@ -19,7 +19,7 @@ import Foundation
 /// let playlistURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
 /// let urlRequest = URLRequest(url: playlistURL)
 /// let userToken = "YOUR_USER_TOKEN"
-/// let dataRequest = MUserRequest(urlRequest: urlRequest, userToken: userToken)
+/// let dataRequest = MusicUserRequest(urlRequest: urlRequest, userToken: userToken)
 ///
 /// do {
 ///     let response = try await dataRequest.response()
@@ -28,7 +28,7 @@ import Foundation
 ///     print("Failed to retrieve playlist data:", error.localizedDescription)
 /// }
 /// ```
-public struct MUserRequest {
+public struct MusicUserRequest {
   /// The user token used for personalized API requests.
   private let userToken: String
 

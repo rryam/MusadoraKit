@@ -38,7 +38,7 @@ struct MRecommendationRequest {
     decoder.dateDecodingStrategy = .iso8601
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       let baseItems = try decoder.decode(MRecommendations.self, from: data)
       items = try await baseItems.collectingAll(upTo: limit)

@@ -42,7 +42,7 @@ struct MHistoryRequest {
     let decoder = JSONDecoder()
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       let baseItems = try decoder.decode(UserMusicItems.self, from: data)
       items = try await baseItems.collectingAll(upTo: limit)

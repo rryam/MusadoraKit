@@ -23,7 +23,7 @@ public struct MusicLibraryResourcesRequest {
     let decoder = JSONDecoder()
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       let items = try decoder.decode(MusicLibraryResourcesTypes.self, from: data)
       return MusicLibraryResourcesResponse(items: items)

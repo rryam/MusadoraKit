@@ -6,6 +6,7 @@
 //
 
 import MusadoraKit
+import MusicKit
 import SwiftUI
 
 struct MTabView: View {
@@ -35,6 +36,10 @@ struct MTabView: View {
         .tabItem {
           Label("Settings", systemImage: "gear")
         }
+    }
+    .task {
+        let token = try? await MusicDataRequest.tokenProvider.developerToken(options: .ignoreCache)
+        print(token)
     }
     .welcomeSheet()
 #if os(visionOS)

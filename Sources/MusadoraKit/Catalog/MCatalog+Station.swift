@@ -209,7 +209,7 @@ public extension MCatalog {
     let decoder = JSONDecoder()
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       stations = try decoder.decode(Stations.self, from: data)
     } else {

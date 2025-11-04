@@ -246,7 +246,7 @@ public extension MLibrary {
     let decoder = JSONDecoder()
 
     if let userToken = MusadoraKit.userToken {
-      let request = MUserRequest(urlRequest: .init(url: url), userToken: userToken)
+      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
       playlists = try decoder.decode(LibraryPlaylists.self, from: data)
     } else {
