@@ -1,5 +1,5 @@
 // 
-//  MLibrarySearchResponse.swift
+//  MusicLibrarySearchResponse.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
@@ -12,7 +12,7 @@
 ///
 /// Example usage:
 /// ```swift
-/// let request = MLibrarySearchRequest(term: "coldplay", types: [Song.self, Album.self])
+/// let request = MusicLibrarySearchRequest(term: "coldplay", types: [Song.self, Album.self])
 /// let response = try await request.response()
 ///
 /// // Access search results by type
@@ -20,7 +20,7 @@
 /// print(response.albums)   // Matching albums
 /// print(response.artists)  // Matching artists
 /// ```
-public struct MLibrarySearchResponse: Equatable, Hashable, Sendable {
+public struct MusicSearchLibraryResponse: Equatable, Hashable, Sendable {
   /// A collection of matching songs from the library.
   public let songs: Songs
 
@@ -41,9 +41,9 @@ public struct MLibrarySearchResponse: Equatable, Hashable, Sendable {
   }
 }
 
-extension MLibrarySearchResponse: Codable {
+extension MusicSearchLibraryResponse: Codable {
   public init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: MLibrarySearchType.self)
+    let container = try decoder.container(keyedBy: MusicSearchLibraryType.self)
 
     songs = try container.decodeIfPresent(Songs.self, forKey: .songs) ?? []
     artists = try container.decodeIfPresent(Artists.self, forKey: .artists) ?? []
@@ -53,7 +53,7 @@ extension MLibrarySearchResponse: Codable {
   }
 
   public func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: MLibrarySearchType.self)
+    var container = encoder.container(keyedBy: MusicSearchLibraryType.self)
 
     try container.encode(songs, forKey: .songs)
     try container.encode(artists, forKey: .artists)
@@ -63,9 +63,9 @@ extension MLibrarySearchResponse: Codable {
   }
 }
 
-extension MLibrarySearchResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MusicSearchLibraryResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
-    var description = "MusicLibrarySearchResponse("
+    var description = "MusicSearchLibraryResponse("
     let mirror = Mirror(reflecting: self)
 
     description += mirror.children.map { "\n\($0.value)," }.joined()

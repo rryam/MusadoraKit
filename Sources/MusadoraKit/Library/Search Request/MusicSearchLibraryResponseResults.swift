@@ -1,5 +1,5 @@
 // 
-//  MLibrarySearchResponseResults.swift
+//  MusicLibrarySearchResponseResults.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 08/09/21.
@@ -12,19 +12,19 @@
 ///
 /// Example usage:
 /// ```swift
-/// let request = MLibrarySearchRequest(term: "coldplay", types: [Song.self])
+/// let request = MusicSearchLibraryRequest(term: "coldplay", types: [Song.self])
 /// let response = try await request.response()
-/// let results = MLibrarySearchResponseResults(results: response)
+/// let results = MusicSearchLibraryResponseResults(results: response)
 /// print(results.results.songs)
 /// ```
-struct MLibrarySearchResponseResults: Decodable {
+struct MusicSearchLibraryResponseResults: Decodable {
   /// The search response containing collections of different music items.
-  var results: MLibrarySearchResponse
+  var results: MusicSearchLibraryResponse
 }
 
-extension MLibrarySearchResponseResults: CustomStringConvertible, CustomDebugStringConvertible {
+extension MusicSearchLibraryResponseResults: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
-    var description = "MusicLibrarySearchResponseResults("
+    var description = "MusicSearchLibraryResponseResults("
     let mirror = Mirror(reflecting: self)
 
     description += mirror.children.map { "\n\($0.value)," }.joined()

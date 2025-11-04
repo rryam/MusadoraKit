@@ -5,14 +5,14 @@
 //  Created by Rudrank Riyam on 08/09/21.
 //
 
-enum MLibrarySearchType: String, CodingKey {
+enum MusicSearchLibraryType: String, CodingKey {
   case songs = "library-songs"
   case artists = "library-artists"
   case albums = "library-albums"
   case musicVideos = "library-music-videos"
   case playlists = "library-playlists"
 
-  static func getTypes(_ types: [MLibrarySearchable.Type]) -> String {
+  static func getTypes(_ types: [MusicLibrarySearchableItem.Type]) -> String {
     types
       .map { $0.searchIdentifier }
       .removeDuplicates()
