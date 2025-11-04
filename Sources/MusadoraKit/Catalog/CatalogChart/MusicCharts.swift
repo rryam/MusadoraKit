@@ -1,5 +1,5 @@
 //
-//  MCharts.swift
+//  MusicCharts.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -17,7 +17,7 @@ import Foundation
 /// let charts = try await MCatalog.charts(kinds: .dailyGlobalTop, types: .songs)
 /// print(charts.results.songs)
 /// ```
-struct MCharts: Codable {
+struct MusicCharts: Codable {
   /// A mapping of a requested type to an array of charts.
   let results: MChartResponse
 }

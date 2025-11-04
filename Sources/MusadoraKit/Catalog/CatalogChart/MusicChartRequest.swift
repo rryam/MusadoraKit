@@ -1,5 +1,5 @@
 //
-//  MChartRequest.swift
+//  MusicChartRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 26/03/22.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum MChartType: String {
+enum MusicChartType: String {
   case cityCharts
   case dailyGlobalTopCharts
 }
 
 /// A  chart request that your app uses to fetch charts from the Apple Music catalog
 /// using the types of charts and for the genre identifier.
-struct MChartRequest {
+struct MusicChartRequest {
   /// The identifier for the genre to use in the chart results.
   var genre: MusicItemID?
 
@@ -22,7 +22,7 @@ struct MChartRequest {
   /// in the catalog chart response.
   var limit: Int?
 
-  var chartType: [MChartType]?
+  var chartType: [MusicChartType]?
 
   /// Creates a request to fetch charts using the list of the
   /// types of charts to include in the results.
@@ -51,14 +51,14 @@ struct MChartRequest {
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
 
-    let charts = try JSONDecoder().decode(MCharts.self, from: response.data)
+    let charts = try JSONDecoder().decode(MusicCharts.self, from: response.data)
     return charts.results
   }
 
   private var types: String
 }
 
-extension MChartRequest {
+extension MusicChartRequest {
   internal func chartsURL(storefront: String) throws -> URL {
     var components = AppleMusicURLComponents()
     var queryItems: [URLQueryItem] = []
