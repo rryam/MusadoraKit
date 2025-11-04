@@ -9,7 +9,7 @@ import MusadoraKit
 import SwiftUI
 
 struct RecommendationView: View {
-  var recommendation: MRecommendationItem
+  var recommendation: MusicRecommendationItem
 
   var body: some View {
     ScrollView(.horizontal) {

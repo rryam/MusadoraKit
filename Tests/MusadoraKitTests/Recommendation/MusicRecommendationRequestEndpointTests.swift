@@ -12,7 +12,7 @@ import Testing
 struct MusicRecommendationRequestEndpointTests {
   @Test
   func defaultRecommendationEndpointURL() throws {
-    let request = MRecommendationRequest()
+    let request = MusicRecommendationRequest()
     let url = try request.recommendationEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recommendations")
@@ -20,7 +20,7 @@ struct MusicRecommendationRequestEndpointTests {
 
   @Test
   func defaultRecommendationWithLimitEndpointURL() throws {
-    var request = MRecommendationRequest()
+    var request = MusicRecommendationRequest()
     request.limit = 5
     let url = try request.recommendationEndpointURL
 
@@ -29,7 +29,7 @@ struct MusicRecommendationRequestEndpointTests {
 
   @Test
   func recommendationByIDEndpointURL() throws {
-    let request = MRecommendationRequest(equalTo: "6-27s5hU6azhJY")
+    let request = MusicRecommendationRequest(equalTo: "6-27s5hU6azhJY")
     let url = try request.recommendationEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recommendations?ids=6-27s5hU6azhJY")
@@ -37,7 +37,7 @@ struct MusicRecommendationRequestEndpointTests {
 
   @Test
   func recommendationByIDWithLimitEndpointURL() throws {
-    var request = MRecommendationRequest(equalTo: "6-27s5hU6azhJY")
+    var request = MusicRecommendationRequest(equalTo: "6-27s5hU6azhJY")
     request.limit = 2
     let url = try request.recommendationEndpointURL
 
@@ -47,7 +47,7 @@ struct MusicRecommendationRequestEndpointTests {
   @Test
   func defaultRecommendationEndpointURLWithOverLimit() {
     let limit = 31
-    var request = MRecommendationRequest()
+    var request = MusicRecommendationRequest()
     request.limit = limit
 
     let error = #expect(throws: MusadoraKitError.self) {

@@ -19,7 +19,7 @@ struct CatalogSearchTests {
       return
     }
 
-    let allTypes = MCatalogSearchTypes.all
+    let allTypes = MusicCatalogSearchTypes.all
 
     #expect(allTypes.contains(.songs))
     #expect(allTypes.contains(.albums))

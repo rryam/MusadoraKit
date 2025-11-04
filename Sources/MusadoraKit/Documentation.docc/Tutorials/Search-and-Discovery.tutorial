@@ -158,7 +158,7 @@
                 case artists = "Artists"
                 case playlists = "Playlists"
                 
-                var searchTypes: [MCatalogSearchType] {
+                var searchTypes: [MusicCatalogSearchType] {
                     switch self {
                     case .all: return [.songs, .albums, .artists, .playlists]
                     case .songs: return [.songs]

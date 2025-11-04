@@ -45,7 +45,7 @@ public extension MLibrary {
       }
       return playlist
     } else {
-      let request = MLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
+      let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
       let response = try await request.response()
 
       guard let playlist = response.items.first else {
@@ -92,7 +92,7 @@ public extension MLibrary {
       let response = try await request.response()
       return try await response.items.collectingAll(upTo: limit)
     } else {
-      var request = MLibraryResourceRequest<Playlist>()
+      var request = MusicLibraryResourceRequest<Playlist>()
       request.limit = limit
       let response = try await request.response()
       return try await response.items.collectingAll(upTo: limit)
@@ -134,7 +134,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      let request = MLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
+      let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
     }
@@ -182,7 +182,7 @@ public extension MLibrary {
   ///   - id: The unique identifier for the playlist.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addPlaylistToLibrary(id: MusicItemID) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .playlists, value: [id])])
+    let request = MusicAddResourcesRequest([(item: .playlists, value: [id])])
     let response = try await request.response()
     return response
   }
@@ -193,7 +193,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the playlists.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addPlaylistsToLibrary(ids: [MusicItemID]) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .playlists, value: ids)])
+    let request = MusicAddResourcesRequest([(item: .playlists, value: ids)])
     let response = try await request.response()
     return response
   }

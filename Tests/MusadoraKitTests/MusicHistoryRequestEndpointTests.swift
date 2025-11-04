@@ -12,7 +12,7 @@ import Testing
 struct MusicHistoryRequestEndpointTests {
   @Test
   func heavyRotationEndpointURL() throws {
-    let request = MHistoryRequest(for: .heavyRotation)
+    let request = MusicHistoryRequest(for: .heavyRotation)
     let url = try request.historyEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/history/heavy-rotation")
@@ -21,7 +21,7 @@ struct MusicHistoryRequestEndpointTests {
   @Test
   func heavyRotationEndpointURLWithOverLimit() {
     let limit = 11
-    var request = MHistoryRequest(for: .heavyRotation)
+    var request = MusicHistoryRequest(for: .heavyRotation)
     request.limit = limit
 
     assertHistoryOverLimit(for: &request, overLimit: limit)
@@ -29,7 +29,7 @@ struct MusicHistoryRequestEndpointTests {
 
   @Test
   func recentlyAddedEndpointURL() throws {
-    let request = MHistoryRequest(for: .recentlyAdded)
+    let request = MusicHistoryRequest(for: .recentlyAdded)
     let url = try request.historyEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/recently-added")
@@ -38,7 +38,7 @@ struct MusicHistoryRequestEndpointTests {
   @Test
   func recentlyAddedEndpointURLWithOverLimit() {
     let limit = 26
-    var request = MHistoryRequest(for: .recentlyAdded)
+    var request = MusicHistoryRequest(for: .recentlyAdded)
     request.limit = limit
 
     assertHistoryOverLimit(for: &request, overLimit: limit)
@@ -46,7 +46,7 @@ struct MusicHistoryRequestEndpointTests {
 
   @Test
   func recentlyPlayedEndpointURL() throws {
-    let request = MHistoryRequest(for: .recentlyPlayed)
+    let request = MusicHistoryRequest(for: .recentlyPlayed)
     let url = try request.historyEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/played?with=library")
@@ -54,7 +54,7 @@ struct MusicHistoryRequestEndpointTests {
 
   @Test
   func recentlyPlayedEndpointURLWithOffset() throws {
-    var request = MHistoryRequest(for: .recentlyPlayed)
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
     request.offset = 10
 
     let url = try request.historyEndpointURL
@@ -65,7 +65,7 @@ struct MusicHistoryRequestEndpointTests {
   @Test
   func recentlyPlayedEndpointURLWithOverLimit() {
     let limit = 11
-    var request = MHistoryRequest(for: .recentlyPlayed)
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
 
     assertHistoryOverLimit(for: &request, overLimit: limit)
@@ -73,7 +73,7 @@ struct MusicHistoryRequestEndpointTests {
 
   @Test
   func recentlyPlayedTracksEndpointURL() throws {
-    let request = MHistoryRequest(for: .recentlyPlayedTracks)
+    let request = MusicHistoryRequest(for: .recentlyPlayedTracks)
     let url = try request.historyEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/played/tracks")
@@ -82,7 +82,7 @@ struct MusicHistoryRequestEndpointTests {
   @Test
   func recentlyPlayedTracksEndpointURLWithOverLimit() {
     let limit = 31
-    var request = MHistoryRequest(for: .recentlyPlayedTracks)
+    var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
     request.limit = limit
 
     assertHistoryOverLimit(for: &request, overLimit: limit)
@@ -90,7 +90,7 @@ struct MusicHistoryRequestEndpointTests {
 
   @Test
   func recentlyPlayedStationsEndpointURL() throws {
-    let request = MHistoryRequest(for: .recentlyPlayedStations)
+    let request = MusicHistoryRequest(for: .recentlyPlayedStations)
     let url = try request.historyEndpointURL
 
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/recent/radio-stations")
@@ -99,13 +99,13 @@ struct MusicHistoryRequestEndpointTests {
   @Test
   func recentlyPlayedStationsEndpointURLWithOverLimit() {
     let limit = 11
-    var request = MHistoryRequest(for: .recentlyPlayedStations)
+    var request = MusicHistoryRequest(for: .recentlyPlayedStations)
     request.limit = limit
 
     assertHistoryOverLimit(for: &request, overLimit: limit)
   }
 
-  private func assertHistoryOverLimit(for request: inout MHistoryRequest, overLimit: Int, sourceLocation: SourceLocation = #_sourceLocation) {
+  private func assertHistoryOverLimit(for request: inout MusicHistoryRequest, overLimit: Int, sourceLocation: SourceLocation = #_sourceLocation) {
     let expectedError = MusadoraKitError.historyOverLimit(limit: request.maximumLimit, overLimit: overLimit)
     let error = #expect(throws: MusadoraKitError.self, sourceLocation: sourceLocation) {
       try request.historyEndpointURL

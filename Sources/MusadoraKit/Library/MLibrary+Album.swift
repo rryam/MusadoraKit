@@ -24,7 +24,7 @@ public extension MLibrary {
       }
       return album
     } else {
-      let request = MLibraryResourceRequest<Album>(matching: \.id, equalTo: id)
+      let request = MusicLibraryResourceRequest<Album>(matching: \.id, equalTo: id)
       let response = try await request.response()
 
       guard let album = response.items.first else {
@@ -42,7 +42,7 @@ public extension MLibrary {
   static func albums(limit: Int = 50) async throws -> Albums {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       if MusadoraKit.userToken != nil {
-        var request = MLibraryResourceRequest<Album>()
+        var request = MusicLibraryResourceRequest<Album>()
         request.limit = limit
         let response = try await request.response()
         return response.items
@@ -53,7 +53,7 @@ public extension MLibrary {
         return response.items
       }
     } else {
-      var request = MLibraryResourceRequest<Album>()
+      var request = MusicLibraryResourceRequest<Album>()
       request.limit = limit
       let response = try await request.response()
       return response.items
@@ -72,7 +72,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      let request = MLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
+      let request = MusicLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
     }
@@ -111,7 +111,7 @@ public extension MLibrary {
   ///   - id: The unique identifier for the album.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addAlbum(id: MusicItemID) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .albums, value: [id])])
+    let request = MusicAddResourcesRequest([(item: .albums, value: [id])])
     let response = try await request.response()
     return response
   }
@@ -122,7 +122,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Bool` indicating if the insert was successfull or not.
   static func addAlbums(ids: [MusicItemID]) async throws -> Bool {
-    let request = MAddResourcesRequest([(item: .albums, value: ids)])
+    let request = MusicAddResourcesRequest([(item: .albums, value: ids)])
     let response = try await request.response()
     return response
   }

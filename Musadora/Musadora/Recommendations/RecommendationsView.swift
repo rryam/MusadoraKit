@@ -9,7 +9,7 @@ import MusadoraKit
 import SwiftUI
 
 struct RecommendationsView: View {
-  @State private var recommendations: MRecommendations = []
+  @State private var recommendations: MusicRecommendations = []
   @State private var hundredBestAlbums: [HundredBestAlbum] = []
 
 #if os(iOS)

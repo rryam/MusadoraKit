@@ -186,7 +186,7 @@ struct CatalogStorefrontTests {
     #expect(storefront.storefrontId == nil)
   }
 
-  private func decodeSingleStorefront(from data: Data) throws -> MStorefront {
+  private func decodeSingleStorefront(from data: Data) throws -> MusicStorefront {
     let decoder = JSONDecoder()
     let result = try decoder.decode(StorefrontsData.self, from: data)
     try #require(result.data.count == 1, "Expected a single storefront in the data array.")

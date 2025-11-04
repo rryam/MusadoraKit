@@ -72,7 +72,7 @@ public extension MCatalog {
   /// - Returns: A boolean value indicating whether the operation was successful.
   @discardableResult
   internal static func addToFavorites(id: MusicItemID, type: FavoritesResourceType) async throws -> Bool {
-    let request = MFavoritesRequest(itemID: id, resourceType: type)
+    let request = MusicFavoritesRequest(itemID: id, resourceType: type)
     return try await request.response()
   }
 }

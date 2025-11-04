@@ -16,7 +16,7 @@ public extension MCatalog {
   /// - Returns: `MusicCatalogSearchResponse` that returns different music items.
   static func search(
     for term: String,
-    types: [MCatalogSearchType],
+    types: [MusicCatalogSearchType],
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> MusicCatalogSearchResponse {
@@ -140,7 +140,7 @@ public extension MCatalog {
   @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
   static func searchSuggestions(
     for term: String,
-    types: [MCatalogSearchType],
+    types: [MusicCatalogSearchType],
     limit: Int? = nil
   ) async throws -> MusicCatalogSearchSuggestionsResponse {
     let searchTypes = types.compactMap { $0.type }

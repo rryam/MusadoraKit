@@ -40,7 +40,7 @@ public extension MLibrary {
       }
       return song
     } else {
-      let request = MLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
+      let request = MusicLibraryResourceRequest<Song>(matching: \.id, equalTo: id)
       let response = try await request.response()
 
       guard let song = response.items.first else {
@@ -76,7 +76,7 @@ public extension MLibrary {
   static func songs(limit: Int = 50) async throws -> Songs {
     if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       if MusadoraKit.userToken != nil {
-        var request = MLibraryResourceRequest<Song>()
+        var request = MusicLibraryResourceRequest<Song>()
         request.limit = limit
         let response = try await request.response()
         return response.items
@@ -87,7 +87,7 @@ public extension MLibrary {
         return response.items
       }
     } else {
-      var request = MLibraryResourceRequest<Song>()
+      var request = MusicLibraryResourceRequest<Song>()
       request.limit = limit
       let response = try await request.response()
       return response.items
@@ -106,7 +106,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      let request = MLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
+      let request = MusicLibraryResourceRequest<Song>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
     }
@@ -203,7 +203,7 @@ public extension MLibrary {
   /// - Throws: An error if the operation fails, such as network connectivity issues or invalid parameters.
   static func addSong(id: MusicItemID) async throws -> Bool {
     let song: SongResource = (item: .songs, value: [id])
-    let request = MAddResourcesRequest([song])
+    let request = MusicAddResourcesRequest([song])
     let response = try await request.response()
     return response
   }
@@ -229,7 +229,7 @@ public extension MLibrary {
   /// - Throws: An error if the operation fails, such as network connectivity issues or invalid parameters.
   static func addSongs(ids: [MusicItemID]) async throws -> Bool {
     let songs: SongResource = (item: .songs, value: ids)
-    let request = MAddResourcesRequest([songs])
+    let request = MusicAddResourcesRequest([songs])
     let response = try await request.response()
     return response
   }

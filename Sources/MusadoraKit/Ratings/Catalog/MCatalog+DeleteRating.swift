@@ -139,7 +139,7 @@ public extension MCatalog {
   ///   - item: The type of the music item to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(for id: MusicItemID, item: CatalogRatingMusicItemType) async throws -> Bool {
-    let request = MCatalogRatingDeleteRequest(with: id, item: item)
+    let request = MusicCatalogRatingDeleteRequest(with: id, item: item)
     let response = try await request.response()
     return response
   }

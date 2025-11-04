@@ -21,34 +21,34 @@ struct StorefrontsLookupTests {
     ]
 
     for (code, storefrontId) in expected {
-      #expect(MStorefront.storefrontID(forCountryCode: code) == storefrontId)
+      #expect(MusicStorefront.storefrontID(forCountryCode: code) == storefrontId)
     }
   }
 
   @Test
   func storefrontLookupMissingCodeReturnsNil() {
-    #expect(MStorefront.storefrontID(forCountryCode: "zz") == nil)
+    #expect(MusicStorefront.storefrontID(forCountryCode: "zz") == nil)
   }
 
   @Test
   func invalidStorefrontResourceThrows() {
     let invalidJSON = Data(#"{"code": "xx"}"#.utf8)
     #expect(throws: Error.self) {
-      _ = try MStorefront.decodeStorefrontLookup(from: invalidJSON)
+      _ = try MusicStorefront.decodeStorefrontLookup(from: invalidJSON)
     }
   }
 
   @Test
   func corruptStorefrontResourceYieldsEmptyLookup() {
     let corruptJSON = Data(#"[{"code": 42, "storefrontId": "invalid"}]"#.utf8)
-    let lookup = MStorefront.loadStorefrontLookup(from: corruptJSON)
+    let lookup = MusicStorefront.loadStorefrontLookup(from: corruptJSON)
     #expect(lookup.isEmpty)
   }
 
   @Test
   func decodeStorefrontLookupNormalizesCodes() throws {
     let json = Data(#"[{"code":"US","storefrontId":143441}]"#.utf8)
-    let lookup = try MStorefront.decodeStorefrontLookup(from: json)
+    let lookup = try MusicStorefront.decodeStorefrontLookup(from: json)
     #expect(lookup["us"] == 143_441)
   }
 }
