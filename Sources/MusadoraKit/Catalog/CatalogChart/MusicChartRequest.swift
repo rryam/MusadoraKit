@@ -27,7 +27,7 @@ struct MusicChartRequest {
   /// Creates a request to fetch charts using the list of the
   /// types of charts to include in the results.
   init(types: [MusicChartItem.Type]) {
-    self.types = types.map { $0.objectIdentifier }.compactMap {
+    self.types = Set(types.map { $0.objectIdentifier }).compactMap {
       switch $0 {
       case Song.objectIdentifier:
         return "songs"

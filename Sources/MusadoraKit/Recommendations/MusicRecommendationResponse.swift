@@ -31,6 +31,10 @@ public struct MusicRecommendationResponse {
 
 extension MusicRecommendationResponse: Codable {}
 
+extension MusicRecommendationResponse: Equatable {}
+
+extension MusicRecommendationResponse: Hashable {}
+
 extension MusicRecommendationResponse: CustomStringConvertible {
   public var description: String {
     "MusicRecommendationResponse(\(items.description))"

@@ -38,11 +38,11 @@ public extension FilterableLibraryItem {
   private func decodeCatalogItem(from data: Data, decoder: JSONDecoder) throws -> Self {
     let items = try decoder.decode(MusicItemCollection<Self>.self, from: data)
 
-        guard let item = items.first else {
-          throw MusadoraKitError.notFound(for: id.rawValue)
-        }
+    guard let item = items.first else {
+      throw MusadoraKitError.notFound(for: id.rawValue)
+    }
 
-        return item
+    return item
   }
 
   /// Creates the URL for fetching the catalog equivalent of a library resource.
