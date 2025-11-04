@@ -86,11 +86,10 @@ This document outlines the remaining M-prefixed structures that can be renamed t
 ---
 
 ## ➕ Resource Management Structure
-### MAddResourcesRequest → MusicAddResourcesRequest
-- **Location**: `Sources/MusadoraKit/Add Resources/MAddResourcesRequest.swift`
-- **Usage**: Request structure for adding resources to library
-- **References**: Used in `MLibrary+Album.swift`, `MLibrary+Song.swift`, `MLibrary+Playlist.swift`
-- **Impact**: ~6-8 references to update
+### ✅ MAddResourcesRequest → MusicAddResourcesRequest
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/Add Resources/MusicAddResourcesRequest.swift`
+- **Impact**: ~6-8 references updated
 
 ---
 

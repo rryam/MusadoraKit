@@ -1,5 +1,5 @@
 //
-//  MAddResourcesRequest.swift
+//  MusicAddResourcesRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -16,7 +16,7 @@ import Foundation
 /// ```swift
 /// // Add multiple songs to the library
 /// let songResources: SongResource = (.songs, ["1234567890", "0987654321"])
-/// let request = MAddResourcesRequest(resources: [songResources])
+/// let request = MusicAddResourcesRequest(resources: [songResources])
 ///
 /// do {
 ///     let response = try await request.response()
@@ -25,12 +25,12 @@ import Foundation
 ///     print("Failed to add resources: \(error)")
 /// }
 /// ```
-public struct MAddResourcesRequest {
+public struct MusicAddResourcesRequest {
   /// The resources to be added to the library.
   /// Each resource is a tuple of the music item type and its identifiers.
   private var resources: [SongResource]
 
-  /// Initializes a new `MAddResourcesRequest` to add multiple resources to the user's iCloud Music Library.
+  /// Initializes a new `MusicAddResourcesRequest` to add multiple resources to the user's iCloud Music Library.
   ///
   /// - Parameter resources: An array of tuples where each tuple represents a type of music item
   /// and the music item IDs to add to the user's iCloud Music Library.
@@ -50,7 +50,7 @@ public struct MAddResourcesRequest {
   }
 }
 
-extension MAddResourcesRequest {
+extension MusicAddResourcesRequest {
   /// A URL representing the endpoint for adding resources to the user's iCloud Music Library.
   ///
   /// - Returns: A URL object.
