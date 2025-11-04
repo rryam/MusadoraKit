@@ -19,10 +19,10 @@ struct MusicHistoryRequest {
 
   /// Endpoints to fetch historical information about the songs and stations the user played recently.
   /// Possible values: `heavyRotation`, `recentlyAdded` and `recentlyPlayed`.
-  var endpoint: MHistoryEndpoints
+  var endpoint: MusicHistoryEndpoints
 
   /// Creates a request to fetch historical data based on the history endpoint.
-  init(for endpoint: MHistoryEndpoints) {
+  init(for endpoint: MusicHistoryEndpoints) {
     self.endpoint = endpoint
 
     switch self.endpoint {
@@ -36,7 +36,7 @@ struct MusicHistoryRequest {
   }
 
   /// Fetches historical information based on the user’s history for the given request.
-  func response() async throws -> MHistoryResponse {
+  func response() async throws -> MusicHistoryResponse {
     let items: UserMusicItems
     let url = try historyEndpointURL
     let decoder = JSONDecoder()
@@ -53,7 +53,7 @@ struct MusicHistoryRequest {
       items = try await baseItems.collectingAll(upTo: limit)
     }
 
-    return MHistoryResponse(items: items)
+      return MusicHistoryResponse(items: items)
   }
 
   /// Maximum limit of the number of resources for each request.

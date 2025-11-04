@@ -1,5 +1,5 @@
 //
-//  MHistoryResponse.swift
+//  MusicHistoryResponse.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
@@ -20,7 +20,7 @@
 /// print(response.tracks)  // Recently played tracks
 /// print(response.playlists)  // Recently played playlists
 /// ```
-struct MHistoryResponse {
+struct MusicHistoryResponse {
   /// A collection of historical resources based on the `MusicHistoryRequest`.
   let items: UserMusicItems
 
@@ -61,9 +61,9 @@ struct MHistoryResponse {
   }
 }
 
-extension MHistoryResponse: Equatable, Hashable, Codable {}
+extension MusicHistoryResponse: Equatable, Hashable, Codable {}
 
-extension MHistoryResponse: CustomStringConvertible {
+extension MusicHistoryResponse: CustomStringConvertible {
   var description: String {
     "MusicHistoryResponse(\(items.description)"
   }

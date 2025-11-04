@@ -22,7 +22,7 @@ struct MusicSummaryRequest {
   var extend: [String]?
 
   /// Summary period that determines which endpoint to hit.
-  var period: MSummaryPeriod = .latestYear
+  var period: MusicSummaryPeriod = .latestYear
 
   /// Builds and performs the request, returning a parsed summary response.
   func response() async throws -> MSummaryResponse {

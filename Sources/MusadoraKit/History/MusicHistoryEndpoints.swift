@@ -1,5 +1,5 @@
 //
-//  MHistoryEndpoints.swift
+//  MusicHistoryEndpoints.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
@@ -9,7 +9,7 @@ import Foundation
 
 /// Different endpoints related to historial data.
 /// Possible types: Heavy rotation, recently added, and recently played resources.
-enum MHistoryEndpoints {
+enum MusicHistoryEndpoints {
   case heavyRotation
   case recentlyAdded
   case recentlyPlayed

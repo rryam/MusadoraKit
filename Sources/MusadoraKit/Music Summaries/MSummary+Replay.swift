@@ -45,7 +45,7 @@ public extension MSummary {
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> MSummaryResponse {
-    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+    guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
     }
 
@@ -81,7 +81,7 @@ public extension MSummary {
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Artists {
-    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+    guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
     }
 
@@ -115,7 +115,7 @@ public extension MSummary {
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Albums {
-    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+    guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
     }
 
@@ -149,7 +149,7 @@ public extension MSummary {
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
   ) async throws -> Songs {
-    guard let period = MSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
+    guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
     }
 
@@ -163,7 +163,7 @@ public extension MSummary {
 
 private extension MSummary {
   static func response(
-    for period: MSummaryPeriod,
+    for period: MusicSummaryPeriod,
     views: Set<MSummaryView>,
     languageTag: String?,
     include: [String]? = nil,

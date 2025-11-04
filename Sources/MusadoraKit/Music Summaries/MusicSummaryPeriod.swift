@@ -1,7 +1,7 @@
 import Foundation
 
 /// Supported periods for music summaries endpoint.
-enum MSummaryPeriod: Equatable {
+enum MusicSummaryPeriod: Equatable {
   case latestYear
   case month(year: Int, month: Int)
 
@@ -9,7 +9,7 @@ enum MSummaryPeriod: Equatable {
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
-  ) -> MSummaryPeriod? {
+  ) -> MusicSummaryPeriod? {
     var calendar = calendar
     calendar.timeZone = timeZone
 
