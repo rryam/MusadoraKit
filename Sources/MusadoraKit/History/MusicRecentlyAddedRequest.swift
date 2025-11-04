@@ -9,12 +9,12 @@ import Foundation
 
 /// A protocol for music items that your app can fetch by
 /// using a recently added request.
-public protocol MRecentlyAddedRequestable: MusicItem {
+public protocol MusicRecentlyAddedRequestable: MusicItem {
 }
 
 /// A request that your app uses to fetch items the user has recently added.
-public struct MRecentlyAddedRequest<MusicItemType>
-where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
+public struct MusicRecentlyAddedRequest<MusicItemType>
+where MusicItemType: MusicRecentlyAddedRequestable, MusicItemType: Decodable {
   /// Creates a request for items the user has recently added.
   public init() {}
 
@@ -39,11 +39,11 @@ where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
 ///
 /// This structure provides access to a collection of music items that have been recently
 /// added to the user's Apple Music library. The items can be of any type that conforms
-/// to the `MRecentlyAddedRequestable` protocol.
+/// to the `MusicRecentlyAddedRequestable` protocol.
 ///
 /// Example usage:
 /// ```swift
-/// let request = MRecentlyAddedRequest<Song>()
+/// let request = MusicRecentlyAddedRequest<Song>()
 ///
 /// do {
 ///     let response = try await request.response()
@@ -54,7 +54,7 @@ where MusicItemType: MRecentlyAddedRequestable, MusicItemType: Decodable {
 ///     print("Failed to fetch recently added items: \(error)")
 /// }
 /// ```
-public struct MRecentlyAddedResponse<MusicItemType> where MusicItemType: MRecentlyAddedRequestable {
+public struct MusicRecentlyAddedResponse<MusicItemType> where MusicItemType: MusicRecentlyAddedRequestable {
   /// A collection of items the user has recently added.
   ///
   /// This property contains the music items that were recently added to the user's library,
@@ -62,11 +62,11 @@ public struct MRecentlyAddedResponse<MusicItemType> where MusicItemType: MRecent
   public let items: MusicItemCollection<MusicItemType>
 }
 
-extension MRecentlyAddedResponse: Sendable {
+extension MusicRecentlyAddedResponse: Sendable {
 }
 
-extension MRecentlyAddedResponse: Decodable where MusicItemType: Decodable {
+extension MusicRecentlyAddedResponse: Decodable where MusicItemType: Decodable {
 }
 
-extension MRecentlyAddedResponse: Encodable where MusicItemType: Encodable {
+extension MusicRecentlyAddedResponse: Encodable where MusicItemType: Encodable {
 }

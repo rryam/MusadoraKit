@@ -94,17 +94,15 @@ This document outlines the remaining M-prefixed structures that can be renamed t
 ---
 
 ## 🕒 Recently Added Structures
-### MRecentlyAddedRequest → MusicRecentlyAddedRequest
-- **Location**: `Sources/MusadoraKit/History/MRecentlyAddedRequest.swift`
-- **Usage**: Request structure for recently added items
-- **References**: Used in recently added functionality
-- **Impact**: ~3-5 references to update
+### ✅ MRecentlyAddedRequest → MusicRecentlyAddedRequest
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/History/MusicRecentlyAddedRequest.swift`
+- **Impact**: ~3-5 references updated
 
-### MRecentlyAddedResponse → MusicRecentlyAddedResponse
-- **Location**: `Sources/MusadoraKit/History/MRecentlyAddedRequest.swift` (nested struct)
-- **Usage**: Response structure for recently added items
-- **References**: Used in recently added response handling
-- **Impact**: ~2-4 references to update
+### ✅ MRecentlyAddedResponse → MusicRecentlyAddedResponse
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/History/MusicRecentlyAddedRequest.swift` (nested struct)
+- **Impact**: ~2-4 references updated
 
 ---
 
