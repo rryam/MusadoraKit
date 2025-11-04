@@ -1,5 +1,5 @@
 // 
-//  Storefronts.swift
+//  MusicStorefront.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 11/03/23.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-/// `MStorefronts` is a type alias for an array of `MStorefront` instances.
+/// `MusicStorefronts` is a type alias for an array of `MusicStorefront` instances.
 ///
 /// This represents a collection of Apple Music storefronts, which can be used when making requests to the
 /// Apple Music API that require a storefront.
-public typealias MStorefronts = [MStorefront]
+public typealias MusicStorefronts = [MusicStorefront]
 
-/// `StorefrontsData` is a struct that decodes the data from a JSON object into an array of `MStorefront` instances.
+/// `StorefrontsData` is a struct that decodes the data from a JSON object into an array of `MusicStorefront` instances.
 ///
 /// This structure corresponds to the response you would receive when fetching a list of Apple Music storefronts.
 struct StorefrontsData: Codable {
-  /// An array of `MStorefront` instances, representing the storefronts returned in the API response.
-  let data: [MStorefront]
+  /// An array of `MusicStorefront` instances, representing the storefronts returned in the API response.
+  let data: [MusicStorefront]
 }
 
 /// Represents a storefront in the Apple Music service.
@@ -43,7 +43,7 @@ struct StorefrontsData: Codable {
 ///     print("\(storefront.name) (\(storefront.id))")
 /// }
 /// ```
-public struct MStorefront: Codable {
+public struct MusicStorefront: Codable {
   /// The unique identifier for the storefront (e.g., "us", "gb", "jp").
   public let id: String
 
@@ -99,7 +99,7 @@ public struct MStorefront: Codable {
     supportedLanguageTags = try attributesContainer.decode(
       [String].self, forKey: .supportedLanguageTags)
     defaultLanguageTag = try attributesContainer.decode(String.self, forKey: .defaultLanguageTag)
-    storefrontId = MStorefront.mapStorefrontIdFromCountryCode(id)
+    storefrontId = MusicStorefront.mapStorefrontIdFromCountryCode(id)
   }
 
   public enum ExplicitContentPolicy: String, Codable {
@@ -146,9 +146,9 @@ extension MCatalog {
   /// In the above example, "us" is the identifier for the United States storefront.
   ///
   /// - Parameter id: The unique identifier for the storefront you want to fetch. This is usually a country code.
-  /// - Returns: A `MStorefront` object containing the details of the requested storefront.
+  /// - Returns: A `MusicStorefront` object containing the details of the requested storefront.
   /// - Throws: An error if the storefront cannot be found, or if there was a problem decoding the response.
-  public static func storefront(id: String) async throws -> MStorefront {
+  public static func storefront(id: String) async throws -> MusicStorefront {
     let url = try storefrontsURL(id: id)
 
     let request = MusicDataRequest(urlRequest: .init(url: url))
@@ -178,9 +178,9 @@ extension MCatalog {
   /// }
   /// ```
   ///
-  /// - Returns: An array of `MStorefront` objects, each representing a different storefront.
+  /// - Returns: An array of `MusicStorefront` objects, each representing a different storefront.
   /// - Throws: An error if there was a problem with the network request, or if the response couldn't be decoded.
-  public static func storefronts() async throws -> MStorefronts {
+  public static func storefronts() async throws -> MusicStorefronts {
     let url = try storefrontsURL()
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
@@ -219,7 +219,7 @@ extension MCatalog {
   }
 }
 
-extension MStorefront {
+extension MusicStorefront {
   internal struct StorefrontLookupEntry: Decodable {
     let code: String
     let storefrontId: Int
