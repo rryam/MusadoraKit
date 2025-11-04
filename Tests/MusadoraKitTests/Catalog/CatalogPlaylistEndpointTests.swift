@@ -10,7 +10,7 @@ import Foundation
 import MusicKit
 import Testing
 
-struct BadURLAppleMusicURLComponents: MURLComponents {
+struct BadURLAppleMusicURLComponents: MusicURLComponents {
   var path: String = ""
   var queryItems: [URLQueryItem]?
 

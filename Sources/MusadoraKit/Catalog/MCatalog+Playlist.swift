@@ -200,7 +200,7 @@ extension MCatalog {
 extension MCatalog {
   internal static func chartPlaylistsURL(
     currentStorefront: String, targetStorefront: String? = nil,
-    components: MURLComponents = AppleMusicURLComponents()
+    components: MusicURLComponents = AppleMusicURLComponents()
   ) throws -> URL {
     var components = components
     components.path = "catalog/\(currentStorefront)/playlists"

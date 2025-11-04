@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol for URL components that can be used to construct URLs for API requests.
-public protocol MURLComponents {
+public protocol MusicURLComponents {
   /// The query items to include in the URL.
   var queryItems: [URLQueryItem]? { get set }
 
@@ -19,8 +19,8 @@ public protocol MURLComponents {
   var url: URL? { get }
 }
 
-/// A structure that implements the `MURLComponents` protocol, specifically for Apple Music API requests.
-public struct AppleMusicURLComponents: MURLComponents {
+/// A structure that implements the `MusicURLComponents` protocol, specifically for Apple Music API requests.
+public struct AppleMusicURLComponents: MusicURLComponents {
   /// The underlying `URLComponents` instance.
   private var components: URLComponents
 
