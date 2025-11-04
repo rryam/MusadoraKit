@@ -1,5 +1,5 @@
 //
-//  MChartItem.swift
+//  MusicChartItem.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -7,18 +7,18 @@
 
 /// A protocol for music items that your app can fetch by
 /// using a catalog chart request.
-public protocol MChartItem {}
+public protocol MusicChartItem {}
 
-extension MChartItem {
+extension MusicChartItem {
   static var objectIdentifier: ObjectIdentifier {
     ObjectIdentifier(Self.self)
   }
 }
 
-extension Song: MChartItem {}
+extension Song: MusicChartItem {}
 
-extension Playlist: MChartItem {}
+extension Playlist: MusicChartItem {}
 
-extension MusicVideo: MChartItem {}
+extension MusicVideo: MusicChartItem {}
 
-extension Album: MChartItem {}
+extension Album: MusicChartItem {}

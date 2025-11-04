@@ -1,5 +1,5 @@
 //
-//  MChartResponse.swift
+//  MusicChartResponse.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -18,7 +18,7 @@
 /// print(response.songs)  // Access chart songs
 /// print(response.albums) // Access chart albums
 /// ```
-public struct MChartResponse {
+public struct MusicChartResponse {
   /// An array of collection of songs in the charts.
   public let songs: Songs
 
@@ -38,7 +38,7 @@ public struct MChartResponse {
   public let dailyGlobalTopCharts: Playlists
 }
 
-extension MChartResponse: Decodable {
+extension MusicChartResponse: Decodable {
   enum CodingKeys: String, CodingKey {
     case songs, playlists, albums
     case musicVideos = "music-videos"
@@ -60,7 +60,7 @@ extension MChartResponse: Decodable {
   }
 }
 
-extension MChartResponse: Encodable {
+extension MusicChartResponse: Encodable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(songs, forKey: .songs)
@@ -72,7 +72,7 @@ extension MChartResponse: Encodable {
   }
 }
 
-extension MChartResponse: Equatable, Hashable {}
+extension MusicChartResponse: Equatable, Hashable {}
 
 // extension MusicCatalogChartResponse: CustomStringConvertible {
 //    public var description: String {

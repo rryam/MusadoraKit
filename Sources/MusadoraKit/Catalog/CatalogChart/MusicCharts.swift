@@ -19,5 +19,5 @@ import Foundation
 /// ```
 struct MusicCharts: Codable {
   /// A mapping of a requested type to an array of charts.
-  let results: MChartResponse
+  let results: MusicChartResponse
 }

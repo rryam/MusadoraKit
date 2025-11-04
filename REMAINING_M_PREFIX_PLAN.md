@@ -23,17 +23,15 @@ This document outlines the remaining M-prefixed structures that can be renamed t
 ---
 
 ## 📊 Chart Structures
-### MChartResponse → MusicChartResponse
-- **Location**: `Sources/MusadoraKit/Catalog/CatalogChart/MChartResponse.swift`
-- **Usage**: Response structure for chart API calls
-- **References**: Used in `MusicChartRequest.response()` return type and `MusicCharts.results`
-- **Impact**: ~3-4 references to update
+### ✅ MChartResponse → MusicChartResponse
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/Catalog/CatalogChart/MusicChartResponse.swift`
+- **Impact**: ~3-4 references updated
 
-### MChartItem → MusicChartItem
-- **Location**: `Sources/MusadoraKit/Catalog/CatalogChart/MChartItem.swift`
-- **Usage**: Protocol for chart item types
-- **References**: Protocol conformance in chart-related structures
-- **Impact**: ~2-3 references to update
+### ✅ MChartItem → MusicChartItem
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/Catalog/CatalogChart/MusicChartItem.swift`
+- **Impact**: ~2-3 references updated
 
 ---
 

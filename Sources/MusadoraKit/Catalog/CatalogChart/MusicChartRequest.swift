@@ -26,8 +26,8 @@ struct MusicChartRequest {
 
   /// Creates a request to fetch charts using the list of the
   /// types of charts to include in the results.
-  init(types: [MChartItem.Type]) {
-    self.types = Set(types.map { $0.objectIdentifier }).compactMap {
+  init(types: [MusicChartItem.Type]) {
+    self.types = types.map { $0.objectIdentifier }.compactMap {
       switch $0 {
       case Song.objectIdentifier:
         return "songs"
@@ -45,7 +45,7 @@ struct MusicChartRequest {
 
   /// Fetches charts of the requested catalog chart types that match
   /// the genre identifier of the request.
-  func response() async throws -> MChartResponse {
+  func response() async throws -> MusicChartResponse {
     let storefront = try await MusicDataRequest.currentCountryCode
     let url = try chartsURL(storefront: storefront)
     let request = MusicDataRequest(urlRequest: .init(url: url))
