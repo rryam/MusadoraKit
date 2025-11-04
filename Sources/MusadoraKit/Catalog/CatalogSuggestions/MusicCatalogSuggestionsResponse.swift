@@ -1,5 +1,5 @@
 //
-//  MCatalogSuggestionsResponse.swift
+//  MusicCatalogSuggestionsResponse.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 09/04/22.
@@ -14,7 +14,7 @@ import Foundation
 ///
 /// Example usage:
 /// ```swift
-/// let request = MCatalogSuggestionsRequest(term: "taylor")
+/// let request = MusicCatalogSuggestionsRequest(term: "taylor")
 /// let response = try await request.response()
 ///
 /// // Access search term suggestions
@@ -28,7 +28,7 @@ import Foundation
 /// }
 /// ```
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-struct MCatalogSuggestionsResponse {
+struct MusicCatalogSuggestionsResponse {
   /// A collection of search and display terms.
   var terms: [TermSuggestion] = []
 
@@ -37,7 +37,7 @@ struct MCatalogSuggestionsResponse {
 }
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-extension MCatalogSuggestionsResponse: Codable {
+extension MusicCatalogSuggestionsResponse: Codable {
   private enum CodingKeys: String, CodingKey {
     case suggestions
   }

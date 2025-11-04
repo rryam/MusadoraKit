@@ -1,5 +1,5 @@
 //
-//  MCatalogSuggestionsRequest.swift
+//  MusicCatalogSuggestionsRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -29,7 +29,7 @@ import Foundation
 /// }
 /// ```
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-struct MCatalogSuggestionsRequest {
+struct MusicCatalogSuggestionsRequest {
   /// A limit for the number of suggestions to return.
   var limit: Int?
 
@@ -55,7 +55,7 @@ struct MCatalogSuggestionsRequest {
 
   /// Fetches search suggestions of the requested catalog searchable types that match
   /// the search term of the request.
-  func response() async throws -> MCatalogSuggestionsResponse {
+  func response() async throws -> MusicCatalogSuggestionsResponse {
     let url = try await searchSuggestionsEndpointURL
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
@@ -65,7 +65,7 @@ struct MCatalogSuggestionsRequest {
 }
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
-extension MCatalogSuggestionsRequest {
+extension MusicCatalogSuggestionsRequest {
   private var searchSuggestionsEndpointURL: URL {
     get async throws {
       if self.kinds.contains(.topResults), types == nil {
