@@ -1,5 +1,5 @@
 //
-//  MCatalogSearchType.swift
+//  MusicCatalogSearchType.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 22/12/22.
@@ -7,14 +7,14 @@
 
 /// A collection of catalog search types that can be used in search requests.
 ///
-/// This type alias provides a convenient way to work with arrays of `MCatalogSearchType`.
+/// This type alias provides a convenient way to work with arrays of `MusicCatalogSearchType`.
 ///
 /// Example usage:
 /// ```swift
-/// let searchTypes: MCatalogSearchTypes = [.songs, .albums]
+/// let searchTypes: MusicCatalogSearchTypes = [.songs, .albums]
 /// let response = try await MCatalog.search(for: "coldplay", types: searchTypes)
 /// ```
-public typealias MCatalogSearchTypes = [MCatalogSearchType]
+public typealias MusicCatalogSearchTypes = [MusicCatalogSearchType]
 
 /// An enumeration representing the different types of items that can be searched in the Apple Music catalog.
 ///
@@ -24,16 +24,16 @@ public typealias MCatalogSearchTypes = [MCatalogSearchType]
 /// Example usage:
 /// ```swift
 /// // Basic search for songs and albums
-/// let types: [MCatalogSearchType] = [.songs, .albums]
+/// let types: [MusicCatalogSearchType] = [.songs, .albums]
 /// let results = try await MCatalog.search(for: "taylor swift", types: types)
 ///
 /// // Search including newer content types (iOS 15.4+)
 /// if #available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *) {
-///     let types: [MCatalogSearchType] = [.songs, .musicVideos, .curators]
+///     let types: [MusicCatalogSearchType] = [.songs, .musicVideos, .curators]
 ///     let results = try await MCatalog.search(for: "drake", types: types)
 /// }
 /// ```
-public enum MCatalogSearchType {
+public enum MusicCatalogSearchType {
   /// Search for songs in the catalog.
   case songs
 
@@ -98,7 +98,7 @@ public enum MCatalogSearchType {
   }
 }
 
-public extension MCatalogSearchTypes {
+public extension MusicCatalogSearchTypes {
   static var all: Self {
     var types: Self = [.songs, .albums, .playlists, .artists, .stations, .recordLabels]
 
