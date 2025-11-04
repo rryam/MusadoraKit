@@ -45,7 +45,7 @@ public extension MLibrary {
       }
       return playlist
     } else {
-      let request = MLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
+      let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, equalTo: id)
       let response = try await request.response()
 
       guard let playlist = response.items.first else {
@@ -92,7 +92,7 @@ public extension MLibrary {
       let response = try await request.response()
       return try await response.items.collectingAll(upTo: limit)
     } else {
-      var request = MLibraryResourceRequest<Playlist>()
+      var request = MusicLibraryResourceRequest<Playlist>()
       request.limit = limit
       let response = try await request.response()
       return try await response.items.collectingAll(upTo: limit)
@@ -134,7 +134,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      let request = MLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
+      let request = MusicLibraryResourceRequest<Playlist>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
     }

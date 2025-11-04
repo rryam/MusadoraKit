@@ -36,7 +36,7 @@ public extension MLibrary {
       }
       return artist
     } else {
-      let request = MLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
+      let request = MusicLibraryResourceRequest<Artist>(matching: \.id, equalTo: id)
       let response = try await request.response()
 
       guard let artist = response.items.first else {
@@ -64,7 +64,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      var request = MLibraryResourceRequest<Artist>()
+      var request = MusicLibraryResourceRequest<Artist>()
       request.limit = limit
       let response = try await request.response()
       return response.items
@@ -100,7 +100,7 @@ public extension MLibrary {
       let response = try await request.response()
       return response.items
     } else {
-      let request = MLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
+      let request = MusicLibraryResourceRequest<Artist>(matching: \.id, memberOf: ids)
       let response = try await request.response()
       return response.items
     }

@@ -7,7 +7,7 @@ import Testing
 struct LibraryResourceEndpointTests {
   @Test
   func songResourceEndpointIncludesDefaultFields() throws {
-    let request = MLibraryResourceRequest<Song>()
+    let request = MusicLibraryResourceRequest<Song>()
     let url = try request.libraryEndpointURL
 
     #expect(url.absoluteString.starts(with: "https://api.music.apple.com/v1/me/library/songs"))
@@ -24,7 +24,7 @@ struct LibraryResourceEndpointTests {
 
   @Test
   func albumResourceEndpointIncludesIdsAndLimit() throws {
-    var request = MLibraryResourceRequest<Album>(matching: \.id, equalTo: MusicItemID("42"))
+    var request = MusicLibraryResourceRequest<Album>(matching: \.id, equalTo: MusicItemID("42"))
     request.limit = 5
     let url = try request.libraryEndpointURL
 

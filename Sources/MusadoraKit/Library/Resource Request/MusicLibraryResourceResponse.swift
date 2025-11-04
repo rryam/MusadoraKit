@@ -1,22 +1,22 @@
 //
-//  MLibraryResourceResponse.swift
+//  MusicLibraryResourceResponse.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
 //
 
 /// An object that contains results for a library resource request.
-struct MLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
+struct MusicLibraryResourceResponse<MusicItemType> where MusicItemType: MusicItem {
   /// A collection of items matching the filter used in
   /// the originating ``MusicLibraryResourceRequest``.
   let items: MusicItemCollection<MusicItemType>
 }
 
-extension MLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
+extension MusicLibraryResourceResponse: Equatable where MusicItemType: Equatable {}
 
-extension MLibraryResourceResponse: Hashable where MusicItemType: Hashable {}
+extension MusicLibraryResourceResponse: Hashable where MusicItemType: Hashable {}
 
-extension MLibraryResourceResponse: Decodable where MusicItemType: Decodable {
+extension MusicLibraryResourceResponse: Decodable where MusicItemType: Decodable {
   // Creates a new instance by decoding from the given decoder.
   //
   // This initializer throws an error if reading from the decoder fails, or
@@ -28,7 +28,7 @@ extension MLibraryResourceResponse: Decodable where MusicItemType: Decodable {
   //    }
 }
 
-extension MLibraryResourceResponse: Encodable where MusicItemType: Encodable {
+extension MusicLibraryResourceResponse: Encodable where MusicItemType: Encodable {
   // Encodes this value into the given encoder.
   //
   // If the value fails to encode anything, `encoder` will encode an empty
@@ -41,7 +41,7 @@ extension MLibraryResourceResponse: Encodable where MusicItemType: Encodable {
   // func encode(to encoder: Encoder) throws { }
 }
 
-extension MLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MusicLibraryResourceResponse: CustomStringConvertible, CustomDebugStringConvertible {
   var description: String {
     ""
   }
