@@ -15,7 +15,7 @@ import Foundation
 /// let itemType: LibraryMusicItemType = .song
 ///
 /// do {
-///     let ratings = try await MLibraryRatingRequest(with: ids, item: itemType).response()
+///     let ratings = try await MusicLibraryRatingRequest(with: ids, item: itemType).response()
 ///     // Use the ratings for further processing.
 /// } catch {
 ///     // Handle the error.

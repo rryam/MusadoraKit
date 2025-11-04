@@ -112,7 +112,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MusadoraKitError.ratingNotFound`: If the music item with the specified ID is not found in the user's library.
   static func addRating(with id: MusicItemID, item: LibraryRatingMusicItemType, rating: RatingType) async throws -> Rating {
-    let request = MLibraryRatingAddRequest(with: id, item: item, rating: rating)
+    let request = MusicLibraryRatingAddRequest(with: id, item: item, rating: rating)
     let response = try await request.response()
 
     guard let rating = response.data.first else {

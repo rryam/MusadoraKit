@@ -1,5 +1,5 @@
 //
-//  MCatalogRatingRequest.swift
+//  MusicCatalogRatingRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
@@ -15,7 +15,7 @@ import Foundation
 /// Example usage:
 /// ```swift
 /// // Fetch ratings for multiple songs
-/// let request = MCatalogRatingRequest(
+/// let request = MusicCatalogRatingRequest(
 ///     with: ["1234567890", "0987654321"],
 ///     item: .song
 /// )
@@ -27,7 +27,7 @@ import Foundation
 ///     print("Failed to fetch ratings: \(error)")
 /// }
 /// ```
-public struct MCatalogRatingRequest {
+public struct MusicCatalogRatingRequest {
   /// The type of music item to fetch ratings for.
   private var type: CatalogRatingMusicItemType
 
@@ -53,7 +53,7 @@ public struct MCatalogRatingRequest {
   }
 }
 
-extension MCatalogRatingRequest: MusicRequest {
+extension MusicCatalogRatingRequest: MusicRequest {
     typealias ResponseType = RatingsResponse
 
     var url: URL {

@@ -177,7 +177,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the music item with the specified ID is not found in the user's library.
   static func getRating(with id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Rating {
-    let request = MLibraryRatingRequest(with: [id], item: item)
+    let request = MusicLibraryRatingRequest(with: [id], item: item)
     let response = try await request.response()
 
     guard let rating = response.data.first else {
@@ -205,7 +205,7 @@ public extension MLibrary {
   ///
   /// - Throws: `MLibraryError.notFound`: If the music items with the IDs is not found in the user's library.
   static func getRatings(with ids: [MusicItemID], item: LibraryRatingMusicItemType) async throws -> Ratings {
-    let request = MLibraryRatingRequest(with: ids, item: item)
+    let request = MusicLibraryRatingRequest(with: ids, item: item)
     let response = try await request.response()
     return response.data
   }

@@ -12,7 +12,7 @@ public typealias Ratings = [Rating]
 
 /// A request that your app uses to get ratings for albums, songs,
 /// playlists, and music videos for content in the user's iCloud library.
-public struct MLibraryRatingRequest {
+public struct MusicLibraryRatingRequest {
   private var type: LibraryRatingMusicItemType
   private var ids: [MusicItemID]
 
@@ -35,7 +35,7 @@ public struct MLibraryRatingRequest {
   }
 }
 
-extension MLibraryRatingRequest {
+extension MusicLibraryRatingRequest {
   internal var libraryRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

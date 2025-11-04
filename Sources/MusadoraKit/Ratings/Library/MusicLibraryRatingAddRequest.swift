@@ -1,5 +1,5 @@
 //
-//  MLibraryRatingAddRequest.swift
+//  MusicLibraryRatingAddRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
@@ -9,7 +9,7 @@ import Foundation
 
 /// A request that your app uses to add ratings for albums, songs,
 /// playlists, music videos, and stations for content in the user's iCloud library.
-public struct MLibraryRatingAddRequest {
+public struct MusicLibraryRatingAddRequest {
   private var type: LibraryRatingMusicItemType
   private var id: MusicItemID
 
@@ -41,7 +41,7 @@ public struct MLibraryRatingAddRequest {
   }
 }
 
-extension MLibraryRatingAddRequest {
+extension MusicLibraryRatingAddRequest {
   internal var libraryAddRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

@@ -115,7 +115,7 @@ public extension MLibrary {
   ///   - item: The type of the music item to delete the rating for.
   /// - Returns: A boolean value indicating whether the delete operation was successful.
   static func deleteRating(with id: MusicItemID, item: LibraryRatingMusicItemType) async throws -> Bool {
-    let request = MLibraryRatingDeleteRequest(with: id, item: item)
+    let request = MusicLibraryRatingDeleteRequest(with: id, item: item)
     let response = try await request.response()
     return response
   }

@@ -1,5 +1,5 @@
 //
-//  MCatalogRatingAddRequest.swift
+//  MusicCatalogRatingAddRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
@@ -14,7 +14,7 @@ import Foundation
 ///
 /// Example usage:
 /// ```swift
-/// let request = MCatalogRatingAddRequest(
+/// let request = MusicCatalogRatingAddRequest(
 ///     with: "1234567890",
 ///     item: .song,
 ///     rating: .like
@@ -27,7 +27,7 @@ import Foundation
 ///     print("Failed to add rating: \(error)")
 /// }
 /// ```
-struct MCatalogRatingAddRequest {
+struct MusicCatalogRatingAddRequest {
   /// The type of music item being rated.
   private var type: CatalogRatingMusicItemType
 
@@ -62,7 +62,7 @@ struct MCatalogRatingAddRequest {
   }
 }
 
-extension MCatalogRatingAddRequest {
+extension MusicCatalogRatingAddRequest {
   internal var catalogAddRatingsEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()
