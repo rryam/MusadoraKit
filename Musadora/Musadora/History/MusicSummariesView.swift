@@ -130,7 +130,7 @@ private extension MusicSummariesView {
     defer { isLoading = false }
 
     do {
-      let summary: MSummaryResponse
+      let summary: MusicSummaryResponse
       switch selection {
       case .year:
         summary = try await MSummary.latest()

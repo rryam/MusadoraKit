@@ -10,7 +10,7 @@ import Foundation
 /// A request that your app uses to fetch the user's Apple Music summary (Replay) for the latest eligible year.
 struct MusicSummaryRequest {
   /// Views to activate in the response.
-  var views: Set<MSummaryView> = [.topArtists, .topAlbums, .topSongs]
+  var views: Set<MusicSummaryView> = [.topArtists, .topAlbums, .topSongs]
 
   /// Optional language tag (BCP‑47) to localize the response.
   var languageTag: String?
@@ -25,7 +25,7 @@ struct MusicSummaryRequest {
   var period: MusicSummaryPeriod = .latestYear
 
   /// Builds and performs the request, returning a parsed summary response.
-  func response() async throws -> MSummaryResponse {
+  func response() async throws -> MusicSummaryResponse {
     let url = try endpointURL
 
     // Decoder configured for documented date formats
@@ -41,7 +41,7 @@ struct MusicSummaryRequest {
     let data = response.data
 
     do {
-      return try MSummaryResponse.parse(from: data, using: decoder)
+      return try MusicSummaryResponse.parse(from: data, using: decoder)
     } catch {
       throw error
     }
@@ -93,7 +93,7 @@ extension MusicSummaryRequest {
 }
 
 /// Supported views for music summaries (Replay) API.
-public enum MSummaryView: String, CaseIterable, Hashable {
+public enum MusicSummaryView: String, CaseIterable, Hashable {
   case topArtists = "top-artists"
   case topAlbums = "top-albums"
   case topSongs = "top-songs"

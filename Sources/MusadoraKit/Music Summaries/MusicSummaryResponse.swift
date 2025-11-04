@@ -1,5 +1,5 @@
 //
-//  MSummaryResponse.swift
+//  MusicSummaryResponse.swift
 //  MusadoraKit
 //
 //  Created by Codex on 02/09/25.
@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Surfaces the three primary views supported by the endpoint
 /// (`top-artists`, `top-albums`, `top-songs`) as MusicKit collections.
-public struct MSummaryResponse {
+public struct MusicSummaryResponse {
   /// Top artists for the latest eligible year (ordered as returned by the API).
   public let topArtists: Artists
 
@@ -25,16 +25,18 @@ public struct MSummaryResponse {
   public let year: Int?
 }
 
-extension MSummaryResponse {
+extension MusicSummaryResponse {
   /// Parses the raw data using the documented Apple schema.
-  static func parse(from data: Data, using decoder: JSONDecoder) throws -> MSummaryResponse {
+  static func parse(from data: Data, using decoder: JSONDecoder) throws -> MusicSummaryResponse {
     let topLevel = try decoder.decode(SummariesResponsePayload.self, from: data)
     // The endpoint returns a collection; pick the first summaries object.
     guard let summaries = topLevel.data.first else {
-      return MSummaryResponse(topArtists: MusicItemCollection([]),
-                              topAlbums: MusicItemCollection([]),
-                              topSongs: MusicItemCollection([]),
-                              year: nil)
+      return MusicSummaryResponse(
+        topArtists: MusicItemCollection([]),
+        topAlbums: MusicItemCollection([]),
+        topSongs: MusicItemCollection([]),
+        year: nil
+      )
     }
 
     // Flatten period summaries relationships into plain MusicKit collections.
@@ -47,7 +49,7 @@ extension MSummaryResponse {
     let songs: [Song] = (summaries.views?.topSongs?.data ?? [])
       .compactMap { summary in summary.relationships?.song?.data.first }
 
-    return MSummaryResponse(
+    return MusicSummaryResponse(
       topArtists: MusicItemCollection(artists),
       topAlbums: MusicItemCollection(albums),
       topSongs: MusicItemCollection(songs),
@@ -56,15 +58,15 @@ extension MSummaryResponse {
   }
 }
 
-extension MSummaryResponse: Equatable, Hashable {}
+extension MusicSummaryResponse: Equatable, Hashable {}
 
-extension MSummaryResponse: CustomStringConvertible, CustomDebugStringConvertible {
+extension MusicSummaryResponse: CustomStringConvertible, CustomDebugStringConvertible {
   public var description: String {
-    "MSummaryResponse(year: \(year.map(String.init) ?? "nil"), artists: \(topArtists.count), albums: \(topAlbums.count), songs: \(topSongs.count))"
+    "MusicSummaryResponse(year: \(year.map(String.init) ?? "nil"), artists: \(topArtists.count), albums: \(topAlbums.count), songs: \(topSongs.count))"
   }
 
   public var debugDescription: String {
-    "MSummaryResponse(\n\(topArtists.debugDescription),\n\(topAlbums.debugDescription),\n\(topSongs.debugDescription)\n)"
+    "MusicSummaryResponse(\n\(topArtists.debugDescription),\n\(topAlbums.debugDescription),\n\(topSongs.debugDescription)\n)"
   }
 }
 

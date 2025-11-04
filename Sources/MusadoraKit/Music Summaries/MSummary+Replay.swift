@@ -17,13 +17,13 @@ public extension MSummary {
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   ///   - include: Optional relationship names to include.
   ///   - extend: Optional attribute extensions to apply.
-  /// - Returns: A typed `MSummaryResponse` containing top artists, albums, and songs (when requested).
+  /// - Returns: A typed `MusicSummaryResponse` containing top artists, albums, and songs (when requested).
   static func latest(
-    views: Set<MSummaryView> = [.topArtists, .topAlbums, .topSongs],
+    views: Set<MusicSummaryView> = [.topArtists, .topAlbums, .topSongs],
     languageTag: String? = nil,
     include: [String]? = nil,
     extend: [String]? = nil
-  ) async throws -> MSummaryResponse {
+  ) async throws -> MusicSummaryResponse {
     try await response(for: .latestYear, views: views, languageTag: languageTag, include: include, extend: extend)
   }
 
@@ -34,17 +34,17 @@ public extension MSummary {
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   ///   - include: Optional relationship names to include.
   ///   - extend: Optional attribute extensions to apply.
-  /// - Returns: A typed `MSummaryResponse` containing top artists, albums, and songs (when requested) for the latest month.
+  /// - Returns: A typed `MusicSummaryResponse` containing top artists, albums, and songs (when requested) for the latest month.
   /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonth(
-    views: Set<MSummaryView> = [.topArtists, .topAlbums, .topSongs],
+    views: Set<MusicSummaryView> = [.topArtists, .topAlbums, .topSongs],
     languageTag: String? = nil,
     include: [String]? = nil,
     extend: [String]? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
     timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
-  ) async throws -> MSummaryResponse {
+  ) async throws -> MusicSummaryResponse {
     guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
     }
@@ -164,11 +164,11 @@ public extension MSummary {
 private extension MSummary {
   static func response(
     for period: MusicSummaryPeriod,
-    views: Set<MSummaryView>,
+    views: Set<MusicSummaryView>,
     languageTag: String?,
     include: [String]? = nil,
     extend: [String]? = nil
-  ) async throws -> MSummaryResponse {
+  ) async throws -> MusicSummaryResponse {
     var request = MusicSummaryRequest()
     request.period = period
     request.views = views
