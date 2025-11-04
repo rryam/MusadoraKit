@@ -57,17 +57,15 @@ This document outlines the remaining M-prefixed structures that can be renamed t
 ---
 
 ## 📚 Library Structures
-### MLibraryPlaylist → MusicLibraryPlaylist
-- **Location**: `Sources/MusadoraKit/Library/MLibraryPlaylist.swift`
-- **Usage**: Data structure for library playlists
-- **References**: Used throughout library playlist functionality
-- **Impact**: ~10-15 references to update
+### ✅ MLibraryPlaylist → MusicLibraryPlaylist
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/Library/MusicLibraryPlaylist.swift`
+- **Impact**: ~10-15 references updated
 
-### MLibraryPlaylistPlayParameters → MusicLibraryPlaylistPlayParameters
-- **Location**: `Sources/MusadoraKit/Library/MLibraryPlaylist.swift` (nested struct)
-- **Usage**: Play parameters for library playlists
-- **References**: Used in playlist play functionality
-- **Impact**: ~3-5 references to update
+### ✅ MLibraryPlaylistPlayParameters → MusicLibraryPlaylistPlayParameters
+- **Status**: COMPLETED
+- **Location**: `Sources/MusadoraKit/Library/MusicLibraryPlaylist.swift` (nested struct)
+- **Impact**: ~3-5 references updated
 
 ---
 

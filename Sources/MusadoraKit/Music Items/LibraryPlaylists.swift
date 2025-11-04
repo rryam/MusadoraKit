@@ -6,4 +6,4 @@
 //
 
 /// A collection of library playlists.
-public typealias LibraryPlaylists = MusicItemCollection<MLibraryPlaylist>
+public typealias LibraryPlaylists = MusicItemCollection<MusicLibraryPlaylist>
