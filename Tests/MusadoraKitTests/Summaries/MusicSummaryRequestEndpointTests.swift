@@ -1,5 +1,5 @@
 //
-//  MSummaryRequestEndpointTests.swift
+//  MusicSummaryRequestEndpointTests.swift
 //  MusadoraKitTests
 //
 //  Created by Codex on 02/09/25.
@@ -9,10 +9,10 @@
 import Testing
 
 @Suite
-struct MSummaryRequestEndpointTests {
+struct MusicSummaryRequestEndpointTests {
   @Test
   func defaultEndpointURLAllViews() throws {
-    let request = MSummaryRequest()
+    let request = MusicSummaryRequest()
     let url = try request.endpointURL
     // Note: views are sorted alphabetically in implementation
     // Default include and extend parameters are added automatically
@@ -21,7 +21,7 @@ struct MSummaryRequestEndpointTests {
 
   @Test
   func endpointURLTopSongsOnly() throws {
-    var request = MSummaryRequest()
+    var request = MusicSummaryRequest()
     request.views = [.topSongs]
     let url = try request.endpointURL
     // Default include and extend parameters are added automatically
@@ -30,7 +30,7 @@ struct MSummaryRequestEndpointTests {
 
   @Test
   func endpointURLLanguageIncludeExtend() throws {
-    var request = MSummaryRequest()
+    var request = MusicSummaryRequest()
     request.views = [.topArtists]
     request.languageTag = "en-US"
     request.include = ["relationships"]
@@ -44,7 +44,7 @@ struct MSummaryRequestEndpointTests {
 
   @Test
   func endpointURLLatestMonth() throws {
-    var request = MSummaryRequest()
+    var request = MusicSummaryRequest()
     request.period = .month(year: 2025, month: 8)
 
     let url = try request.endpointURL

@@ -169,7 +169,7 @@ private extension MSummary {
     include: [String]? = nil,
     extend: [String]? = nil
   ) async throws -> MSummaryResponse {
-    var request = MSummaryRequest()
+    var request = MusicSummaryRequest()
     request.period = period
     request.views = views
     request.languageTag = languageTag

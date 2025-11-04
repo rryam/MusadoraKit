@@ -12,7 +12,7 @@
 ///
 /// Example usage:
 /// ```swift
-/// let request = MHistoryRequest()
+/// let request = MusicHistoryRequest()
 /// let response = try await request.response()
 ///
 /// // Access historical items by type

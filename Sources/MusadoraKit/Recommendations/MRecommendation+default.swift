@@ -108,7 +108,7 @@ public extension MRecommendation {
 
 extension MRecommendation {
   private static func recommendations(_ limit: Int? = nil) async throws -> MRecommendations {
-    var request = MRecommendationRequest()
+    var request = MusicRecommendationRequest()
     request.limit = limit
     let response = try await request.response()
     return response.items

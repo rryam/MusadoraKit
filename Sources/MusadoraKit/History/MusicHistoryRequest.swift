@@ -1,5 +1,5 @@
 //
-//  MHistoryRequest.swift
+//  MusicHistoryRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/04/22.
@@ -9,7 +9,7 @@ import Foundation
 
 /// A  request that your app uses to fetch historical information about
 /// the songs and stations the user played recently.
-struct MHistoryRequest {
+struct MusicHistoryRequest {
   /// A limit for the number of items to return
   /// in the history response.
   var limit: Int?
@@ -60,7 +60,7 @@ struct MHistoryRequest {
   internal var maximumLimit: Int = 0
 }
 
-extension MHistoryRequest {
+extension MusicHistoryRequest {
   internal var historyEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

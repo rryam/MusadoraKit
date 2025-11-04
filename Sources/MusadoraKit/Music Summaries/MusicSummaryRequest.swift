@@ -1,5 +1,5 @@
 //
-//  MSummaryRequest.swift
+//  MusicSummaryRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 02/09/25.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// A request that your app uses to fetch the user's Apple Music summary (Replay) for the latest eligible year.
-struct MSummaryRequest {
+struct MusicSummaryRequest {
   /// Views to activate in the response.
   var views: Set<MSummaryView> = [.topArtists, .topAlbums, .topSongs]
 
@@ -48,7 +48,7 @@ struct MSummaryRequest {
   }
 }
 
-extension MSummaryRequest {
+extension MusicSummaryRequest {
   /// Constructs the endpoint URL for the music summaries request.
   var endpointURL: URL {
     get throws {

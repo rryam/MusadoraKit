@@ -12,7 +12,7 @@
 ///
 /// Example usage:
 /// ```swift
-/// let request = MRecommendationRequest()
+/// let request = MusicRecommendationRequest()
 /// let response = try await request.response()
 ///
 /// // Access recommended items

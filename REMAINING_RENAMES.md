@@ -1,10 +1,5 @@
 # Remaining M-Prefix Renames
 
-## 🎵 Core API Structures
-- MRecommendationRequest → MusicRecommendationRequest
-- MHistoryRequest → MusicHistoryRequest
-- MSummaryRequest → MusicSummaryRequest
-
 ## 📊 Chart Operations
 - MChartRequest → MusicChartRequest
 - MChartType → MusicChartType

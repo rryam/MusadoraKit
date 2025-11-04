@@ -9,7 +9,7 @@ import Foundation
 
 /// A  request that your app uses to fetch recommendations from
 /// the user's library, either default ones or based on identifiers.
-struct MRecommendationRequest {
+struct MusicRecommendationRequest {
   /// A limit for the number of items to return
   /// in the recommendation response.
   var limit: Int?
@@ -53,7 +53,7 @@ struct MRecommendationRequest {
   }
 }
 
-extension MRecommendationRequest {
+extension MusicRecommendationRequest {
   var recommendationEndpointURL: URL {
     get throws {
       var components = AppleMusicURLComponents()

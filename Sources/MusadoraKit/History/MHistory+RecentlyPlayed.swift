@@ -59,7 +59,7 @@ public extension MHistory {
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
   static func recentlyPlayed(limit: Int? = nil, offset: Int? = nil) async throws
     -> UserMusicItems {
-    var request = MHistoryRequest(for: .recentlyPlayed)
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
     request.offset = offset
     let response = try await request.response()
@@ -70,7 +70,7 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: A collection of albums.
   static func recentlyPlayedAlbums(limit: Int? = nil) async throws -> Albums {
-    var request = MHistoryRequest(for: .recentlyPlayed)
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
     let response = try await request.response()
     return response.albums
@@ -80,7 +80,7 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: A collection of albums.
   static func recentlyPlayedPlaylists(limit: Int? = nil) async throws -> Playlists {
-    var request = MHistoryRequest(for: .recentlyPlayed)
+    var request = MusicHistoryRequest(for: .recentlyPlayed)
     request.limit = limit
     let response = try await request.response()
     return response.playlists
@@ -90,7 +90,7 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
   static func heavyRotation(limit: Int? = nil) async throws -> UserMusicItems {
-    var request = MHistoryRequest(for: .heavyRotation)
+    var request = MusicHistoryRequest(for: .heavyRotation)
     request.limit = limit
     let response = try await request.response()
     return response.items
@@ -103,7 +103,7 @@ public extension MHistory {
   /// - Returns: Collection of `UserMusicItem` that may be albums, playlists or stations.
   static func recentlyAdded(limit: Int? = nil, offset: Int? = nil) async throws
     -> UserMusicItems {
-    var request = MHistoryRequest(for: .recentlyAdded)
+    var request = MusicHistoryRequest(for: .recentlyAdded)
     request.limit = limit
     request.offset = offset
     let response = try await request.response()
@@ -114,7 +114,7 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `Tracks`.
   static func recentlyPlayedTracks(limit: Int? = nil) async throws -> Tracks {
-    var request = MHistoryRequest(for: .recentlyPlayedTracks)
+    var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
     request.limit = limit
     let response = try await request.response()
     return response.tracks
@@ -124,7 +124,7 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `Stations`.
   static func recentlyPlayedStations(limit: Int? = nil) async throws -> Stations {
-    var request = MHistoryRequest(for: .recentlyPlayedStations)
+    var request = MusicHistoryRequest(for: .recentlyPlayedStations)
     request.limit = limit
     let response = try await request.response()
     return response.stations
