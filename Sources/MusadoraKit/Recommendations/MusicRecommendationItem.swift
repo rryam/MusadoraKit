@@ -85,4 +85,4 @@ public extension MusicRecommendationItem {
   func encode(to _: Encoder) throws {}
 }
 
-extension MRecommendationItem: Equatable, Hashable {}
+extension MusicRecommendationItem: Equatable, Hashable {}

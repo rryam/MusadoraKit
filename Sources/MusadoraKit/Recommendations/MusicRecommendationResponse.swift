@@ -29,7 +29,7 @@ public struct MusicRecommendationResponse {
   public let items: MusicRecommendations
 }
 
-extension MusicRecommendationResponse: Equatable, Hashable, Codable {}
+extension MusicRecommendationResponse: Codable {}
 
 extension MusicRecommendationResponse: CustomStringConvertible {
   public var description: String {

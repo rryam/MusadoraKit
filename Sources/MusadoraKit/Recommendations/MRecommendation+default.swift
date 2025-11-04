@@ -23,7 +23,7 @@ public extension MRecommendation {
   /// - Parameter limit: The maximum number of recommendations to retrieve. If not specified, the default value is used.
   /// - Returns: A collection of `MRecommendation` objects, each representing a recommendation
   /// item containing albums, playlists and/or stations.
-  static func `default`(limit: Int? = nil) async throws -> MRecommendations {
+  static func `default`(limit: Int? = nil) async throws -> MusicRecommendations {
     try await recommendations(limit)
   }
 
@@ -107,7 +107,7 @@ public extension MRecommendation {
 }
 
 extension MRecommendation {
-  private static func recommendations(_ limit: Int? = nil) async throws -> MRecommendations {
+  private static func recommendations(_ limit: Int? = nil) async throws -> MusicRecommendations {
     var request = MusicRecommendationRequest()
     request.limit = limit
     let response = try await request.response()

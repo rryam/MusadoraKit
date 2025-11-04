@@ -31,8 +31,8 @@ struct MusicRecommendationRequest {
 
   /// Fetches recommendations based on the user’s library
   /// and purchase history for the given request.
-  func response() async throws -> MRecommendationResponse {
-    let items: MRecommendations
+  func response() async throws -> MusicRecommendationResponse {
+    let items: MusicRecommendations
     let url = try recommendationEndpointURL
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
@@ -40,16 +40,16 @@ struct MusicRecommendationRequest {
     if let userToken = MusadoraKit.userToken {
       let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
-      let baseItems = try decoder.decode(MRecommendations.self, from: data)
+      let baseItems = try decoder.decode(MusicRecommendations.self, from: data)
       items = try await baseItems.collectingAll(upTo: limit)
     } else {
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
-      let baseItems = try decoder.decode(MRecommendations.self, from: response.data)
+      let baseItems = try decoder.decode(MusicRecommendations.self, from: response.data)
       items = try await baseItems.collectingAll(upTo: limit)
     }
 
-    return MRecommendationResponse(items: items)
+    return MusicRecommendationResponse(items: items)
   }
 }
 
