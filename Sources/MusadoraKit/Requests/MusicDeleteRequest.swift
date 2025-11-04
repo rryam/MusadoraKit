@@ -1,5 +1,5 @@
 //
-//  MDataDeleteRequest.swift
+//  MusicDeleteRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A request structure for deleting data from an arbitrary Apple Music API endpoint.
+/// A request structure for deleting data from the Apple Music API using developer tokens.
 ///
 /// This structure provides a way to send DELETE requests to the Apple Music API,
 /// such as removing items from playlists or deleting user-created playlists.
@@ -16,7 +16,7 @@ import Foundation
 /// ```swift
 /// // Delete a playlist from the user's library
 /// let playlistURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists/p.12345")!
-/// let deleteRequest = MDataDeleteRequest(url: playlistURL)
+/// let deleteRequest = MusicDeleteRequest(url: playlistURL)
 ///
 /// do {
 ///     let response = try await deleteRequest.response()
@@ -26,7 +26,7 @@ import Foundation
 /// }
 /// ```
 ///
-public struct MDataDeleteRequest {
+public struct MusicDeleteRequest {
   /// The URL associated with the data request.
   private var url: URL
 

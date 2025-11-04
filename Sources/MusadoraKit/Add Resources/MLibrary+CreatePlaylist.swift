@@ -306,7 +306,7 @@ public extension MLibrary {
 
     let data = try JSONEncoder().encode(tracks)
 
-    let request = MDataPostRequest(url: url, data: data)
+    let request = MusicPostRequest(url: url, data: data)
     let response = try await request.response()
     return [201, 204].contains(response.urlResponse.statusCode)
   }
@@ -350,7 +350,7 @@ public extension MLibrary {
 
     let data = try JSONEncoder().encode(creationRequest)
 
-    let request = MDataPostRequest(url: url, data: data)
+    let request = MusicPostRequest(url: url, data: data)
     let response = try await request.response()
 
     let playlists = try JSONDecoder().decode(Playlists.self, from: response.data)

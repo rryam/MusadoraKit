@@ -1,5 +1,5 @@
 //
-//  MDataPostRequest.swift
+//  MusicPostRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 23/04/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A request structure for uploading data to an arbitrary Apple Music API endpoint.
+/// A request structure for uploading data to the Apple Music API using developer tokens.
 ///
 /// This struct provides a way to send POST requests to the Apple Music API. You can use it to upload data,
 /// such as adding songs to a library, creating new playlists, or any other action that requires a POST request.
@@ -17,7 +17,7 @@ import Foundation
 /// ```swift
 /// let playlistURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists")!
 /// let playlistData: Data = // ... (your encoded playlist data here)
-/// let postRequest = MDataPostRequest(url: playlistURL, data: playlistData)
+/// let postRequest = MusicPostRequest(url: playlistURL, data: playlistData)
 ///
 /// do {
 ///     let response = try await postRequest.response()
@@ -27,7 +27,7 @@ import Foundation
 /// }
 /// ```
 ///
-public struct MDataPostRequest: Sendable {
+public struct MusicPostRequest: Sendable {
   /// The URL associated with the data request.
   var url: URL
 

@@ -1,5 +1,5 @@
 //
-//  MDataRequest.swift
+//  MusicCatalogRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 15/03/23.
@@ -8,9 +8,9 @@
 import Foundation
 @preconcurrency import MusicKit
 
-/// A request structure for fetching data from an arbitrary Apple Music API endpoint.
+/// A request structure for fetching data from the Apple Music API using developer tokens.
 ///
-/// The `MDataRequest` struct facilitates sending requests to the Apple Music API for fetching resources,
+/// The `MusicDeveloperRequest` struct facilitates sending authenticated requests to the Apple Music API,
 /// such as retrieving details of a playlist, fetching track metadata, or any other action requiring an API call.
 ///
 /// Before sending a request, it sets a token provider with the provided developer token. This ensures that the API
@@ -21,17 +21,17 @@ import Foundation
 /// ```swift
 /// let trackURL = URL(string: "https://api.music.apple.com/v1/catalog/us/songs/{id}")!
 /// let urlRequest = URLRequest(url: trackURL)
-/// let dataRequest = MDataRequest(urlRequest: urlRequest, developerToken: "YOUR_DEVELOPER_TOKEN")
+/// let developerRequest = MusicDeveloperRequest(urlRequest: urlRequest, developerToken: "YOUR_DEVELOPER_TOKEN")
 ///
 /// do {
-///     let response = try await dataRequest.response()
+///     let response = try await developerRequest.response()
 ///     print("Track data retrieved successfully:", response)
 /// } catch {
 ///     print("Failed to retrieve track data:", error.localizedDescription)
 /// }
 /// ```
 ///
-public struct MDataRequest {
+public struct MusicDeveloperRequest {
   /// The developer token used for authentication with the Apple Music API.
   private let developerToken: String
 

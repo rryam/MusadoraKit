@@ -1,12 +1,11 @@
 //
-//  CatalogResourceTypes.swift
+//  CatalogResourceIdentifiers.swift
 //  MusadoraKit
 //
-//  Created by Assistant on 31/10/2025.
+//  Created by Rudrank Riyam on 31/10/2025.
 //
 
 import Foundation
-@_exported import MusicKit
 
 /// A collection of music item identifiers organized by resource type.
 /// Used for batch requests to fetch multiple resources of different types.

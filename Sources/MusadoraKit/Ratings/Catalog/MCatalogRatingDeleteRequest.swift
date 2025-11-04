@@ -26,7 +26,7 @@ public struct MCatalogRatingDeleteRequest {
   /// that matches the unique identifier for the request.
   public func response() async throws -> Bool {
     let url = try catalogDeleteRatingsEndpointURL
-    let request = MDataDeleteRequest(url: url)
+    let request = MusicDeleteRequest(url: url)
     let response = try await request.response()
     // 204 EmptyBodyResponse - The modification was successful, but there’s no content in the response.
     return response.urlResponse.statusCode == 204

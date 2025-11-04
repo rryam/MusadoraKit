@@ -8,7 +8,6 @@
 import Foundation
 
 public extension FilterableLibraryItem {
-  
   /// The catalog version of the library item.
   ///
   /// This property fetches the full catalog equivalent of a library resource from the Apple Music API.

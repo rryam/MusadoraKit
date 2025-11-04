@@ -56,7 +56,7 @@ struct MCatalogRatingAddRequest {
     let rating = RatingRequest(value: rating)
     let data = try JSONEncoder().encode(rating)
 
-    let request = MDataPutRequest(url: url, data: data)
+    let request = MusicPutRequest(url: url, data: data)
     let response = try await request.response()
     return try JSONDecoder().decode(RatingsResponse.self, from: response.data)
   }

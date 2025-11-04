@@ -33,7 +33,7 @@ struct MFavoritesRequest {
   /// a boolean value indicating the success of the operation.
   func response() async throws -> Bool {
     let url = try favoritesEndpointURL
-    let request = MDataPostRequest(url: url)
+    let request = MusicPostRequest(url: url)
     let response = try await request.response()
     return response.urlResponse.statusCode == 202
   }

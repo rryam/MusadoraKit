@@ -1,5 +1,5 @@
 //
-//  MDataPutRequest.swift
+//  MusicPutRequest.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 18/05/22.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// A request structure for updating data at an arbitrary Apple Music API endpoint.
+/// A request structure for updating data at the Apple Music API using developer tokens.
 ///
-/// The `MDataPutRequest` struct facilitates sending PUT requests to the Apple Music API, allowing you to update existing resources,
+/// The `MusicPutRequest` struct facilitates sending PUT requests to the Apple Music API, allowing you to update existing resources,
 /// such as modifying details of a playlist, changing track metadata, or any other action requiring a PUT request.
 ///
 /// ### Usage Example:
@@ -17,7 +17,7 @@ import Foundation
 /// ```swift
 /// let playlistURL = URL(string: "https://api.music.apple.com/v1/me/library/playlists/{id}")!
 /// let updatedPlaylistData: Data = // ... (your encoded updated playlist data here)
-/// let putRequest = MDataPutRequest(url: playlistURL, data: updatedPlaylistData)
+/// let putRequest = MusicPutRequest(url: playlistURL, data: updatedPlaylistData)
 ///
 /// do {
 ///     let response = try await putRequest.response()
@@ -27,7 +27,7 @@ import Foundation
 /// }
 /// ```
 /// 
-public struct MDataPutRequest {
+public struct MusicPutRequest {
     /// The URL associated with the data request.
     private var url: URL
 

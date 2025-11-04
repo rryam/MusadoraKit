@@ -44,7 +44,7 @@ public struct MAddResourcesRequest {
   /// - Throws: An error if the request fails.
   public func response() async throws -> Bool {
     let url = try addResourcesEndpointURL
-    let request = MDataPostRequest(url: url)
+    let request = MusicPostRequest(url: url)
     let response = try await request.response()
     return response.urlResponse.statusCode == 202
   }
