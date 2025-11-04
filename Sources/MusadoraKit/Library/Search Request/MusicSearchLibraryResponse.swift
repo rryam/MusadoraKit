@@ -12,7 +12,7 @@
 ///
 /// Example usage:
 /// ```swift
-/// let request = MusicLibrarySearchRequest(term: "coldplay", types: [Song.self, Album.self])
+/// let request = MusicSearchLibraryRequest(term: "coldplay", types: [Song.self, Album.self])
 /// let response = try await request.response()
 ///
 /// // Access search results by type

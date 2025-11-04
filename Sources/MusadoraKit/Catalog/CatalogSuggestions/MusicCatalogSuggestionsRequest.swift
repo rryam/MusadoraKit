@@ -14,7 +14,7 @@ import Foundation
 ///
 /// Example usage:
 /// ```swift
-/// let request = MCatalogSuggestionsRequest(
+/// let request = MusicCatalogSuggestionsRequest(
 ///     term: "taylor",
 ///     kinds: [.terms, .topResults],
 ///     types: [Song.self, Artist.self]
