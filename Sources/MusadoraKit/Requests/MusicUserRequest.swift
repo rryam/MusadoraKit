@@ -28,7 +28,7 @@ import Foundation
 ///     print("Failed to retrieve playlist data:", error.localizedDescription)
 /// }
 /// ```
-public struct MusicUserRequest {
+public struct MusicUserRequest: Sendable {
   /// The user token used for personalized API requests.
   private let userToken: String
 
@@ -64,7 +64,7 @@ public struct MusicUserRequest {
     let (data, response) = try await URLSession.shared.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse else {
-      throw URLError(.badServerResponse, userInfo: ["description": "Invalid HTTP response"])
+      throw URLError(.badServerResponse, userInfo: ["description": "Invalid HTTP response."])
     }
 
     switch httpResponse.statusCode {
@@ -77,7 +77,7 @@ public struct MusicUserRequest {
     case 500:
       throw URLError(.badServerResponse, userInfo: ["description": "Internal Server Error (500)."])
     default:
-      throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)"])
+      throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)."])
     }
   }
 }

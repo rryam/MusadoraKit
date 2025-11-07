@@ -27,7 +27,7 @@ import Foundation
 /// }
 /// ```
 /// 
-public struct MusicPutRequest {
+public struct MusicPutRequest: Sendable {
     /// The URL associated with the data request.
     private var url: URL
 

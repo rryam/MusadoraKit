@@ -81,7 +81,7 @@ extension MusadoraKit {
             case 500:
                 throw URLError(.badServerResponse, userInfo: ["description": "Internal Server Error (500)."])
             default:
-                throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)"])
+                throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)."])
             }
         } catch let error as URLError where error.code == .userAuthenticationRequired {
             throw URLError(.userAuthenticationRequired, userInfo: ["description": "Unauthorized (401). Check developer token validity and MusicKit setup.", NSUnderlyingErrorKey: error])

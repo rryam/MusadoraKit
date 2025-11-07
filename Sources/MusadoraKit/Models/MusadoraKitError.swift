@@ -60,19 +60,19 @@ extension MusadoraKitError: CustomStringConvertible {
     case .typeMissing:
       return "One or more types must be specified for fetching top results in search suggestions."
     case let .recommendationOverLimit(limit):
-      return "Value must be an integer less than or equal to 30, but was: \(limit)."
+      return "The recommendation limit was exceeded. Value must be an integer less than or equal to 30, but was \(limit)."
     case let .historyOverLimit(limit, overLimit):
-      return "Value must be an integer less than or equal to \(limit), but was: \(overLimit)."
+      return "The history limit was exceeded. Value must be an integer less than or equal to \(limit), but was \(overLimit)."
     case .invalidSummaryPeriod:
       return "A monthly summary period could not be determined from the provided date context."
     case .idMissing:
-      return "One or more ID must be specified to fetch the ratings for it."
+      return "One or more IDs must be specified to fetch the ratings."
     case .platformNotSupported:
-      return "This is only available on iOS."
+      return "This operation is only available on iOS."
     case let .ratingNotFound(id):
       return "No rating could be found for \(id)."
     case let .unableToCountItems(item):
-      return "Not able to count the music items for \(item)."
+      return "Unable to count the music items for \(item)."
     case .invalidArtworkURL:
       return "The artwork URL could not be generated or is invalid."
     case .invalidImageData:

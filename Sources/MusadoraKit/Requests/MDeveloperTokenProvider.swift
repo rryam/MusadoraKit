@@ -27,8 +27,9 @@ import Foundation
 /// // Now proceed with sending a MusicDataRequest
 /// ```
 ///
+/// `@MainActor` isolation provides thread safety, making this safe to pass across concurrency boundaries.
 @MainActor
-public final class MDeveloperTokenProvider: MusicTokenProvider {
+public final class MDeveloperTokenProvider: MusicTokenProvider, @unchecked Sendable {
   /// The **custom** developer token used to authenticate Apple Music API requests.
   private var developerToken: String = ""
 

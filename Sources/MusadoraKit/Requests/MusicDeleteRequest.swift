@@ -26,7 +26,7 @@ import Foundation
 /// }
 /// ```
 ///
-public struct MusicDeleteRequest {
+public struct MusicDeleteRequest: Sendable {
   /// The URL associated with the data request.
   private var url: URL
 

@@ -31,7 +31,7 @@ import Foundation
 /// }
 /// ```
 ///
-public struct MusicDeveloperRequest {
+public struct MusicDeveloperRequest: Sendable {
   /// The developer token used for authentication with the Apple Music API.
   private let developerToken: String
 
