@@ -33,7 +33,7 @@ extension EquivalentMusicItemType {
     case is MusicVideo.Type:
       path = .musicVideos
     default:
-      throw NSError(domain: "Wrong equivalent music item type.", code: 0)
+      throw MusadoraKitError.invalidEquivalentMusicItemType
     }
     return path
   }

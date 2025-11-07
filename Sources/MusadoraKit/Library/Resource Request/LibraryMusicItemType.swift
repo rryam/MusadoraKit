@@ -70,7 +70,7 @@ public extension LibraryMusicItemType {
     case is Playlist.Type:
       path = .playlists
     default:
-      throw NSError(domain: "Wrong library music item type.", code: 0)
+      throw MusadoraKitError.invalidLibraryItemType
     }
 
     return path

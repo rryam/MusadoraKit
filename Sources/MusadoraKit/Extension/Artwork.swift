@@ -30,18 +30,18 @@ public extension Artwork {
   /// - Throws: An error if the image cannot be fetched or processed.
   func fetchColors(width: Int, height: Int, numberOfColors: Int = 9) async throws -> [Color] {
     guard let imageURL = self.url(width: width, height: height) else {
-      throw NSError(domain: "Invalid artwork URL", code: 0, userInfo: nil)
+      throw MusadoraKitError.invalidArtworkURL
     }
 
     let (data, _) = try await URLSession.shared.data(from: imageURL)
 
 #if canImport(UIKit)
     guard let image = UIImage(data: data) else {
-      throw NSError(domain: "Invalid image data", code: 0, userInfo: nil)
+      throw MusadoraKitError.invalidImageData
     }
 #elseif canImport(AppKit)
     guard let image = NSImage(data: data) else {
-      throw NSError(domain: "Invalid image data", code: 0, userInfo: nil)
+      throw MusadoraKitError.invalidImageData
     }
 #endif
 

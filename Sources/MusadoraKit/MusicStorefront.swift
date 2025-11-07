@@ -156,7 +156,7 @@ extension MCatalog {
     let storefront = try JSONDecoder().decode(StorefrontsData.self, from: response.data).data.first
 
     guard let storefront = storefront else {
-      throw NSError(domain: "Storefront not found for ID \(id).", code: 0)
+      throw MusadoraKitError.storefrontNotFound(for: id)
     }
 
     return storefront

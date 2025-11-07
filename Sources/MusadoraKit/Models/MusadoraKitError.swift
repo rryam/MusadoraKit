@@ -35,6 +35,21 @@ public enum MusadoraKitError: Error, Equatable {
 
   /// Unable to count music items for the specified type.
   case unableToCountItems(for: String)
+
+  /// The artwork URL could not be generated or is invalid.
+  case invalidArtworkURL
+
+  /// The artwork image data could not be decoded or is invalid.
+  case invalidImageData
+
+  /// The specified storefront could not be found.
+  case storefrontNotFound(for: String)
+
+  /// The equivalent music item type is not recognized or unsupported.
+  case invalidEquivalentMusicItemType
+
+  /// The library music item type is not recognized or unsupported.
+  case invalidLibraryItemType
 }
 
 extension MusadoraKitError: CustomStringConvertible {
@@ -58,6 +73,16 @@ extension MusadoraKitError: CustomStringConvertible {
       return "No rating could be found for \(id)."
     case let .unableToCountItems(item):
       return "Not able to count the music items for \(item)."
+    case .invalidArtworkURL:
+      return "The artwork URL could not be generated or is invalid."
+    case .invalidImageData:
+      return "The artwork image data could not be decoded or is invalid."
+    case let .storefrontNotFound(id):
+      return "The specified storefront could not be found for ID \(id)."
+    case .invalidEquivalentMusicItemType:
+      return "The equivalent music item type is not recognized or unsupported."
+    case .invalidLibraryItemType:
+      return "The library music item type is not recognized or unsupported."
     }
   }
 }
