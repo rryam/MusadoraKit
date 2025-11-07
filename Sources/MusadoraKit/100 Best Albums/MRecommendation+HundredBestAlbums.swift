@@ -37,6 +37,9 @@ public extension MRecommendation {
 
   /// Retrieves all the 100 Best Albums using a task group with enumeration.
   ///
+  /// This method fetches all 100 albums concurrently. If individual albums fail to load,
+  /// those errors are logged but do not prevent the method from returning successfully fetched albums.
+  ///
   /// Example usage:
   ///
   ///     do {
@@ -47,31 +50,41 @@ public extension MRecommendation {
   ///         print("Artist name: \(album.artistName)")
   ///         // access other album properties as needed
   ///       }
+  ///       print("Successfully fetched \(albums.count) out of 100 albums")
   ///     } catch {
   ///       print("Error retrieving albums: \(error.localizedDescription)")
   ///     }
   ///
-  /// - Returns: An array of `HundredBestAlbum` objects representing all the 100 Best Albums.
+  /// - Parameters:
+  ///   - storefront: The storefront to fetch albums from (default: "us").
+  ///   - region: The region/language code for localization (default: "en-us").
+  /// - Returns: An array of `HundredBestAlbum` objects representing successfully fetched albums.
+  ///   Note: This may contain fewer than 100 albums if some requests fail.
   static func allHundredBestAlbums(storefront: String = "us", region: String = "en-us")
     async throws -> [HundredBestAlbum] {
     let positions = 1...100
     var albums: [HundredBestAlbum?] = Array(repeating: nil, count: positions.count)
 
-    return try await withThrowingTaskGroup(of: (Int, HundredBestAlbum?).self) { group in
+    return try await withThrowingTaskGroup(of: (Int, Result<HundredBestAlbum, Error>).self) { group in
       for position in positions {
         group.addTask {
           do {
             let album = try await self.hundredBestAlbum(
               at: position, storefront: storefront, region: region)
-            return (position, album)
+            return (position, .success(album))
           } catch {
-            return (position, nil)
+            return (position, .failure(error))
           }
         }
       }
 
-      for try await (position, album) in group {
-        albums[position - 1] = album
+      for try await (position, result) in group {
+        switch result {
+        case .success(let album):
+          albums[position - 1] = album
+        case .failure:
+          break
+        }
       }
 
       return albums.compactMap { $0 }

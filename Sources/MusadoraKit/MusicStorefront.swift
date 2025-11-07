@@ -249,9 +249,6 @@ extension MusicStorefront {
     do {
       return try decodeStorefrontLookup(from: data)
     } catch {
-      #if DEBUG
-      debugPrint("Failed to decode storefront mapping: \(error)")
-      #endif
       return [:]
     }
   }
