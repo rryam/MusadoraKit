@@ -227,7 +227,6 @@ extension MusicStorefront {
 
   private static let storefrontIDLookup: [String: Int] = {
     guard let url = Bundle.module.url(forResource: "storefront-ids", withExtension: "json") else {
-      assertionFailure("Missing storefront-ids.json resource.")
       return [:]
     }
 
@@ -235,7 +234,6 @@ extension MusicStorefront {
       let data = try Data(contentsOf: url)
       return loadStorefrontLookup(from: data)
     } catch {
-      assertionFailure("Failed to load storefront mapping data: \(error)")
       return [:]
     }
   }()

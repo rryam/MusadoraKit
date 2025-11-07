@@ -7,17 +7,17 @@
 
 import Foundation
 
-extension Array where Element: Equatable {
-  /// Returns a new array with the duplicate elements removed.
+extension Array where Element: Hashable {
+  /// Returns a new array with the duplicate elements removed, preserving the order of first occurrence.
   ///
   /// - Returns: A new array with the duplicate elements removed.
   ///
-  /// - Note: This method has O(n²) time performance, but is optimized for arrays with no more than 10 elements.
+  /// - Note: This method has O(n) time performance using a Set for efficient duplicate detection.
   func removeDuplicates() -> Self {
-    reduce(into: []) { result, element in
-      if !result.contains(element) {
-        result.append(element)
-      }
+    var seen = Set<Element>()
+    return filter { element in
+      let inserted = seen.insert(element).inserted
+      return inserted
     }
   }
 }

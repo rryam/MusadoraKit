@@ -7,18 +7,6 @@
 
 import CoreGraphics
 
-/// Errors that can occur during image processing.
-enum ImageProcessingError: Error {
-  /// The provided image is invalid or cannot be processed.
-  case invalidImage
-  /// The image resizing operation failed.
-  case resizeFailed
-  /// Failed to allocate memory for image processing.
-  case failedToAllocateMemory
-  /// Failed to create a CGContext for image processing.
-  case failedToCreateCGContext
-}
-
 /// Represents the color data of a single pixel.
 struct PixelData {
   /// The red component of the pixel color (0-255).
@@ -39,24 +27,47 @@ struct Cluster {
 
 /// A utility struct for common image processing operations.
 struct CommonImageProcessing {
+  /// Maximum image dimensions allowed for processing to prevent memory issues.
+  /// Images larger than this will be automatically downscaled.
+  private static let maxImageDimension: Int = 1000
+
+  /// Maximum total pixels allowed for processing (maxImageDimension * maxImageDimension).
+  private static let maxTotalPixels: Int = maxImageDimension * maxImageDimension
+
   /// Extracts the most prominent colors from a CGImage.
   ///
   /// - Parameters:
-  ///   - cgImage: The CGImage to extract colors from.
+  ///   - cgImage: The CGImage to extract colors from. Large images will be automatically downscaled.
   ///   - numberOfColors: The number of prominent colors to extract.
   ///
   /// - Returns: An array of CGColor objects representing the prominent colors.
   ///
-  /// - Throws: An `ImageProcessingError` if the image processing fails.
+  /// - Throws: A `MusadoraKitError` if the image processing fails.
   static func extractColors(from cgImage: CGImage, numberOfColors: Int) throws -> [CGColor] {
-    let width = cgImage.width
-    let height = cgImage.height
+    // Downscale image if it exceeds memory limits
+    let processedImage: CGImage
+    if cgImage.width * cgImage.height > maxTotalPixels {
+      let scale = min(Double(maxImageDimension) / Double(cgImage.width),
+                      Double(maxImageDimension) / Double(cgImage.height))
+      let newWidth = Int(Double(cgImage.width) * scale)
+      let newHeight = Int(Double(cgImage.height) * scale)
+
+      guard let resizedImage = resizeImage(cgImage, width: newWidth, height: newHeight) else {
+        throw MusadoraKitError.imageResizeFailed
+      }
+      processedImage = resizedImage
+    } else {
+      processedImage = cgImage
+    }
+
+    let width = processedImage.width
+    let height = processedImage.height
     let bytesPerPixel = 4
     let bytesPerRow = bytesPerPixel * width
     let bitsPerComponent = 8
 
     guard let data = calloc(height * width, MemoryLayout<UInt32>.size) else {
-      throw ImageProcessingError.failedToAllocateMemory
+      throw MusadoraKitError.imageMemoryAllocationFailed
     }
 
     defer { free(data) }
@@ -69,10 +80,10 @@ struct CommonImageProcessing {
                                   bytesPerRow: bytesPerRow,
                                   space: colorSpace,
                                   bitmapInfo: bitmapInfo) else {
-      throw ImageProcessingError.failedToCreateCGContext
+      throw MusadoraKitError.imageContextCreationFailed
     }
 
-    context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+    context.draw(processedImage, in: CGRect(x: 0, y: 0, width: width, height: height))
 
     let pixelBuffer = data.bindMemory(to: UInt8.self, capacity: width * height * bytesPerPixel)
     var pixelData = [PixelData]()
@@ -94,6 +105,33 @@ struct CommonImageProcessing {
               blue: cluster.center.blue / 255.0,
               alpha: 1.0)
     }
+  }
+
+  /// Resizes a CGImage to the specified dimensions.
+  ///
+  /// - Parameters:
+  ///   - image: The image to resize.
+  ///   - width: The target width.
+  ///   - height: The target height.
+  /// - Returns: A resized CGImage, or nil if resizing fails.
+  private static func resizeImage(_ image: CGImage, width: Int, height: Int) -> CGImage? {
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
+
+    guard let context = CGContext(data: nil,
+                                  width: width,
+                                  height: height,
+                                  bitsPerComponent: 8,
+                                  bytesPerRow: width * 4,
+                                  space: colorSpace,
+                                  bitmapInfo: bitmapInfo) else {
+      return nil
+    }
+
+    context.interpolationQuality = .high
+    context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+    return context.makeImage()
   }
 
   /// Performs k-means clustering on a set of pixels.

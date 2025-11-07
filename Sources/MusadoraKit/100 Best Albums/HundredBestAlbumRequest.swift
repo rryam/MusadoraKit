@@ -14,9 +14,8 @@ import Foundation
 ///
 /// Example usage:
 /// ```swift
-/// let request = HundredBestAlbumRequest(position: 1)
-///
 /// do {
+///     let request = try HundredBestAlbumRequest(position: 1)
 ///     let album = try await request.response()
 ///     print("Album at position 1: \(album.name)")
 ///     print("Artist: \(album.artistName)")
@@ -40,7 +39,11 @@ public struct HundredBestAlbumRequest {
   ///   - position: The position of the album in the list (1-100).
   ///   - storefront: The storefront to fetch the album from (defaults to "us").
   ///   - region: The region/language code for localized content (defaults to "en-us").
-  public init(position: Int, storefront: String = "us", region: String = "en-us") {
+  /// - Throws: `MusadoraKitError` if the position is outside the valid range (1-100).
+  public init(position: Int, storefront: String = "us", region: String = "en-us") throws {
+    guard position >= 1 && position <= 100 else {
+      throw MusadoraKitError.invalidPosition(limit: 100, provided: position)
+    }
     self.position = position
     self.storefront = storefront
     self.region = region

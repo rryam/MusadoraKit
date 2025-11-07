@@ -93,6 +93,7 @@ public extension SPlayer {
   /// Plays the specified personalized music recommendation item in the player's queue.
   ///
   /// - Parameter item: The personalized music recommendation item to play, which can be an album, playlist, or station.
+  /// - Throws: `MusadoraKitError.unsupportedRecommendationItemType` if the item type is not supported.
   @available(macOS 14.0, *)
   func play(item: MusicPersonalRecommendation.Item) async throws {
     switch item {
@@ -103,8 +104,7 @@ public extension SPlayer {
     case .station(let station):
       queue = [station]
     @unknown default:
-      assertionFailure("Unsupported recommendation item type encountered; no playback performed.")
-      return
+      throw MusadoraKitError.unsupportedRecommendationItemType
     }
 
     try await play()

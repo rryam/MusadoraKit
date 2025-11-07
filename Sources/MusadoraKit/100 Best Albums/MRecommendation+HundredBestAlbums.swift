@@ -8,7 +8,7 @@
 import Foundation
 
 public extension MRecommendation {
-  /// Retrieves the 100 Best Album for a given position.
+  /// Fetches the 100 Best Album for a given position.
   ///
   /// Example usage:
   ///
@@ -30,7 +30,7 @@ public extension MRecommendation {
   static func hundredBestAlbum(
     at position: Int, storefront: String = "us", region: String = "en-us"
   ) async throws -> HundredBestAlbum {
-    let request = HundredBestAlbumRequest(
+    let request = try HundredBestAlbumRequest(
       position: position, storefront: storefront, region: region)
     return try await request.response()
   }
@@ -79,6 +79,10 @@ public extension MRecommendation {
       }
 
       for try await (position, result) in group {
+        guard position >= 1 && position <= albums.count else {
+          continue
+        }
+
         switch result {
         case .success(let album):
           albums[position - 1] = album

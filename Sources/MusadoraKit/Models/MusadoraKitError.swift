@@ -50,6 +50,24 @@ public enum MusadoraKitError: Error, Equatable {
 
   /// The library music item type is not recognized or unsupported.
   case invalidLibraryItemType
+
+  /// The music recommendation item type is not supported for playback.
+  case unsupportedRecommendationItemType
+
+  /// The provided image is invalid or cannot be processed.
+  case invalidImage
+
+  /// The image resizing operation failed.
+  case imageResizeFailed
+
+  /// Failed to allocate memory for image processing.
+  case imageMemoryAllocationFailed
+
+  /// Failed to create a CGContext for image processing.
+  case imageContextCreationFailed
+
+  /// The position value is outside the valid range.
+  case invalidPosition(limit: Int, provided: Int)
 }
 
 extension MusadoraKitError: CustomStringConvertible {
@@ -83,6 +101,18 @@ extension MusadoraKitError: CustomStringConvertible {
       return "The equivalent music item type is not recognized or unsupported."
     case .invalidLibraryItemType:
       return "The library music item type is not recognized or unsupported."
+    case .unsupportedRecommendationItemType:
+      return "The music recommendation item type is not supported for playback."
+    case .invalidImage:
+      return "The provided image is invalid or cannot be processed."
+    case .imageResizeFailed:
+      return "The image resizing operation failed."
+    case .imageMemoryAllocationFailed:
+      return "Failed to allocate memory for image processing."
+    case .imageContextCreationFailed:
+      return "Failed to create a CGContext for image processing."
+    case let .invalidPosition(limit, provided):
+      return "The position value \(provided) is outside the valid range (1-\(limit))."
     }
   }
 }
