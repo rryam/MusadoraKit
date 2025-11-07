@@ -12,7 +12,7 @@ import Testing
 struct HundredBestAlbumRequestTests {
   @Test
   func hundredBestAlbumEndpointURL() throws {
-    let request = HundredBestAlbumRequest(position: 100)
+    let request = try HundredBestAlbumRequest(position: 100)
     let endpointURL = try request.albumEndpointURL
 
     let expectedURL = "https://100best.music.apple.com/content/us/en-us/100.json"
@@ -21,7 +21,7 @@ struct HundredBestAlbumRequestTests {
 
   @Test
   func hundredBestAlbumRequest() async throws {
-    let request = HundredBestAlbumRequest(position: 100)
+    let request = try HundredBestAlbumRequest(position: 100)
     let album = try await request.response()
 
     #expect(album.title == "Body Talk")
