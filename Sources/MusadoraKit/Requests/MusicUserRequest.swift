@@ -49,6 +49,9 @@ public struct MusicUserRequest {
   ///
   /// - Returns: The raw `Data` received in response to the API call.
   /// - Throws: An error if the request fails or if there's an issue with fetching the developer token.
+  ///   Common errors include:
+  ///   - `URLError.userAuthenticationRequired`: Thrown for HTTP 401 Unauthorized responses.
+  ///   - `URLError.badServerResponse`: Thrown for HTTP 404 Not Found, 500 Internal Server Error, or other unexpected status codes.
   public func response() async throws -> Data {
     let developerToken = try await MusicDataRequest.tokenProvider.developerToken(options: .ignoreCache)
 
@@ -60,10 +63,21 @@ public struct MusicUserRequest {
 
     let (data, response) = try await URLSession.shared.data(for: request)
 
-    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-      throw URLError(.badServerResponse)
+    guard let httpResponse = response as? HTTPURLResponse else {
+      throw URLError(.badServerResponse, userInfo: ["description": "Invalid HTTP response"])
     }
 
-    return data
+    switch httpResponse.statusCode {
+    case 200:
+      return data
+    case 401:
+      throw URLError(.userAuthenticationRequired, userInfo: ["description": "Unauthorized (401). Check user token validity and authentication."])
+    case 404:
+      throw URLError(.badServerResponse, userInfo: ["description": "Not Found (404). The requested resource does not exist."])
+    case 500:
+      throw URLError(.badServerResponse, userInfo: ["description": "Internal Server Error (500)."])
+    default:
+      throw URLError(.badServerResponse, userInfo: ["description": "Unexpected HTTP status code: \(httpResponse.statusCode)"])
+    }
   }
 }
