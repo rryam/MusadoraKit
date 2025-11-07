@@ -165,19 +165,49 @@ public extension Album {
   /// A Boolean value that indicates whether the album is from the user's library.
   ///
   /// This property decodes the play parameters of the album to determine its library status.
-  var isLibrary: Bool? {
-    guard let data = try? JSONEncoder().encode(playParameters) else { return nil }
-    let parameters = try? JSONDecoder().decode(AlbumPlayParameters.self, from: data)
-    return parameters?.isLibrary
+  ///
+  /// - Returns: `true` if the album is from the user's library, `false` if it's from the catalog.
+  /// - Throws: An error if the play parameters cannot be encoded, decoded, or if the library status
+  ///   is not available in the play parameters.
+  var isLibrary: Bool {
+    get throws {
+      guard let playParameters = playParameters else {
+        throw MusadoraKitError.notFound(for: "playParameters")
+      }
+
+      let data = try JSONEncoder().encode(playParameters)
+      let parameters = try JSONDecoder().decode(AlbumPlayParameters.self, from: data)
+
+      guard let isLibrary = parameters.isLibrary else {
+        throw MusadoraKitError.notFound(for: "isLibrary")
+      }
+
+      return isLibrary
+    }
   }
 
   /// The catalog identifier for the album.
   ///
   /// This property decodes the play parameters of the album to retrieve its catalog identifier.
-  var catalogID: MusicItemID? {
-    guard let data = try? JSONEncoder().encode(playParameters) else { return nil }
-    let parameters = try? JSONDecoder().decode(AlbumPlayParameters.self, from: data)
-    return parameters?.catalogId
+  ///
+  /// - Returns: The catalog identifier for the album.
+  /// - Throws: An error if the play parameters cannot be encoded, decoded, or if the catalog identifier
+  ///   is not available in the play parameters.
+  var catalogID: MusicItemID {
+    get throws {
+      guard let playParameters = playParameters else {
+        throw MusadoraKitError.notFound(for: "playParameters")
+      }
+
+      let data = try JSONEncoder().encode(playParameters)
+      let parameters = try JSONDecoder().decode(AlbumPlayParameters.self, from: data)
+
+      guard let catalogId = parameters.catalogId else {
+        throw MusadoraKitError.notFound(for: "catalogId")
+      }
+
+      return catalogId
+    }
   }
 }
 

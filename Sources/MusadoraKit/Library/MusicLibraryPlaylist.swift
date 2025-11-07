@@ -78,11 +78,23 @@ extension MusicLibraryPlaylist: PlayableMusicItem {
   /// Retrieves the parameters required to play the playlist.
   ///
   /// - Returns: A set of play parameters or `nil` if they can't be determined.
+  ///
+  /// - Note: This property returns `nil` if encoding or decoding fails. This is expected behavior
+  ///   when the play parameters structure doesn't match the expected format, and allows the
+  ///   caller to handle the absence of play parameters gracefully.
   public var playParameters: PlayParameters? {
-    let parameters = try? JSONEncoder().encode(attributes.playParams)
-    guard let parameters else { return nil }
-    let playParams = try? JSONDecoder().decode(PlayParameters.self, from: parameters)
-    return playParams
+    let parameters: Data
+    do {
+      parameters = try JSONEncoder().encode(attributes.playParams)
+    } catch {
+      return nil
+    }
+
+    do {
+      return try JSONDecoder().decode(PlayParameters.self, from: parameters)
+    } catch {
+      return nil
+    }
   }
 }
 
