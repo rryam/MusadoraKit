@@ -175,28 +175,7 @@ public extension Artist {
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
 
-      // Parse to extract inFavorites from catalog attributes
-      let json = try JSONSerialization.jsonObject(with: response.data) as? [String: Any]
-      guard let data = json?["data"] as? [[String: Any]],
-            let first = data.first else {
-        throw MusadoraKitError.notFound(for: "artist in catalog")
-      }
-
-      let attributes = first["attributes"] as? [String: Any]
-
-      // Check if artist is in library
-      if let relationships = first["relationships"] as? [String: Any],
-         let library = relationships["library"] as? [String: Any],
-         let libraryData = library["data"] as? [[String: Any]],
-         libraryData.isEmpty {
-        throw MusadoraKitError.notInLibrary(item: "artist")
-      }
-
-      guard let inFavorites = attributes?["inFavorites"] as? Bool else {
-        throw MusadoraKitError.notFound(for: "inFavorites")
-      }
-
-      return inFavorites
+      return try InFavoritesParser.parse(from: response.data, itemType: .artist)
     }
   }
 }
