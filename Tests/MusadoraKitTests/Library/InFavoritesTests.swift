@@ -28,7 +28,7 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
-    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .song)
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .songs)
 
     #expect(inFavorites == true)
   }
@@ -54,7 +54,7 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
-    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .song)
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .songs)
 
     #expect(inFavorites == false)
   }
@@ -82,7 +82,7 @@ struct InFavoritesTests {
     let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
-      try InFavoritesParser.parse(from: data, itemType: .song)
+      try InFavoritesParser.parse(from: data, itemType: .songs)
     }
   }
 
@@ -109,7 +109,7 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
-    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .album)
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .albums)
 
     #expect(inFavorites == true)
   }
@@ -137,7 +137,7 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
-    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .artist)
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .artists)
 
     #expect(inFavorites == true)
   }
@@ -165,7 +165,7 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
-    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .playlist)
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .playlists)
 
     #expect(inFavorites == true)
   }
@@ -194,7 +194,7 @@ struct InFavoritesTests {
     let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
-      try InFavoritesParser.parse(from: data, itemType: .song)
+      try InFavoritesParser.parse(from: data, itemType: .songs)
     }
   }
 
@@ -209,7 +209,7 @@ struct InFavoritesTests {
     let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
-      try InFavoritesParser.parse(from: data, itemType: .song)
+      try InFavoritesParser.parse(from: data, itemType: .songs)
     }
   }
 }

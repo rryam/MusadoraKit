@@ -226,7 +226,7 @@ public extension Album {
   var inFavorites: Bool {
     get async throws {
       let catalogId = try self.catalogID
-      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .album)
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .albums)
     }
   }
 }

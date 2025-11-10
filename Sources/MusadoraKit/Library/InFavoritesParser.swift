@@ -7,15 +7,6 @@
 
 import Foundation
 
-/// The type of music item being parsed for inFavorites status.
-internal enum MusicItemType: String {
-  case song
-  case album
-  case artist
-  case playlist
-  case musicVideo = "music-video"
-}
-
 /// Response structure for Apple Music API inFavorites queries.
 private struct InFavoritesResponse: Decodable {
   let data: [InFavoritesResponseItem]
@@ -51,7 +42,7 @@ internal enum InFavoritesParser {
   ///   - itemType: The type of music item being parsed
   /// - Returns: The inFavorites boolean value
   /// - Throws: MusadoraKitError if parsing fails, item not found, not in library, or inFavorites not found
-  static func parse(from data: Data, itemType: MusicItemType) throws -> Bool {
+  static func parse(from data: Data, itemType: LibraryMusicItemType) throws -> Bool {
     let response = try JSONDecoder().decode(InFavoritesResponse.self, from: data)
 
     guard let item = response.data.first else {
@@ -78,10 +69,10 @@ internal enum InFavoritesParser {
   ///   - itemType: The type of music item
   /// - Returns: `true` if the item is in favorites, `false` otherwise
   /// - Throws: An error if the item is not in library or if the request fails
-  static func fetchInFavorites(for id: MusicItemID, itemType: MusicItemType) async throws -> Bool {
+  static func fetchInFavorites(for id: MusicItemID, itemType: LibraryMusicItemType) async throws -> Bool {
     let storefront = try await MusicDataRequest.currentCountryCode
     var components = AppleMusicURLComponents()
-    components.path = "catalog/\(storefront)/\(itemType.rawValue)s/\(id.rawValue)"
+    components.path = "catalog/\(storefront)/\(itemType.rawValue)/\(id.rawValue)"
     components.queryItems = [
       URLQueryItem(name: "relate", value: "library"),
       URLQueryItem(name: "extend", value: "inFavorites")

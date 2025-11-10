@@ -328,7 +328,7 @@ public extension Playlist {
   /// - Throws: An error if the playlist is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .playlist)
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .playlists)
     }
   }
 }

@@ -518,7 +518,7 @@ public extension Song {
         throw MusadoraKitError.notFound(for: "catalogId")
       }
 
-      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .song)
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .songs)
     }
   }
 }

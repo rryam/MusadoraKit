@@ -158,7 +158,7 @@ public extension Artist {
   /// - Throws: An error if the artist is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .artist)
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .artists)
     }
   }
 }
