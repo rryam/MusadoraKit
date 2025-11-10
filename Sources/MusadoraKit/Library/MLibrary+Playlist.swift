@@ -284,8 +284,7 @@ public extension MLibrary {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
     components.queryItems = [
-      URLQueryItem(name: "filter[featured]", value: "made-for-you"),
-      URLQueryItem(name: "extend", value: "inFavorites")
+      URLQueryItem(name: "filter[featured]", value: "made-for-you")
     ]
 
     guard let url = components.url else {
@@ -306,8 +305,7 @@ public extension MLibrary {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
     components.queryItems = [
-      URLQueryItem(name: "limit", value: "\(limit)"),
-      URLQueryItem(name: "extend", value: "inFavorites")
+      URLQueryItem(name: "limit", value: "\(limit)")
     ]
 
     return components.url
