@@ -37,12 +37,16 @@ internal enum InFavoritesParser {
     }
 
     let attributes = first["attributes"] as? [String: Any]
+    let relationships = first["relationships"] as? [String: Any]
 
     // Check if item is in library
-    if let relationships = first["relationships"] as? [String: Any],
+    if let relationships = relationships,
        let library = relationships["library"] as? [String: Any],
-       let libraryData = library["data"] as? [[String: Any]],
-       libraryData.isEmpty {
+       let libraryData = library["data"] as? [[String: Any]] {
+      if libraryData.isEmpty {
+        throw MusadoraKitError.notInLibrary(item: itemType.rawValue)
+      }
+    } else {
       throw MusadoraKitError.notInLibrary(item: itemType.rawValue)
     }
 

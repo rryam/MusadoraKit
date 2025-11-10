@@ -13,6 +13,7 @@ struct SongsView: View {
   private var songs: Songs
   @State private var favoritedSongIDs: Set<MusicItemID> = []
   @State private var favoritingSongIDs: Set<MusicItemID> = []
+  @State private var isLoadingFavorites = false
 
   init(with songs: Songs) {
     self.songs = songs
@@ -81,8 +82,8 @@ struct SongsView: View {
               }
             } label: {
               let isFavorited = favoritedSongIDs.contains(song.id)
-              Image(systemName: isFavorited ? "heart.fill" : "heart")
-                .foregroundColor(isFavorited ? .red : .secondary)
+              Image(systemName: isFavorited ? "star.fill" : "star")
+                .foregroundColor(isFavorited ? .yellow : .secondary)
             }
             .buttonStyle(.plain)
             .disabled(favoritingSongIDs.contains(song.id) || favoritedSongIDs.contains(song.id))
@@ -104,5 +105,31 @@ struct SongsView: View {
     #if os(iOS)
     .navigationBarTitleDisplayMode(.large)
     #endif
+    .onChange(of: songs.count) { _, _ in
+      Task {
+        await loadFavoritesStatus()
+      }
+    }
+  }
+
+  private func loadFavoritesStatus() async {
+    guard !isLoadingFavorites else { return }
+    isLoadingFavorites = true
+
+    for song in songs {
+      do {
+        let isFavorite = try await song.inFavorites
+        if isFavorite {
+          await MainActor.run {
+            favoritedSongIDs.insert(song.id)
+          }
+        }
+      } catch {
+        // Song is not in library or other error - silently skip
+        continue
+      }
+    }
+
+    isLoadingFavorites = false
   }
 }
