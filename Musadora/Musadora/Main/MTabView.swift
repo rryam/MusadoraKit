@@ -37,10 +37,6 @@ struct MTabView: View {
           Label("Settings", systemImage: "gear")
         }
     }
-    .task {
-        let token = try? await MusicDataRequest.tokenProvider.developerToken(options: .ignoreCache)
-        print(token)
-    }
     .welcomeSheet()
 #if os(visionOS)
     .toolbar {

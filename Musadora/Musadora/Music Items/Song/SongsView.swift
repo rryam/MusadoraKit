@@ -70,15 +70,15 @@ struct SongsView: View {
                     favoritingSongIDs.contains(song.id) == false else { return }
 
               Task {
-                await MainActor.run { favoritingSongIDs.insert(song.id) }
+                _ = await MainActor.run { favoritingSongIDs.insert(song.id) }
                 do {
                   if try await MCatalog.favorite(song: song) {
-                    await MainActor.run { favoritedSongIDs.insert(song.id) }
+                    _ = await MainActor.run { favoritedSongIDs.insert(song.id) }
                   }
                 } catch {
                   print(error)
                 }
-                await MainActor.run { favoritingSongIDs.remove(song.id) }
+                _ = await MainActor.run { favoritingSongIDs.remove(song.id) }
               }
             } label: {
               let isFavorited = favoritedSongIDs.contains(song.id)
@@ -120,7 +120,7 @@ struct SongsView: View {
       do {
         let isFavorite = try await song.inFavorites
         if isFavorite {
-          await MainActor.run {
+          _ = await MainActor.run {
             favoritedSongIDs.insert(song.id)
           }
         }

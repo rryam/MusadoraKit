@@ -140,15 +140,15 @@ private extension AlbumsView {
           favoritingAlbumIDs.contains(album.id) == false else { return }
 
     Task {
-      await MainActor.run { favoritingAlbumIDs.insert(album.id) }
+      _ = await MainActor.run { favoritingAlbumIDs.insert(album.id) }
       do {
         if try await MCatalog.favorite(album: album) {
-          await MainActor.run { favoritedAlbumIDs.insert(album.id) }
+          _ = await MainActor.run { favoritedAlbumIDs.insert(album.id) }
         }
       } catch {
         print(error)
       }
-      await MainActor.run { favoritingAlbumIDs.remove(album.id) }
+      _ = await MainActor.run { favoritingAlbumIDs.remove(album.id) }
     }
   }
 }
