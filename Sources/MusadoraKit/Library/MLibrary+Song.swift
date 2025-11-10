@@ -5,6 +5,7 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
+// swiftlint:disable file_length
 import MediaPlayer
 
 public extension MLibrary {
