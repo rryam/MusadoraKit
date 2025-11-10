@@ -506,7 +506,19 @@ public extension Song {
   /// - Throws: An error if the song is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      // Get catalog ID from play parameters
+      let catalogId = try self.catalogID
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .songs)
+    }
+  }
+
+  /// The catalog identifier for the song.
+  ///
+  /// This property decodes the play parameters of the song to retrieve its catalog identifier.
+  ///
+  /// - Returns: The catalog ID of the song.
+  /// - Throws: `MusadoraKitError.notFound` if play parameters or catalog ID are not available.
+  var catalogID: MusicItemID {
+    get throws {
       guard let playParameters = playParameters else {
         throw MusadoraKitError.notFound(for: "playParameters")
       }
@@ -518,7 +530,7 @@ public extension Song {
         throw MusadoraKitError.notFound(for: "catalogId")
       }
 
-      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .songs)
+      return catalogId
     }
   }
 }
