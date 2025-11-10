@@ -488,3 +488,47 @@ public extension MLibrary {
     return response.sections
   }
 }
+
+public extension Song {
+  /// A Boolean value indicating whether the song is in the user's favorites.
+  ///
+  /// This property fetches the song from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let song: Song = ...
+  ///     if try await song.inFavorites {
+  ///         print("This song is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the song is in favorites, `false` otherwise, or `nil` if the status cannot be determined.
+  /// - Throws: An error if the request fails.
+  var inFavorites: Bool? {
+    get async throws {
+      var components = AppleMusicURLComponents()
+      components.path = "me/library/songs/\(id.rawValue)"
+      components.queryItems = [
+        URLQueryItem(name: "extend", value: "inFavorites")
+      ]
+
+      guard let url = components.url else {
+        throw URLError(.badURL)
+      }
+
+      let decoder = JSONDecoder()
+      let data: Data
+
+      if let userToken = MusadoraKit.userToken {
+        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
+        data = try await request.response()
+      } else {
+        let request = MusicDataRequest(urlRequest: .init(url: url))
+        let response = try await request.response()
+        data = response.data
+      }
+
+      let wrapper = try decoder.decode(LibraryItemsResponse.self, from: data)
+      return wrapper.data.first?.attributes.inFavorites
+    }
+  }
+}

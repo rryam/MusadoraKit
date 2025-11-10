@@ -283,7 +283,10 @@ public extension MLibrary {
   static func madeForYouPlaylists() async throws -> LibraryPlaylists {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
-    components.queryItems = [URLQueryItem(name: "filter[featured]", value: "made-for-you")]
+    components.queryItems = [
+      URLQueryItem(name: "filter[featured]", value: "made-for-you"),
+      URLQueryItem(name: "extend", value: "inFavorites")
+    ]
 
     guard let url = components.url else {
       throw URLError(.badURL)
@@ -302,8 +305,55 @@ public extension MLibrary {
 
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
-    components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+    components.queryItems = [
+      URLQueryItem(name: "limit", value: "\(limit)"),
+      URLQueryItem(name: "extend", value: "inFavorites")
+    ]
 
     return components.url
+  }
+}
+
+public extension Playlist {
+  /// A Boolean value indicating whether the playlist is in the user's favorites.
+  ///
+  /// This property fetches the playlist from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let playlist: Playlist = ...
+  ///     if try await playlist.inFavorites {
+  ///         print("This playlist is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the playlist is in favorites, `false` otherwise, or `nil` if the status cannot be determined.
+  /// - Throws: An error if the request fails.
+  var inFavorites: Bool? {
+    get async throws {
+      var components = AppleMusicURLComponents()
+      components.path = "me/library/playlists/\(id.rawValue)"
+      components.queryItems = [
+        URLQueryItem(name: "extend", value: "inFavorites")
+      ]
+
+      guard let url = components.url else {
+        throw URLError(.badURL)
+      }
+
+      let decoder = JSONDecoder()
+      let data: Data
+
+      if let userToken = MusadoraKit.userToken {
+        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
+        data = try await request.response()
+      } else {
+        let request = MusicDataRequest(urlRequest: .init(url: url))
+        let response = try await request.response()
+        data = response.data
+      }
+
+      let wrapper = try decoder.decode(LibraryItemsResponse.self, from: data)
+      return wrapper.data.first?.attributes.inFavorites
+    }
   }
 }

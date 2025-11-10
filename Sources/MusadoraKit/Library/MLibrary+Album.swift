@@ -209,6 +209,48 @@ public extension Album {
       return catalogId
     }
   }
+
+  /// A Boolean value indicating whether the album is in the user's favorites.
+  ///
+  /// This property fetches the album from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let album: Album = ...
+  ///     if try await album.inFavorites {
+  ///         print("This album is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the album is in favorites, `false` otherwise, or `nil` if the status cannot be determined.
+  /// - Throws: An error if the request fails.
+  var inFavorites: Bool? {
+    get async throws {
+      var components = AppleMusicURLComponents()
+      components.path = "me/library/albums/\(id.rawValue)"
+      components.queryItems = [
+        URLQueryItem(name: "extend", value: "inFavorites")
+      ]
+
+      guard let url = components.url else {
+        throw URLError(.badURL)
+      }
+
+      let decoder = JSONDecoder()
+      let data: Data
+
+      if let userToken = MusadoraKit.userToken {
+        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
+        data = try await request.response()
+      } else {
+        let request = MusicDataRequest(urlRequest: .init(url: url))
+        let response = try await request.response()
+        data = response.data
+      }
+
+      let wrapper = try decoder.decode(LibraryItemsResponse.self, from: data)
+      return wrapper.data.first?.attributes.inFavorites
+    }
+  }
 }
 
 struct AlbumPlayParameters: Codable {
