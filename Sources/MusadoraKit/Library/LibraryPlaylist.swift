@@ -1,5 +1,5 @@
 //
-//  MusicLibraryPlaylist.swift
+//  LibraryPlaylist.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 06/10/22.
@@ -9,15 +9,15 @@ import Foundation
 
 /// Represents a playlist within a user's music library.
 ///
-/// A `MusicLibraryPlaylist` provides a detailed view of a playlist, including its attributes and associated metadata.
+/// A `LibraryPlaylist` represents a playlist within a user's music library, providing detailed information about its attributes and metadata.
 /// This includes details like its editability, public status, artwork, and more.
 ///
 /// Example usage:
 ///
-///     let playlist: MusicLibraryPlaylist = fetchPlaylist(withID: someID)
+///     let playlist: LibraryPlaylist = fetchPlaylist(withID: someID)
 ///     print(playlist.attributes.name) // Prints the name of the playlist
 ///
-public struct MusicLibraryPlaylist: Codable, MusicItem {
+public struct LibraryPlaylist: Codable, MusicItem {
   /// The unique identifier for the playlist.
   ///
   /// This identifier is unique to each playlist and can be used for fetching, updating, or deleting specific playlists.
@@ -49,7 +49,7 @@ public struct MusicLibraryPlaylist: Codable, MusicItem {
     public let hasCatalog: Bool
 
     /// Parameters that determine how the playlist can be played.
-    public var playParams: MusicLibraryPlaylistPlayParameters
+    public var playParams: LibraryPlaylistPlayParameters
 
     /// A brief description of the playlist.
     ///
@@ -58,6 +58,9 @@ public struct MusicLibraryPlaylist: Codable, MusicItem {
 
     /// Visual representation or image associated with the playlist.
     public let artwork: Artwork?
+
+    /// A Boolean value indicating whether the playlist is in the user's favorites.
+    public let inFavorites: Bool
   }
 
   /// Contains the textual description of a playlist.
@@ -74,7 +77,7 @@ public struct MusicLibraryPlaylist: Codable, MusicItem {
 
 @available(macOS 14.0, *)
 @available(watchOS, unavailable)
-extension MusicLibraryPlaylist: PlayableMusicItem {
+extension LibraryPlaylist: PlayableMusicItem {
   /// Retrieves the parameters required to play the playlist.
   ///
   /// - Returns: A set of play parameters or `nil` if they can't be determined.
@@ -99,7 +102,7 @@ extension MusicLibraryPlaylist: PlayableMusicItem {
 }
 
 /// Defines the parameters required for playback of a library playlist.
-public struct MusicLibraryPlaylistPlayParameters: Codable, Sendable {
+public struct LibraryPlaylistPlayParameters: Codable, Sendable {
   /// The unique identifier associated with the playlist.
   public let id: MusicItemID
 
@@ -115,4 +118,4 @@ public struct MusicLibraryPlaylistPlayParameters: Codable, Sendable {
   }
 }
 
-extension MusicLibraryPlaylist: Identifiable {}
+extension LibraryPlaylist: Identifiable {}
