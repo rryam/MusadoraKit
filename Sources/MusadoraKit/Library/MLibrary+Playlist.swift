@@ -283,7 +283,9 @@ public extension MLibrary {
   static func madeForYouPlaylists() async throws -> LibraryPlaylists {
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
-    components.queryItems = [URLQueryItem(name: "filter[featured]", value: "made-for-you")]
+    components.queryItems = [
+      URLQueryItem(name: "filter[featured]", value: "made-for-you")
+    ]
 
     guard let url = components.url else {
       throw URLError(.badURL)
@@ -302,8 +304,31 @@ public extension MLibrary {
 
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
-    components.queryItems = [URLQueryItem(name: "limit", value: "\(limit)")]
+    components.queryItems = [
+      URLQueryItem(name: "limit", value: "\(limit)")
+    ]
 
     return components.url
+  }
+}
+
+public extension Playlist {
+  /// A Boolean value indicating whether the playlist is in the user's favorites.
+  ///
+  /// This property fetches the playlist from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let playlist: Playlist = ...
+  ///     if try await playlist.inFavorites {
+  ///         print("This playlist is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the playlist is in favorites, `false` otherwise.
+  /// - Throws: An error if the playlist is not in library or if the request fails.
+  var inFavorites: Bool {
+    get async throws {
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .playlists)
+    }
   }
 }

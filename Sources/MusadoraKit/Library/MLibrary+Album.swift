@@ -209,6 +209,26 @@ public extension Album {
       return catalogId
     }
   }
+
+  /// A Boolean value indicating whether the album is in the user's favorites.
+  ///
+  /// This property fetches the album from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let album: Album = ...
+  ///     if try await album.inFavorites {
+  ///         print("This album is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the album is in favorites, `false` otherwise.
+  /// - Throws: An error if the album is not in library or if the request fails.
+  var inFavorites: Bool {
+    get async throws {
+      let catalogId = try self.catalogID
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .albums)
+    }
+  }
 }
 
 struct AlbumPlayParameters: Codable {

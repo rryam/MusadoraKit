@@ -5,6 +5,7 @@
 //  Created by Rudrank Riyam on 14/08/21.
 //
 
+// swiftlint:disable file_length
 import MediaPlayer
 
 public extension MLibrary {
@@ -486,5 +487,60 @@ public extension MLibrary {
     let request = MusicLibrarySectionedRequest<Playlist, Song>()
     let response = try await request.response()
     return response.sections
+  }
+}
+
+public extension Song {
+  /// A Boolean value indicating whether the song is in the user's favorites.
+  ///
+  /// This property fetches the song from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let song: Song = ...
+  ///     if try await song.inFavorites {
+  ///         print("This song is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the song is in favorites, `false` otherwise.
+  /// - Throws: An error if the song is not in library or if the request fails.
+  var inFavorites: Bool {
+    get async throws {
+      let catalogId = try self.catalogID
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .songs)
+    }
+  }
+
+  /// The catalog identifier for the song.
+  ///
+  /// This property decodes the play parameters of the song to retrieve its catalog identifier.
+  ///
+  /// - Returns: The catalog ID of the song.
+  /// - Throws: `MusadoraKitError.notFound` if play parameters or catalog ID are not available.
+  var catalogID: MusicItemID {
+    get throws {
+      guard let playParameters = playParameters else {
+        throw MusadoraKitError.notFound(for: "playParameters")
+      }
+
+      let playParamData = try JSONEncoder().encode(playParameters)
+      let params = try JSONDecoder().decode(SongPlayParameters.self, from: playParamData)
+
+      guard let catalogId = params.catalogId else {
+        throw MusadoraKitError.notFound(for: "catalogId")
+      }
+
+      return catalogId
+    }
+  }
+}
+
+internal struct SongPlayParameters: Codable {
+  let isLibrary: Bool?
+  let catalogId: MusicItemID?
+
+  private enum CodingKeys: String, CodingKey {
+    case isLibrary
+    case catalogId
   }
 }

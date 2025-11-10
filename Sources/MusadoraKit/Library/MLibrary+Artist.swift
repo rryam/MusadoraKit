@@ -141,3 +141,24 @@ public extension MLibrary {
     }
   }
 }
+
+public extension Artist {
+  /// A Boolean value indicating whether the artist is in the user's favorites.
+  ///
+  /// This property fetches the artist from the library and checks its favorite status.
+  ///
+  /// Example usage:
+  ///
+  ///     let artist: Artist = ...
+  ///     if try await artist.inFavorites {
+  ///         print("This artist is in favorites!")
+  ///     }
+  ///
+  /// - Returns: `true` if the artist is in favorites, `false` otherwise.
+  /// - Throws: An error if the artist is not in library or if the request fails.
+  var inFavorites: Bool {
+    get async throws {
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .artists)
+    }
+  }
+}
