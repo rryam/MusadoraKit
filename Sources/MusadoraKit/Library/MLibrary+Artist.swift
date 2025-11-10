@@ -158,24 +158,7 @@ public extension Artist {
   /// - Throws: An error if the artist is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      // Note: Artists don't have playParameters, so we use the ID directly
-      // Fetch catalog artist with relate=library and extend=inFavorites
-      let storefront = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(storefront)/artists/\(id.rawValue)"
-      components.queryItems = [
-        URLQueryItem(name: "relate", value: "library"),
-        URLQueryItem(name: "extend", value: "inFavorites")
-      ]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: .init(url: url))
-      let response = try await request.response()
-
-      return try InFavoritesParser.parse(from: response.data, itemType: .artist)
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .artist)
     }
   }
 }

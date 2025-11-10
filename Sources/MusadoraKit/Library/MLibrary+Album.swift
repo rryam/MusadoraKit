@@ -225,35 +225,8 @@ public extension Album {
   /// - Throws: An error if the album is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      // Get catalog ID from play parameters
-      guard let playParameters = playParameters else {
-        throw MusadoraKitError.notFound(for: "playParameters")
-      }
-
-      let playParamData = try JSONEncoder().encode(playParameters)
-      let params = try JSONDecoder().decode(AlbumPlayParameters.self, from: playParamData)
-
-      guard let catalogId = params.catalogId else {
-        throw MusadoraKitError.notFound(for: "catalogId")
-      }
-
-      // Fetch catalog album with relate=library and extend=inFavorites
-      let storefront = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(storefront)/albums/\(catalogId.rawValue)"
-      components.queryItems = [
-        URLQueryItem(name: "relate", value: "library"),
-        URLQueryItem(name: "extend", value: "inFavorites")
-      ]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: .init(url: url))
-      let response = try await request.response()
-
-      return try InFavoritesParser.parse(from: response.data, itemType: .album)
+      let catalogId = try self.catalogID
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .album)
     }
   }
 }

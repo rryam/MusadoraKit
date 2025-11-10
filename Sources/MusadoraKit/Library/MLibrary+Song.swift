@@ -518,30 +518,14 @@ public extension Song {
         throw MusadoraKitError.notFound(for: "catalogId")
       }
 
-      // Fetch catalog song with relate=library and extend=inFavorites
-      let storefront = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(storefront)/songs/\(catalogId.rawValue)"
-      components.queryItems = [
-        URLQueryItem(name: "relate", value: "library"),
-        URLQueryItem(name: "extend", value: "inFavorites")
-      ]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: .init(url: url))
-      let response = try await request.response()
-
-      return try InFavoritesParser.parse(from: response.data, itemType: .song)
+      return try await InFavoritesParser.fetchInFavorites(for: catalogId, itemType: .song)
     }
   }
 }
 
-public struct SongPlayParameters: Codable {
+internal struct SongPlayParameters: Codable {
   let isLibrary: Bool?
-  public let catalogId: MusicItemID?
+  let catalogId: MusicItemID?
 
   private enum CodingKeys: String, CodingKey {
     case isLibrary

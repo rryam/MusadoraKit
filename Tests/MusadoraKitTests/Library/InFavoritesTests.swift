@@ -27,9 +27,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
     let inFavorites = try InFavoritesParser.parse(from: data, itemType: .song)
 
     #expect(inFavorites == true)
@@ -55,9 +53,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
     let inFavorites = try InFavoritesParser.parse(from: data, itemType: .song)
 
     #expect(inFavorites == false)
@@ -83,9 +79,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
       try InFavoritesParser.parse(from: data, itemType: .song)
@@ -114,9 +108,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
     let inFavorites = try InFavoritesParser.parse(from: data, itemType: .album)
 
     #expect(inFavorites == true)
@@ -144,9 +136,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
     let inFavorites = try InFavoritesParser.parse(from: data, itemType: .artist)
 
     #expect(inFavorites == true)
@@ -174,9 +164,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
     let inFavorites = try InFavoritesParser.parse(from: data, itemType: .playlist)
 
     #expect(inFavorites == true)
@@ -203,9 +191,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
       try InFavoritesParser.parse(from: data, itemType: .song)
@@ -220,9 +206,7 @@ struct InFavoritesTests {
     }
     """
 
-    guard let data = json.data(using: .utf8) else {
-      throw Issue.record("Failed to convert JSON string to Data")
-    }
+    let data = try #require(json.data(using: .utf8))
 
     #expect(throws: MusadoraKitError.self) {
       try InFavoritesParser.parse(from: data, itemType: .song)

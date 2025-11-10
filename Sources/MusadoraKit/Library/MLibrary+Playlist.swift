@@ -330,24 +330,7 @@ public extension Playlist {
   /// - Throws: An error if the playlist is not in library or if the request fails.
   var inFavorites: Bool {
     get async throws {
-      // Note: Playlists use ID directly (not catalog ID from playParams)
-      // Fetch catalog playlist with relate=library and extend=inFavorites
-      let storefront = try await MusicDataRequest.currentCountryCode
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(storefront)/playlists/\(id.rawValue)"
-      components.queryItems = [
-        URLQueryItem(name: "relate", value: "library"),
-        URLQueryItem(name: "extend", value: "inFavorites")
-      ]
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      let request = MusicDataRequest(urlRequest: .init(url: url))
-      let response = try await request.response()
-
-      return try InFavoritesParser.parse(from: response.data, itemType: .playlist)
+      return try await InFavoritesParser.fetchInFavorites(for: id, itemType: .playlist)
     }
   }
 }

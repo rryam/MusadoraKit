@@ -18,6 +18,25 @@ internal enum MusicItemType: String {
 
 /// Internal parser for extracting inFavorites status from Apple Music API responses.
 internal enum InFavoritesParser {
+  /// Response structure for Apple Music API inFavorites queries.
+  private struct Response: Decodable {
+    struct Item: Decodable {
+      struct Attributes: Decodable {
+        let inFavorites: Bool?
+      }
+      struct Relationships: Decodable {
+        struct Library: Decodable {
+          struct Item: Decodable {}
+          let data: [Item]
+        }
+        let library: Library?
+      }
+      let attributes: Attributes?
+      let relationships: Relationships?
+    }
+    let data: [Item]
+  }
+
   /// Parse the inFavorites response from Apple Music API data.
   ///
   /// This function extracts the inFavorites boolean value from the API response,
@@ -29,31 +48,48 @@ internal enum InFavoritesParser {
   /// - Returns: The inFavorites boolean value
   /// - Throws: MusadoraKitError if parsing fails, item not found, not in library, or inFavorites not found
   static func parse(from data: Data, itemType: MusicItemType) throws -> Bool {
-    // Parse to extract inFavorites from catalog attributes
-    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-    guard let responseData = json?["data"] as? [[String: Any]],
-          let first = responseData.first else {
+    let response = try JSONDecoder().decode(Response.self, from: data)
+
+    guard let item = response.data.first else {
       throw MusadoraKitError.notFound(for: "\(itemType.rawValue) in catalog")
     }
 
-    let attributes = first["attributes"] as? [String: Any]
-    let relationships = first["relationships"] as? [String: Any]
-
-    // Check if item is in library
-    if let relationships = relationships,
-       let library = relationships["library"] as? [String: Any],
-       let libraryData = library["data"] as? [[String: Any]] {
-      if libraryData.isEmpty {
-        throw MusadoraKitError.notInLibrary(item: itemType.rawValue)
-      }
-    } else {
+    guard let libraryData = item.relationships?.library?.data, !libraryData.isEmpty else {
       throw MusadoraKitError.notInLibrary(item: itemType.rawValue)
     }
 
-    guard let inFavorites = attributes?["inFavorites"] as? Bool else {
+    guard let inFavorites = item.attributes?.inFavorites else {
       throw MusadoraKitError.notFound(for: "inFavorites")
     }
 
     return inFavorites
+  }
+
+  /// Fetch inFavorites status for a music item from the Apple Music API.
+  ///
+  /// This helper method handles the common logic for fetching favorite status across all music item types.
+  ///
+  /// - Parameters:
+  ///   - id: The catalog ID of the music item
+  ///   - itemType: The type of music item
+  /// - Returns: `true` if the item is in favorites, `false` otherwise
+  /// - Throws: An error if the item is not in library or if the request fails
+  static func fetchInFavorites(for id: MusicItemID, itemType: MusicItemType) async throws -> Bool {
+    let storefront = try await MusicDataRequest.currentCountryCode
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/\(itemType.rawValue)s/\(id.rawValue)"
+    components.queryItems = [
+      URLQueryItem(name: "relate", value: "library"),
+      URLQueryItem(name: "extend", value: "inFavorites")
+    ]
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    let request = MusicDataRequest(urlRequest: .init(url: url))
+    let response = try await request.response()
+
+    return try parse(from: response.data, itemType: itemType)
   }
 }
