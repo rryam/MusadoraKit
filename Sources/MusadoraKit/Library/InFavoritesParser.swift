@@ -16,27 +16,31 @@ internal enum MusicItemType: String {
   case musicVideo = "music-video"
 }
 
+/// Response structure for Apple Music API inFavorites queries.
+private struct InFavoritesResponse: Decodable {
+  let data: [InFavoritesResponseItem]
+}
+
+private struct InFavoritesResponseItem: Decodable {
+  let attributes: InFavoritesAttributes?
+  let relationships: InFavoritesRelationships?
+}
+
+private struct InFavoritesAttributes: Decodable {
+  let inFavorites: Bool?
+}
+
+private struct InFavoritesRelationships: Decodable {
+  let library: InFavoritesLibrary?
+}
+
+private struct InFavoritesLibrary: Decodable {
+  struct Item: Decodable {}
+  let data: [Item]
+}
+
 /// Internal parser for extracting inFavorites status from Apple Music API responses.
 internal enum InFavoritesParser {
-  /// Response structure for Apple Music API inFavorites queries.
-  private struct Response: Decodable {
-    struct Item: Decodable {
-      struct Attributes: Decodable {
-        let inFavorites: Bool?
-      }
-      struct Relationships: Decodable {
-        struct Library: Decodable {
-          struct Item: Decodable {}
-          let data: [Item]
-        }
-        let library: Library?
-      }
-      let attributes: Attributes?
-      let relationships: Relationships?
-    }
-    let data: [Item]
-  }
-
   /// Parse the inFavorites response from Apple Music API data.
   ///
   /// This function extracts the inFavorites boolean value from the API response,
@@ -48,7 +52,7 @@ internal enum InFavoritesParser {
   /// - Returns: The inFavorites boolean value
   /// - Throws: MusadoraKitError if parsing fails, item not found, not in library, or inFavorites not found
   static func parse(from data: Data, itemType: MusicItemType) throws -> Bool {
-    let response = try JSONDecoder().decode(Response.self, from: data)
+    let response = try JSONDecoder().decode(InFavoritesResponse.self, from: data)
 
     guard let item = response.data.first else {
       throw MusadoraKitError.notFound(for: "\(itemType.rawValue) in catalog")
