@@ -154,13 +154,17 @@ public extension Artist {
   ///         print("This artist is in favorites!")
   ///     }
   ///
-  /// - Returns: `true` if the artist is in favorites, `false` otherwise, or `nil` if the status cannot be determined.
-  /// - Throws: An error if the request fails.
-  var inFavorites: Bool? {
+  /// - Returns: `true` if the artist is in favorites, `false` otherwise.
+  /// - Throws: An error if the artist is not in library or if the request fails.
+  var inFavorites: Bool {
     get async throws {
+      // Note: Artists don't have playParameters, so we use the ID directly
+      // Fetch catalog artist with relate=library and extend=inFavorites
+      let storefront = try await MusicDataRequest.currentCountryCode
       var components = AppleMusicURLComponents()
-      components.path = "me/library/artists/\(id.rawValue)"
+      components.path = "catalog/\(storefront)/artists/\(id.rawValue)"
       components.queryItems = [
+        URLQueryItem(name: "relate", value: "library"),
         URLQueryItem(name: "extend", value: "inFavorites")
       ]
 
@@ -168,20 +172,31 @@ public extension Artist {
         throw URLError(.badURL)
       }
 
-      let decoder = JSONDecoder()
-      let data: Data
+      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let response = try await request.response()
 
-      if let userToken = MusadoraKit.userToken {
-        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
-        data = try await request.response()
-      } else {
-        let request = MusicDataRequest(urlRequest: .init(url: url))
-        let response = try await request.response()
-        data = response.data
+      // Parse to extract inFavorites from catalog attributes
+      let json = try JSONSerialization.jsonObject(with: response.data) as? [String: Any]
+      guard let data = json?["data"] as? [[String: Any]],
+            let first = data.first else {
+        throw MusadoraKitError.notFound(for: "artist in catalog")
       }
 
-      let wrapper = try decoder.decode(LibraryItemsResponse.self, from: data)
-      return wrapper.data.first?.attributes.inFavorites
+      let attributes = first["attributes"] as? [String: Any]
+
+      // Check if artist is in library
+      if let relationships = first["relationships"] as? [String: Any],
+         let library = relationships["library"] as? [String: Any],
+         let libraryData = library["data"] as? [[String: Any]],
+         libraryData.isEmpty {
+        throw MusadoraKitError.notInLibrary(item: "artist")
+      }
+
+      guard let inFavorites = attributes?["inFavorites"] as? Bool else {
+        throw MusadoraKitError.notFound(for: "inFavorites")
+      }
+
+      return inFavorites
     }
   }
 }

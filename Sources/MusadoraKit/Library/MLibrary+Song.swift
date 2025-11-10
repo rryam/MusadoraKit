@@ -501,13 +501,28 @@ public extension Song {
   ///         print("This song is in favorites!")
   ///     }
   ///
-  /// - Returns: `true` if the song is in favorites, `false` otherwise, or `nil` if the status cannot be determined.
-  /// - Throws: An error if the request fails.
-  var inFavorites: Bool? {
+  /// - Returns: `true` if the song is in favorites, `false` otherwise.
+  /// - Throws: An error if the song is not in library or if the request fails.
+  var inFavorites: Bool {
     get async throws {
+      // Get catalog ID from play parameters
+      guard let playParameters = playParameters else {
+        throw MusadoraKitError.notFound(for: "playParameters")
+      }
+
+      let playParamData = try JSONEncoder().encode(playParameters)
+      let params = try JSONDecoder().decode(SongPlayParameters.self, from: playParamData)
+
+      guard let catalogId = params.catalogId else {
+        throw MusadoraKitError.notFound(for: "catalogId")
+      }
+
+      // Fetch catalog song with relate=library and extend=inFavorites
+      let storefront = try await MusicDataRequest.currentCountryCode
       var components = AppleMusicURLComponents()
-      components.path = "me/library/songs/\(id.rawValue)"
+      components.path = "catalog/\(storefront)/songs/\(catalogId.rawValue)"
       components.queryItems = [
+        URLQueryItem(name: "relate", value: "library"),
         URLQueryItem(name: "extend", value: "inFavorites")
       ]
 
@@ -515,20 +530,41 @@ public extension Song {
         throw URLError(.badURL)
       }
 
-      let decoder = JSONDecoder()
-      let data: Data
+      let request = MusicDataRequest(urlRequest: .init(url: url))
+      let response = try await request.response()
 
-      if let userToken = MusadoraKit.userToken {
-        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
-        data = try await request.response()
-      } else {
-        let request = MusicDataRequest(urlRequest: .init(url: url))
-        let response = try await request.response()
-        data = response.data
+      // Parse to extract inFavorites from catalog attributes
+      let json = try JSONSerialization.jsonObject(with: response.data) as? [String: Any]
+      guard let data = json?["data"] as? [[String: Any]],
+            let first = data.first else {
+        throw MusadoraKitError.notFound(for: "song in catalog")
       }
 
-      let wrapper = try decoder.decode(LibraryItemsResponse.self, from: data)
-      return wrapper.data.first?.attributes.inFavorites
+      let attributes = first["attributes"] as? [String: Any]
+
+      // Check if song is in library
+      if let relationships = first["relationships"] as? [String: Any],
+         let library = relationships["library"] as? [String: Any],
+         let libraryData = library["data"] as? [[String: Any]],
+         libraryData.isEmpty {
+        throw MusadoraKitError.notInLibrary(item: "song")
+      }
+
+      guard let inFavorites = attributes?["inFavorites"] as? Bool else {
+        throw MusadoraKitError.notFound(for: "inFavorites")
+      }
+
+      return inFavorites
     }
+  }
+}
+
+public struct SongPlayParameters: Codable {
+  let isLibrary: Bool?
+  public let catalogId: MusicItemID?
+
+  private enum CodingKeys: String, CodingKey {
+    case isLibrary
+    case catalogId
   }
 }

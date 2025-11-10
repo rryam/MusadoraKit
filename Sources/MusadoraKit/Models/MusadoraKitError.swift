@@ -12,6 +12,9 @@ public enum MusadoraKitError: Error, Equatable {
   /// The specified music item could not be found.
   case notFound(for: String)
 
+  /// The specified music item is not in the user's library.
+  case notInLibrary(item: String)
+
   /// One or more types must be specified for the operation.
   case typeMissing
 
@@ -75,6 +78,8 @@ extension MusadoraKitError: CustomStringConvertible {
     switch self {
     case let .notFound(id):
       return "The specified music item could not be found for \(id)."
+    case let .notInLibrary(item):
+      return "The \(item) is not in the user's library."
     case .typeMissing:
       return "One or more types must be specified for fetching top results in search suggestions."
     case let .recommendationOverLimit(limit):
