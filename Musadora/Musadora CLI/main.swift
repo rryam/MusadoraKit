@@ -15,7 +15,7 @@ print("━━━━━━━━━━━━━━━━━━━━━━━━�
 
 let status = await MusicAuthorization.request()
 guard status == .authorized else {
-  print("ERROR: Music authorization not granted")
+  fputs("ERROR: Music authorization not granted\n", stderr)
   exit(1)
 }
 
