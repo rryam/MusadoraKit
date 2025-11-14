@@ -101,6 +101,7 @@
 			);
 			name = "Musadora CLI";
 			packageProductDependencies = (
+				0A834F2329B926AF0063AA6C /* MusadoraKit */,
 				0A8A20802EC75BBF00D41DBC /* ArgumentParser */,
 			);
 			productName = "Musadora CLI";

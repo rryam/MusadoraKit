@@ -6,6 +6,33 @@
 //
 
 import Foundation
+import MusadoraKit
 
-print("Hello, World!")
+@preconcurrency import MusicKit
+
+print("Musadora CLI - Token Information")
+print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+
+let status = await MusicAuthorization.request()
+guard status == .authorized else {
+  print("ERROR: Music authorization not granted")
+  exit(1)
+}
+
+print("Authorization: OK\n")
+
+do {
+  let developerToken = try await MusicDataRequest.tokenProvider.developerToken(options: .ignoreCache)
+  print("Developer Token:")
+  print(developerToken)
+  print("")
+
+  let userToken = try await MusicDataRequest.tokenProvider.userToken(for: developerToken, options: .ignoreCache)
+  print("User Token:")
+  print(userToken)
+  print("")
+} catch {
+  print("ERROR getting tokens: \(error)")
+  print("")
+}
 

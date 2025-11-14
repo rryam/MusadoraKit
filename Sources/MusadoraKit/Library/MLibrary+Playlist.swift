@@ -252,6 +252,7 @@ public extension MLibrary {
     } else {
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
+
       playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
     }
     return try await playlists.collectingAll(upTo: limit)
