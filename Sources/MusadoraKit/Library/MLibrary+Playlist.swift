@@ -244,6 +244,7 @@ public extension MLibrary {
 
     var playlists: LibraryPlaylists = []
     let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
 
     if let userToken = MusadoraKit.userToken {
       let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
@@ -295,7 +296,9 @@ public extension MLibrary {
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
 
-    let playlists = try JSONDecoder().decode(LibraryPlaylists.self, from: response.data)
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    let playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
 
     return try await playlists.collectingAll()
   }

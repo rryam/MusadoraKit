@@ -63,9 +63,7 @@ public struct LibraryPlaylist: Codable, MusicItem {
     public let inFavorites: Bool?
 
     /// The date and time when the playlist was added to the library.
-    ///
-    /// The date is in ISO 8601 format: YYYY-MM-DDThh:mm:ssZ
-    public let dateAdded: String?
+    public let dateAdded: Date?
 
     /// The types of resources included in the playlist's tracks.
     ///
@@ -75,9 +73,7 @@ public struct LibraryPlaylist: Codable, MusicItem {
     public let trackTypes: [String]?
 
     /// The date and time when the playlist was last modified.
-    ///
-    /// The date is in ISO 8601 format: YYYY-MM-DDThh:mm:ssZ
-    public let lastModifiedDate: String?
+    public let lastModifiedDate: Date?
   }
 
   /// Contains the textual description of a playlist.
