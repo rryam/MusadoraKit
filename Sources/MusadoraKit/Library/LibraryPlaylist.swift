@@ -60,7 +60,20 @@ public struct LibraryPlaylist: Codable, MusicItem {
     public let artwork: Artwork?
 
     /// A Boolean value indicating whether the playlist is in the user's favorites.
-    public let inFavorites: Bool
+    public let inFavorites: Bool?
+
+    /// The date and time when the playlist was added to the library.
+    public let dateAdded: Date?
+
+    /// The types of resources included in the playlist's tracks.
+    ///
+    /// Possible values include:
+    /// - `library-music-videos`: The playlist contains library music videos
+    /// - `library-songs`: The playlist contains library songs
+    public let trackTypes: [String]?
+
+    /// The date and time when the playlist was last modified.
+    public let lastModifiedDate: Date?
   }
 
   /// Contains the textual description of a playlist.
@@ -112,8 +125,14 @@ public struct LibraryPlaylistPlayParameters: Codable, Sendable {
   /// A global identifier, if present, associated with the playlist.
   public let globalID: MusicItemID?
 
+  /// The kind of content.
+  public let kind: String?
+
+  /// A version hash for the playlist content.
+  public let versionHash: String?
+
   private enum CodingKeys: String, CodingKey {
-    case id, isLibrary
+    case id, isLibrary, kind, versionHash
     case globalID = "globalId"
   }
 }
