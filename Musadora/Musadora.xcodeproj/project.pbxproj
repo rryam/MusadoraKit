@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A834F2429B926AF0063AA6C /* MusadoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A834F2329B926AF0063AA6C /* MusadoraKit */; };
-		0A8A20812EC75BBF00D41DBC /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8A20802EC75BBF00D41DBC /* ArgumentParser */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A8A20812EC75BBF00D41DBC /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +100,6 @@
 			name = "Musadora CLI";
 			packageProductDependencies = (
 				0A834F2329B926AF0063AA6C /* MusadoraKit */,
-				0A8A20802EC75BBF00D41DBC /* ArgumentParser */,
 			);
 			productName = "Musadora CLI";
 			productReference = 0A8A20782EC75B6F00D41DBC /* Musadora CLI */;
@@ -160,7 +157,6 @@
 			mainGroup = 0A8FFEEE29B9248E0029A91F;
 			packageReferences = (
 				0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */,
-				0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 0A8FFEF829B9248F0029A91F /* Products */;
 			projectDirPath = "";
@@ -478,27 +474,11 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		0A834F2329B926AF0063AA6C /* MusadoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */;
 			productName = MusadoraKit;
-		};
-		0A8A20802EC75BBF00D41DBC /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
