@@ -7,10 +7,12 @@ let package = Package(
     name: "MusadoraKit",
     platforms: [.iOS(.v15), .macOS(.v12), .watchOS(.v8), .tvOS(.v15), .visionOS(.v1)],
     products: [
-        .library(name: "MusadoraKit", targets: ["MusadoraKit"])
+        .library(name: "MusadoraKit", targets: ["MusadoraKit"]),
+        .executable(name: "musadora", targets: ["MusadoraCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0")
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
     ],
     targets: [
         .target(
@@ -28,6 +30,16 @@ let package = Package(
             name: "MusadoraKitTests",
             dependencies: ["MusadoraKit"],
             resources: [.process("Fixtures")]
+        ),
+        .executableTarget(
+            name: "MusadoraCLI",
+            dependencies: [
+                "MusadoraKit",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ],
+            swiftSettings: [
+                .define("MUSADORA_CLI")
+            ]
         )
     ]
 )

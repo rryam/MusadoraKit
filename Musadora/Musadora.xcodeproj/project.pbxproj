@@ -7,35 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A4C262A2E67578E00570FA7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C26292E67578E00570FA7 /* README.md */; };
 		0A834F2429B926AF0063AA6C /* MusadoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0A834F2329B926AF0063AA6C /* MusadoraKit */; };
-		0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A8FFEFE29B9248F0029A91F /* Assets.xcassets */; };
-		0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AF15F8129C4D9FE00FFEF63 /* release_notes.json */; };
+		0A8A20812EC75BBF00D41DBC /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 0A8A20802EC75BBF00D41DBC /* ArgumentParser */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0A8A20762EC75B6F00D41DBC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0A4C26292E67578E00570FA7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		0A834F2529B928510063AA6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0A8A20782EC75B6F00D41DBC /* Musadora CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Musadora CLI"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A8FFEF729B9248F0029A91F /* Musadora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musadora.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A8FFEFE29B9248F0029A91F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0AF15F8129C4D9FE00FFEF63 /* release_notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = release_notes.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0A8A20732EC75B5500D41DBC /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0A8FFEF629B9248E0029A91F /* Musadora */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0A4C25A12E67576900570FA7 /* Library */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Library; sourceTree = "<group>"; };
-		0A4C25A92E67576D00570FA7 /* History */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = History; sourceTree = "<group>"; };
-		0A4C25B12E67576D00570FA7 /* Catalog */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Catalog; sourceTree = "<group>"; };
-		0A4C25B62E67577400570FA7 /* Onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Onboarding; sourceTree = "<group>"; };
-		0A4C25BE2E67577400570FA7 /* Charts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Charts; sourceTree = "<group>"; };
-		0A4C25C72E67577400570FA7 /* Main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Main; sourceTree = "<group>"; };
-		0A4C25D52E67577400570FA7 /* Music Items */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Music Items"; sourceTree = "<group>"; };
-		0A4C25DE2E67577800570FA7 /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
-		0A4C25E22E67577A00570FA7 /* Recommendations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Recommendations; sourceTree = "<group>"; };
-		0A4C25E62E67577E00570FA7 /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
-		0A4C29AE2E675F9700570FA7 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		0A8A20502EC75B5500D41DBC /* Musadora */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (0A8A20732EC75B5500D41DBC /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Musadora; sourceTree = "<group>"; };
+		0A8A20792EC75B6F00D41DBC /* Musadora CLI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Musadora CLI"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0A8A20752EC75B6F00D41DBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A8A20812EC75BBF00D41DBC /* ArgumentParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0A8FFEF429B9248E0029A91F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,7 +66,8 @@
 		0A8FFEEE29B9248E0029A91F = {
 			isa = PBXGroup;
 			children = (
-				0A8FFEF929B9248F0029A91F /* Musadora */,
+				0A8A20502EC75B5500D41DBC /* Musadora */,
+				0A8A20792EC75B6F00D41DBC /* Musadora CLI */,
 				0A8FFEF829B9248F0029A91F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,35 +76,37 @@
 			isa = PBXGroup;
 			children = (
 				0A8FFEF729B9248F0029A91F /* Musadora.app */,
+				0A8A20782EC75B6F00D41DBC /* Musadora CLI */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0A8FFEF929B9248F0029A91F /* Musadora */ = {
-			isa = PBXGroup;
-			children = (
-				0A4C29AE2E675F9700570FA7 /* Shared */,
-				0A4C26292E67578E00570FA7 /* README.md */,
-				0A4C25DE2E67577800570FA7 /* Settings */,
-				0AF15F8129C4D9FE00FFEF63 /* release_notes.json */,
-				0A4C25C72E67577400570FA7 /* Main */,
-				0A4C25D52E67577400570FA7 /* Music Items */,
-				0A4C25B62E67577400570FA7 /* Onboarding */,
-				0A4C25BE2E67577400570FA7 /* Charts */,
-				0A4C25E22E67577A00570FA7 /* Recommendations */,
-				0A4C25A92E67576D00570FA7 /* History */,
-				0A4C25B12E67576D00570FA7 /* Catalog */,
-				0A4C25A12E67576900570FA7 /* Library */,
-				0A834F2529B928510063AA6C /* Info.plist */,
-				0A8FFEFE29B9248F0029A91F /* Assets.xcassets */,
-				0A4C25E62E67577E00570FA7 /* Preview Content */,
-			);
-			path = Musadora;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0A8A20772EC75B6F00D41DBC /* Musadora CLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A8A207C2EC75B6F00D41DBC /* Build configuration list for PBXNativeTarget "Musadora CLI" */;
+			buildPhases = (
+				0A8A20742EC75B6F00D41DBC /* Sources */,
+				0A8A20752EC75B6F00D41DBC /* Frameworks */,
+				0A8A20762EC75B6F00D41DBC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0A8A20792EC75B6F00D41DBC /* Musadora CLI */,
+			);
+			name = "Musadora CLI";
+			packageProductDependencies = (
+				0A8A20802EC75BBF00D41DBC /* ArgumentParser */,
+			);
+			productName = "Musadora CLI";
+			productReference = 0A8A20782EC75B6F00D41DBC /* Musadora CLI */;
+			productType = "com.apple.product-type.tool";
+		};
 		0A8FFEF629B9248E0029A91F /* Musadora */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A8FFF0529B9248F0029A91F /* Build configuration list for PBXNativeTarget "Musadora" */;
@@ -101,17 +120,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0A4C25A12E67576900570FA7 /* Library */,
-				0A4C25A92E67576D00570FA7 /* History */,
-				0A4C25B12E67576D00570FA7 /* Catalog */,
-				0A4C25B62E67577400570FA7 /* Onboarding */,
-				0A4C25BE2E67577400570FA7 /* Charts */,
-				0A4C25C72E67577400570FA7 /* Main */,
-				0A4C25D52E67577400570FA7 /* Music Items */,
-				0A4C25DE2E67577800570FA7 /* Settings */,
-				0A4C25E22E67577A00570FA7 /* Recommendations */,
-				0A4C25E62E67577E00570FA7 /* Preview Content */,
-				0A4C29AE2E675F9700570FA7 /* Shared */,
+				0A8A20502EC75B5500D41DBC /* Musadora */,
 			);
 			name = Musadora;
 			packageProductDependencies = (
@@ -128,9 +137,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					0A8A20772EC75B6F00D41DBC = {
+						CreatedOnToolsVersion = 26.1;
+					};
 					0A8FFEF629B9248E0029A91F = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -147,12 +159,14 @@
 			mainGroup = 0A8FFEEE29B9248E0029A91F;
 			packageReferences = (
 				0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */,
+				0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 0A8FFEF829B9248F0029A91F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				0A8FFEF629B9248E0029A91F /* Musadora */,
+				0A8A20772EC75B6F00D41DBC /* Musadora CLI */,
 			);
 		};
 /* End PBXProject section */
@@ -162,15 +176,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AF15F8229C4D9FE00FFEF63 /* release_notes.json in Resources */,
-				0A4C262A2E67578E00570FA7 /* README.md in Resources */,
-				0A8FFEFF29B9248F0029A91F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0A8A20742EC75B6F00D41DBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0A8FFEF329B9248E0029A91F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -181,6 +199,43 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		0A8A207D2EC75B6F00D41DBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YQZQG7N4WG;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0A8A207E2EC75B6F00D41DBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YQZQG7N4WG;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudrankriyam.musadora;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		0A8FFF0329B9248F0029A91F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -386,6 +441,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0A8A207C2EC75B6F00D41DBC /* Build configuration list for PBXNativeTarget "Musadora CLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A8A207D2EC75B6F00D41DBC /* Debug */,
+				0A8A207E2EC75B6F00D41DBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0A8FFEF229B9248E0029A91F /* Build configuration list for PBXProject "Musadora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -413,11 +477,27 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		0A834F2329B926AF0063AA6C /* MusadoraKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0A834F2229B926AF0063AA6C /* XCLocalSwiftPackageReference ".." */;
 			productName = MusadoraKit;
+		};
+		0A8A20802EC75BBF00D41DBC /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A8A207F2EC75BBF00D41DBC /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
