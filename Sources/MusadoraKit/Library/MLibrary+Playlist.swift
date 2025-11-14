@@ -242,19 +242,15 @@ public extension MLibrary {
       return LibraryPlaylists([])
     }
 
-    var playlists: LibraryPlaylists = []
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-
+    let playlists: LibraryPlaylists
     if let userToken = MusadoraKit.userToken {
       let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
       let data = try await request.response()
-      playlists = try decoder.decode(LibraryPlaylists.self, from: data)
+      playlists = try decodePlaylists(from: data)
     } else {
       let request = MusicDataRequest(urlRequest: .init(url: url))
       let response = try await request.response()
-
-      playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
+      playlists = try decodePlaylists(from: response.data)
     }
     return try await playlists.collectingAll(upTo: limit)
   }
@@ -295,11 +291,7 @@ public extension MLibrary {
 
     let request = MusicDataRequest(urlRequest: .init(url: url))
     let response = try await request.response()
-
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    let playlists = try decoder.decode(LibraryPlaylists.self, from: response.data)
-
+    let playlists = try decodePlaylists(from: response.data)
     return try await playlists.collectingAll()
   }
 
@@ -313,6 +305,12 @@ public extension MLibrary {
     ]
 
     return components.url
+  }
+
+  private static func decodePlaylists(from data: Data) throws -> LibraryPlaylists {
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    return try decoder.decode(LibraryPlaylists.self, from: data)
   }
 }
 
