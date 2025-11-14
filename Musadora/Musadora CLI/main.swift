@@ -32,7 +32,7 @@ do {
   print(userToken)
   print("")
 } catch {
-  print("ERROR getting tokens: \(error)")
-  print("")
+  fputs("ERROR getting tokens: \(error)\n", stderr)
+  exit(1)
 }
 
