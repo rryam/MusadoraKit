@@ -42,4 +42,24 @@ struct MusicAddResourcesRequestEndpointTests {
     let endpointURL = "https://api.music.apple.com/v1/me/library?ids[albums]=1577502911&ids[songs]=1545146511"
     expectEndpoint(url, equals: endpointURL)
   }
+
+  @Test
+  func addResourcesWithDuplicatesAndSorting() throws {
+    // Test deduplication: same ID appears in multiple resource tuples
+    // Test sorting: IDs should be sorted alphabetically
+    let songs1: [MusicItemID] = ["789", "123"]  // unsorted
+    let songs2: [MusicItemID] = ["123", "456"]  // duplicate "123"
+    let albums: [MusicItemID] = ["999", "111"]  // unsorted
+
+    let request = MusicAddResourcesRequest([
+      (item: .songs, value: songs1),
+      (item: .albums, value: albums),
+      (item: .songs, value: songs2)
+    ])
+    let url = try request.addResourcesEndpointURL
+
+    // Expected: albums before songs (alphabetical), IDs sorted within each type, duplicates removed
+    let expectedURL = "https://api.music.apple.com/v1/me/library?ids[albums]=111,999&ids[songs]=123,456,789"
+    expectEndpoint(url, equals: expectedURL)
+  }
 }
