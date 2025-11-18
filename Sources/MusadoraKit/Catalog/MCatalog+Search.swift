@@ -18,11 +18,14 @@ public extension MCatalog {
     for term: String,
     types: [MusicCatalogSearchType],
     limit: Int? = nil,
-    offset: Int? = nil
+    offset: Int? = nil,
+    includeTopResults: Bool = false
   ) async throws -> MusicCatalogSearchResponse {
     let searchTypes = types.compactMap { $0.type }
     var request = MusicCatalogSearchRequest(term: term, types: searchTypes)
-    // request.includeTopResults = includeTopResults /// Waiting for Beta 4 for it to be fixed.
+    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
+      request.includeTopResults = includeTopResults
+    }
     request.limit = limit
     request.offset = offset
     let response = try await request.response()
