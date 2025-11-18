@@ -51,7 +51,6 @@ public struct MusicAddResourcesRequest {
 }
 
 extension MusicAddResourcesRequest {
-  
   /// A URL representing the endpoint for adding resources to the user's iCloud Music Library.
   ///
   /// - Returns: A URL object.

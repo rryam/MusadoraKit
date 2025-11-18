@@ -39,6 +39,11 @@ public extension MCatalog {
     includeTopResults: Bool = false
   ) async throws -> MusicCatalogSearchResponse {
     let searchTypes = types.compactMap { $0.type }
+
+    guard !searchTypes.isEmpty else {
+        throw MusadoraKitError.notFound(for: term)
+    }
+
     var request = MusicCatalogSearchRequest(term: term, types: searchTypes)
     if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
       request.includeTopResults = includeTopResults
