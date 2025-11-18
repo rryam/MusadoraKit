@@ -51,6 +51,7 @@ public struct MusicAddResourcesRequest {
 }
 
 extension MusicAddResourcesRequest {
+  
   /// A URL representing the endpoint for adding resources to the user's iCloud Music Library.
   ///
   /// - Returns: A URL object.
@@ -61,13 +62,17 @@ extension MusicAddResourcesRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/library"
 
-      for resource in resources {
-        let values = resource.value.map { $0.rawValue }.joined(separator: ",")
-        let query = URLQueryItem(name: resource.item.type, value: values)
+      let resourcesMap = Dictionary(grouping: resources, by: { $0.item })
+
+      for (itemType, resources) in resourcesMap {
+        let ids = resources.flatMap { $0.value }.map { $0.rawValue }
+        let uniqueIds = Set(ids)
+        let values = uniqueIds.sorted().joined(separator: ",")
+        let query = URLQueryItem(name: itemType.type, value: values)
         queryItems.append(query)
       }
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.sorted { $0.name < $1.name }
 
       guard let url = components.url else {
         throw URLError(.badURL)
