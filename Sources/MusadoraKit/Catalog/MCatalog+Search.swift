@@ -1,9 +1,26 @@
-// 
+//
 //  CatalogSearch.swift
 //  MusadoraKit
 //
 //  Created by Rudrank Riyam on 20/08/21.
 //
+
+// MARK: - Generic Search Helper
+private extension MCatalog {
+    private static func search<ResponseType, ItemType: MusicCatalogSearchable>(
+        for term: String,
+        itemType: ItemType.Type,
+        keyPath: KeyPath<MusicCatalogSearchResponse, ResponseType>,
+        limit: Int?,
+        offset: Int?
+    ) async throws -> ResponseType {
+        var request = MusicCatalogSearchRequest(term: term, types: [itemType])
+        request.limit = limit
+        request.offset = offset
+        let response = try await request.response()
+        return response[keyPath: keyPath]
+    }
+}
 
 public extension MCatalog {
   /// Search the Apple Music catalog by using a query term.
@@ -37,11 +54,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Songs {
-    var request = MusicCatalogSearchRequest(term: term, types: [Song.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.songs
+    try await search(for: term, itemType: Song.self, keyPath: \.songs, limit: limit, offset: offset)
   }
 
   static func searchPlaylists(
@@ -49,11 +62,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Playlists {
-    var request = MusicCatalogSearchRequest(term: term, types: [Playlist.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.playlists
+    try await search(for: term, itemType: Playlist.self, keyPath: \.playlists, limit: limit, offset: offset)
   }
 
   static func searchAlbums(
@@ -61,11 +70,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Albums {
-    var request = MusicCatalogSearchRequest(term: term, types: [Album.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.albums
+    try await search(for: term, itemType: Album.self, keyPath: \.albums, limit: limit, offset: offset)
   }
 
   static func searchArtists(
@@ -73,11 +78,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Artists {
-    var request = MusicCatalogSearchRequest(term: term, types: [Artist.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.artists
+    try await search(for: term, itemType: Artist.self, keyPath: \.artists, limit: limit, offset: offset)
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
@@ -86,11 +87,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> MusicVideos {
-    var request = MusicCatalogSearchRequest(term: term, types: [MusicVideo.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.musicVideos
+    try await search(for: term, itemType: MusicVideo.self, keyPath: \.musicVideos, limit: limit, offset: offset)
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
@@ -99,11 +96,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Curators {
-    var request = MusicCatalogSearchRequest(term: term, types: [Curator.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.curators
+    try await search(for: term, itemType: Curator.self, keyPath: \.curators, limit: limit, offset: offset)
   }
 
   @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
@@ -112,11 +105,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> RadioShows {
-    var request = MusicCatalogSearchRequest(term: term, types: [RadioShow.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.radioShows
+    try await search(for: term, itemType: RadioShow.self, keyPath: \.radioShows, limit: limit, offset: offset)
   }
 
   static func searchStations(
@@ -124,11 +113,7 @@ public extension MCatalog {
     limit: Int? = nil,
     offset: Int? = nil
   ) async throws -> Stations {
-    var request = MusicCatalogSearchRequest(term: term, types: [Station.self])
-    request.limit = limit
-    request.offset = offset
-    let response = try await request.response()
-    return response.stations
+    try await search(for: term, itemType: Station.self, keyPath: \.stations, limit: limit, offset: offset)
   }
 }
 

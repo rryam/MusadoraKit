@@ -96,6 +96,25 @@ public extension MLibrary {
     }
 }
 
+// MARK: - Generic Search Helper
+@available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
+private extension MLibrary {
+    private static func search<ResponseType, ItemType: MusicLibrarySearchableItem>(
+        for term: String,
+        itemType: ItemType.Type,
+        keyPath: KeyPath<MusicSearchLibraryResponse, ResponseType>,
+        limit: Int,
+        offset: Int?,
+        includeTopResults: Bool
+    ) async throws -> ResponseType {
+        var request = MusicSearchLibraryRequest(term: term, types: [itemType])
+        request.limit = limit
+        request.includeTopResults = includeTopResults
+        let response = try await request.response()
+        return response[keyPath: keyPath]
+    }
+}
+
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MLibrary {
   static func search(
@@ -116,11 +135,7 @@ public extension MLibrary {
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Songs {
-      var request = MusicSearchLibraryRequest(term: term, types: [Song.self])
-      request.limit = limit
-      request.includeTopResults = includeTopResults
-      let response = try await request.response()
-      return response.songs
+      try await search(for: term, itemType: Song.self, keyPath: \.songs, limit: limit, offset: offset, includeTopResults: includeTopResults)
     }
 
   static func searchAlbums(
@@ -128,11 +143,7 @@ public extension MLibrary {
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Albums {
-      var request = MusicSearchLibraryRequest(term: term, types: [Album.self])
-      request.limit = limit
-      request.includeTopResults = includeTopResults
-      let response = try await request.response()
-      return response.albums
+      try await search(for: term, itemType: Album.self, keyPath: \.albums, limit: limit, offset: offset, includeTopResults: includeTopResults)
     }
 
   static func searchPlaylists(
@@ -140,11 +151,7 @@ public extension MLibrary {
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Playlists {
-      var request = MusicSearchLibraryRequest(term: term, types: [Playlist.self])
-      request.limit = limit
-      request.includeTopResults = includeTopResults
-      let response = try await request.response()
-      return response.playlists
+      try await search(for: term, itemType: Playlist.self, keyPath: \.playlists, limit: limit, offset: offset, includeTopResults: includeTopResults)
     }
 
   static func searchMusicVideos(
@@ -152,11 +159,7 @@ public extension MLibrary {
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> MusicVideos {
-      var request = MusicSearchLibraryRequest(term: term, types: [MusicVideo.self])
-      request.limit = limit
-      request.includeTopResults = includeTopResults
-      let response = try await request.response()
-      return response.musicVideos
+      try await search(for: term, itemType: MusicVideo.self, keyPath: \.musicVideos, limit: limit, offset: offset, includeTopResults: includeTopResults)
     }
 
   static func searchArtists(
@@ -164,10 +167,6 @@ public extension MLibrary {
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Artists {
-      var request = MusicSearchLibraryRequest(term: term, types: [Artist.self])
-      request.limit = limit
-      request.includeTopResults = includeTopResults
-      let response = try await request.response()
-      return response.artists
+      try await search(for: term, itemType: Artist.self, keyPath: \.artists, limit: limit, offset: offset, includeTopResults: includeTopResults)
     }
 }

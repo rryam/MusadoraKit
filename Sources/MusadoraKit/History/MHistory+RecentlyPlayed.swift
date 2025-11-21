@@ -51,6 +51,20 @@ public extension MHistory {
   }
 }
 
+// MARK: - Generic Helper
+private extension MHistory {
+    private static func fetchFromHistory<ResponseType>(
+        endpoint: MusicHistoryEndpoints,
+        extract: (MusicHistoryResponse) -> ResponseType,
+        limit: Int?
+    ) async throws -> ResponseType {
+        var request = MusicHistoryRequest(for: endpoint)
+        request.limit = limit
+        let response = try await request.response()
+        return extract(response)
+    }
+}
+
 public extension MHistory {
   /// Fetch the recently played resources for the user.
   /// - Parameters:
@@ -70,20 +84,14 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: A collection of albums.
   static func recentlyPlayedAlbums(limit: Int? = nil) async throws -> Albums {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
-    request.limit = limit
-    let response = try await request.response()
-    return response.albums
+    try await fetchFromHistory(endpoint: .recentlyPlayed, extract: { $0.albums }, limit: limit)
   }
 
   /// Fetch the recently played playlists for the user.
   /// - Parameter limit: The number of objects returned.
   /// - Returns: A collection of albums.
   static func recentlyPlayedPlaylists(limit: Int? = nil) async throws -> Playlists {
-    var request = MusicHistoryRequest(for: .recentlyPlayed)
-    request.limit = limit
-    let response = try await request.response()
-    return response.playlists
+    try await fetchFromHistory(endpoint: .recentlyPlayed, extract: { $0.playlists }, limit: limit)
   }
 
   /// Fetch the resources in heavy rotation for the user.
@@ -114,19 +122,13 @@ public extension MHistory {
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `Tracks`.
   static func recentlyPlayedTracks(limit: Int? = nil) async throws -> Tracks {
-    var request = MusicHistoryRequest(for: .recentlyPlayedTracks)
-    request.limit = limit
-    let response = try await request.response()
-    return response.tracks
+    try await fetchFromHistory(endpoint: .recentlyPlayedTracks, extract: { $0.tracks }, limit: limit)
   }
 
   /// Fetch the recently played stations for the user.
   /// - Parameter limit: The number of objects returned.
   /// - Returns: Collection of `Stations`.
   static func recentlyPlayedStations(limit: Int? = nil) async throws -> Stations {
-    var request = MusicHistoryRequest(for: .recentlyPlayedStations)
-    request.limit = limit
-    let response = try await request.response()
-    return response.stations
+    try await fetchFromHistory(endpoint: .recentlyPlayedStations, extract: { $0.stations }, limit: limit)
   }
 }
