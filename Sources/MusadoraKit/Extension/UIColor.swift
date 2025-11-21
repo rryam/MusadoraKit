@@ -24,6 +24,10 @@ extension UIColor {
       return "#000000"
     }
 
+    guard components.count > 2 else {
+      return "#000000"
+    }
+
     let r = Int(components[0] * 255.0)
     let g = Int(components[1] * 255.0)
     let b = Int(components[2] * 255.0)

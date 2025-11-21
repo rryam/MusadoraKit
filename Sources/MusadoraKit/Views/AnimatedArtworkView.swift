@@ -1,5 +1,6 @@
 import MusicKit
 import SwiftUI
+import os.log
 
 /// A view that displays an animated artwork with a dynamic mesh gradient background.
 ///
@@ -118,7 +119,7 @@ public struct AnimatedArtworkView: View {
         self.dominantColors = colors
       }
     } catch {
-      // Silently fail - colors will remain empty or previous values
+      os_log("Failed to extract colors from artwork: %@", log: OSLog.default, type: .error, error.localizedDescription)
     }
   }
 

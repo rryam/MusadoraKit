@@ -170,11 +170,12 @@ struct CommonImageProcessing {
 
       for clusterIndex in 0..<clusters.count {
         let cluster = clusters[clusterIndex]
-        if cluster.points.isEmpty { continue }
+        guard !cluster.points.isEmpty else { continue }
         let sum = cluster.points.reduce(PixelData(red: 0, green: 0, blue: 0)) { result, pixel -> PixelData in
           return PixelData(red: result.red + pixel.red, green: result.green + pixel.green, blue: result.blue + pixel.blue)
         }
         let count = Double(cluster.points.count)
+        guard count > 0 else { continue }
         clusters[clusterIndex].center = PixelData(red: sum.red / count, green: sum.green / count, blue: sum.blue / count)
       }
     }
