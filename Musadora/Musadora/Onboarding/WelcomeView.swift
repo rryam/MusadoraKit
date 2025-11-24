@@ -95,8 +95,11 @@ struct WelcomeView: View {
             buttonText = Text("Continue")
         case .denied:
             buttonText = Text("Open Settings")
-        default:
-            fatalError("No button should be displayed for current authorization status: \(musicAuthorizationStatus).")
+        case .authorized, .restricted:
+            // Button should not be displayed for these states, but return empty text as fallback
+            buttonText = Text("")
+        @unknown default:
+            buttonText = Text("")
         }
         return buttonText
     }
@@ -114,8 +117,11 @@ struct WelcomeView: View {
                 openURL(settingsURL)
             }
             #endif
-        default:
-            fatalError("No button should be displayed for current authorization status: \(musicAuthorizationStatus).")
+        case .authorized, .restricted:
+            // No action needed for these states as button should not be visible
+            break
+        @unknown default:
+            break
         }
     }
     

@@ -36,7 +36,7 @@ public extension MCatalog {
     types: [MusicCatalogSearchType],
     limit: Int? = nil,
     offset: Int? = nil,
-    includeTopResults: Bool = false
+    includeTopResults: Bool = true
   ) async throws -> MusicCatalogSearchResponse {
     let searchTypes = types.compactMap { $0.type }
 
