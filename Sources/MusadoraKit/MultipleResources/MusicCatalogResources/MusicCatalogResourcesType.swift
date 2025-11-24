@@ -23,18 +23,30 @@ public enum MusicCatalogResourcesType {
   case radioShow(RadioShow)
   case musicVideo(MusicVideo)
 
+  /// The key identifying the type of catalog resource for API requests.
   public enum Key: String, Codable {
+    /// Stations resource key.
     case stations
+    /// Genres resource key.
     case genres
+    /// Songs resource key.
     case songs
+    /// Record labels resource key.
     case recordLabels = "record-labels"
+    /// Playlists resource key.
     case playlists
+    /// Artists resource key.
     case artists
+    /// Albums resource key.
     case albums
+    /// Curators resource key.
     case curators
+    /// Radio shows resource key.
     case radioShows = "apple-curators"
+    /// Music videos resource key.
     case musicVideos = "music-videos"
 
+    /// The formatted type string for use in API query parameters.
     public var type: String {
       "ids[\(rawValue)]".removingPercentEncoding ?? "ids[\(rawValue)]"
     }
@@ -43,6 +55,7 @@ public enum MusicCatalogResourcesType {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogResourcesType: MusicItem {
+  /// The unique identifier for the catalog resource.
   public var id: MusicItemID {
     let id: MusicItemID
 

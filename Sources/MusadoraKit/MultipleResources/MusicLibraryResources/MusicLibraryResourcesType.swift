@@ -16,13 +16,20 @@ public enum MusicLibraryResourcesType {
   case artist(Artist)
   case musicVideo(MusicVideo)
 
+  /// The key identifying the type of library resource for API requests.
   public enum Key: String, Codable {
+    /// Library songs resource key.
     case songs = "library-songs"
+    /// Library albums resource key.
     case albums = "library-albums"
+    /// Library playlists resource key.
     case playlists = "library-playlists"
+    /// Library artists resource key.
     case artists = "library-artists"
+    /// Library music videos resource key.
     case musicVideos = "library-music-videos"
 
+    /// The formatted type string for use in API query parameters.
     public var type: String {
       "ids[\(rawValue)]".removingPercentEncoding ?? "ids[\(rawValue)]"
     }
@@ -30,6 +37,7 @@ public enum MusicLibraryResourcesType {
 }
 
 extension MusicLibraryResourcesType: MusicItem {
+  /// The unique identifier for the library resource.
   public var id: MusicItemID {
     let id: MusicItemID
 

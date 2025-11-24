@@ -102,13 +102,19 @@ public struct MusicStorefront: Codable {
     storefrontId = MusicStorefront.mapStorefrontIdFromCountryCode(id)
   }
 
+  /// The explicit content policy for a storefront.
   public enum ExplicitContentPolicy: String, Codable {
+    /// Explicit content is allowed in this storefront.
     case allowed
+    /// Explicit content requires the user to opt in.
     case optIn = "opt-in"
+    /// Explicit content is prohibited in this storefront.
     case prohibited
   }
 
+  /// The type of the resource.
   public enum `Type`: String, Codable {
+    /// The resource is a storefront.
     case storefronts
   }
 

@@ -123,6 +123,7 @@ extension MusadoraKitError: CustomStringConvertible {
 }
 
 extension MusadoraKitError: LocalizedError {
+  /// A localized description of the error.
   public var errorDescription: String? {
     description
   }

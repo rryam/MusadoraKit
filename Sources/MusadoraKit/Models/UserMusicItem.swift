@@ -14,6 +14,7 @@ public enum UserMusicItem: Equatable, Hashable, Identifiable {
 }
 
 extension UserMusicItem: MusicItem {
+  /// The unique identifier for the music item.
   public var id: MusicItemID {
     let id: MusicItemID
 
@@ -31,6 +32,7 @@ extension UserMusicItem: MusicItem {
     return id
   }
 
+  /// The artwork associated with the music item, if available.
   public var artwork: Artwork? {
     switch self {
     case .album(let album):
@@ -44,6 +46,7 @@ extension UserMusicItem: MusicItem {
     }
   }
 
+  /// The title or name of the music item.
   public var title: String {
     switch self {
     case .album(let album):
@@ -101,6 +104,7 @@ extension UserMusicItem: Encodable {
 }
 
 extension UserMusicItem: PlayableMusicItem {
+  /// The parameters to use when playing the music item.
   public var playParameters: PlayParameters? {
     switch self {
     case .album(let album):
