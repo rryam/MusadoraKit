@@ -1,6 +1,6 @@
 import MusicKit
-import SwiftUI
 import os.log
+import SwiftUI
 
 /// A view that displays an animated artwork with a dynamic mesh gradient background.
 ///

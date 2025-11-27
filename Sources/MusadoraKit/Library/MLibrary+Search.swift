@@ -104,7 +104,6 @@ private extension MLibrary {
         itemType: ItemType.Type,
         keyPath: KeyPath<MusicSearchLibraryResponse, ResponseType>,
         limit: Int,
-        offset: Int?,
         includeTopResults: Bool
     ) async throws -> ResponseType {
         var request = MusicSearchLibraryRequest(term: term, types: [itemType])
@@ -133,40 +132,35 @@ public extension MLibrary {
   static func searchSongs(
     for term: String,
     limit: Int = 5,
-    offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Songs {
-      try await search(for: term, itemType: Song.self, keyPath: \.songs, limit: limit, offset: offset, includeTopResults: includeTopResults)
+      try await search(for: term, itemType: Song.self, keyPath: \.songs, limit: limit, includeTopResults: includeTopResults)
     }
 
   static func searchAlbums(
     for term: String,
     limit: Int = 5,
-    offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Albums {
-      try await search(for: term, itemType: Album.self, keyPath: \.albums, limit: limit, offset: offset, includeTopResults: includeTopResults)
+      try await search(for: term, itemType: Album.self, keyPath: \.albums, limit: limit, includeTopResults: includeTopResults)
     }
 
   static func searchPlaylists(
     for term: String,
     limit: Int = 5,
-    offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Playlists {
-      try await search(for: term, itemType: Playlist.self, keyPath: \.playlists, limit: limit, offset: offset, includeTopResults: includeTopResults)
+      try await search(for: term, itemType: Playlist.self, keyPath: \.playlists, limit: limit, includeTopResults: includeTopResults)
     }
 
   static func searchMusicVideos(
     for term: String,
     limit: Int = 5,
-    offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> MusicVideos {
-      try await search(for: term, itemType: MusicVideo.self, keyPath: \.musicVideos, limit: limit, offset: offset, includeTopResults: includeTopResults)
+      try await search(for: term, itemType: MusicVideo.self, keyPath: \.musicVideos, limit: limit, includeTopResults: includeTopResults)
     }
 
   static func searchArtists(
     for term: String,
     limit: Int = 5,
-    offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> Artists {
-      try await search(for: term, itemType: Artist.self, keyPath: \.artists, limit: limit, offset: offset, includeTopResults: includeTopResults)
+      try await search(for: term, itemType: Artist.self, keyPath: \.artists, limit: limit, includeTopResults: includeTopResults)
     }
 }
