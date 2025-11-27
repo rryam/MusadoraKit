@@ -5,8 +5,8 @@ definitions:
         - push
         - pull_request
 workflows:
-  musadorakit:
-    name: MusadoraKit Workflow
+  musadorakit-xcode-26-0:
+    name: MusadoraKit Workflow (Xcode 26.0)
     environment:
       xcode: 26.0
       vars:
@@ -41,6 +41,53 @@ workflows:
         script: |
           #!/bin/zsh
           
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 17" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=macOS,variant=Mac Catalyst" "platform=visionOS Simulator,name=Apple Vision Pro")
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              set -o pipefail
+              xcodebuild clean test \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation | xcpretty --report junit
+          done
+        test_report: build/reports/junit.xml
+
+  musadorakit-xcode-26-1:
+    name: MusadoraKit Workflow (Xcode 26.1)
+    environment:
+      xcode: 26.1
+      vars:
+        XCODE_SCHEME: "MusadoraKit"
+        APP_ID: "Musadora"
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Tests'
+    triggering:
+      <<: *events
+    scripts:
+      - name: SwiftLint
+        script: |
+          #!/bin/zsh
+          brew install swiftlint
+          swiftlint lint --strict
+      - name: Build Framework
+        script: |
+          #!/bin/zsh
+
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 17" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=macOS,variant=Mac Catalyst" "platform=visionOS Simulator,name=Apple Vision Pro")
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              xcodebuild clean build \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation
+          done
+      - name: Test Framework
+        script: |
+          #!/bin/zsh
+
           declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 17" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=macOS,variant=Mac Catalyst" "platform=visionOS Simulator,name=Apple Vision Pro")
           for DESTINATION in "${DESTINATIONS[@]}"
             do
