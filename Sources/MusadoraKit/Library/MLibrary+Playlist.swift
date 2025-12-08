@@ -260,16 +260,16 @@ public extension MLibrary {
         break
       }
 
-      let batchPlaylists: LibraryPlaylists
+      let data: Data
       if let userToken = MusadoraKit.userToken {
         let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
-        let data = try await request.response()
-        batchPlaylists = try decodePlaylists(from: data)
+        data = try await request.response()
       } else {
         let request = MusicDataRequest(urlRequest: .init(url: url))
         let response = try await request.response()
-        batchPlaylists = try decodePlaylists(from: response.data)
+        data = response.data
       }
+      let batchPlaylists = try decodePlaylists(from: data)
 
       if batchPlaylists.isEmpty {
         break
