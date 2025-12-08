@@ -84,7 +84,7 @@ public extension MLibrary {
   ///   For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///   that fetches the data from the Apple Music API.
   static func playlists(limit: Int? = nil) async throws -> Playlists {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *), MusadoraKit.userToken == nil {
       var request = MusicLibraryRequest<Playlist>()
       if let limit {
         request.limit = limit
@@ -234,25 +234,56 @@ public extension MHistory {
 
 // MARK: - `LibraryPlaylist` methods
 public extension MLibrary {
+  /// The maximum number of items the Apple Music API allows per request.
+  private static let maxAPILimit = 100
+
   /// Fetch all playlists from the user's library in alphabetical order.
   ///
+  /// This method handles pagination automatically when the requested limit exceeds
+  /// the API maximum of 100 items per request.
+  ///
+  /// - Parameter limit: The maximum number of playlists to return.
   /// - Returns: `LibraryPlaylists` that contains the user's library playlists.
   static func playlists(limit: Int) async throws -> LibraryPlaylists {
-    guard let url = try libraryPlaylistsURL(limit: limit) else {
+    guard limit > 0 else {
       return LibraryPlaylists([])
     }
 
-    let playlists: LibraryPlaylists
-    if let userToken = MusadoraKit.userToken {
-      let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
-      let data = try await request.response()
-      playlists = try decodePlaylists(from: data)
-    } else {
-      let request = MusicDataRequest(urlRequest: .init(url: url))
-      let response = try await request.response()
-      playlists = try decodePlaylists(from: response.data)
+    var allPlaylists: [LibraryPlaylist] = []
+    var offset = 0
+
+    while allPlaylists.count < limit {
+      let remaining = limit - allPlaylists.count
+      let requestLimit = min(remaining, maxAPILimit)
+
+      guard let url = try libraryPlaylistsURL(limit: requestLimit, offset: offset) else {
+        break
+      }
+
+      let data: Data
+      if let userToken = MusadoraKit.userToken {
+        let request = MusicUserRequest(urlRequest: .init(url: url), userToken: userToken)
+        data = try await request.response()
+      } else {
+        let request = MusicDataRequest(urlRequest: .init(url: url))
+        let response = try await request.response()
+        data = response.data
+      }
+      let batchPlaylists = try decodePlaylists(from: data)
+
+      if batchPlaylists.isEmpty {
+        break
+      }
+
+      allPlaylists.append(contentsOf: batchPlaylists)
+      offset += batchPlaylists.count
+
+      if batchPlaylists.count < requestLimit {
+        break
+      }
     }
-    return try await playlists.collectingAll(upTo: limit)
+
+    return LibraryPlaylists(allPlaylists)
   }
 
   /// Fetch the user's "Made For You" playlists from their library.
@@ -295,14 +326,21 @@ public extension MLibrary {
     return try await playlists.collectingAll()
   }
 
-  internal static func libraryPlaylistsURL(limit: Int) throws -> URL? {
+  internal static func libraryPlaylistsURL(limit: Int, offset: Int = 0) throws -> URL? {
     guard limit > 0 else { return nil }
 
     var components = AppleMusicURLComponents()
     components.path = "me/library/playlists"
-    components.queryItems = [
+
+    var queryItems = [
       URLQueryItem(name: "limit", value: "\(limit)")
     ]
+
+    if offset > 0 {
+      queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
+    }
+
+    components.queryItems = queryItems
 
     return components.url
   }
