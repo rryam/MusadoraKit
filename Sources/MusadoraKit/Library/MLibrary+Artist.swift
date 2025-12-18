@@ -26,7 +26,7 @@ public extension MLibrary {
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
   static func artist(id: MusicItemID) async throws -> Artist {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *), MusadoraKit.userToken == nil {
       var request = MusicLibraryRequest<Artist>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -94,7 +94,7 @@ public extension MLibrary {
   ///  For iOS 15 devices, it uses the custom structure `MusicLibraryResourceRequest`
   ///  that fetches the data from Apple Music API.
   static func artists(ids: [MusicItemID]) async throws -> Artists {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *), MusadoraKit.userToken == nil {
       var request = MusicLibraryRequest<Artist>()
       request.filter(matching: \.id, memberOf: ids)
       let response = try await request.response()

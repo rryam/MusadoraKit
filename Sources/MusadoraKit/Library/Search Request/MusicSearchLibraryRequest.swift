@@ -79,7 +79,7 @@ extension MusicSearchLibraryRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/library/search"
 
-      let termValue = term.replacingOccurrences(of: " ", with: "+").lowercased()
+      let termValue = term
       let termQuery = URLQueryItem(name: "term", value: termValue)
       queryItems.append(termQuery)
 

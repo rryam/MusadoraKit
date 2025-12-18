@@ -68,7 +68,7 @@ public struct MusicUserRequest: Sendable {
     }
 
     switch httpResponse.statusCode {
-    case 200:
+    case 200 ... 299:
       return data
     case 401:
       throw URLError(.userAuthenticationRequired, userInfo: ["description": "Unauthorized (401). Check user token validity and authentication."])

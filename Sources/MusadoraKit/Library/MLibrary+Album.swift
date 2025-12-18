@@ -14,7 +14,7 @@ public extension MLibrary {
   ///   - id: The unique identifier for the album.
   /// - Returns: `Album` matching the given identifier.
   static func album(id: MusicItemID) async throws -> Album {
-    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *) {
+    if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14, macCatalyst 17.0, visionOS 1.0, *), MusadoraKit.userToken == nil {
       var request = MusicLibraryRequest<Album>()
       request.filter(matching: \.id, equalTo: id)
       let response = try await request.response()
@@ -59,7 +59,7 @@ public extension MLibrary {
   ///   - ids: The unique identifiers for the albums.
   /// - Returns: `Albums` matching the given identifiers.
   static func albums(ids: [MusicItemID]) async throws -> Albums {
-    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
+    if #available(iOS 16.0, macOS 14.0, macCatalyst 17.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *), MusadoraKit.userToken == nil {
       var request = MusicLibraryRequest<Album>()
       request.filter(matching: \.id, memberOf: ids)
       let response = try await request.response()
