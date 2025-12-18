@@ -7,7 +7,7 @@ This guide provides context for automation or coding agents (Claude, GPT, etc.) 
 MusadoraKit is a Swift package that simplifies working with Apple's MusicKit and Apple Music API. It provides high-level abstractions over MusicKit for catalog access, library management, recommendations, and more.
 
 **Key characteristics:**
-- Swift 6.2+ with strict concurrency enabled
+- Swift 6.0+ with strict concurrency enabled
 - Multi-platform: iOS 15+, macOS 12+, watchOS 8+, tvOS 15+, visionOS 1+
 - Zero dependencies (except swift-docc-plugin for documentation)
 - Pure Swift package with no Objective-C
@@ -30,28 +30,28 @@ The main `MusadoraKit` struct is rarely used directly except for:
 **Directory structure:**
 ```
 Sources/MusadoraKit/
-├── 100 Best Albums/      - Apple Music “100 Best Albums” helpers
+├── 100BestAlbums/     - Apple Music “100 Best Albums” helpers
 ├── Catalog/           - Catalog resource access and search
 ├── Library/           - Library resource access, search, and management
 ├── Recommendations/   - Recommendation system integration
 ├── History/           - Recently played/added history
 ├── Ratings/           - Rating CRUD operations
 ├── Favorites/         - Favorites management
-├── Music Summaries/   - Apple Music Replay data
-├── Music Player/      - ApplicationMusicPlayer extensions
+├── MusicSummaries/    - Apple Music Replay data
+├── MusicPlayer/       - ApplicationMusicPlayer extensions
 ├── Equivalents/       - Cross-storefront and clean equivalents
-├── Add Resources/     - Library add operations (playlists, tracks)
-├── Multiple Resources/ - Batch resource requests
-├── Music Item Properties/ - Typed property collections for MusicKit resources
+├── AddResources/      - Library add operations (playlists, tracks)
+├── MultipleResources/ - Batch resource requests
+├── MusicItemProperties/ - Typed property collections for MusicKit resources
 ├── Requests/          - Custom API request types
 ├── Models/            - Data models and API components
 ├── Extension/         - MusicKit type extensions
 ├── Views/             - SwiftUI views (AnimatedArtworkView)
-├── Music Items/       - MusicKit item type extensions
+├── MusicItems/        - MusicKit item type extensions
 ├── Documentation.docc/ - DocC catalog
 ├── MusadoraKit.swift  - Package entry point
 ├── MusicRequest.swift - Shared request utilities
-├── Storefronts.swift  - Storefront helpers and ID mapping
+├── MusicStorefront.swift  - Storefront helpers and ID mapping
 └── PrivacyInfo.xcprivacy
 ```
 
