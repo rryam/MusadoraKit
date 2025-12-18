@@ -26,7 +26,7 @@ struct MusicSearchLibraryRequestEndpointTests {
     let request = MusicSearchLibraryRequest(term: term, types: [MusicVideo.self])
     let url = try request.librarySearchEndpointURL
 
-    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=max&types=library-music-videos")
+    expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/library/search?term=MAX&types=library-music-videos")
   }
 
   @Test
@@ -43,7 +43,7 @@ struct MusicSearchLibraryRequestEndpointTests {
     let term = "ed sheeran"
     let request = MusicSearchLibraryRequest(term: term, types: [Song.self, Artist.self])
     let endpointURL = try request.librarySearchEndpointURL
-    let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sheeran&types=library-songs,library-artists"
+    let url = "https://api.music.apple.com/v1/me/library/search?term=ed%20sheeran&types=library-songs,library-artists"
 
     expectEndpoint(endpointURL, equals: url)
   }
@@ -54,7 +54,7 @@ struct MusicSearchLibraryRequestEndpointTests {
     var request = MusicSearchLibraryRequest(term: term, types: [Song.self, Artist.self])
     request.limit = 2
     let endpointURL = try request.librarySearchEndpointURL
-    let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sh&types=library-songs,library-artists&limit=2"
+    let url = "https://api.music.apple.com/v1/me/library/search?term=ed%20sh&types=library-songs,library-artists&limit=2"
 
     expectEndpoint(endpointURL, equals: url)
   }
@@ -65,7 +65,7 @@ struct MusicSearchLibraryRequestEndpointTests {
     var request = MusicSearchLibraryRequest(term: term, types: [Song.self, Artist.self])
     request.offset = 2
     let endpointURL = try request.librarySearchEndpointURL
-    let url = "https://api.music.apple.com/v1/me/library/search?term=ed+sh&types=library-songs,library-artists&offset=2"
+    let url = "https://api.music.apple.com/v1/me/library/search?term=ed%20sh&types=library-songs,library-artists&offset=2"
 
     expectEndpoint(endpointURL, equals: url)
   }
