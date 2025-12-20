@@ -143,44 +143,72 @@ struct CommonImageProcessing {
   ///
   /// - Returns: An array of Cluster objects representing the final clusters.
   private static func kMeansCluster(pixels: [PixelData], k: Int, maxIterations: Int = 10) -> [Cluster] {
+    guard !pixels.isEmpty else {
+      return []
+    }
+
+    var clusters = initializeClusters(pixels: pixels, k: k)
+
+    for _ in 0..<maxIterations {
+      assignPixelsToClusters(pixels: pixels, clusters: &clusters)
+      updateClusterCenters(clusters: &clusters)
+    }
+
+    return clusters
+  }
+
+  private static func initializeClusters(pixels: [PixelData], k: Int) -> [Cluster] {
     var clusters = [Cluster]()
     for _ in 0..<k {
       if let randomPixel = pixels.randomElement() {
         clusters.append(Cluster(center: randomPixel, points: []))
       }
     }
+    return clusters
+  }
 
-    for _ in 0..<maxIterations {
-      for clusterIndex in 0..<clusters.count {
-        clusters[clusterIndex].points.removeAll()
-      }
+  private static func assignPixelsToClusters(pixels: [PixelData], clusters: inout [Cluster]) {
+    clearClusterPoints(clusters: &clusters)
 
-      for pixel in pixels {
-        var minDistance = Double.greatestFiniteMagnitude
-        var closestClusterIndex = 0
-        for (index, cluster) in clusters.enumerated() {
-          let distance = euclideanDistance(pixel1: pixel, pixel2: cluster.center)
-          if distance < minDistance {
-            minDistance = distance
-            closestClusterIndex = index
-          }
-        }
-        clusters[closestClusterIndex].points.append(pixel)
-      }
+    for pixel in pixels {
+      let closestIndex = findClosestClusterIndex(pixel: pixel, clusters: clusters)
+      clusters[closestIndex].points.append(pixel)
+    }
+  }
 
-      for clusterIndex in 0..<clusters.count {
-        let cluster = clusters[clusterIndex]
-        guard !cluster.points.isEmpty else { continue }
-        let sum = cluster.points.reduce(PixelData(red: 0, green: 0, blue: 0)) { result, pixel -> PixelData in
-          return PixelData(red: result.red + pixel.red, green: result.green + pixel.green, blue: result.blue + pixel.blue)
-        }
-        let count = Double(cluster.points.count)
-        guard count > 0 else { continue }
-        clusters[clusterIndex].center = PixelData(red: sum.red / count, green: sum.green / count, blue: sum.blue / count)
+  private static func clearClusterPoints(clusters: inout [Cluster]) {
+    for index in 0..<clusters.count {
+      clusters[index].points.removeAll()
+    }
+  }
+
+  private static func findClosestClusterIndex(pixel: PixelData, clusters: [Cluster]) -> Int {
+    var minDistance = Double.greatestFiniteMagnitude
+    var closestIndex = 0
+
+    for (index, cluster) in clusters.enumerated() {
+      let distance = euclideanDistance(pixel1: pixel, pixel2: cluster.center)
+      if distance < minDistance {
+        minDistance = distance
+        closestIndex = index
       }
     }
 
-    return clusters
+    return closestIndex
+  }
+
+  private static func updateClusterCenters(clusters: inout [Cluster]) {
+    for index in 0..<clusters.count {
+      let cluster = clusters[index]
+      guard !cluster.points.isEmpty else { continue }
+
+      let sum = cluster.points.reduce(PixelData(red: 0, green: 0, blue: 0)) { result, pixel in
+        PixelData(red: result.red + pixel.red, green: result.green + pixel.green, blue: result.blue + pixel.blue)
+      }
+
+      let count = Double(cluster.points.count)
+      clusters[index].center = PixelData(red: sum.red / count, green: sum.green / count, blue: sum.blue / count)
+    }
   }
 
   /// Calculates the Euclidean distance between two pixels in color space.
