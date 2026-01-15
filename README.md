@@ -1,5 +1,4 @@
 # MusadoraKit
-[![Star History Chart](https://api.star-history.com/svg?repos=rryam/MusadoraKit&type=Date)](https://star-history.com/#rryam/MusadoraKit&Date)
 
 
 MusadoraKit (pronounced 'myu' za' 'do' 'ra') is the ultimate companion to MusicKit. It makes working with MusicKit and Apple Music API much easier, with one-liner API implementations.
@@ -726,3 +725,5 @@ MusadoraKit is available under the MIT license. See [LICENSE](LICENSE) for more 
 - [Twitter](https://x.com/rudrankriyam)
 
 I hope you love working with MusadoraKit!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rryam/MusadoraKit&type=Date)](https://star-history.com/#rryam/MusadoraKit&Date)
