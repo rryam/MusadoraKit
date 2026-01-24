@@ -14,20 +14,10 @@ private struct InFavoritesResponse: Decodable {
 
 private struct InFavoritesResponseItem: Decodable {
   let attributes: InFavoritesAttributes?
-  let relationships: InFavoritesRelationships?
 }
 
 private struct InFavoritesAttributes: Decodable {
   let inFavorites: Bool?
-}
-
-private struct InFavoritesRelationships: Decodable {
-  let library: InFavoritesLibrary?
-}
-
-private struct InFavoritesLibrary: Decodable {
-  struct Item: Decodable {}
-  let data: [Item]
 }
 
 /// Internal parser for extracting inFavorites status from Apple Music API responses.
@@ -47,10 +37,6 @@ internal enum InFavoritesParser {
 
     guard let item = response.data.first else {
       throw MusadoraKitError.notFound(for: "\(itemType.rawValue) in catalog")
-    }
-
-    guard let libraryData = item.relationships?.library?.data, !libraryData.isEmpty else {
-      throw MusadoraKitError.notInLibrary(item: itemType.rawValue)
     }
 
     guard let inFavorites = item.attributes?.inFavorites else {
@@ -74,7 +60,6 @@ internal enum InFavoritesParser {
     var components = AppleMusicURLComponents()
     components.path = "catalog/\(storefront)/\(itemType.rawValue)/\(id.rawValue)"
     components.queryItems = [
-      URLQueryItem(name: "relate", value: "library"),
       URLQueryItem(name: "extend", value: "inFavorites")
     ]
 
