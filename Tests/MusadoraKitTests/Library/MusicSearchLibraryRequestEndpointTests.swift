@@ -88,4 +88,15 @@ struct MusicSearchLibraryRequestEndpointTests {
     #expect(requests.contains(requestB))
     #expect(!requests.contains(different))
   }
+
+  @Test
+  func librarySearchWithEmptyTypesThrows() throws {
+    let request = MusicSearchLibraryRequest(term: "ed", types: [])
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.librarySearchEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.invalidLibraryItemType)
+  }
 }

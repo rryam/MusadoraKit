@@ -27,17 +27,15 @@ import Foundation
 /// // Now proceed with sending a MusicDataRequest
 /// ```
 ///
-/// `@MainActor` isolation provides thread safety, making this safe to pass across concurrency boundaries.
-@MainActor
+/// This type is immutable; `@unchecked Sendable` is safe here.
 public final class MDeveloperTokenProvider: MusicTokenProvider, @unchecked Sendable {
   /// The **custom** developer token used to authenticate Apple Music API requests.
-  private var developerToken: String = ""
+  private let developerToken: String
 
   /// Creates a new instance of `MDeveloperTokenProvider` using the provided **custom** developer token.
   ///
   /// - Parameter developerToken: The **custom** developer token for Apple Music API authentication.
-  public convenience init(developerToken: String) {
-    self.init()
+  public init(developerToken: String) {
     self.developerToken = developerToken
   }
 

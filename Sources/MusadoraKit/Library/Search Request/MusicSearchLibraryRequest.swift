@@ -84,6 +84,9 @@ extension MusicSearchLibraryRequest {
       queryItems.append(termQuery)
 
       let typesValue = MusicSearchLibraryType.getTypes(types)
+      guard !typesValue.isEmpty else {
+        throw MusadoraKitError.invalidLibraryItemType
+      }
       let typesQuery = URLQueryItem(name: "types", value: typesValue)
       queryItems.append(typesQuery)
 
