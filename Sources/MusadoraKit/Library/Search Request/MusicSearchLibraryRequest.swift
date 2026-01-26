@@ -84,6 +84,9 @@ extension MusicSearchLibraryRequest {
       queryItems.append(termQuery)
 
       let typesValue = MusicSearchLibraryType.getTypes(types)
+      guard !typesValue.isEmpty else {
+        throw MusadoraKitError.invalidLibraryItemType
+      }
       let typesQuery = URLQueryItem(name: "types", value: typesValue)
       queryItems.append(typesQuery)
 
@@ -99,7 +102,7 @@ extension MusicSearchLibraryRequest {
         queryItems.append(URLQueryItem(name: "includeTopResults", value: includeTopResults ? "true" : "false"))
       }
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

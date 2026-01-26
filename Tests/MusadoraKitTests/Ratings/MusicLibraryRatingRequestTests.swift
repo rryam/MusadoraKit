@@ -42,4 +42,15 @@ struct MusicLibraryRatingRequestTests {
     let url = try request.libraryRatingsEndpointURL
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/ratings/library-music-videos?ids=1138988512")
   }
+
+  @Test
+  func libraryRatingsWithEmptyIdsThrows() throws {
+    let request = MusicLibraryRatingRequest(with: [], item: .song)
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.libraryRatingsEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.idMissing)
+  }
 }

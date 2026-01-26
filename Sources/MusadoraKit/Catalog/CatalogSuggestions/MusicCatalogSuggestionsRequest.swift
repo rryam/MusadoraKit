@@ -66,43 +66,54 @@ struct MusicCatalogSuggestionsRequest {
 
 @available(iOS 15.4, macOS 12.3, tvOS 15.4, watchOS 9.0, visionOS 1.0, *)
 extension MusicCatalogSuggestionsRequest {
-  private var searchSuggestionsEndpointURL: URL {
+  internal var searchSuggestionsEndpointURL: URL {
     get async throws {
       if self.kinds.contains(.topResults), types == nil {
         throw MusadoraKitError.typeMissing
       }
 
       let storefront = try await MusicDataRequest.currentCountryCode
-      let kinds = Set(kinds.map { $0.rawValue }).joined(separator: ",")
-
-      var queryItems: [URLQueryItem] = []
-      var components = AppleMusicURLComponents()
-      components.path = "catalog/\(storefront)/search/suggestions"
-
-      queryItems.append(URLQueryItem(name: "kinds", value: kinds))
-      queryItems.append(URLQueryItem(name: "term", value: term))
-
-      if let types = types {
-        let searchTypes = setTypes(for: types)
-        queryItems.append(URLQueryItem(name: "types", value: searchTypes))
-      }
-
-      if let limit = limit {
-        queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
-      }
-
-      components.queryItems = queryItems
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-
-      return url
+      return try endpointURL(storefront: storefront)
     }
   }
 
-  private func setTypes(for types: [MusicCatalogSearchable.Type]) -> String {
-    Set(types.map { $0.identifier }).compactMap {
+  internal func endpointURL(storefront: String) throws -> URL {
+    let kindsValue = Set(kinds.map { $0.rawValue })
+    guard !kindsValue.isEmpty else {
+      throw MusadoraKitError.typeMissing
+    }
+
+    var queryItems: [URLQueryItem] = []
+    var components = AppleMusicURLComponents()
+    components.path = "catalog/\(storefront)/search/suggestions"
+
+    let kindsQuery = kindsValue.sorted().joined(separator: ",")
+    queryItems.append(URLQueryItem(name: "kinds", value: kindsQuery))
+    queryItems.append(URLQueryItem(name: "term", value: term))
+
+    if let types = types {
+      if let searchTypes = setTypes(for: types) {
+        queryItems.append(URLQueryItem(name: "types", value: searchTypes))
+      } else if self.kinds.contains(.topResults) {
+        throw MusadoraKitError.typeMissing
+      }
+    }
+
+    if let limit = limit {
+      queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+    }
+
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+
+    return url
+  }
+
+  private func setTypes(for types: [MusicCatalogSearchable.Type]) -> String? {
+    let joined = Set(types.map { $0.identifier }).compactMap {
       switch $0 {
       case Song.identifier:
         return "songs"
@@ -126,5 +137,7 @@ extension MusicCatalogSuggestionsRequest {
         return nil
       }
     }.joined(separator: ",")
+
+    return joined.isEmpty ? nil : joined
   }
 }

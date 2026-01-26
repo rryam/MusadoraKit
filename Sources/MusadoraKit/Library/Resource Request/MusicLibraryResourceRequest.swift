@@ -89,6 +89,9 @@ extension MusicLibraryResourceRequest {
       components.path = "me/library/\(type.rawValue)"
 
       if let ids = ids {
+        guard !ids.isEmpty else {
+          throw MusadoraKitError.idMissing
+        }
         queryItems += [URLQueryItem(name: "ids", value: ids.joined(separator: ","))]
       }
 
@@ -104,7 +107,7 @@ extension MusicLibraryResourceRequest {
         URLQueryItem(name: "include[library-albums]", value: "artists")
       ]
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

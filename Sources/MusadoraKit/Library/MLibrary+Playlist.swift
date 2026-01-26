@@ -340,7 +340,7 @@ public extension MLibrary {
       queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
     }
 
-    components.queryItems = queryItems
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
 
     return components.url
   }

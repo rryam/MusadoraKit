@@ -24,6 +24,8 @@ import Foundation
 /// }
 /// ```
 public struct HundredBestAlbumRequest {
+  private static let allowedPathCharacters = CharacterSet.alphanumerics.union(.init(charactersIn: "-"))
+
   /// The position of the album in the 100 Best Albums list (1-100).
   private let position: Int
 
@@ -40,13 +42,20 @@ public struct HundredBestAlbumRequest {
   ///   - storefront: The storefront to fetch the album from (defaults to "us").
   ///   - region: The region/language code for localized content (defaults to "en-us").
   /// - Throws: `MusadoraKitError` if the position is outside the valid range (1-100).
+  /// - Throws: `URLError.badURL` if the storefront or region contains invalid characters.
   public init(position: Int, storefront: String = "us", region: String = "en-us") throws {
     guard position >= 1 && position <= 100 else {
       throw MusadoraKitError.invalidPosition(limit: 100, provided: position)
     }
+
+    guard let sanitizedStorefront = Self.sanitizedPathComponent(storefront),
+          let sanitizedRegion = Self.sanitizedPathComponent(region) else {
+      throw URLError(.badURL)
+    }
+
     self.position = position
-    self.storefront = storefront
-    self.region = region
+    self.storefront = sanitizedStorefront
+    self.region = sanitizedRegion
   }
 
   /// Fetches the album at the specified position in the 100 Best Albums list.
@@ -71,6 +80,19 @@ public struct HundredBestAlbumRequest {
 
 /// Extension containing URL-related functionality for the album request.
 extension HundredBestAlbumRequest {
+  private static func sanitizedPathComponent(_ value: String) -> String? {
+    let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    guard !trimmed.isEmpty else {
+      return nil
+    }
+
+    guard trimmed.rangeOfCharacter(from: allowedPathCharacters.inverted) == nil else {
+      return nil
+    }
+
+    return trimmed
+  }
+
   /// The URL used to fetch the album data.
   ///
   /// - Returns: A URL constructed using the storefront, region, and position.

@@ -79,7 +79,7 @@ extension MusicChartRequest {
       queryItems.append(URLQueryItem(name: "with", value: value))
     }
 
-    components.queryItems = queryItems
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
 
     guard let url = components.url else {
       throw URLError(.badURL)

@@ -5,6 +5,7 @@
 //  Created by Rudrank Riyam on 19/05/24.
 //
 
+import Foundation
 @testable import MusadoraKit
 import Testing
 
@@ -37,5 +38,23 @@ struct HundredBestAlbumRequestTests {
     #expect(album.title == "Body Talk")
     #expect(album.artistName == "Robyn")
     #expect(album.url.absoluteString == "https://music.apple.com/us/album/body-talk/1440714879")
+  }
+
+  @Test
+  func invalidStorefrontThrows() {
+    let error = #expect(throws: URLError.self) {
+      try HundredBestAlbumRequest(position: 1, storefront: "us/../", region: "en-us")
+    }
+
+    #expect(error == URLError(.badURL))
+  }
+
+  @Test
+  func invalidRegionThrows() {
+    let error = #expect(throws: URLError.self) {
+      try HundredBestAlbumRequest(position: 1, storefront: "us", region: "en us")
+    }
+
+    #expect(error == URLError(.badURL))
   }
 }

@@ -59,11 +59,14 @@ extension MusicCatalogRatingRequest: MusicRequest {
     var url: URL {
         get throws {
             var components = AppleMusicURLComponents()
-            var queryItems: [URLQueryItem]?
+            var queryItems: [URLQueryItem] = []
             components.path = "me/ratings/\(type.rawValue)"
+            guard !ids.isEmpty else {
+                throw MusadoraKitError.idMissing
+            }
             let idsString = ids.map { $0.rawValue }.joined(separator: ",")
-            queryItems = [URLQueryItem(name: "ids", value: idsString)]
-            components.queryItems = queryItems
+            queryItems.append(URLQueryItem(name: "ids", value: idsString))
+            components.queryItems = queryItems.isEmpty ? nil : queryItems
             guard let url = components.url else {
                 throw URLError(.badURL)
             }

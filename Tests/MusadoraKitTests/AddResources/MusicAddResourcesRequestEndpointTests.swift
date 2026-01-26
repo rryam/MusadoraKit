@@ -62,4 +62,26 @@ struct MusicAddResourcesRequestEndpointTests {
     let expectedURL = "https://api.music.apple.com/v1/me/library?ids[albums]=111,999&ids[songs]=123,456,789"
     expectEndpoint(url, equals: expectedURL)
   }
+
+  @Test
+  func addResourcesWithEmptyIdsThrows() throws {
+    let request = MusicAddResourcesRequest([(item: .songs, value: [])])
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.addResourcesEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.idMissing)
+  }
+
+  @Test
+  func addResourcesWithNoResourcesThrows() throws {
+    let request = MusicAddResourcesRequest([])
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.addResourcesEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.idMissing)
+  }
 }

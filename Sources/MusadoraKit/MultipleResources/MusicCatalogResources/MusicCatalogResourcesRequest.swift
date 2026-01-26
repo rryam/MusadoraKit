@@ -33,22 +33,32 @@ extension MusicCatalogResourcesRequest {
   private var multipleCatalogResourcesEndpointURL: URL {
     get async throws {
       let storefront = try await MusicDataRequest.currentCountryCode
-
-      var components = AppleMusicURLComponents()
-      var queryItems: [URLQueryItem] = []
-      components.path = "catalog/\(storefront)"
-
-      for (key, value) in types {
-        let values = value.map { $0.rawValue }.joined(separator: ",")
-        queryItems.append(URLQueryItem(name: key.type, value: values))
-      }
-
-      components.queryItems = queryItems
-
-      guard let url = components.url else {
-        throw URLError(.badURL)
-      }
-      return url
+      return try endpointURL(storefront: storefront)
     }
+  }
+
+  internal func endpointURL(storefront: String) throws -> URL {
+    var components = AppleMusicURLComponents()
+    var queryItems: [URLQueryItem] = []
+    components.path = "catalog/\(storefront)"
+
+    guard !types.isEmpty else {
+      throw MusadoraKitError.idMissing
+    }
+
+    for (key, value) in types {
+      guard !value.isEmpty else {
+        throw MusadoraKitError.idMissing
+      }
+      let values = value.map { $0.rawValue }.joined(separator: ",")
+      queryItems.append(URLQueryItem(name: key.type, value: values))
+    }
+
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
+
+    guard let url = components.url else {
+      throw URLError(.badURL)
+    }
+    return url
   }
 }

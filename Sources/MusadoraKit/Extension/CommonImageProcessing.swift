@@ -44,8 +44,18 @@ struct CommonImageProcessing {
   ///
   /// - Throws: A `MusadoraKitError` if the image processing fails.
   static func extractColors(from cgImage: CGImage, numberOfColors: Int) throws -> [CGColor] {
+    guard numberOfColors > 0 else {
+      return []
+    }
+
+    let processedImage = try processedImage(for: cgImage)
+    let pixels = try pixelData(from: processedImage)
+    let clusters = kMeansCluster(pixels: pixels, k: numberOfColors)
+    return colors(from: clusters)
+  }
+
+  private static func processedImage(for cgImage: CGImage) throws -> CGImage {
     // Downscale image if it exceeds memory limits
-    let processedImage: CGImage
     if cgImage.width * cgImage.height > maxTotalPixels {
       let scale = min(Double(maxImageDimension) / Double(cgImage.width),
                       Double(maxImageDimension) / Double(cgImage.height))
@@ -55,13 +65,15 @@ struct CommonImageProcessing {
       guard let resizedImage = resizeImage(cgImage, width: newWidth, height: newHeight) else {
         throw MusadoraKitError.imageResizeFailed
       }
-      processedImage = resizedImage
-    } else {
-      processedImage = cgImage
+      return resizedImage
     }
 
-    let width = processedImage.width
-    let height = processedImage.height
+    return cgImage
+  }
+
+  private static func pixelData(from image: CGImage) throws -> [PixelData] {
+    let width = image.width
+    let height = image.height
     let bytesPerPixel = 4
     let bytesPerRow = bytesPerPixel * width
     let bitsPerComponent = 8
@@ -83,23 +95,26 @@ struct CommonImageProcessing {
       throw MusadoraKitError.imageContextCreationFailed
     }
 
-    context.draw(processedImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+    context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
 
     let pixelBuffer = data.bindMemory(to: UInt8.self, capacity: width * height * bytesPerPixel)
-    var pixelData = [PixelData]()
+    var pixels = [PixelData]()
+    pixels.reserveCapacity(width * height)
     for y in 0..<height {
       for x in 0..<width {
         let offset = ((width * y) + x) * bytesPerPixel
         let r = pixelBuffer[offset]
         let g = pixelBuffer[offset + 1]
         let b = pixelBuffer[offset + 2]
-        pixelData.append(PixelData(red: Double(r), green: Double(g), blue: Double(b)))
+        pixels.append(PixelData(red: Double(r), green: Double(g), blue: Double(b)))
       }
     }
 
-    let clusters = kMeansCluster(pixels: pixelData, k: numberOfColors)
+    return pixels
+  }
 
-    return clusters.map { cluster -> CGColor in
+  private static func colors(from clusters: [Cluster]) -> [CGColor] {
+    clusters.map { cluster -> CGColor in
       CGColor(red: cluster.center.red / 255.0,
               green: cluster.center.green / 255.0,
               blue: cluster.center.blue / 255.0,
@@ -143,7 +158,7 @@ struct CommonImageProcessing {
   ///
   /// - Returns: An array of Cluster objects representing the final clusters.
   private static func kMeansCluster(pixels: [PixelData], k: Int, maxIterations: Int = 10) -> [Cluster] {
-    guard !pixels.isEmpty else {
+    guard !pixels.isEmpty, k > 0 else {
       return []
     }
 

@@ -42,12 +42,19 @@ extension MusicLibraryResourcesRequest {
     var queryItems: [URLQueryItem] = []
     components.path = "me/library"
 
+    guard !types.isEmpty else {
+      throw MusadoraKitError.idMissing
+    }
+
     for (key, value) in types {
+      guard !value.isEmpty else {
+        throw MusadoraKitError.idMissing
+      }
       let values = value.map { $0.rawValue }.joined(separator: ",")
       queryItems.append(URLQueryItem(name: key.type, value: values))
     }
 
-    components.queryItems = queryItems
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
 
     guard let url = components.url else {
       throw URLError(.badURL)

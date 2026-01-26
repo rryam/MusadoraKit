@@ -18,4 +18,15 @@ struct FavoritesEndpointTests {
     let url = try request.favoritesEndpointURL
     expectEndpoint(url, equals: "https://api.music.apple.com/v1/me/favorites?ids[albums]=1,2,3")
   }
+
+  @Test
+  func favoriteEmptyResourcesThrows() throws {
+    let request = MusicFavoritesRequest(itemIDs: [], resourceType: .songs)
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.favoritesEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.idMissing)
+  }
 }

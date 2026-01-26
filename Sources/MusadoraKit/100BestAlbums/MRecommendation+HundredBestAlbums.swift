@@ -79,10 +79,6 @@ public extension MRecommendation {
       }
 
       for try await (position, result) in group {
-        guard position >= 1 && position <= albums.count else {
-          continue
-        }
-
         switch result {
         case .success(let album):
           albums[position - 1] = album

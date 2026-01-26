@@ -17,7 +17,7 @@ struct RecentlyPlayedView: View {
       NavigationLink("Playlists", destination: PlaylistsView(with: recentlyPlayedPlaylists))
       NavigationLink("Albums", destination: AlbumsView(with: recentlyPlayedAlbums))
     }
-    .navigationTitle("Recently Added")
+    .navigationTitle("Recently Played")
     .task {
       do {
         recentlyPlayedAlbums = try await MHistory.recentlyPlayedAlbums(limit: 25, offset: 0)

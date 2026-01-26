@@ -81,7 +81,7 @@ extension MusadoraKitError: CustomStringConvertible {
     case let .notInLibrary(item):
       return "The \(item) is not in the user's library."
     case .typeMissing:
-      return "One or more types must be specified for fetching top results in search suggestions."
+      return "One or more types or kinds must be specified for search suggestions."
     case let .recommendationOverLimit(limit):
       return "The recommendation limit was exceeded. Value must be an integer less than or equal to 30, but was \(limit)."
     case let .historyOverLimit(limit, overLimit):
@@ -89,7 +89,7 @@ extension MusadoraKitError: CustomStringConvertible {
     case .invalidSummaryPeriod:
       return "A monthly summary period could not be determined from the provided date context."
     case .idMissing:
-      return "One or more IDs must be specified to fetch the ratings."
+      return "One or more IDs must be specified for the operation."
     case .platformNotSupported:
       return "This operation is only available on iOS."
     case let .ratingNotFound(id):

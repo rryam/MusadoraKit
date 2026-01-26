@@ -56,11 +56,15 @@ extension MusicFavoritesRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/favorites"
 
+      guard !itemIDs.isEmpty else {
+        throw MusadoraKitError.idMissing
+      }
+
       // Join all item IDs with commas and include the required resource-typed parameter name.
       let idsString = itemIDs.map { $0.rawValue }.joined(separator: ",")
       queryItems.append(URLQueryItem(name: "ids[\(resourceType.rawValue)]", value: idsString))
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

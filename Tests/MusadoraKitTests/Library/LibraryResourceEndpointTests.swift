@@ -49,6 +49,18 @@ struct LibraryResourceEndpointTests {
     #expect(url == nil)
   }
 
+  @Test
+  func libraryResourceEndpointWithEmptyIdsThrows() throws {
+    let ids: [MusicItemID] = []
+    let request = MusicLibraryResourceRequest<Album>(matching: \.id, memberOf: ids)
+
+    let error = #expect(throws: MusadoraKitError.self) {
+      try request.libraryEndpointURL
+    }
+
+    #expect(error == MusadoraKitError.idMissing)
+  }
+
   private func queryItems(from url: URL) throws -> [String: String] {
     guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
           let queryItems = components.queryItems else {

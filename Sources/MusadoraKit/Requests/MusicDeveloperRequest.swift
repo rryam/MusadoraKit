@@ -56,7 +56,7 @@ public struct MusicDeveloperRequest: Sendable {
   /// - Throws: An error if there's a problem initiating or receiving the response.
   public func response() async throws -> MusicDataResponse {
     let token = self.developerToken
-    MusicDataRequest.tokenProvider = await MDeveloperTokenProvider(developerToken: token)
+    MusicDataRequest.tokenProvider = MDeveloperTokenProvider(developerToken: token)
     let request = MusicDataRequest(urlRequest: urlRequest)
     let response = try await request.response()
     return response
