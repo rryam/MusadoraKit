@@ -66,7 +66,7 @@ struct RecommendationsView: View {
         hundredBestAlbums = try await MRecommendation.allHundredBestAlbums()
         //   recommendations = try await MRecommendation.default()
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
     }
   }

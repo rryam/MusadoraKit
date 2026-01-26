@@ -23,7 +23,7 @@ struct RecentlyPlayedView: View {
         recentlyPlayedAlbums = try await MHistory.recentlyPlayedAlbums(limit: 25, offset: 0)
         recentlyPlayedPlaylists = try await MHistory.recentlyPlayedPlaylists(limit: 25, offset: 0)
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
     }
   }

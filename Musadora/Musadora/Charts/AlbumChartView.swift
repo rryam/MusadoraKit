@@ -31,7 +31,7 @@ struct AlbumChartView: View {
                   do {
                     try await APlayer.shared.play(album: album)
                   } catch {
-                    print(error)
+                    ErrorPresenter.shared.present(error)
                   }
                 }
               }

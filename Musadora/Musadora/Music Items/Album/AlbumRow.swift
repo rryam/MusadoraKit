@@ -31,7 +31,7 @@ struct AlbumRow: View {
                 do {
                   try await APlayer.shared.play(album: album)
                 } catch {
-                  print(error)
+                  ErrorPresenter.shared.present(error)
                 }
               }
             }
@@ -46,7 +46,7 @@ struct AlbumRow: View {
                   await MainActor.run { isFavorited = true }
                 }
               } catch {
-                print(error)
+                ErrorPresenter.shared.present(error)
               }
               await MainActor.run { isFavoriting = false }
             }

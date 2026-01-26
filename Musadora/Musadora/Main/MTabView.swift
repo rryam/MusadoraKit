@@ -111,7 +111,9 @@ struct PlayerButton: View {
         do {
           try await action()
         } catch {
-          print("Failed to perform player action: \(error)")
+          ErrorPresenter.shared.present(
+            message: "Failed to perform player action: \(error.localizedDescription)"
+          )
         }
       }
     }) {

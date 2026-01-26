@@ -100,7 +100,7 @@ extension ChartView {
     do {
       chart = try await MCatalog.charts(genre: genre, kinds: .all, types: .all)
     } catch {
-      print(error)
+      ErrorPresenter.shared.present(error)
     }
   }
 }

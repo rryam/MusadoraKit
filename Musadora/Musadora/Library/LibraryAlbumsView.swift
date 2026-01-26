@@ -18,7 +18,7 @@ struct LibraryAlbumsView: View {
         do {
           albums = try await MLibrary.albums()
         } catch {
-          print(error)
+          ErrorPresenter.shared.present(error)
         }
       }
   }

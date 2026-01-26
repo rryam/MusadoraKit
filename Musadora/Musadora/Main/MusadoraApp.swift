@@ -12,6 +12,7 @@ struct MusadoraApp: App {
   var body: some Scene {
     WindowGroup {
       MTabView()
+        .errorAlert()
     }
   }
 }

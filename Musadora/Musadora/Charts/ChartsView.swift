@@ -50,7 +50,7 @@ struct ChartsView: View {
       do {
         genres = try await MCatalog.topGenres()
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
     }
   }

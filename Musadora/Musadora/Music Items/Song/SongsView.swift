@@ -56,7 +56,7 @@ struct SongsView: View {
                 do {
                   try await APlayer.shared.play(song: song)
                 } catch {
-                  print(error)
+                  ErrorPresenter.shared.present(error)
                 }
               }
             } label: {
@@ -76,7 +76,7 @@ struct SongsView: View {
                     _ = await MainActor.run { favoritedSongIDs.insert(song.id) }
                   }
                 } catch {
-                  print(error)
+                  ErrorPresenter.shared.present(error)
                 }
                 _ = await MainActor.run { favoritingSongIDs.remove(song.id) }
               }
@@ -95,7 +95,7 @@ struct SongsView: View {
             do {
               try await APlayer.shared.play(song: song)
             } catch {
-              print(error)
+              ErrorPresenter.shared.present(error)
             }
           }
         }

@@ -29,7 +29,7 @@ extension StationGenresView {
       do {
         stationGenres = try await MCatalog.stationGenres()
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
     }
   }
 }

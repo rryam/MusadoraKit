@@ -6,6 +6,7 @@
 //
 
 import MusicKit
+import MusadoraKit
 import Observation
 import SwiftUI
 
@@ -109,7 +110,19 @@ struct WelcomeView: View {
         case .notDetermined:
             Task {
                 let musicAuthorizationStatus = await MusicAuthorization.request()
-                update(with: musicAuthorizationStatus)
+                await update(with: musicAuthorizationStatus)
+
+                guard musicAuthorizationStatus == .authorized else {
+                    return
+                }
+
+                do {
+                    try await MusadoraKit.test()
+                } catch {
+                    ErrorPresenter.shared.present(
+                        message: "Apple Music connection failed. \(error.localizedDescription)"
+                    )
+                }
             }
         case .denied:
             #if os(iOS)
@@ -138,9 +151,7 @@ struct WelcomeView: View {
         
         private init() {
             let authorizationStatus = MusicAuthorization.currentStatus
-            
-            debugPrint(MusicAuthorization.currentStatus.rawValue)
-            
+
             musicAuthorizationStatus = authorizationStatus
             isWelcomeViewPresented = (authorizationStatus != .authorized)
         }

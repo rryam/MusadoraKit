@@ -29,7 +29,7 @@ struct PlaylistChartView: View {
                 do {
                   try await APlayer.shared.play(playlist: playlist)
                 } catch {
-                  print(error)
+                  ErrorPresenter.shared.present(error)
                 }
               }
             }, label: {

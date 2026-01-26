@@ -102,7 +102,7 @@ struct LibraryPlaylistsTestView: View {
       print("Successfully fetched \(playlists.count) playlists with limit \(limit)")
     } catch {
       errorMessage = error.localizedDescription
-      print("Error fetching playlists: \(error)")
+      ErrorPresenter.shared.present(message: "Error fetching playlists: \(error.localizedDescription)")
     }
 
     isLoading = false

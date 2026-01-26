@@ -24,7 +24,7 @@ struct StationGenreDetailedView: View {
       do {
         stations = try await MCatalog.stations(for: stationGenre)
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
     }
   }
