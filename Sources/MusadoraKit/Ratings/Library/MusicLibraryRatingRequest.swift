@@ -42,6 +42,10 @@ extension MusicLibraryRatingRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/ratings/\(type.rawValue)"
 
+      guard !ids.isEmpty else {
+        throw MusadoraKitError.idMissing
+      }
+
       let ids = ids.map { $0.rawValue }.joined(separator: ",")
       queryItems.append(URLQueryItem(name: "ids", value: ids))
       components.queryItems = queryItems.isEmpty ? nil : queryItems

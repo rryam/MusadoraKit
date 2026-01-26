@@ -89,7 +89,7 @@ extension MusadoraKitError: CustomStringConvertible {
     case .invalidSummaryPeriod:
       return "A monthly summary period could not be determined from the provided date context."
     case .idMissing:
-      return "One or more IDs must be specified to fetch the ratings."
+      return "One or more IDs must be specified for the operation."
     case .platformNotSupported:
       return "This operation is only available on iOS."
     case let .ratingNotFound(id):

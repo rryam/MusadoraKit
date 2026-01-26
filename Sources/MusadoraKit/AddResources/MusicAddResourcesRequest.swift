@@ -61,11 +61,18 @@ extension MusicAddResourcesRequest {
       var queryItems: [URLQueryItem] = []
       components.path = "me/library"
 
+      guard !resources.isEmpty else {
+        throw MusadoraKitError.idMissing
+      }
+
       let resourcesMap = Dictionary(grouping: resources, by: { $0.item })
 
       for (itemType, resources) in resourcesMap {
         let ids = resources.flatMap { $0.value }.map { $0.rawValue }
         let uniqueIds = Set(ids)
+        guard !uniqueIds.isEmpty else {
+          throw MusadoraKitError.idMissing
+        }
         let values = uniqueIds.sorted().joined(separator: ",")
         let query = URLQueryItem(name: itemType.type, value: values)
         queryItems.append(query)

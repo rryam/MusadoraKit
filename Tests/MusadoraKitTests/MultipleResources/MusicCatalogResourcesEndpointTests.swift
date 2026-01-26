@@ -4,41 +4,41 @@ import MusicKit
 import Testing
 
 @Suite
-struct MusicLibraryResourcesEndpointTests {
+struct MusicCatalogResourcesEndpointTests {
   @Test
-  func libraryResourcesEndpointBuildsQueryPerType() throws {
-    let request = MusicLibraryResourcesRequest(types: [
+  func catalogResourcesEndpointBuildsQueryPerType() throws {
+    let request = MusicCatalogResourcesRequest(types: [
       .songs: [MusicItemID("1"), MusicItemID("2")],
       .albums: [MusicItemID("3")]
     ])
 
-    let url = try request.makeEndpointURL()
-    #expect(url.absoluteString.starts(with: "https://api.music.apple.com/v1/me/library"))
+    let url = try request.endpointURL(storefront: "us")
+    #expect(url.absoluteString.starts(with: "https://api.music.apple.com/v1/catalog/us"))
 
     let items = try queryItems(from: url)
-    #expect(items["ids[library-songs]"] == "1,2")
-    #expect(items["ids[library-albums]"] == "3")
+    #expect(items["ids[songs]"] == "1,2")
+    #expect(items["ids[albums]"] == "3")
   }
 
   @Test
-  func libraryResourcesEndpointWithEmptyTypesThrows() throws {
-    let request = MusicLibraryResourcesRequest(types: [:])
+  func catalogResourcesEndpointWithEmptyTypesThrows() throws {
+    let request = MusicCatalogResourcesRequest(types: [:])
 
     let error = #expect(throws: MusadoraKitError.self) {
-      try request.makeEndpointURL()
+      try request.endpointURL(storefront: "us")
     }
 
     #expect(error == MusadoraKitError.idMissing)
   }
 
   @Test
-  func libraryResourcesEndpointWithEmptyIdsThrows() throws {
-    let request = MusicLibraryResourcesRequest(types: [
+  func catalogResourcesEndpointWithEmptyIdsThrows() throws {
+    let request = MusicCatalogResourcesRequest(types: [
       .songs: []
     ])
 
     let error = #expect(throws: MusadoraKitError.self) {
-      try request.makeEndpointURL()
+      try request.endpointURL(storefront: "us")
     }
 
     #expect(error == MusadoraKitError.idMissing)
