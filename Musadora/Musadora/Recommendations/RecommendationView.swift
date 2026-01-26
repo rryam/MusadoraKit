@@ -30,7 +30,7 @@ struct RecommendationRow: View {
           APlayer.shared.queue = [item]
           try await APlayer.shared.play()
         } catch {
-          print(error)
+          ErrorPresenter.shared.present(error)
         }
       }
     }, label: {

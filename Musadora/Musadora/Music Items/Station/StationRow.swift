@@ -28,7 +28,7 @@ struct StationRow: View {
               do {
                 try await APlayer.shared.play(station: station)
               } catch {
-                print(error)
+                ErrorPresenter.shared.present(error)
               }
             }
           }

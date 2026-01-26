@@ -130,7 +130,7 @@ private extension AlbumsView {
       do {
         try await APlayer.shared.play(album: album)
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
     }
   }
@@ -146,7 +146,7 @@ private extension AlbumsView {
           _ = await MainActor.run { favoritedAlbumIDs.insert(album.id) }
         }
       } catch {
-        print(error)
+        ErrorPresenter.shared.present(error)
       }
       _ = await MainActor.run { favoritingAlbumIDs.remove(album.id) }
     }
