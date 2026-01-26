@@ -60,7 +60,7 @@ struct InFavoritesTests {
   }
 
   @Test
-  func songNotInLibraryThrowsError() throws {
+  func songNotInLibraryReturnsFalse() throws {
     let json = """
     {
       "data": [{
@@ -80,10 +80,9 @@ struct InFavoritesTests {
     """
 
     let data = try #require(json.data(using: .utf8))
+    let inFavorites = try InFavoritesParser.parse(from: data, itemType: .songs)
 
-    #expect(throws: MusadoraKitError.self) {
-      try InFavoritesParser.parse(from: data, itemType: .songs)
-    }
+    #expect(inFavorites == false)
   }
 
   // MARK: - Album Tests
