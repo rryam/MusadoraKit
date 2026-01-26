@@ -207,6 +207,10 @@ This method performs a GET request to Apple's test endpoint and validates:
 - Network connectivity to Apple Music API
 - Basic API communication works
 
+### Input validation
+
+Requests that require identifiers validate empty inputs and throw `MusadoraKitError.idMissing` when arrays are empty. This applies to favorites, ratings, add-resources, and batch resource requests (catalog and library).
+
 ## Catalog 
 
 To easily access the Apple Music Catalog, you can use pre-defined methods from MusadoraKit. The methods are similar across the music items. 
@@ -629,6 +633,8 @@ print(response.songs)
 print(response.albums)
 ```
 
+> **Note:** Empty identifier collections throw `MusadoraKitError.idMissing`.
+
 ## MusicLibraryResourcesRequest:
 
 To fetch multiple library music items by their identifiers in the same request. For example:
@@ -640,6 +646,8 @@ let response = try await request.response()
 print(response.songs)
 print(response.playlists)
 ```
+
+> **Note:** Empty identifier collections throw `MusadoraKitError.idMissing`.
 
 ## Animated Artwork View
 
