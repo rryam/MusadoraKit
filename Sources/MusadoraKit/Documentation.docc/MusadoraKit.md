@@ -42,6 +42,10 @@ let recommendations = try await MRecommendation.default()
 let summary = try await MSummary.latest()
 ```
 
+## Input validation
+
+Request builders that require identifiers validate empty inputs and throw `MusadoraKitError.idMissing` when arrays are empty. This includes favorites, ratings, add-resources, and batch resource requests for catalog and library items.
+
 ## API Overview
 
 ### Core APIs
