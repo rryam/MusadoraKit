@@ -103,7 +103,7 @@ extension MusicCatalogSuggestionsRequest {
       queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
     }
 
-    components.queryItems = queryItems
+    components.queryItems = queryItems.isEmpty ? nil : queryItems
 
     guard let url = components.url else {
       throw URLError(.badURL)

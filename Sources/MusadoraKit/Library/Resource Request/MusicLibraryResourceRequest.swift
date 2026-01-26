@@ -107,7 +107,7 @@ extension MusicLibraryResourceRequest {
         URLQueryItem(name: "include[library-albums]", value: "artists")
       ]
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

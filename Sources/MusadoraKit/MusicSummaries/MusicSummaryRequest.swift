@@ -84,7 +84,7 @@ extension MusicSummaryRequest {
         queryItems.append(URLQueryItem(name: "l", value: languageTag))
       }
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else { throw URLError(.badURL) }
       return url

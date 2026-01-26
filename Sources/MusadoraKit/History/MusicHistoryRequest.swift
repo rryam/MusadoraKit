@@ -84,9 +84,7 @@ extension MusicHistoryRequest {
         queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
       }
 
-      if !queryItems.isEmpty {
-        components.queryItems = queryItems
-      }
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

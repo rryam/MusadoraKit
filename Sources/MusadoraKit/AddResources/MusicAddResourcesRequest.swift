@@ -71,7 +71,8 @@ extension MusicAddResourcesRequest {
         queryItems.append(query)
       }
 
-      components.queryItems = queryItems.sorted { $0.name < $1.name }
+      let sortedItems = queryItems.sorted { $0.name < $1.name }
+      components.queryItems = sortedItems.isEmpty ? nil : sortedItems
 
       guard let url = components.url else {
         throw URLError(.badURL)

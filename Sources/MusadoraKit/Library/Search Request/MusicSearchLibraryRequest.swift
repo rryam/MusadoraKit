@@ -102,7 +102,7 @@ extension MusicSearchLibraryRequest {
         queryItems.append(URLQueryItem(name: "includeTopResults", value: includeTopResults ? "true" : "false"))
       }
 
-      components.queryItems = queryItems
+      components.queryItems = queryItems.isEmpty ? nil : queryItems
 
       guard let url = components.url else {
         throw URLError(.badURL)
