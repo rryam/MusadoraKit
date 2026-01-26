@@ -92,9 +92,14 @@ public extension MRecommendation {
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
 extension MRecommendation {
   private static func personalRecommendations(_ limit: Int? = nil) async throws -> PersonalRecommendations {
-    var request = MusicPersonalRecommendationsRequest()
-    request.limit = limit
+    let request = personalRecommendationsRequest(limit: limit)
     let response = try await request.response()
     return try await response.recommendations.collectingAll(upTo: limit)
+  }
+
+  internal static func personalRecommendationsRequest(limit: Int?) -> MusicPersonalRecommendationsRequest {
+    var request = MusicPersonalRecommendationsRequest()
+    request.limit = limit
+    return request
   }
 }

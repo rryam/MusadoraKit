@@ -58,12 +58,7 @@ extension MusadoraKit {
     /// }
     /// ```
     public static func test() async throws {
-        var components = AppleMusicURLComponents()
-        components.path = "test"
-
-        guard let url = components.url else {
-            throw URLError(.badURL)
-        }
+        let url = try testEndpointURL()
 
         let urlRequest = URLRequest(url: url)
         let request = MusicDataRequest(urlRequest: urlRequest)
@@ -88,5 +83,16 @@ extension MusadoraKit {
         } catch {
             throw error
         }
+    }
+
+    internal static func testEndpointURL(components: MusicURLComponents = AppleMusicURLComponents()) throws -> URL {
+        var components = components
+        components.path = "test"
+
+        guard let url = components.url else {
+            throw URLError(.badURL)
+        }
+
+        return url
     }
 }
