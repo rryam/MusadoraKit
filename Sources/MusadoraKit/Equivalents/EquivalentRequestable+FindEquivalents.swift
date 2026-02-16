@@ -21,14 +21,13 @@ public extension EquivalentRequestable where Self: FilterableMusicItem {
   ///
   /// - Returns: The equivalent item that exists in the user's current storefront.
   func equivalentInCurrentStorefront() async throws -> Self {
-    let storefront = try await MusicDataRequest.currentCountryCode
-
     #if compiler(>=6.3)
     if #available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, visionOS 26.4, *) {
       return try await equivalentInCurrentStorefrontUsingMusicKit()
     }
     #endif
 
+    let storefront = try await MusicDataRequest.currentCountryCode
     return try await equivalent(for: storefront)
   }
 }
@@ -44,8 +43,6 @@ public extension MusicItemCollection where MusicItemType: EquivalentRequestable 
   ///
   /// - Returns: A collection of equivalent music items for the user's current storefront.
   func equivalentsInCurrentStorefront() async throws -> MusicItemCollection<MusicItemType> {
-    let storefront = try await MusicDataRequest.currentCountryCode
-
     #if compiler(>=6.3)
     if #available(iOS 26.4, macOS 26.4, tvOS 26.4, watchOS 26.4, visionOS 26.4, *) {
       let ids = map(\.id)
@@ -56,6 +53,7 @@ public extension MusicItemCollection where MusicItemType: EquivalentRequestable 
     }
     #endif
 
+    let storefront = try await MusicDataRequest.currentCountryCode
     return try await equivalents(for: storefront)
   }
 }
