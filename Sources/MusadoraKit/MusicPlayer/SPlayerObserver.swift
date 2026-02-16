@@ -21,7 +21,7 @@ public final class SPlayerObserver {
   ///
   /// - Note: MusicKit models can replace the queue instance when you assign a new queue. Use `sync()` (or
   /// `setQueue(_:)`) to refresh this reference if needed.
-  public var queue: MusicPlayer.Queue
+  public var queue: SPlayer.Queue
 
   /// A reference to the player's state.
   public let state: MusicPlayer.State
@@ -43,7 +43,7 @@ public final class SPlayerObserver {
   /// Sets a new queue on the underlying player and updates `queue`.
   ///
   /// - Parameter queue: The new queue to assign.
-  public func setQueue(_ queue: MusicPlayer.Queue) {
+  public func setQueue(_ queue: SPlayer.Queue) {
     player.queue = queue
     sync()
   }
