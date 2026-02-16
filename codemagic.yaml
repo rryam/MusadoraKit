@@ -52,10 +52,57 @@ workflows:
           done
         test_report: build/reports/junit.xml
 
-  musadorakit-xcode-26-1:
-    name: MusadoraKit Workflow (Xcode 26.1)
+  musadorakit-xcode-26-2:
+    name: MusadoraKit Workflow (Xcode 26.2)
     environment:
-      xcode: 26.1
+      xcode: 26.2
+      vars:
+        XCODE_SCHEME: "MusadoraKit"
+        APP_ID: "Musadora"
+    when:
+      changeset:
+        includes:
+          - 'Sources'
+          - 'Tests'
+    triggering:
+      <<: *events
+    scripts:
+      - name: SwiftLint
+        script: |
+          #!/bin/zsh
+          brew install swiftlint
+          swiftlint lint --strict
+      - name: Build Framework
+        script: |
+          #!/bin/zsh
+
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 17" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=macOS,variant=Mac Catalyst" "platform=visionOS Simulator,name=Apple Vision Pro")
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              xcodebuild clean build \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation
+          done
+      - name: Test Framework
+        script: |
+          #!/bin/zsh
+
+          declare -a DESTINATIONS=("platform=iOS Simulator,name=iPhone 17" "platform=watchOS Simulator,name=Apple Watch Ultra 2 (49mm)" "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)" "platform=macOS" "platform=macOS,variant=Mac Catalyst" "platform=visionOS Simulator,name=Apple Vision Pro")
+          for DESTINATION in "${DESTINATIONS[@]}"
+            do
+              set -o pipefail
+              xcodebuild clean test \
+                -scheme "$XCODE_SCHEME" \
+                -destination "$DESTINATION" \
+                -skipPackagePluginValidation | xcpretty --report junit
+          done
+        test_report: build/reports/junit.xml
+
+  musadorakit-xcode-edge:
+    name: MusadoraKit Workflow (Xcode Edge)
+    environment:
+      xcode: edge
       vars:
         XCODE_SCHEME: "MusadoraKit"
         APP_ID: "Musadora"
