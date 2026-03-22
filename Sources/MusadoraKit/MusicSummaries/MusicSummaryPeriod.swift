@@ -8,7 +8,7 @@ enum MusicSummaryPeriod: Equatable {
   static func latestMonth(
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = .current
   ) -> MusicSummaryPeriod? {
     var calendar = calendar
     calendar.timeZone = timeZone

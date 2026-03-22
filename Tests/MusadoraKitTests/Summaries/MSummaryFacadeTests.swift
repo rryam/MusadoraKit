@@ -51,4 +51,25 @@ struct MSummaryFacadeTests {
     #expect(request.include == ["relationships"])
     #expect(request.extend == ["extended-attributes"])
   }
+
+  @Test
+  func latestMonthPeriodRespectsRequestedTimeZoneAtBoundary() throws {
+    let calendar = Calendar(identifier: .gregorian)
+    let utc = try #require(TimeZone(secondsFromGMT: 0))
+    let india = try #require(TimeZone(identifier: "Asia/Kolkata"))
+
+    var components = DateComponents()
+    components.calendar = calendar
+    components.timeZone = utc
+    components.year = 2026
+    components.month = 2
+    components.day = 28
+    components.hour = 19
+    components.minute = 0
+
+    let now = try #require(components.date)
+
+    #expect(MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: utc) == .month(year: 2026, month: 1))
+    #expect(MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: india) == .month(year: 2026, month: 2))
+  }
 }

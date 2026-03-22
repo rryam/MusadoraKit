@@ -9,8 +9,7 @@ import Foundation
 
 /// A protocol for music items that your app can fetch by
 /// using a recently added request.
-public protocol MusicRecentlyAddedRequestable: MusicItem {
-}
+public protocol MusicRecentlyAddedRequestable: MusicItem, MusicPropertyContainer {}
 
 /// A request that your app uses to fetch items the user has recently added.
 public struct MusicRecentlyAddedRequest<MusicItemType>
@@ -29,11 +28,103 @@ where MusicItemType: MusicRecentlyAddedRequestable, MusicItemType: Decodable {
   /// will fetch for each music item in the response.
   public var properties: [PartialMusicAsyncProperty<MusicItemType>] = []
 
-  // Fetches items the user has recently added.
-  //    public func response() async throws -> MusicRecentlyAddedResponse<MusicItemType> {
-  //        return MusicRecentlyAddedResponse(items: .init(arrayLiteral: []))
-  //    }
+  /// Fetches items the user has recently added.
+  public func response() async throws -> MusicRecentlyAddedResponse<MusicItemType> {
+    var request = MusicHistoryRequest(for: .recentlyAdded)
+    request.limit = limit
+    request.offset = offset
+
+    let history = try await request.response()
+    let items = try filteredItems(from: history)
+    let hydratedItems = try await resolvedItems(from: items)
+    return MusicRecentlyAddedResponse(items: hydratedItems)
+  }
+
+  internal func filteredItems(from history: MusicHistoryResponse) throws -> MusicItemCollection<MusicItemType> {
+    MusicItemCollection(try filteredItems(from: Array(history.items)))
+  }
+
+  internal func filteredItems(from items: [UserMusicItem]) throws -> [MusicItemType] {
+    let mapper = try itemMapper()
+    return items.compactMap(mapper)
+  }
+
+  private func itemMapper() throws -> (UserMusicItem) -> MusicItemType? {
+    switch MusicItemType.self {
+    case is Album.Type:
+      return album(from:)
+    case is Playlist.Type:
+      return playlist(from:)
+    case is Station.Type:
+      return station(from:)
+    case is Track.Type:
+      return track(from:)
+    case is Song.Type:
+      return song(from:)
+    case is MusicVideo.Type:
+      return musicVideo(from:)
+    default:
+      throw MusadoraKitError.invalidLibraryItemType
+    }
+  }
+
+  private func album(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .album(album) = item else { return nil }
+    return album as? MusicItemType
+  }
+
+  private func playlist(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .playlist(playlist) = item else { return nil }
+    return playlist as? MusicItemType
+  }
+
+  private func station(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .station(station) = item else { return nil }
+    return station as? MusicItemType
+  }
+
+  private func track(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .track(track) = item else { return nil }
+    return track as? MusicItemType
+  }
+
+  private func song(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .track(track) = item, case let .song(song) = track else { return nil }
+    return song as? MusicItemType
+  }
+
+  private func musicVideo(from item: UserMusicItem) -> MusicItemType? {
+    guard case let .track(track) = item, case let .musicVideo(musicVideo) = track else { return nil }
+    return musicVideo as? MusicItemType
+  }
+
+  private func resolvedItems(from items: MusicItemCollection<MusicItemType>) async throws -> MusicItemCollection<MusicItemType> {
+    guard !properties.isEmpty else {
+      return items
+    }
+
+    var resolvedItems: [MusicItemType] = []
+    resolvedItems.reserveCapacity(items.count)
+
+    for item in items {
+      resolvedItems.append(try await item.with(properties))
+    }
+
+    return MusicItemCollection(resolvedItems)
+  }
 }
+
+extension Album: MusicRecentlyAddedRequestable {}
+
+extension MusicVideo: MusicRecentlyAddedRequestable {}
+
+extension Playlist: MusicRecentlyAddedRequestable {}
+
+extension Song: MusicRecentlyAddedRequestable {}
+
+extension Station: MusicRecentlyAddedRequestable {}
+
+extension Track: MusicRecentlyAddedRequestable {}
 
 /// A response that contains items the user has recently added to their library.
 ///

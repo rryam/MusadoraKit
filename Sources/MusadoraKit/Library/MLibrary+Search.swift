@@ -116,16 +116,34 @@ private extension MLibrary {
 
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
 public extension MLibrary {
+  internal static func librarySearchRequest(
+    for term: String,
+    types: [MusicLibrarySearchableItemType],
+    limit: Int = 5,
+    offset: Int? = nil,
+    includeTopResults: Bool = false
+  ) -> MusicSearchLibraryRequest {
+    let searchTypes = types.map { $0.libraryType }
+    var request = MusicSearchLibraryRequest(term: term, types: searchTypes)
+    request.limit = limit
+    request.offset = offset
+    request.includeTopResults = includeTopResults
+    return request
+  }
+
   static func search(
     for term: String,
     types: [MusicLibrarySearchableItemType],
     limit: Int = 5,
     offset: Int? = nil,
     includeTopResults: Bool = false) async throws -> MusicSearchLibraryResponse {
-      let searchTypes = types.map { $0.libraryType }
-      var request = MusicSearchLibraryRequest(term: term, types: searchTypes)
-      request.limit = limit
-      request.includeTopResults = includeTopResults
+      let request = librarySearchRequest(
+        for: term,
+        types: types,
+        limit: limit,
+        offset: offset,
+        includeTopResults: includeTopResults
+      )
       return try await request.response()
     }
 

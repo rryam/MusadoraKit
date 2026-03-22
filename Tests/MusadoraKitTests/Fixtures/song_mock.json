@@ -3,6 +3,17 @@
   "type":"songs",
   "attributes":{
     "name":"Glimpse of Us",
-    "artistName":"Joji"
+    "artistName":"Joji",
+    "artwork": {
+      "width": 1500,
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/73/3e/e2/733ee2d4-fb8a-5876-6676-7c0d7fd1151f/093624855671.jpg/{w}x{h}bb.jpg",
+      "height": 1500,
+      "textColor3": "3f4040",
+      "textColor2": "3a3b3c",
+      "textColor4": "343536",
+      "textColor1": "000000",
+      "bgColor": "f4f5f5",
+      "hasP3": false
+    }
   }
 }
