@@ -11,6 +11,26 @@ import Testing
 
 @Suite
 struct MusicSearchLibraryRequestEndpointTests {
+  @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 14.0, macCatalyst 17.0, visionOS 1.0, *)
+  @Test
+  func modernLibrarySearchRequestIncludesOffset() throws {
+    let request = MLibrary.librarySearchRequest(
+      for: "ed",
+      types: [.songs, .artists],
+      limit: 5,
+      offset: 3,
+      includeTopResults: true
+    )
+
+    #expect(request.offset == 3)
+    #expect(request.includeTopResults == true)
+    let url = try request.librarySearchEndpointURL
+    expectEndpoint(
+      url,
+      equals: "https://api.music.apple.com/v1/me/library/search?term=ed&types=library-songs,library-artists&limit=5&offset=3&includeTopResults=true"
+    )
+  }
+
   @Test
   func librarySearchWithSingleTermAndTypeAsSong() throws {
     let term = "ed"

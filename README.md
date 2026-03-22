@@ -695,7 +695,7 @@ AnimatedArtworkView(
 )
 ```
 
-This view automatically extracts dominant colors from the current playing song's artwork and creates a beautiful animated mesh gradient background that responds to the music.
+This view automatically extracts dominant colors from the current playing item's artwork and creates a beautiful animated mesh gradient background that responds to the music.
 
 ## Contributing
 

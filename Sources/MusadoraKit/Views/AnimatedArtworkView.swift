@@ -11,14 +11,31 @@ import SwiftUI
 /// - Important: This view is available on iOS 18, macOS 15, watchOS 11, tvOS 18, and visionOS 2 or later.
 @available(iOS 18.0, macOS 15.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
 public struct AnimatedArtworkView: View {
+  private static let colorCount = 16
+  private static let fallbackColors: [Color] = [
+    .black.opacity(0.95),
+    .gray.opacity(0.85),
+    .indigo.opacity(0.85),
+    .black.opacity(0.95),
+    .gray.opacity(0.80),
+    .blue.opacity(0.75),
+    .mint.opacity(0.65),
+    .gray.opacity(0.85),
+    .indigo.opacity(0.80),
+    .cyan.opacity(0.70),
+    .teal.opacity(0.70),
+    .blue.opacity(0.75),
+    .black.opacity(0.95),
+    .gray.opacity(0.85),
+    .indigo.opacity(0.85),
+    .black.opacity(0.95)
+  ]
+
   /// The music player queue to observe for current entry changes.
   @ObservedObject private var queue: MusicPlayer.Queue
 
-  /// The current entry in the music player queue.
-  @State private var currentEntry: MusicPlayer.Queue.Entry?
-
   /// The dominant colors extracted from the artwork.
-  @State private var dominantColors: [Color] = []
+  @State private var dominantColors: [Color] = Self.fallbackColors
 
   /// The artwork to display, if provided directly.
   var artwork: MusicKit.Artwork?
@@ -105,15 +122,8 @@ public struct AnimatedArtworkView: View {
   /// Extracts the dominant colors from the artwork.
   private func extractColors() async {
     do {
-      let colors: [Color]
-      if let artwork = self.artwork {
-        colors = try await artwork.fetchColors(width: width, height: height, numberOfColors: 16)
-      } else if case .song(let song) = queue.currentEntry?.item,
-                let songArtwork = song.artwork {
-        colors = try await songArtwork.fetchColors(width: width, height: height, numberOfColors: 16)
-      } else {
-        colors = []
-      }
+      let artwork = self.artwork ?? artwork(for: queue.currentEntry?.item)
+      let colors = try await extractedColors(from: artwork)
 
       await MainActor.run {
         self.dominantColors = colors
@@ -121,6 +131,50 @@ public struct AnimatedArtworkView: View {
     } catch {
       os_log("Failed to extract colors from artwork: %@", log: OSLog.default, type: .error, error.localizedDescription)
     }
+  }
+
+  private func extractedColors(from artwork: MusicKit.Artwork?) async throws -> [Color] {
+    guard let artwork else {
+      return Self.fallbackColors
+    }
+
+    let colors = try await artwork.fetchColors(
+      width: width,
+      height: height,
+      numberOfColors: Self.colorCount
+    )
+
+    return normalizedColors(colors)
+  }
+
+  internal func artwork(for item: MusicPlayer.Queue.Entry.Item?) -> MusicKit.Artwork? {
+    guard let item else {
+      return nil
+    }
+
+    switch item {
+    case .song(let song):
+      return song.artwork
+    case .musicVideo(let musicVideo):
+      return musicVideo.artwork
+    @unknown default:
+      return nil
+    }
+  }
+
+  internal func normalizedColors(_ colors: [Color]) -> [Color] {
+    guard !colors.isEmpty else {
+      return Self.fallbackColors
+    }
+
+    if colors.count >= Self.colorCount {
+      return Array(colors.prefix(Self.colorCount))
+    }
+
+    var normalizedColors = colors
+    let padding = Self.fallbackColors.dropFirst(colors.count)
+    normalizedColors.append(contentsOf: padding)
+    return normalizedColors
   }
 
   /// Generates the gradient content for a given date.

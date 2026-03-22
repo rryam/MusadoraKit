@@ -49,7 +49,7 @@ public extension MSummary {
     extend: [String]? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = .current
   ) async throws -> MusicSummaryResponse {
     let context = LatestMonthContext(calendar: calendar, now: now, timeZone: timeZone)
     let request = try requestForLatestMonth(
@@ -76,14 +76,14 @@ public extension MSummary {
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   ///   - calendar: Calendar instance used when determining the reference month. Defaults to Gregorian.
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
-  ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
+  ///   - timeZone: Time zone used when computing month boundaries. Defaults to the user's current time zone.
   /// - Returns: The ordered list of top artists for the user's most recent monthly Replay summary.
   /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopArtists(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = .current
   ) async throws -> Artists {
     guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -110,14 +110,14 @@ public extension MSummary {
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   ///   - calendar: Calendar instance used when determining the reference month. Defaults to Gregorian.
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
-  ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
+  ///   - timeZone: Time zone used when computing month boundaries. Defaults to the user's current time zone.
   /// - Returns: The ordered list of top albums for the user's most recent monthly Replay summary.
   /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopAlbums(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = .current
   ) async throws -> Albums {
     guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -144,14 +144,14 @@ public extension MSummary {
   ///   - languageTag: Optional BCP‑47 language tag. If not provided, storefront default is used.
   ///   - calendar: Calendar instance used when determining the reference month. Defaults to Gregorian.
   ///   - now: Current date used to calculate the previous month. Defaults to system time.
-  ///   - timeZone: Time zone used when computing month boundaries. Defaults to GMT.
+  ///   - timeZone: Time zone used when computing month boundaries. Defaults to the user's current time zone.
   /// - Returns: The ordered list of top songs for the user's most recent monthly Replay summary.
   /// - Throws: `MusadoraKitError.invalidSummaryPeriod` when a valid previous month cannot be determined from the provided context.
   static func latestMonthTopSongs(
     languageTag: String? = nil,
     calendar: Calendar = .init(identifier: .gregorian),
     now: Date = .now,
-    timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    timeZone: TimeZone = .current
   ) async throws -> Songs {
     guard let period = MusicSummaryPeriod.latestMonth(calendar: calendar, now: now, timeZone: timeZone) else {
       throw MusadoraKitError.invalidSummaryPeriod
@@ -174,7 +174,7 @@ extension MSummary {
     init(
       calendar: Calendar = .init(identifier: .gregorian),
       now: Date = .now,
-      timeZone: TimeZone = TimeZone(secondsFromGMT: 0) ?? .current
+      timeZone: TimeZone = .current
     ) {
       self.calendar = calendar
       self.now = now
