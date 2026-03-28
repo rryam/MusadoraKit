@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension MusicItemCollection {
+extension MusicItemCollection where MusicItemType: Decodable {
   /// Loads subsequent batches for the current collection until either the next batch is
   /// unavailable or the desired number of items has been gathered.
   ///
